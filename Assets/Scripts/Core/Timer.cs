@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    public float time = 10;
+    public float time = 1800;
+    public float dangerZone = 600;
     public bool timerIsRunning = false;
     public Text display;
 
@@ -38,6 +39,11 @@ public class Timer : MonoBehaviour
     {
         float minutes = Mathf.FloorToInt(ttd / 60);
         float seconds = Mathf.FloorToInt(ttd % 60);
+
+        if(ttd <= dangerZone)
+        {
+            display.color = Color.red;
+        }
 
         display.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }

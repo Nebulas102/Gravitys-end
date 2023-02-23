@@ -7,7 +7,7 @@ public class PlayerAnimator : MonoBehaviour
     private const string IS_RUNNING = "IsRunning";
 
     [SerializeField]
-    private Player player;
+    private PlayerMovementController playerMovementController;
 
     private Animator animator;
 
@@ -24,7 +24,7 @@ public class PlayerAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.SetBool(IS_RUNNING, player.IsRunning());
+        animator.SetBool(IS_RUNNING, playerMovementController.IsRunning());
        
     }
 }

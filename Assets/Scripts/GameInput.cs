@@ -22,4 +22,9 @@ public class GameInput : MonoBehaviour
         Vector2 mousePosition = playerInputManager.Player.MousePosition.ReadValue<Vector2>();
         return mousePosition;
     }
+
+    public bool GetDash(){
+        bool dash = playerInputManager.Player.Dash.triggered;
+        return dash;
+    }
 }

@@ -25,17 +25,18 @@ public class animationStateController : MonoBehaviour
     void FixedUpdate(){
 
         bool isRunning = animator.GetBool(isRunningHash);
-        bool forwardPressed = Input.GetKey(KeyCode.W);
+        // bool forwardPressed = Input.GetKey(KeyCode.W);
+        bool wasdPressed = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
 
         //if player presses W and is not running, start running
-        if(forwardPressed && !isRunning){
-            Debug.Log("W is pressed");
+        if(wasdPressed && !isRunning){
+            Debug.Log("wasdpressed");
             animator.SetBool(isRunningHash, true);
         }
 
         //if player stops pressing W and is running, stop running
-        if(!forwardPressed && isRunning){
-            Debug.Log("W is not pressed");
+        if(!wasdPressed && isRunning){
+            Debug.Log("wasdpressed");
             animator.SetBool(isRunningHash, false);
         }
     }

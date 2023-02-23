@@ -5,10 +5,11 @@ using UnityEngine;
 public class LookTowardMouse : MonoBehaviour
 {
     [SerializeField]
-    private LayerMask groundMask;
+    private GameInput gameInput;
 
     [SerializeField]
     private new Camera camera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,41 +17,20 @@ public class LookTowardMouse : MonoBehaviour
 
     void FixedUpdate()
     {
-        Aim();
+
     }
 
-    private void Aim()
+    public Quaternion GetMousePosition()
     {
-        var (success, position) = GetMousePosition();
-        if (success)
-        {
-            // Calculate the direction
-            var direction = position - transform.position;
-
-            // You might want to delete this line.
-            // Ignore the height difference.
-            direction.y = 0;
-
-            // Make the transform look in the direction.
-            transform.forward = direction;
-        }
+        //get mouse position
+        Vector2 mouseScreenPosition = gameInput.GetMousePosition();
+        Vector3 mouseWorldPosition = camera.ScreenToWorldPoint(mouseScreenPosition);
+        //calculate direction
+        Vector3 targetDirection = mouseWorldPosition - transform.position;
+        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+        return Quaternion.Euler(new Vector3(0f, -angle, 0f));
     }
 
-    private (bool success, Vector3 position) GetMousePosition()
-    {
-        var ray = camera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out var hitInfo, Mathf.Infinity, groundMask))
-        {
-            // The Raycast hit something, return with the position.
-            return (success: true, position: hitInfo.point);
-        }
-        else
-        {
-            // The Raycast did not hit anything.
-            return (success: false, position: Vector3.zero);
-        }
-    }
 
 
 

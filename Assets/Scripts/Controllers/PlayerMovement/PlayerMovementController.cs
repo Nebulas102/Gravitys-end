@@ -30,13 +30,22 @@ public class PlayerMovementController : MonoBehaviour
     private Vector2 move;
     private Rigidbody rb;
 
-
+    private bool dashInput;
+    private Vector2 wasdInput;
+    private Vector2 mouseInput;
 
     void Awake()
     {
         //freeze rotation so player doesn't fall over
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+    }
+
+    void Update()
+    {
+        wasdInput = gameInput.GetMovementVectorNormalized();
+        mouseInput = gameInput.GetMousePosition();
+        dashInput = gameInput.GetDash();
     }
 
     void FixedUpdate()
@@ -55,7 +64,7 @@ public class PlayerMovementController : MonoBehaviour
     public Vector3 GetMovementDirection()
     {
         //gets input from player
-        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+        Vector2 inputVector = wasdInput;
         //create vector3 from input
         Vector3 movementDirection = new Vector3(inputVector.x, 0f, inputVector.y);
         //makes player move independent of camera rotation (W means north, S means south, etc.)
@@ -70,14 +79,15 @@ public class PlayerMovementController : MonoBehaviour
         //set running to true if movement direction is not zero for animation to start
         isRunning = movementDirection != Vector3.zero;
         //move character to new position with set speed
-        transform.Translate(movementDirection * speed * Time.deltaTime, Space.World);
+        rb.MovePosition(transform.position + movementDirection * speed * Time.deltaTime);
+
     }
 
 
     //rotate player to face mouse position
     private void OnMouse()
     {
-        Ray cameraRay = camera.ScreenPointToRay(gameInput.GetMousePosition());
+        Ray cameraRay = camera.ScreenPointToRay(mouseInput);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayLength;
 
@@ -91,20 +101,17 @@ public class PlayerMovementController : MonoBehaviour
     //get dash input and dash player in direction of input
     public void OnDash()
     {
-        bool dashClicked = gameInput.GetDash();
-        if (!dashAvailble && dashClicked)
+        if (!dashAvailble && dashInput)
         {
             Debug.Log("Dash not available");
         }
-        if (dashAvailble && dashClicked)
+        if (dashAvailble && dashInput)
         {
             dashAvailble = false;
-            transform.Translate(GetMovementDirection() * dashDistance, Space.World);
+            rb.MovePosition(transform.position + GetMovementDirection() * dashDistance);
             //start independent cooldown
             StartCoroutine(DashCooldown());
-
         }
-
     }
 
     //dash cooldown

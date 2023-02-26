@@ -8,7 +8,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField]
     public GameObject pauseMenu;
 
-    public void Resume() {
+    public void Resume() 
+    {
         // This removes the pause menu overlay to continue the game
         pauseMenu.SetActive(false);
         // Unpause the game
@@ -17,7 +18,8 @@ public class PauseMenu : MonoBehaviour
         // Maybe set the boolean isPaused on false here if there is a boolean
     }
 
-    public void GoToMainMenu() {
+    public void GoToMainMenu() 
+    {
         SceneManager.LoadScene("MainMenuScene");
     }
 }

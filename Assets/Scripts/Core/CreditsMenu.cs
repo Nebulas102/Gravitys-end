@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CreditsMenu : MonoBehaviour
 {
-    public void GoToMainMenu() {
+    public void GoToMainMenu() 
+    {
         SceneManager.LoadScene("MainMenuScene");
     }
 }

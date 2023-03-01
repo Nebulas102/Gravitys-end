@@ -207,7 +207,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1271767314
+--- !u!1 &1079740413
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,22 +215,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1271767316}
-  - component: {fileID: 1271767317}
+  - component: {fileID: 1079740415}
+  - component: {fileID: 1079740414}
   m_Layer: 0
-  m_Name: RoomGenerator
+  m_Name: StageGenerator
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1271767316
+--- !u!114 &1079740414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079740413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1f8925a727d0cd4a825d37c6d370df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridX: 40
+  gridZ: 12
+  offset: 10
+  gridCell: {fileID: 9137627346341927211, guid: a31c9469b043ae94f95cc1e49fcf7a8d, type: 3}
+  hallway: {fileID: 8575780208596979285, guid: fe32b7c7fbfc07443b7be84fa088b223, type: 3}
+  rooms:
+  - {fileID: 1367966650999095394, guid: c9c527acc47a2984aa7f4c34621b318b, type: 3}
+  occupiedCellMaterial: {fileID: 2100000, guid: 6355cf7d3f3b12c4881b3dbda3d67122, type: 2}
+  doorCellMaterial: {fileID: 2100000, guid: 482f759315eb39c4db3eee9c422ba31a, type: 2}
+  cells: []
+  mapHallways: []
+  mapRooms: []
+--- !u!4 &1079740415
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271767314}
+  m_GameObject: {fileID: 1079740413}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -239,20 +263,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1271767317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271767314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40db63eb097e6834e950259a562eb215, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _room: {fileID: 4679635426906370307, guid: 161c7ccd0d845e74385b24a3bae3f8dd, type: 3}
-  maxRooms: 10
 --- !u!1 &1319295847
 GameObject:
   m_ObjectHideFlags: 0

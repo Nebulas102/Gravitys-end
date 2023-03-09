@@ -27,12 +27,9 @@ public class PlayerMovementController : MonoBehaviour
     //variable for running animation to start
     private bool isRunning;
 
-    private Vector2 move;
     private Rigidbody rb;
-
     private bool dashInput;
-    private Vector2 wasdInput;
-    private Vector2 mouseInput;
+    private Vector2 move, moveInput, lookDir, joystickLook;
 
     void Awake()
     {
@@ -43,15 +40,15 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
-        wasdInput = gameInput.GetMovementVectorNormalized();
-        mouseInput = gameInput.GetMousePosition();
+        moveInput = gameInput.GetMovementVectorNormalized();
+        lookDir = gameInput.GetLookPosition();
         dashInput = gameInput.GetDash();
     }
 
     void FixedUpdate()
     {
         OnMove();
-        OnMouse();
+        OnLook();
         OnDash();
     }
 
@@ -60,39 +57,56 @@ public class PlayerMovementController : MonoBehaviour
         return isRunning;
     }
 
-
     public Vector3 GetMovementDirection()
     {
         //gets input from player
-        var inputVector = wasdInput;
+        Vector2 inputVector = moveInput;
         //create vector3 from input
-        var movementDirection = new Vector3(inputVector.x, 0f, inputVector.y);
+        Vector3 movementDirection = new Vector3(inputVector.x, 0f, inputVector.y);
         //makes player move independent of camera rotation (W means north, S means south, etc.)
-        return Quaternion.Euler(0, camera.gameObject.transform.eulerAngles.y, 0) * movementDirection;
+        return movementDirection = Quaternion.Euler(0, camera.gameObject.transform.eulerAngles.y, 0) * movementDirection;
     }
 
 
     public void OnMove()
     {
         //get movement direction
-        var movementDirection = GetMovementDirection();
+        Vector3 movementDirection = GetMovementDirection();
         //set running to true if movement direction is not zero for animation to start
         isRunning = movementDirection != Vector3.zero;
         //move character to new position with set speed
         rb.MovePosition(transform.position + movementDirection * speed * Time.deltaTime);
     }
 
-
-    //rotate player to face mouse position
-    private void OnMouse()
+    //rotate player to face mouse/joystick position
+    private void OnLook()
     {
-        var cameraRay = camera.ScreenPointToRay(mouseInput);
-        var groundPlane = new Plane(Vector3.up, Vector3.zero);
-
-        if (groundPlane.Raycast(cameraRay, out float rayLength))
+        if (lookDir == Vector2.zero)
         {
-            var pointToLook = cameraRay.GetPoint(rayLength);
-            transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+            return;
+        }
+        //mouse
+        if (lookDir.x > 1 || lookDir.y > 1)
+        {
+            Ray cameraRay = camera.ScreenPointToRay(lookDir);
+            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+            float rayLength;
+
+            if (groundPlane.Raycast(cameraRay, out rayLength))
+            {
+                Vector3 pointToLook = cameraRay.GetPoint(rayLength);
+                transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+            }
+        }
+        //controller
+        else if (lookDir.x <= 1 || lookDir.y <= 1 || lookDir.x <= -1 || lookDir.y <= -1)
+        {
+            Vector3 aimDirection = new Vector3(lookDir.x, 0, lookDir.y);
+
+            if (aimDirection != Vector3.zero)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(aimDirection), 1f) * Quaternion.Euler(0, camera.gameObject.transform.eulerAngles.y, 0);
+            }
         }
     }
 

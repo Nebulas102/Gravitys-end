@@ -20,11 +20,12 @@ public class GameInput : MonoBehaviour
         return inputVector;
     }
 
-    public Vector2 GetMousePosition()
+    public Vector2 GetLookPosition()
     {
-        Vector2 mousePosition = playerInputManager.Player.MousePosition.ReadValue<Vector2>();
-        return mousePosition;
+        Vector2 lookPosition = playerInputManager.Player.Look.ReadValue<Vector2>();
+        return lookPosition;
     }
+
 
     public bool GetDash()
     {

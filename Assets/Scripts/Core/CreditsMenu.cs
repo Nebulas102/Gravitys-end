@@ -1,12 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CreditsMenu : MonoBehaviour
+namespace Assets.Scripts.Core
 {
-    public void GoToMainMenu() 
+    public class CreditsMenu : MonoBehaviour
     {
-        SceneManager.LoadScene("MainMenuScene");
+        public void GoToMainMenu()
+        {
+            SceneManager.LoadScene("MainMenuScene");
+        }
     }
 }

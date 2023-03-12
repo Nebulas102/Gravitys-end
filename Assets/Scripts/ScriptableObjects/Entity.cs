@@ -28,6 +28,16 @@ namespace Assets.Scripts.ScriptableObjects
             _baseDamage = damage;
         }
 
+        public void TakeDamage(float damage, float modifier)
+        {
+            // Substract the armor value
+            damage -= (modifier / 100) * damage;
+            damage = Mathf.Clamp(damage, 0, int.MaxValue);
+
+            // Damage character
+            _health -= damage;
+        }
+
         public float GetDamage()
         {
             return _baseDamage;

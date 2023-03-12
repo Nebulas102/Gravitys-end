@@ -21,16 +21,6 @@ namespace Assets.Scripts.Models
             _entity.Name = "Player";
         }
 
-        public void TakeDamage(float damage)
-        {
-            // Substract the armor value
-            damage -= (_armor.HealthModifier / 100) * damage;
-            damage = Mathf.Clamp(damage, 0, int.MaxValue);
-
-            // Damage character
-            _entity.SetBaseHealth(_entity.GetHealth() - damage);
-        }
-
         public void SwitchArmor(Gear armor)
         {
             _armor = armor;

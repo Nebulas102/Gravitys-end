@@ -5,18 +5,22 @@ namespace Assets.Scripts.ScriptableObjects
     [CreateAssetMenu(fileName = "Entity", menuName = "ScriptableObjects/Entity")]
     public class Entity : ScriptableObject
     {
-        private float _baseHealth;
+        private float _health;
         private float _baseDamage;
         public string Name;
 
         public void SetBaseHealth(float health)
         {
-            _baseHealth = health;
+            _health = health;
+            if(_health <= 0)
+            {
+                Die();
+            }
         }
 
         public float GetHealth()
         {
-            return _baseHealth;
+            return _health;
         }
 
         public void SetBaseDamage(float damage)
@@ -27,6 +31,11 @@ namespace Assets.Scripts.ScriptableObjects
         public float GetDamage()
         {
             return _baseDamage;
+        }
+
+        public void Die()
+        {
+            Debug.Log("Entity has died");
         }
     }
 }

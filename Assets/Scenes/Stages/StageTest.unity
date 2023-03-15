@@ -237,17 +237,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridX: 40
-  gridZ: 12
+  gridZ: 6
   offset: 10
-  gridCell: {fileID: 9137627346341927211, guid: a31c9469b043ae94f95cc1e49fcf7a8d, type: 3}
-  hallway: {fileID: 8575780208596979285, guid: fe32b7c7fbfc07443b7be84fa088b223, type: 3}
+  gridCell: {fileID: 5977070374732653095, guid: a31c9469b043ae94f95cc1e49fcf7a8d, type: 3}
+  hallway: {fileID: 3539307900891926368, guid: d46e19aa43b2a11478ccf217ad0e148e, type: 3}
+  hallways:
+  - {fileID: 0}
+  spawnRoom: {fileID: 0}
+  bossRoom: {fileID: 0}
   rooms:
-  - {fileID: 1367966650999095394, guid: c9c527acc47a2984aa7f4c34621b318b, type: 3}
+  - {fileID: 2915231218470790405, guid: f5b43880f44fcfd4f91aa005a9ab449a, type: 3}
   occupiedCellMaterial: {fileID: 2100000, guid: 6355cf7d3f3b12c4881b3dbda3d67122, type: 2}
   doorCellMaterial: {fileID: 2100000, guid: 482f759315eb39c4db3eee9c422ba31a, type: 2}
   cells: []
-  mapHallways: []
-  mapRooms: []
 --- !u!4 &1079740415
 Transform:
   m_ObjectHideFlags: 0

@@ -4,9 +4,18 @@ using UnityEngine;
 
 public abstract class Room : MonoBehaviour
 {
+    public float x;
+    public float y;
+    public float z;
+
+    [HideInInspector]
     public List<Cell> cells;
 
-    public float sizeX;
-    public float sizeY;
-    public float sizeZ;
+    [SerializeField]
+    private int spawnChance;
+
+    public int GetSpawnChance()
+    {
+        return spawnChance;
+    }
 }

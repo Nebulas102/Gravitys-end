@@ -15,11 +15,20 @@ public class StageGenerator : MonoBehaviour
     [SerializeField]
     private GameObject gridCell;
 
-    [Header("Room Grid Settings")]
+    [Header("Hallway settings")]
     [SerializeField]
     private GameObject hallway;
     [SerializeField]
+    private List<GameObject> hallways = new List<GameObject>();
+
+    [Header("Room Settings")]
+    [SerializeField]
+    private GameObject spawnRoom;
+    [SerializeField]
+    private GameObject bossRoom;
+    [SerializeField]
     private List<GameObject> rooms;
+
 
     [Header("Grid Cell Materials")]
     [SerializeField]
@@ -32,10 +41,8 @@ public class StageGenerator : MonoBehaviour
 
     private GameObject stageParent;
 
-    [SerializeField]
-    private List<Hallway> mapHallways;
-    [SerializeField]
-    private List<StandardRoom> mapRooms;
+    private List<Hallway> mapHallways = new List<Hallway>();
+    private List<Room> mapRooms = new List<Room>();
 
     private void Start()
     {
@@ -51,6 +58,8 @@ public class StageGenerator : MonoBehaviour
             }
         }
 
+        InitializeRoomSizes();
+
         //Start making the finite hallway
         StartCoroutine(HallwayGenerator());
     }
@@ -59,7 +68,7 @@ public class StageGenerator : MonoBehaviour
     private void SpawnCell(int x, int z)
     {
         //Create the position of the cell to place in scene
-        Vector3 cellPos = new Vector3(x * offset, -5f, z * offset);
+        Vector3 cellPos = new Vector3(x * offset, -4f, z * offset);
 
         //Place the gameobject in the scene
         GameObject newCell = Instantiate(gridCell, cellPos, Quaternion.identity);
@@ -79,8 +88,8 @@ public class StageGenerator : MonoBehaviour
     //Generate the finite hallway in the game
     private IEnumerator HallwayGenerator()
     {
-        int hallwayX = (int)hallway.GetComponent<Room>().sizeX;
-        int hallwayZ = (int)hallway.GetComponent<Room>().sizeZ;
+        int hallwayX = (int)hallway.GetComponent<Room>().x;
+        int hallwayZ = (int)hallway.GetComponent<Room>().z;
 
         //First hallway (function as spawn for now)
         GameObject initialHallway = InitialHallway();
@@ -100,9 +109,9 @@ public class StageGenerator : MonoBehaviour
             int posZ = (int)latestHallway.transform.position.z + hallwayZ;
 
             latestHallway = Instantiate(hallway, new Vector3(posX, 0, posZ), Quaternion.identity);
-            List<Cell> roomCells = SetRoomCells(hallwayX, hallwayZ, posX, posZ);
+            List<Cell> roomCells = SetRoomCells(latestHallway, posX, posZ);
 
-            latestHallway.GetComponent<Room>().cells = roomCells;
+            latestHallway.GetComponent<Hallway>().cells = roomCells;
 
             mapHallways.Add(latestHallway.GetComponent<Hallway>());
         }
@@ -112,8 +121,8 @@ public class StageGenerator : MonoBehaviour
 
     private GameObject InitialHallway()
     {
-        int hallwayX = (int)hallway.GetComponent<Room>().sizeX;
-        int hallwayZ = (int)hallway.GetComponent<Room>().sizeZ;
+        int hallwayX = (int)hallway.GetComponent<Room>().x;
+        int hallwayZ = (int)hallway.GetComponent<Room>().z;
 
         int posX = gridX * offset / 2;
         int posZ = hallwayZ / 2;
@@ -129,9 +138,9 @@ public class StageGenerator : MonoBehaviour
         }
 
         GameObject _hallway = Instantiate(hallway, new Vector3(posX, 0, posZ), Quaternion.identity);
-        List<Cell> roomCells = SetRoomCells(hallwayX, hallwayZ, posX, posZ);
+        List<Cell> roomCells = SetRoomCells(_hallway, posX, posZ);
 
-        _hallway.GetComponent<Room>().cells = roomCells;
+        _hallway.GetComponent<Hallway>().cells = roomCells;
         _hallway.name = "Initial hallway (temp spawn)";
 
         mapHallways.Add(_hallway.GetComponent<Hallway>());
@@ -143,43 +152,55 @@ public class StageGenerator : MonoBehaviour
     {
         for (int i = 0; i < mapHallways.Count; i++)
         {
-            foreach (var _door in mapHallways[i].doors)
+            foreach (var _door in mapHallways[i].GetDoors())
             {
                 int placeRoom = Random.Range(0, 2);
-                Debug.Log(placeRoom);
+
                 if (placeRoom == 1)
                 {
-                    int doorCellX = mapHallways[i].cells.Select(mh => mh.x).Distinct()
-                                    .OrderByDescending(mh => mh).ToArray()[_door.GetComponent<Door>().roomPosXOffset - 1];
-                    int doorCellZ = mapHallways[i].cells.Select(mh => mh.z).Distinct()
-                                    .OrderByDescending(mh => mh).ToArray()[_door.GetComponent<Door>().roomPosZOffset - 1];
+                    Cell doorCellRoom = null;
 
-                    Cell doorCell = null;
+                    int doorCellX = mapHallways[i].cells.Select(mh => mh.x).Distinct()
+                                    .ToArray()[_door.GetComponent<Door>().roomPosXOffset - 1];
+                    int doorCellZ = mapHallways[i].cells.Select(mh => mh.z).Distinct()
+                                    .ToArray()[_door.GetComponent<Door>().roomPosZOffset - 1];
 
                     if (_door.GetComponent<Door>().rightSide)
                     {
-                        doorCell = cells.Where(c => c.x == doorCellX + 1 && c.z == doorCellZ).SingleOrDefault();
+                        doorCellRoom = cells.Where(c => c.x == doorCellX + 1 && c.z == doorCellZ).SingleOrDefault();
                     }
                     else
                     {
-                        doorCell = cells.Where(c => c.x == doorCellX - 1 && c.z == doorCellZ).SingleOrDefault();
+                        doorCellRoom = cells.Where(c => c.x == doorCellX - 1 && c.z == doorCellZ).SingleOrDefault();
                     }
 
-                    doorCell.gameObject.GetComponent<MeshRenderer>().material = doorCellMaterial;
-                    _door.GetComponent<Door>().cell = doorCell;
+                    doorCellRoom.gameObject.GetComponent<MeshRenderer>().material = doorCellMaterial;
+                    _door.GetComponent<Door>().cell = doorCellRoom;
 
                     GameObject randomRoom = rooms[Random.Range(0, rooms.Count)];
 
-                    _door.gameObject.SetActive(false);
-
                     if (_door.GetComponent<Door>().rightSide)
                     {
-                        Instantiate(randomRoom, new Vector3(doorCell.transform.position.x + 5, 0, doorCell.transform.position.z), Quaternion.identity);
+                        randomRoom = Instantiate(randomRoom, new Vector3(
+                            doorCellRoom.transform.position.x + (randomRoom.GetComponent<Room>().x / 2 - 5), 0,
+                            doorCellRoom.transform.position.z), Quaternion.identity);
+
+                        Room _randomRoom = randomRoom.GetComponent<Room>();
+
+                        _randomRoom.cells = SetRoomCells(randomRoom, (int)doorCellRoom.transform.position.x + offset, (int)doorCellRoom.transform.position.z);
                     }
                     else
                     {
-                        Instantiate(randomRoom, new Vector3(doorCell.transform.position.x - 5, 0, doorCell.transform.position.z), Quaternion.identity);
+                        randomRoom = Instantiate(randomRoom, new Vector3(
+                            doorCellRoom.transform.position.x - (randomRoom.GetComponent<Room>().x / 2 - 5), 0,
+                            doorCellRoom.transform.position.z), Quaternion.identity);
+
+                        Room _randomRoom = randomRoom.GetComponent<Room>();
+
+                        _randomRoom.cells = SetRoomCells(randomRoom, (int)doorCellRoom.transform.position.x - offset, (int)doorCellRoom.transform.position.z);
                     }
+
+                    _door.GetComponent<Door>().gameObject.SetActive(false);
                 }
             }
         }
@@ -188,14 +209,16 @@ public class StageGenerator : MonoBehaviour
     }
 
     //Set the room cells that are occupied by it
-    private List<Cell> SetRoomCells(int width, int height, int posX, int posZ)
+    private List<Cell> SetRoomCells(GameObject room, int posX, int posZ)
     {
         //Create a new list to store the cells in
         List<Cell> roomCells = new List<Cell>();
 
+        Room _room = room.GetComponent<Room>();
+
         //Get the room X and Z length
-        int roomX = width / offset;
-        int roomZ = height / offset;
+        int roomX = (int)_room.x / offset;
+        int roomZ = (int)_room.z / offset;
 
         //Get the position X and Z of the cell in the scene
         int cellPosX = (posX - 5) / offset;
@@ -218,9 +241,15 @@ public class StageGenerator : MonoBehaviour
                 }
                 else
                 {
+                    if (_room.GetComponent<StandardRoom>())
+                    {
+                        cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
+                    }
+                    else
+                    {
+                        cell.gameObject.GetComponent<MeshRenderer>().material = occupiedCellMaterial;
+                    }
                     cell.isOccupied = true;
-                    cell.gameObject.name = "Hallway cell";
-                    cell.gameObject.GetComponent<MeshRenderer>().material = occupiedCellMaterial;
 
                     roomCells.Add(cell);
                 }
@@ -230,18 +259,23 @@ public class StageGenerator : MonoBehaviour
         return roomCells;
     }
 
-    private Cell GetRandomCell()
+    private void InitializeRoomSizes()
     {
-        int randomx = Random.Range(0, gridX + 1);
-        int randomz = Random.Range(0, gridZ + 1);
+        List<GameObject> allRooms = new List<GameObject>();
 
-        Cell cell = cells.Where(c => c.x == randomx && c.z == randomz && c.isOccupied == false).SingleOrDefault();
+        allRooms.Add(hallway);
+        // allRooms.Add(spawnRoom);
+        // allRooms.Add(bossRoom);
+        allRooms.AddRange(rooms);
 
-        while (cell.isOccupied)
+        foreach (var _room in allRooms)
         {
-            GetRandomCell();
-        }
+            var newSizes = RoomUtil.CalculateSizeBasedOnChildren(_room);
+            var roomComp = _room.GetComponent<Room>();
 
-        return cell;
+            roomComp.x = newSizes["x"];
+            roomComp.y = newSizes["y"];
+            roomComp.z = newSizes["z"];
+        }
     }
 }

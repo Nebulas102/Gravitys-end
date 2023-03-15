@@ -11,6 +11,8 @@ namespace Assets.Scripts.Controllers.PlayerMovement
         [Header("Movement")]
         [SerializeField]
         private float playerSpeed = 5f;
+        [SerializeField]
+        private bool canMove = true;
 
         [Header("Dash")]
         [SerializeField]
@@ -21,6 +23,7 @@ namespace Assets.Scripts.Controllers.PlayerMovement
         private float dashDuration = 0.25f;
 
         [SerializeField]
+        [Min(-0.1f)]
         [Tooltip("Dash countdown timer when starting dash")]
         private float dashTimer;
 
@@ -56,6 +59,8 @@ namespace Assets.Scripts.Controllers.PlayerMovement
         //variable for running animation to start
         private bool isRunning;
         private bool dashInput;
+        private bool isDashing = false;
+
 
         private void Awake()
         {
@@ -76,13 +81,20 @@ namespace Assets.Scripts.Controllers.PlayerMovement
 
         void Update()
         {
-            HandleInput();
+            if (!isDashing)
+            {
+                HandleInput();
+            }
             HandleRotation();
         }
 
         void FixedUpdate()
         {
-            HandleMovement();
+            if (canMove)
+            {
+                HandleMovement();
+            }
+
             HandleDash();
         }
 
@@ -161,6 +173,7 @@ namespace Assets.Scripts.Controllers.PlayerMovement
         }
 
         //get dash input and dash player in direction of input
+
         public void HandleDash()
         {
             if (!dashAvailable && dashInput)
@@ -171,35 +184,34 @@ namespace Assets.Scripts.Controllers.PlayerMovement
             if (dashAvailable && dashInput)
             {
                 //when activation input is pressed, start dash cooldown
-                StartCoroutine(DashCooldown());
-            }
-            if (dashTimer > 0)
-            {
-                //when dash timer is greater than 0, dash player
-                Dash();
+                StartCoroutine(DashCoroutine());
             }
         }
 
-        //dash
-        IEnumerator DashCooldown()
+        private IEnumerator DashCoroutine()
         {
+            // disable user input
+            isDashing = true;
+
             dashAvailable = false;
             dashTimer = dashDuration;
+            Vector3 dashDir = new Vector3(movementInput.x, 0, movementInput.y);
+            dashDir = Quaternion.Euler(0, _camera.gameObject.transform.eulerAngles.y, 0) * dashDir;
+
+            while (dashTimer > 0)
+            {
+                controller.Move(dashDir * dashSpeed * Time.deltaTime);
+                dashTimer -= Time.deltaTime;
+                yield return null;
+            }
+
+            // enable user input after the dash
+            isDashing = false;
+
             yield return new WaitForSeconds(dashCooldown);
             dashAvailable = true;
         }
 
-        private void Dash()
-        {
-            //get direction of dash
-            Vector3 dashDir = new Vector3(movementInput.x, 0, movementInput.y);
-            //makes player move independent of camera rotation (W means north, S means south, etc.)
-            dashDir = Quaternion.Euler(0, _camera.gameObject.transform.eulerAngles.y, 0) * dashDir;
-            //start duration timer
-            dashTimer -= Time.deltaTime;
-            //move player in direction of dash
-            controller.Move(dashDir * dashSpeed * Time.deltaTime);
-        }
 
         public void OnDeviceChange(PlayerInput pi)
         {

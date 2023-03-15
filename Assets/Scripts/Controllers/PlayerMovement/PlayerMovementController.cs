@@ -11,6 +11,8 @@ namespace Assets.Scripts.Controllers.PlayerMovement
         [Header("Movement")]
         [SerializeField]
         private float playerSpeed = 5f;
+        [SerializeField]
+        private bool canMove = true;
 
         [Header("Dash")]
         [SerializeField]
@@ -56,6 +58,8 @@ namespace Assets.Scripts.Controllers.PlayerMovement
         //variable for running animation to start
         private bool isRunning;
         private bool dashInput;
+        private bool isDashing = false;
+
 
         private void Awake()
         {
@@ -76,18 +80,26 @@ namespace Assets.Scripts.Controllers.PlayerMovement
 
         void Update()
         {
-            HandleInput();
+            if (!isDashing)
+            {
+                HandleInput();
+            }
             HandleRotation();
         }
 
         void FixedUpdate()
         {
-            HandleMovement();
+            if (canMove)
+            {
+                HandleMovement();
+            }
+
             HandleDash();
         }
 
         void HandleInput()
         {
+            //get input from player input manager
             movementInput = playerInputManager.Player.Move.ReadValue<Vector2>();
             lookInput = playerInputManager.Player.Look.ReadValue<Vector2>();
             dashInput = playerInputManager.Player.Dash.ReadValue<float>() > 0;
@@ -97,7 +109,7 @@ namespace Assets.Scripts.Controllers.PlayerMovement
         {
             //set running to true if movement direction is not zero for animation to start
             isRunning = GetMovementDirection() != Vector3.zero;
-
+            //move player
             controller.Move(GetMovementDirection() * Time.deltaTime * playerSpeed);
         }
 
@@ -119,9 +131,10 @@ namespace Assets.Scripts.Controllers.PlayerMovement
                 Vector3 lookInputVector = new Vector3(lookInput.x, 0, lookInput.y);
                 float lookInputSqrMagnitude = lookInputVector.sqrMagnitude;
 
-
+                //if input is greater than deadzone, rotate towards input
                 if (lookInputSqrMagnitude > controllerDeadzone * controllerDeadzone)
                 {
+                    //rotate towards input
                     Vector3 playerDirection = Vector3.right * lookInput.x + Vector3.forward * lookInput.y;
                     if (playerDirection.sqrMagnitude > 0.0f)
                     {
@@ -131,26 +144,33 @@ namespace Assets.Scripts.Controllers.PlayerMovement
                 }
                 else
                 {
-                    if (GetMovementDirection() != Vector3.zero)
-                    {
-                        transform.rotation = Quaternion.LookRotation(GetMovementDirection(), Vector3.up);
-                    }
+                    KeepRotationAfterMovement();
                 }
             }
             else
             {
-                //mouse rotation
-                Ray ray = _camera.ScreenPointToRay(lookInput);
-                Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-                float rayDistance;
+                KeepRotationAfterMovement();
+                // // TODO SHOULD ONLY LOOK AT MOUSE DURING ATTACK
+                // //LOOK TOWARDS MOUSE POSITION
+                // Ray ray = _camera.ScreenPointToRay(lookInput);
+                // Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+                // float rayDistance;
 
-                if (groundPlane.Raycast(ray, out rayDistance))
-                {
-                    Vector3 pointToLook = ray.GetPoint(rayDistance);
-                    LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-                }
+                // if (groundPlane.Raycast(ray, out rayDistance))
+                // {
+                //     Vector3 pointToLook = ray.GetPoint(rayDistance);
+                //     LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+                // }
             }
 
+        }
+
+        private void KeepRotationAfterMovement()
+        {
+            if (GetMovementDirection() != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(GetMovementDirection(), Vector3.up);
+            }
         }
 
         private void LookAt(Vector3 lookPoint)
@@ -160,7 +180,6 @@ namespace Assets.Scripts.Controllers.PlayerMovement
             transform.LookAt(heighCorrectedPoint);
         }
 
-        //get dash input and dash player in direction of input
         public void HandleDash()
         {
             if (!dashAvailable && dashInput)
@@ -171,35 +190,37 @@ namespace Assets.Scripts.Controllers.PlayerMovement
             if (dashAvailable && dashInput)
             {
                 //when activation input is pressed, start dash cooldown
-                StartCoroutine(DashCooldown());
-            }
-            if (dashTimer > 0)
-            {
-                //when dash timer is greater than 0, dash player
-                Dash();
+                StartCoroutine(DashCoroutine());
             }
         }
 
-        //dash
-        IEnumerator DashCooldown()
+        private IEnumerator DashCoroutine()
         {
+            // disable user input
+            isDashing = true;
             dashAvailable = false;
+            // set dash timer
             dashTimer = dashDuration;
+            Vector3 dashDir = new Vector3(movementInput.x, 0, movementInput.y);
+            //makes player move independent of camera rotation (W means north, S means south, etc.)
+            dashDir = Quaternion.Euler(0, _camera.gameObject.transform.eulerAngles.y, 0) * dashDir;
+
+            while (dashTimer > 0)
+            {
+                // move player
+                controller.Move(dashDir * dashSpeed * Time.deltaTime);
+                // decrease dash timer
+                dashTimer -= Time.deltaTime;
+                yield return null;
+            }
+
+            // enable user input after the dash
+            isDashing = false;
+
             yield return new WaitForSeconds(dashCooldown);
             dashAvailable = true;
         }
 
-        private void Dash()
-        {
-            //get direction of dash
-            Vector3 dashDir = new Vector3(movementInput.x, 0, movementInput.y);
-            //makes player move independent of camera rotation (W means north, S means south, etc.)
-            dashDir = Quaternion.Euler(0, _camera.gameObject.transform.eulerAngles.y, 0) * dashDir;
-            //start duration timer
-            dashTimer -= Time.deltaTime;
-            //move player in direction of dash
-            controller.Move(dashDir * dashSpeed * Time.deltaTime);
-        }
 
         public void OnDeviceChange(PlayerInput pi)
         {
@@ -211,96 +232,5 @@ namespace Assets.Scripts.Controllers.PlayerMovement
         {
             return isRunning;
         }
-
-
-
-
-
-        // [SerializeField]
-        // private GameInput gameInput;
-
-
-
-        // private Rigidbody rb;
-        // private bool dashInput;
-        // private Vector2 move, moveInput, lookDir, joystickLook;
-
-        // void Awake()
-        // {
-        //     //freeze rotation so player doesn't fall over
-        //     rb = GetComponent<Rigidbody>();
-        //     rb.freezeRotation = true;
-        // }
-
-        // void Update()
-        // {
-        //     moveInput = gameInput.GetMovementVectorNormalized();
-        //     lookDir = gameInput.GetLookPosition();
-        //     dashInput = gameInput.GetDash();
-        // }
-
-        // void FixedUpdate()
-        // {
-        //     OnMove();
-        //     OnLook();
-        //     OnDash();
-        // }
-
-
-
-        // public Vector3 GetMovementDirection()
-        // {
-        //     //gets input from player
-        //     Vector2 inputVector = moveInput;
-        //     //create vector3 from input
-        //     Vector3 movementDirection = new Vector3(inputVector.x, 0f, inputVector.y);
-        //     //makes player move independent of camera rotation (W means north, S means south, etc.)
-        //     return movementDirection = Quaternion.Euler(0, camera.gameObject.transform.eulerAngles.y, 0) * movementDirection;
-        // }
-
-
-        // public void OnMove()
-        // {
-        //     //get movement direction
-        //     Vector3 movementDirection = GetMovementDirection();
-        //     //set running to true if movement direction is not zero for animation to start
-        //     isRunning = movementDirection != Vector3.zero;
-        //     //move character to new position with set speed
-        //     rb.MovePosition(transform.position + movementDirection * speed * Time.deltaTime);
-        // }
-
-        // //rotate player to face mouse/joystick position
-        // private void OnLook()
-        // {
-        //     if (lookDir == Vector2.zero)
-        //     {
-        //         return;
-        //     }
-        //     //mouse
-        //     if (lookDir.x > 1 || lookDir.y > 1)
-        //     {
-        //         Ray cameraRay = camera.ScreenPointToRay(lookDir);
-        //         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-        //         float rayLength;
-
-        //         if (groundPlane.Raycast(cameraRay, out rayLength))
-        //         {
-        //             Vector3 pointToLook = cameraRay.GetPoint(rayLength);
-        //             transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
-        //         }
-        //     }
-        //     //controller
-        //     else if (lookDir.x <= 1 || lookDir.y <= 1 || lookDir.x <= -1 || lookDir.y <= -1)
-        //     {
-        //         Vector3 aimDirection = new Vector3(lookDir.x, 0, lookDir.y);
-
-        //         if (aimDirection != Vector3.zero)
-        //         {
-        //             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(aimDirection), 1f) * Quaternion.Euler(0, camera.gameObject.transform.eulerAngles.y, 0);
-        //         }
-        //     }
-        // }
-
-
     }
 }

@@ -67,6 +67,14 @@ public abstract class Room : MonoBehaviour
             {
                 doorCell = spawnDoor.GetComponent<Door>().cell;
                 placementSide = spawnDoor.GetComponent<Door>().GetDirection();
+
+                var initialPos = RoomPlacementPos(placementSide, doorCell);
+                bool canPlace = CanPlaceRoom((int)initialPos["x"], (int)initialPos["z"]);
+
+                if (!canPlace)
+                {
+                    break;
+                }
             }
 
             var pos = RoomPlacementPos(placementSide, doorCell);
@@ -92,24 +100,10 @@ public abstract class Room : MonoBehaviour
             doorDirection = StageHelper.RandomDirection();
             door = previousRoom.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().hasNeighbour == false && 
              d.GetComponent<Door>().GetDirection() == doorDirection).SingleOrDefault();       
-
-            // if (door == null)
-            // {
-            //     Debug.Log("door empty");
-            // }
-            // else
-            // {
-            //     Debug.Log("door not empty");
-            // }
-
-            Debug.Log("While loop new pos: " + doorDirection);
                 
             pos = RoomPlacementPos(doorDirection, door.GetComponent<Door>().cell);        
             canPlace = CanPlaceRoom((int)pos["x"], (int)pos["z"]);        
         }
-
-        Debug.Log(canPlace);
-        Debug.Log(doorDirection);
 
         door.GetComponent<Door>().hasNeighbour = true;
 
@@ -231,7 +225,6 @@ public abstract class Room : MonoBehaviour
                 {
                     if (room.GetComponent<StandardRoom>())
                     {
-                        // Debug.Log("Cell x" + i + " z" + j);
                         cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
                     }
                     else

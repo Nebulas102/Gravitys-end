@@ -162,52 +162,12 @@ public class StageGenerator : MonoBehaviour
             mapHallways[i].GetComponent<Room>().SetDoorCells();
 
             foreach (var _door in mapHallways[i].GetDoors())
-            {   
-                // Room previousRoom = mapHallways[i].GetComponent<Room>();
-
+            {
                 if (Random.Range(0, 2) == 1)
                 {
-                    // Cell doorCellRoom = null;
-
-                    // int doorCellX = mapHallways[i].cells.Select(mh => mh.x).Distinct()
-                    //                 .ToArray()[_door.GetComponent<Door>().roomPosXOffset];
-                    // int doorCellZ = mapHallways[i].cells.Select(mh => mh.z).Distinct()
-                    //                 .ToArray()[_door.GetComponent<Door>().roomPosZOffset];
-
-                    // doorCellRoom = cells.Where(c => c.x == doorCellX && c.z == doorCellZ).SingleOrDefault();
-            
-                    // doorCellRoom.gameObject.GetComponent<MeshRenderer>().material = doorCellMaterial;
-                    // doorCellRoom.gameObject.name = "Door Cell";
-
-                    // _door.GetComponent<Door>().cell = doorCellRoom;
-
                     GameObject randomRoom = rooms[Random.Range(0, rooms.Count)];
 
                     randomRoom.GetComponent<Room>().PlaceRooms(_door);
-
-
-                    // if (_door.GetComponent<Door>().GetDirection() == StageHelper.roomDirections.Right)
-                    // {
-                    //     float roomX = doorCellRoom.transform.position.x + (randomRoom.GetComponent<Room>().sizeX / 2 - 5 + offset);
-                    //     float roomZ = doorCellRoom.transform.position.z;
-
-                    //     randomRoom = Instantiate(randomRoom, new Vector3(roomX, 0, roomZ), Quaternion.identity);
-
-                    //     Room _randomRoom = randomRoom.GetComponent<Room>();
-
-                    //     _randomRoom.cells = SetRoomCells(randomRoom, (int)roomX, (int)roomZ);
-                    // }
-                    // else
-                    // {
-                    //     float roomX = doorCellRoom.transform.position.x - (randomRoom.GetComponent<Room>().sizeX / 2 - 5 + offset);
-                    //     float roomZ = doorCellRoom.transform.position.z;
-
-                    //     randomRoom = Instantiate(randomRoom, new Vector3(roomX, 0, roomZ), Quaternion.identity);
-
-                    //     Room _randomRoom = randomRoom.GetComponent<Room>();
-
-                    //     _randomRoom.cells = SetRoomCells(randomRoom, (int)roomX, (int)roomZ);
-                    // }
 
                     _door.GetComponent<Door>().gameObject.SetActive(false);
                 }

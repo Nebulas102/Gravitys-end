@@ -28,6 +28,8 @@ public class StageGenerator : MonoBehaviour
     private GameObject bossRoom;
     [SerializeField]
     private List<GameObject> rooms;
+    [SerializeField]
+    private int maxRooms;
 
 
     [Header("Grid Cell Materials")]
@@ -57,6 +59,11 @@ public class StageGenerator : MonoBehaviour
                 SpawnCell(i, j);
             }
         }
+
+        StageHelper.gridX = gridX;
+        StageHelper.gridZ = gridZ;
+        StageHelper.offset = offset;
+        StageHelper.cells = cells;
 
         InitializeRoomSizes();
 
@@ -88,8 +95,8 @@ public class StageGenerator : MonoBehaviour
     //Generate the finite hallway in the game
     private IEnumerator HallwayGenerator()
     {
-        int hallwayX = (int)hallway.GetComponent<Room>().x;
-        int hallwayZ = (int)hallway.GetComponent<Room>().z;
+        int hallwayX = (int)hallway.GetComponent<Room>().sizeX;
+        int hallwayZ = (int)hallway.GetComponent<Room>().sizeZ;
 
         //First hallway (function as spawn for now)
         GameObject initialHallway = InitialHallway();
@@ -108,8 +115,8 @@ public class StageGenerator : MonoBehaviour
             int posX = (int)initialHallway.transform.position.x;
             int posZ = (int)latestHallway.transform.position.z + hallwayZ;
 
-            latestHallway = Instantiate(hallway, new Vector3(posX, 0, posZ), Quaternion.identity);
             List<Cell> roomCells = SetRoomCells(latestHallway, posX, posZ);
+            latestHallway = Instantiate(hallway, new Vector3(posX, 0, posZ), Quaternion.identity);
 
             latestHallway.GetComponent<Hallway>().cells = roomCells;
 
@@ -121,8 +128,8 @@ public class StageGenerator : MonoBehaviour
 
     private GameObject InitialHallway()
     {
-        int hallwayX = (int)hallway.GetComponent<Room>().x;
-        int hallwayZ = (int)hallway.GetComponent<Room>().z;
+        int hallwayX = (int)hallway.GetComponent<Room>().sizeX;
+        int hallwayZ = (int)hallway.GetComponent<Room>().sizeZ;
 
         int posX = gridX * offset / 2;
         int posZ = hallwayZ / 2;
@@ -152,53 +159,55 @@ public class StageGenerator : MonoBehaviour
     {
         for (int i = 0; i < mapHallways.Count; i++)
         {
+            mapHallways[i].GetComponent<Room>().SetDoorCells();
+
             foreach (var _door in mapHallways[i].GetDoors())
-            {
-                int placeRoom = Random.Range(0, 2);
+            {   
+                // Room previousRoom = mapHallways[i].GetComponent<Room>();
 
-                if (placeRoom == 1)
+                if (Random.Range(0, 2) == 1)
                 {
-                    Cell doorCellRoom = null;
+                    // Cell doorCellRoom = null;
 
-                    int doorCellX = mapHallways[i].cells.Select(mh => mh.x).Distinct()
-                                    .ToArray()[_door.GetComponent<Door>().roomPosXOffset - 1];
-                    int doorCellZ = mapHallways[i].cells.Select(mh => mh.z).Distinct()
-                                    .ToArray()[_door.GetComponent<Door>().roomPosZOffset - 1];
+                    // int doorCellX = mapHallways[i].cells.Select(mh => mh.x).Distinct()
+                    //                 .ToArray()[_door.GetComponent<Door>().roomPosXOffset];
+                    // int doorCellZ = mapHallways[i].cells.Select(mh => mh.z).Distinct()
+                    //                 .ToArray()[_door.GetComponent<Door>().roomPosZOffset];
 
-                    if (_door.GetComponent<Door>().rightSide)
-                    {
-                        doorCellRoom = cells.Where(c => c.x == doorCellX + 1 && c.z == doorCellZ).SingleOrDefault();
-                    }
-                    else
-                    {
-                        doorCellRoom = cells.Where(c => c.x == doorCellX - 1 && c.z == doorCellZ).SingleOrDefault();
-                    }
+                    // doorCellRoom = cells.Where(c => c.x == doorCellX && c.z == doorCellZ).SingleOrDefault();
+            
+                    // doorCellRoom.gameObject.GetComponent<MeshRenderer>().material = doorCellMaterial;
+                    // doorCellRoom.gameObject.name = "Door Cell";
 
-                    doorCellRoom.gameObject.GetComponent<MeshRenderer>().material = doorCellMaterial;
-                    _door.GetComponent<Door>().cell = doorCellRoom;
+                    // _door.GetComponent<Door>().cell = doorCellRoom;
 
                     GameObject randomRoom = rooms[Random.Range(0, rooms.Count)];
 
-                    if (_door.GetComponent<Door>().rightSide)
-                    {
-                        randomRoom = Instantiate(randomRoom, new Vector3(
-                            doorCellRoom.transform.position.x + (randomRoom.GetComponent<Room>().x / 2 - 5), 0,
-                            doorCellRoom.transform.position.z), Quaternion.identity);
+                    randomRoom.GetComponent<Room>().PlaceRooms(_door);
 
-                        Room _randomRoom = randomRoom.GetComponent<Room>();
 
-                        _randomRoom.cells = SetRoomCells(randomRoom, (int)doorCellRoom.transform.position.x + offset, (int)doorCellRoom.transform.position.z);
-                    }
-                    else
-                    {
-                        randomRoom = Instantiate(randomRoom, new Vector3(
-                            doorCellRoom.transform.position.x - (randomRoom.GetComponent<Room>().x / 2 - 5), 0,
-                            doorCellRoom.transform.position.z), Quaternion.identity);
+                    // if (_door.GetComponent<Door>().GetDirection() == StageHelper.roomDirections.Right)
+                    // {
+                    //     float roomX = doorCellRoom.transform.position.x + (randomRoom.GetComponent<Room>().sizeX / 2 - 5 + offset);
+                    //     float roomZ = doorCellRoom.transform.position.z;
 
-                        Room _randomRoom = randomRoom.GetComponent<Room>();
+                    //     randomRoom = Instantiate(randomRoom, new Vector3(roomX, 0, roomZ), Quaternion.identity);
 
-                        _randomRoom.cells = SetRoomCells(randomRoom, (int)doorCellRoom.transform.position.x - offset, (int)doorCellRoom.transform.position.z);
-                    }
+                    //     Room _randomRoom = randomRoom.GetComponent<Room>();
+
+                    //     _randomRoom.cells = SetRoomCells(randomRoom, (int)roomX, (int)roomZ);
+                    // }
+                    // else
+                    // {
+                    //     float roomX = doorCellRoom.transform.position.x - (randomRoom.GetComponent<Room>().sizeX / 2 - 5 + offset);
+                    //     float roomZ = doorCellRoom.transform.position.z;
+
+                    //     randomRoom = Instantiate(randomRoom, new Vector3(roomX, 0, roomZ), Quaternion.identity);
+
+                    //     Room _randomRoom = randomRoom.GetComponent<Room>();
+
+                    //     _randomRoom.cells = SetRoomCells(randomRoom, (int)roomX, (int)roomZ);
+                    // }
 
                     _door.GetComponent<Door>().gameObject.SetActive(false);
                 }
@@ -215,29 +224,35 @@ public class StageGenerator : MonoBehaviour
         List<Cell> roomCells = new List<Cell>();
 
         Room _room = room.GetComponent<Room>();
-
+        
         //Get the room X and Z length
-        int roomX = (int)_room.x / offset;
-        int roomZ = (int)_room.z / offset;
+        int roomX = (int)_room.sizeX / offset;
+        int roomZ = (int)_room.sizeZ / offset;
+
+        int cellPosX = (posX % offset == 5 ? posX - 5 : posX) / offset;
+        int cellPosZ = (posZ % offset == 5 ? posZ - 5 : posZ) / offset;
+
+        // cellPosX = roomX % 2 != 0 ? cellPosX : cellPosX + 1;
+        // cellPosZ = roomZ % 2 != 0 ? cellPosZ : cellPosZ + 1;
 
         //Get the position X and Z of the cell in the scene
-        int cellPosX = (posX - 5) / offset;
-        int cellPosZ = (posZ - 5) / offset;
+        int startPosX = cellPosX - roomX / 2;
+        int startPosZ = cellPosZ - roomZ / 2;
 
         //Get the starting width and height of the cells you need for the room
-        int cellWidth = cellPosX - (roomX / 2 - 1);
-        int cellHeight = cellPosZ - (roomZ / 2 - 1);
+        int endPosX = cellPosX + roomX / 2;
+        int endPosZ = cellPosZ + roomZ / 2;
 
         //Loop through cells based on start position and length of room
-        for (int i = cellWidth; i < cellWidth + roomX; i++)
+        for (int i = startPosX; i <= endPosX; i++)
         {
-            for (int j = cellHeight; j < cellHeight + roomZ; j++)
+            for (int j = startPosZ; j <= endPosZ; j++)
             {
                 Cell cell = cells.Where(c => c.x == i && c.z == j && c.isOccupied == false).SingleOrDefault();
 
                 if (cell == null)
                 {
-                    Debug.Log("No cell");
+                    Debug.Log("No cell x" + i + " z" + j);
                 }
                 else
                 {
@@ -273,9 +288,9 @@ public class StageGenerator : MonoBehaviour
             var newSizes = RoomUtil.CalculateSizeBasedOnChildren(_room);
             var roomComp = _room.GetComponent<Room>();
 
-            roomComp.x = newSizes["x"];
-            roomComp.y = newSizes["y"];
-            roomComp.z = newSizes["z"];
+            roomComp.sizeX = newSizes["x"];
+            roomComp.sizeY = newSizes["y"];
+            roomComp.sizeZ = newSizes["z"];
         }
     }
 }

@@ -18,30 +18,15 @@ public static class RoomUtil
         {
             float tempY = 0;
 
-            if (t.CompareTag("Floor"))
-            {
-                floorY = t.localScale.y;
-            }
+            if (t.CompareTag("Floor")) floorY = t.localScale.y;
 
-            if (x < t.localScale.x)
-            {
-                x = t.localScale.x;
-            }
+            if (x < t.localScale.x) x = t.localScale.x;
 
-            if (t.CompareTag("Wall"))
-            {
-                tempY = t.localScale.y;
-            }
+            if (t.CompareTag("Wall")) tempY = t.localScale.y;
 
-            if (y < tempY)
-            {
-                y = tempY;
-            }
+            if (y < tempY) y = tempY;
 
-            if (z < t.localScale.z)
-            {
-                z = t.localScale.z;
-            }
+            if (z < t.localScale.z) z = t.localScale.z;
         }
 
         sizes.Add("x", x);

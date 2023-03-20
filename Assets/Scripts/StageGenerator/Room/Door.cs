@@ -8,6 +8,14 @@ public class Door : MonoBehaviour
     public int roomPosZOffset;
 
     public Cell cell;
-    public bool leftSide;
-    public bool rightSide;
+
+    public bool hasNeighbour = false;
+
+    [SerializeField]
+    private StageHelper.roomDirections direction;
+
+    public StageHelper.roomDirections GetDirection()
+    {
+        return direction;
+    }
 }

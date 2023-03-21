@@ -50,10 +50,12 @@ public class Inventory : MonoBehaviour
         // Don't add the item if it is default, maybe it is an item which isn't supposed to be in the inventory
         if (!item.isDefaultItem)
         {
-            if (item.type == Type.ARMOR) {
+            if (item.type == Type.ARMOR)
+            {
                 itemAddCheck(item, armorItems);
             }
-            if (item.type == Type.WEAPON) {
+            if (item.type == Type.WEAPON)
+            {
                 itemAddCheck(item, weaponItems);
             }
 
@@ -91,13 +93,14 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    bool itemAddCheck (Item item, List<Item> items) {
-            if (items.Count >= space)
-            {
-                // Not enough room
-                return false;
-            }
-            items.Add(item);
+    bool itemAddCheck(Item item, List<Item> items)
+    {
+        if (items.Count >= space)
+        {
+            // Not enough room
+            return false;
+        }
+        items.Add(item);
         return true;
     }
 

@@ -82,7 +82,12 @@ public abstract class Room : MonoBehaviour
             SetRoomCells((int)pos["x"], (int)pos["z"]);
             SetDoorCells();
 
-            previousRoom = roomPlacement((int)pos["x"], (int)pos["z"]);
+            if (previousRoom != null)
+            {
+                previousRoom.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().GetDirection() == placementSide).SingleOrDefault().SetActive(false);
+            }
+
+            previousRoom = roomPlacement((int)pos["x"], (int)pos["z"], placementSide);
 
             initialSpawned = true;
         }
@@ -180,9 +185,13 @@ public abstract class Room : MonoBehaviour
         return pos;
     }
 
-    private GameObject roomPlacement(int posX, int posZ)
+    private GameObject roomPlacement(int posX, int posZ, StageHelper.roomDirections direction)
     {
-        return Instantiate(gameObject, new Vector3(posX, 0, posZ), Quaternion.identity);
+        GameObject room = Instantiate(gameObject, new Vector3(posX, 0, posZ), Quaternion.identity);
+
+        room.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().GetDirection() == StageHelper.GetOppositeDirection(direction)).SingleOrDefault().SetActive(false);
+
+        return room;
     }
 
     //Set the room cells that are occupied by it

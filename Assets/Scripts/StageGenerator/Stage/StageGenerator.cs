@@ -98,27 +98,30 @@ public class StageGenerator : MonoBehaviour
         int hallwayX = (int)hallway.GetComponent<Room>().sizeX;
         int hallwayZ = (int)hallway.GetComponent<Room>().sizeZ;
 
-        //First hallway (function as spawn for now)
-        GameObject initialHallway = InitialHallway();
+        //Initial spawnroom
+        GameObject spawnRoom = SpawnRoom();
+        GameObject latestHallway = null;
 
-        GameObject latestHallway = initialHallway;
-
-        int maxHallways = Mathf.FloorToInt(gridZ - hallwayZ / offset) / (hallwayZ / offset);
+        int maxHallways = Mathf.FloorToInt((gridZ - (spawnRoom.GetComponent<Room>().sizeZ / offset)) / (hallwayZ / offset));
 
         for (int i = 0; i < maxHallways; i++)
         {
-            if (i == 0)
+            int posX = (int)spawnRoom.transform.position.x;
+            int posZ = 0;
+
+            if (latestHallway == null)
             {
-                latestHallway = initialHallway;
+                posZ = (int)hallwayZ / 2 + (int)spawnRoom.GetComponent<Room>().sizeZ - 5;
+            }
+            else
+            {
+                posZ = (int)latestHallway.transform.position.z + hallwayZ;
             }
 
-            int posX = (int)initialHallway.transform.position.x;
-            int posZ = (int)latestHallway.transform.position.z + hallwayZ;
-
-            List<Cell> roomCells = SetRoomCells(latestHallway, posX, posZ);
             latestHallway = Instantiate(hallway, new Vector3(posX, 0, posZ), Quaternion.identity);
-
-            latestHallway.GetComponent<Hallway>().cells = roomCells;
+            
+            List<Cell> roomCells = SetRoomCells(latestHallway, posX, posZ);
+            latestHallway.GetComponent<Room>().cells = roomCells;
 
             mapHallways.Add(latestHallway.GetComponent<Hallway>());
         }
@@ -126,33 +129,23 @@ public class StageGenerator : MonoBehaviour
         yield return StartCoroutine(RoomPlacement());
     }
 
-    private GameObject InitialHallway()
+    private GameObject SpawnRoom()
     {
-        int hallwayX = (int)hallway.GetComponent<Room>().sizeX;
-        int hallwayZ = (int)hallway.GetComponent<Room>().sizeZ;
+        int spawnRoomX = (int)spawnRoom.GetComponent<Room>().sizeX;
+        int spawnRoomZ = (int)spawnRoom.GetComponent<Room>().sizeZ;
 
         int posX = gridX * offset / 2;
-        int posZ = hallwayZ / 2;
+        int posZ = spawnRoomZ / 2 - 5;
 
-        if (hallwayX % 2 == 0)
-        {
-            posX = posX - 5;
-        }
+        GameObject _spawnRoom = Instantiate(spawnRoom, new Vector3(posX, 0, posZ), Quaternion.identity);
+        List<Cell> roomCells = SetRoomCells(_spawnRoom, posX, posZ);
 
-        if (hallwayX % 2 == 0)
-        {
-            posZ = posZ - 5;
-        }
+        _spawnRoom.GetComponent<Room>().cells = roomCells;
+        _spawnRoom.name = "Spawn Room";
 
-        GameObject _hallway = Instantiate(hallway, new Vector3(posX, 0, posZ), Quaternion.identity);
-        List<Cell> roomCells = SetRoomCells(_hallway, posX, posZ);
+        _spawnRoom.GetComponent<Room>().GetDoors()[0].SetActive(false);
 
-        _hallway.GetComponent<Hallway>().cells = roomCells;
-        _hallway.name = "Initial hallway (temp spawn)";
-
-        mapHallways.Add(_hallway.GetComponent<Hallway>());
-
-        return _hallway;
+        return _spawnRoom;
     }
 
     private IEnumerator RoomPlacement()
@@ -220,6 +213,10 @@ public class StageGenerator : MonoBehaviour
                     {
                         cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
                     }
+                    else if (_room.GetComponent<SpawnRoom>())
+                    {
+                        cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.yellow;
+                    }
                     else
                     {
                         cell.gameObject.GetComponent<MeshRenderer>().material = occupiedCellMaterial;
@@ -239,7 +236,7 @@ public class StageGenerator : MonoBehaviour
         List<GameObject> allRooms = new List<GameObject>();
 
         allRooms.Add(hallway);
-        // allRooms.Add(spawnRoom);
+        allRooms.Add(spawnRoom);
         // allRooms.Add(bossRoom);
         allRooms.AddRange(rooms);
 

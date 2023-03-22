@@ -100,9 +100,11 @@ public class StageGenerator : MonoBehaviour
 
         //Initial spawnroom
         GameObject spawnRoom = SpawnRoom();
+
         GameObject latestHallway = null;
 
-        int maxHallways = Mathf.FloorToInt((gridZ - (spawnRoom.GetComponent<Room>().sizeZ / offset)) / (hallwayZ / offset));
+        int priorRoomsZ = ((int)spawnRoom.GetComponent<Room>().sizeZ / offset) + ((int)bossRoom.GetComponent<Room>().sizeZ / offset);
+        int maxHallways = Mathf.FloorToInt((gridZ - priorRoomsZ) / (hallwayZ / offset));
 
         for (int i = 0; i < maxHallways; i++)
         {
@@ -126,6 +128,8 @@ public class StageGenerator : MonoBehaviour
             mapHallways.Add(latestHallway.GetComponent<Hallway>());
         }
 
+        SpawnBossRoom(latestHallway);
+
         yield return StartCoroutine(RoomPlacement());
     }
 
@@ -146,6 +150,26 @@ public class StageGenerator : MonoBehaviour
         _spawnRoom.GetComponent<Room>().GetDoors()[0].SetActive(false);
 
         return _spawnRoom;
+    }
+
+    private GameObject SpawnBossRoom(GameObject lastHallway)
+    {
+        int spawnBossRoomX = (int)bossRoom.GetComponent<Room>().sizeX;
+        int spawnBossRoomZ = (int)bossRoom.GetComponent<Room>().sizeZ;
+
+        int posX = gridX * offset / 2;
+        int posZ = (int)lastHallway.transform.position.z + ((int)lastHallway.GetComponent<Room>().sizeZ / 2)
+                    + (spawnBossRoomZ / 2);
+
+        GameObject _bossRoom = Instantiate(bossRoom, new Vector3(posX, 0, posZ), Quaternion.identity);
+        List<Cell> roomCells = SetRoomCells(_bossRoom, posX, posZ);
+
+        _bossRoom.GetComponent<Room>().cells = roomCells;
+        _bossRoom.name = "Boss Room";
+
+        _bossRoom.GetComponent<Room>().GetDoors()[0].SetActive(false);
+
+        return _bossRoom;
     }
 
     private IEnumerator RoomPlacement()
@@ -237,7 +261,7 @@ public class StageGenerator : MonoBehaviour
 
         allRooms.Add(hallway);
         allRooms.Add(spawnRoom);
-        // allRooms.Add(bossRoom);
+        allRooms.Add(bossRoom);
         allRooms.AddRange(rooms);
 
         foreach (var _room in allRooms)

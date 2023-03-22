@@ -14,17 +14,12 @@ namespace Assets.Scripts.Core
 
         void Start()
         {
-            foreach (Transform child in gameobject.transform) 
-            {
-                if (child.tag == "EnemySpawnpoint")
-                    spawnpointPos = child.transform.position;
-            }
-
+            spawnpointPos = gameObject.transform.position;
             Debug.Log(spawnpointPos.x);
             StartCoroutine(EnemyDrop());
         }
 
-        // Spawns enmies at random x and z coordinates
+        // Spawns enemies at random x and z coordinates
         IEnumerator EnemyDrop()
         {
             // Spawns certain amount of enemies, in this case 5 (can also be randomized)

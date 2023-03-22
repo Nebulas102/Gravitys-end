@@ -535,7 +535,7 @@ GameObject:
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2915231216515450549
 Transform:
@@ -669,10 +669,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d837a51561f58d441a53bf195c507ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 0
-  sizeY: 0
-  sizeZ: 0
-  cells: []
+  sizeX: 30
+  sizeY: 1
+  sizeZ: 30
+  cells:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   spawnChance: 0
   doors:
   - {fileID: 5599090481970514351}
@@ -851,7 +860,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6284127663360464280}
-  - component: {fileID: 3138814881856231496}
+  - component: {fileID: 3671028284744445845}
   m_Layer: 0
   m_Name: EnemySpawnpoint
   m_TagString: EnemySpawnpoint
@@ -874,7 +883,7 @@ Transform:
   m_Father: {fileID: 2915231218470790407}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3138814881856231496
+--- !u!114 &3671028284744445845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

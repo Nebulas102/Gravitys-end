@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-
     public float lookRadius = 10f;
 
     Transform target;
@@ -21,16 +20,16 @@ public class EnemyController : MonoBehaviour
     {
         float distance = Vector3.Distance(target.position, transform.position);
 
-        if (distance <= lookRadius)
-        {
-            agent.SetDestination(target.position);
+        if (distance > lookRadius)
+            return;
+            
+        agent.SetDestination(target.position);
 
-            if (distance <= agent.stoppingDistance)
-            {
-                // Attack the player
-                // Face the player
-                FaceTarget();
-            }
+        if (distance <= agent.stoppingDistance)
+        {
+            // Attack the player
+            // Face the player
+            FaceTarget();
         }
     }
 

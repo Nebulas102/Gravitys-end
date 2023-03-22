@@ -1,6 +1,7 @@
+using Core.Inventory;
 using UnityEngine;
 
-namespace Assets.Scripts.ScriptableObjects
+namespace ScriptableObjects
 {
     [CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/Item")]
     public class Item : ScriptableObject
@@ -9,8 +10,6 @@ namespace Assets.Scripts.ScriptableObjects
         public Sprite icon = null;
         public bool isDefaultItem = false;
         [SerializeField] public Type type;
-
-
 
         public virtual void Use(InventorySlot itemSlot)
         {

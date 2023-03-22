@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Assets.Scripts.Controllers.PlayerMovement
+namespace Controllers.PlayerMovement
 {
     public class PlayerAnimator : MonoBehaviour
     {

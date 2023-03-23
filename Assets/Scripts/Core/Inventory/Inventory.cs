@@ -45,16 +45,17 @@ namespace Core.Inventory
         {
             if (item.isDefaultItem)
                 return true;
-            
+    
             // Check whether the dictionary key is already set, if not, set with new list
-            if (!items.ContainsKey(item.type))
-                items.Add(item.type, new List<Item>());
+            if (!items.TryGetValue(item.type, out List<Item> list))
+            {
+                list = new List<Item>();
+                items.Add(item.type, list);
+            }
 
-            // Get the inventory list
-            List<Item> list = items.First(x => x.Key == item.type).Value;
             if (list.Count >= space)
                 return false;
-            
+    
             // Add item to list and update the dictionary with the updated list
             list.Add(item);
             items[item.type] = list;
@@ -81,9 +82,7 @@ namespace Core.Inventory
 
             // Toggles the inventory
             if (Input.GetKeyDown(KeyCode.E))
-            {
                 inventoryUI.SetActive(!inventoryUI.activeSelf);
-            }
         }
 
         public void CloseInventory()

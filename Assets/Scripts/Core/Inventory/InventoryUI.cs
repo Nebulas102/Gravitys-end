@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ScriptableObjects;
@@ -11,10 +12,10 @@ namespace Core.Inventory
         public Transform itemsParent;
         
         [SerializeField]
-        private InventorySlot[] armorSlots;
+        private List<InventorySlot> armorSlots;
 
         [SerializeField]
-        private InventorySlot[] weaponSlots;
+        private List<InventorySlot> weaponSlots;
 
         [SerializeField]
         private InventorySlot currentArmorSlot;
@@ -58,99 +59,44 @@ namespace Core.Inventory
 
         private void UpdateGUI()
         {
-            //TODO: Dit hieronder werkt niet
-            // HandleSlots(armorSlots, inventory.armorItems);
-            // HandleSlots(weaponSlots, inventory.weaponItems);
-
-            // Loop through all slots when the itemchanged delegate is invoked. So the inventory GUI gets updated
-            for (int i = 0; i < armorSlots.Length; i++)
-            {
-                List<Item> armorItems = inventory.items.First(x => x.Key == Type.ARMOR).Value;
-                // If an item is to be added
-                if (i < armorItems.Count)
-                {
-                    // Add it
-                    armorSlots[i].AddItem(armorItems[i]);
-                }
-                else
-                {
-                    // If not then clear the slot
-                    armorSlots[i].ClearSlot();
-                }
-
-            }
-
-            for (int i = 0; i < weaponSlots.Length; i++)
-            {
-                List<Item> weaponItems = inventory.items.First(x => x.Key == Type.WEAPON).Value;
-                // If an item is to be added
-                if (i < weaponItems.Count)
-                {
-                    // Add it
-                    weaponSlots[i].AddItem(weaponItems[i]);
-                }
-                else
-                {
-                    // If not then clear the slot
-                    weaponSlots[i].ClearSlot();
-                }
-
-            }
+            UpdateSlots(armorSlots, Type.ARMOR);
+            UpdateSlots(weaponSlots, Type.WEAPON);
         }
 
-        // private void HandleSlots(InventorySlot[] slots, List<Item> items)
-        // {
-        //     for (int i = 0; i < slots.Length; i++)
-        //     {
-        //         // If an item is to be added
-        //         if (i < inventory.items.Count)
-        //         {
-        //             // Add it
-        //             slots[i].AddItem(inventory.items[i]);
-        //         }
-        //         else
-        //         {
-        //             // If not then clear the slot
-        //             slots[i].ClearSlot();
-        //         }
-        //
-        //     }
-        // }
+        private void UpdateSlots(List<InventorySlot> inventorySlots, Type itemType)
+        {
+            List<Item> items = inventory.items[itemType];
+
+            foreach (InventorySlot slot in inventorySlots)
+            {
+                int index = inventorySlots.IndexOf(slot);
+
+                if (index < items.Count)
+                {
+                    slot.AddItem(items[index]);
+                }
+                else
+                {
+                    slot.ClearSlot();
+                }
+            }
+        }
 
 
         public InventorySlot CheckForAvailableSlots(Type type)
         {
-            if (type == Type.ARMOR)
+            InventorySlot GetFirstAvailableSlot(IReadOnlyList<InventorySlot> inventorySlots, ICollection items)
             {
-                List<Item> armorItems = inventory.items.First(x => x.Key == Type.ARMOR).Value;
-                for (int i = 0; i < armorSlots.Length; i++)
-                {
-                    if (!(i < armorItems.Count))
-                    {
-                        return armorSlots[i];
-                    }
-
-
-                }
-
+                return items.Count < inventorySlots.Count ? inventorySlots[items.Count] : null;
             }
 
-            if (type == Type.WEAPON)
+            return type switch
             {
-                List<Item> weaponItems = inventory.items.First(x => x.Key == Type.WEAPON).Value;
-                for (int i = 0; i < weaponSlots.Length; i++)
-                {
-                    if (!(i < weaponItems.Count))
-                    {
-                        return weaponSlots[i];
-                    }
-
-
-                }
-
-            }
-
-            return null;
+                Type.ARMOR => GetFirstAvailableSlot(armorSlots, inventory.items.First(x => x.Key == Type.ARMOR).Value),
+                Type.WEAPON => GetFirstAvailableSlot(weaponSlots,
+                    inventory.items.First(x => x.Key == Type.WEAPON).Value),
+                _ => null
+            };
         }
 
         // InventorySlot SlotCheckingByType (Type type) {

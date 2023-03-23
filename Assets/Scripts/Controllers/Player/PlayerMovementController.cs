@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Scripts.Controllers.PlayerMovement
+namespace Assets.Scripts.Controllers.Player
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(PlayerInputManager))]
@@ -55,27 +55,17 @@ namespace Assets.Scripts.Controllers.PlayerMovement
         private PlayerInputManager playerInputManager;
         private PlayerInput playerInput;
 
+        private GameInput gameInput;
+
         //variable for running animation to start
         private bool isRunning;
         private bool dashInput;
         private bool isDashing = false;
 
-
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
-            playerInputManager = new PlayerInputManager();
-            playerInput = GetComponent<PlayerInput>();
-        }
-
-        private void OnEnable()
-        {
-            playerInputManager.Enable();
-        }
-
-        private void OnDisable()
-        {
-            playerInputManager.Disable();
+            gameInput = FindObjectOfType<GameInput>();
         }
 
         void Update()
@@ -100,9 +90,9 @@ namespace Assets.Scripts.Controllers.PlayerMovement
         void HandleInput()
         {
             //get input from player input manager
-            movementInput = playerInputManager.Player.Move.ReadValue<Vector2>();
-            lookInput = playerInputManager.Player.Look.ReadValue<Vector2>();
-            dashInput = playerInputManager.Player.Dash.ReadValue<float>() > 0;
+            movementInput = gameInput.GetMovement();
+            lookInput = gameInput.GetLookPosition();
+            dashInput = gameInput.GetDash();
         }
 
         void HandleMovement()

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Assets.Scripts.Controllers.PlayerMovement
+namespace Controllers.PlayerMovement
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(PlayerInputManager))]

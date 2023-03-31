@@ -5,15 +5,18 @@ using UnityEngine;
 
 public abstract class Room : MonoBehaviour
 {
+    // [HideInInspector]
     public float sizeX;
+    // [HideInInspector]
     public float sizeY;
+    // [HideInInspector]
     public float sizeZ;
 
     [HideInInspector]
     public List<Cell> cells;
 
     [SerializeField]
-    private int spawnChance;
+    private float spawnChance;
 
     [SerializeField]
     private List<GameObject> doors;
@@ -23,7 +26,7 @@ public abstract class Room : MonoBehaviour
         return doors;
     }
 
-    public int GetSpawnChance()
+    public float GetSpawnChance()
     {
         return spawnChance;
     }
@@ -96,6 +99,7 @@ public abstract class Room : MonoBehaviour
     private StageHelper.roomDirections DeterminePlacementSide(GameObject previousRoom)
     {
         StageHelper.roomDirections doorDirection = StageHelper.RandomDirection();
+        
         var door = previousRoom.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().GetDirection() == doorDirection).SingleOrDefault();
         var pos = RoomPlacementPos(doorDirection, door.GetComponent<Door>().cell);
         bool canPlace = CanPlaceRoom((int)pos["x"], (int)pos["z"]);

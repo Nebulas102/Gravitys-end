@@ -158,6 +158,19 @@ public class StageGenerator : MonoBehaviour
     {
         roomGenerator.BranchRoomGeneration(mapHallways, minWeightRoomsBranch, maxWeightRoomsBranch);
 
+        yield return StartCoroutine(ReplaceDoors());
+    }
+
+    private IEnumerator ReplaceDoors()
+    {
+        foreach (Room room in mapRooms)
+        {
+            if (room.GetDoorReplacement() != null)
+            {
+                StageHelper.ReplaceAllDoors(room.gameObject);
+            }
+        }
+
         yield return null;
     }
 
@@ -279,5 +292,10 @@ public class StageGenerator : MonoBehaviour
             roomComp.sizeY = newSizes["y"];
             roomComp.sizeZ = newSizes["z"];
         }
+    }
+
+    public void AddRoomToMap(Room room)
+    {
+        mapRooms.Add(room);
     }
 }

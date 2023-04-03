@@ -22,6 +22,8 @@ public class RoomGenerator
 
                 PlaceRooms(_door, branchLength, weightTotal);
             }
+
+            StageHelper.ReplaceAllDoors(mapHallways[i].gameObject);
         }
     }
 

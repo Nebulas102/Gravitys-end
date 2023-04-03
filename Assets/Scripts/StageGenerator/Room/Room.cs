@@ -18,14 +18,22 @@ public abstract class Room : MonoBehaviour
     [SerializeField]
     private List<GameObject> doors;
 
+    [SerializeField]
+    private GameObject doorReplacement;
+
+    public int GetWeight()
+    {
+        return weight;
+    }
+
     public List<GameObject> GetDoors()
     {
         return doors;
     }
 
-    public int GetWeight()
+    public GameObject GetDoorReplacement()
     {
-        return weight;
+        return doorReplacement;
     }
 
     public GameObject PlaceRoom(int posX, int posZ, StageHelper.roomDirections direction, GameObject spawndoor)
@@ -34,6 +42,8 @@ public abstract class Room : MonoBehaviour
 
         spawndoor.GetComponent<Door>().gameObject.SetActive(false);
         room.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().GetDirection() == StageHelper.GetOppositeDirection(direction)).SingleOrDefault().SetActive(false);
+
+        GameObject.FindWithTag("StageGenerator").GetComponent<StageGenerator>().AddRoomToMap(room.GetComponent<Room>());
 
         return room;
     }

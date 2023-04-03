@@ -102,4 +102,21 @@ public class StageHelper : MonoBehaviour
 
         return oppositeDirection;
     }
+
+    public static void ReplaceAllDoors(GameObject room)
+    {
+        var doors = room.GetComponent<Room>().GetDoors().Where(d => d.activeSelf == true).ToList();
+
+        foreach (GameObject _door in doors)
+        {
+            Vector3 doorPos = _door.transform.position;
+            Quaternion doorRot = _door.transform.rotation;
+
+            Destroy(_door);
+
+            GameObject wall = Instantiate(room.GetComponent<Room>().GetDoorReplacement(), doorPos, doorRot);
+
+            wall.transform.parent = room.transform;
+        }
+    }
 }

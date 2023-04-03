@@ -25,13 +25,17 @@ public class StageGenerator : MonoBehaviour
 
     [Header("Room Settings")]
     [SerializeField]
+    private int minWeightRoomsBranch;
+    [SerializeField]
+    private int maxWeightRoomsBranch;
+    [SerializeField]
     private GameObject spawnRoom;
     [SerializeField]
     private GameObject bossRoom;
     [SerializeField]
     private List<GameObject> rooms;
-    [SerializeField]
-    private int maxRooms;
+    // [SerializeField]
+    // private int maxRooms;
 
     [HideInInspector]
     public List<Cell> cells;
@@ -40,6 +44,8 @@ public class StageGenerator : MonoBehaviour
 
     private List<Hallway> mapHallways = new List<Hallway>();
     private List<Room> mapRooms = new List<Room>();
+
+    private RoomGenerator roomGenerator;
 
     private void Start()
     {
@@ -55,12 +61,15 @@ public class StageGenerator : MonoBehaviour
             }
         }
 
-        StageHelper.gridX = gridX;
-        StageHelper.gridZ = gridZ;
-        StageHelper.offset = offset;
-        StageHelper.cells = cells;
+        StageHelper.SetGridX(gridX);
+        StageHelper.SetGridZ(gridZ);
+        StageHelper.SetOffset(offset);
+        StageHelper.SetCells(cells);
+        StageHelper.SetRooms(rooms);
 
         InitializeRoomSizes();
+
+        roomGenerator = new RoomGenerator();
 
         //Start making the finite hallway
         StartCoroutine(HallwayGenerator());
@@ -105,24 +114,9 @@ public class StageGenerator : MonoBehaviour
         while (generateHallway)
         {
             GameObject chosenHallway = null;
-            float probabilityTotal = hallways.Sum(h => h.GetComponent<Room>().GetSpawnChance());
-            float randomChance = Random.value;
+            int weightTotal = hallways.Sum(h => h.GetComponent<Room>().GetWeight());
 
-            probabilityTotal = 0;
-
-            foreach (GameObject h in hallways)
-            {
-                if (randomChance <= h.GetComponent<Room>().GetSpawnChance())
-                {
-                    chosenHallway = h;
-                    break;
-                }
-            }
-
-            if (hallways.Count > 0)
-            {
-                chosenHallway = hallways[Random.Range(0, hallways.Count)];
-            }
+            chosenHallway = RoomUtil.GetRandomRoom(hallways, weightTotal);
 
             int hallwayX = (int)chosenHallway.GetComponent<Room>().sizeX;
             int hallwayZ = (int)chosenHallway.GetComponent<Room>().sizeZ;
@@ -157,7 +151,14 @@ public class StageGenerator : MonoBehaviour
 
         SpawnBossRoom(latestHallway.gameObject);
 
-        yield return StartCoroutine(RoomPlacement());
+        yield return StartCoroutine(GenerateRooms());
+    }
+
+    private IEnumerator GenerateRooms()
+    {
+        roomGenerator.BranchRoomGeneration(mapHallways, minWeightRoomsBranch, maxWeightRoomsBranch);
+
+        yield return null;
     }
 
     private GameObject SpawnRoom()
@@ -197,28 +198,6 @@ public class StageGenerator : MonoBehaviour
         _bossRoom.GetComponent<Room>().GetDoors()[0].SetActive(false);
 
         return _bossRoom;
-    }
-
-    private IEnumerator RoomPlacement()
-    {
-        for (int i = 0; i < mapHallways.Count; i++)
-        {
-            mapHallways[i].GetComponent<Room>().SetDoorCells();
-
-            foreach (var _door in mapHallways[i].GetDoors())
-            {
-                if (Random.Range(0, 2) == 1)
-                {
-                    GameObject randomRoom = rooms[Random.Range(0, rooms.Count)];
-
-                    randomRoom.GetComponent<Room>().PlaceRooms(_door);
-
-                    _door.GetComponent<Door>().gameObject.SetActive(false);
-                }
-            }
-        }
-
-        yield return null;
     }
 
     //Set the room cells that are occupied by it

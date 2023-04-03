@@ -245,11 +245,13 @@ MonoBehaviour:
   hallways:
   - {fileID: 3539307900891926368, guid: d46e19aa43b2a11478ccf217ad0e148e, type: 3}
   - {fileID: 3539307900891926368, guid: 7d5f34a08ebdcbf498aced53c8633b06, type: 3}
+  minWeightRoomsBranch: 1
+  maxWeightRoomsBranch: 5
   spawnRoom: {fileID: 5154548415723241550, guid: 491fa2f89b412b2429015c1af292354b, type: 3}
   bossRoom: {fileID: 5154548415723241550, guid: 60de7db663c44c144b6ec03426926d08, type: 3}
   rooms:
   - {fileID: 2915231218470790405, guid: f5b43880f44fcfd4f91aa005a9ab449a, type: 3}
-  maxRooms: 0
+  - {fileID: 2915231218470790405, guid: e3477174c9e6e144e8c6242a8c3d6d6e, type: 3}
   cells: []
 --- !u!4 &1079740415
 Transform:

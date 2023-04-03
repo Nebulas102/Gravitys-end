@@ -10,14 +10,11 @@ public class StageHelper : MonoBehaviour
     [HideInInspector]
     public enum roomDirections { Top, Right, Bottom, Left };
 
-    [HideInInspector]
-    public static int gridX;
-    [HideInInspector]
-    public static int gridZ;
-    [HideInInspector]
-    public static int offset;
-    [HideInInspector]
-    public static List<Cell> cells;
+    private static int gridX;
+    private static int gridZ;
+    private static int offset;
+    private static List<Cell> cells;
+    private static List<GameObject> rooms;
 
     private void Awake() 
     {
@@ -25,6 +22,56 @@ public class StageHelper : MonoBehaviour
         else if (instance != null) Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    public static int GetGridX()
+    {
+        return gridX;
+    }
+
+    public static void SetGridX(int _gridX)
+    {
+        gridX = _gridX;
+    }
+
+    public static int GetGridZ()
+    {
+        return gridZ;
+    }
+
+    public static void SetGridZ(int _gridZ)
+    {
+        gridX = _gridZ;
+    }
+
+    public static int GetOffset()
+    {
+        return offset;
+    }
+
+    public static void SetOffset(int _offset)
+    {
+        offset = _offset;
+    }
+
+    public static List<Cell> GetCells()
+    {
+        return cells;
+    }
+
+    public static void SetCells(List<Cell> _cells)
+    {
+        cells = _cells;
+    }
+
+    public static List<GameObject> GetRooms()
+    {
+        return rooms;
+    }
+
+    public static void SetRooms(List<GameObject> _rooms)
+    {
+        rooms = _rooms;
     }
 
     public static roomDirections RandomDirection()

@@ -37,4 +37,24 @@ public static class RoomUtil
 
         return sizes;
     }
+
+    public static GameObject GetRandomRoom(List<GameObject> rooms, int totalWeight)
+    {       
+            int randomWeightChance = Random.Range(0, totalWeight + 1);
+
+            foreach (GameObject r in rooms)
+            {
+                int hWeight = r.GetComponent<Room>().GetWeight();
+
+                randomWeightChance -= hWeight;
+
+                if (randomWeightChance <= 0)
+                {
+                    return r;
+                }
+            }
+
+        //Should never reach that point
+        return null;     
+    }
 }

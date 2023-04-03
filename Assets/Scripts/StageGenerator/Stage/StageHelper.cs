@@ -8,7 +8,7 @@ public class StageHelper : MonoBehaviour
     public static StageHelper instance;
 
     [HideInInspector]
-    public enum roomDirections { Top, Right, Bottom, Left };
+    public enum roomDirections { Top, Right, Bottom, Left , Undefined };
 
     private static int gridX;
     private static int gridZ;
@@ -77,6 +77,12 @@ public class StageHelper : MonoBehaviour
     public static roomDirections RandomDirection()
     {
         return (roomDirections)Random.Range(0, System.Enum.GetValues(typeof(roomDirections)).Length);
+    }
+
+    public static roomDirections RandomDirection(List<roomDirections> directions)
+    {
+        return directions[Random.Range(0, directions.Count + 1)];
+        //return (roomDirections)Random.Range(0, System.Enum.GetValues(typeof(roomDirections)).Length);
     }
 
     public static roomDirections GetOppositeDirection(roomDirections direction)

@@ -73,6 +73,11 @@ public abstract class Room : MonoBehaviour
                 roomX = doorCell.transform.position.x - (sizeX / 2 - 5 + StageHelper.GetOffset());
                 roomZ = doorCell.transform.position.z;
             break;
+            case StageHelper.roomDirections.Undefined:
+            Debug.Log("Is Undefined");
+                roomX = 0;
+                roomZ = 0;
+            break;
         }
 
         pos.Add("x", roomX);

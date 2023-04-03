@@ -151,6 +151,7 @@ public class StageGenerator : MonoBehaviour
 
         SpawnBossRoom(latestHallway.gameObject);
 
+        // yield return null;
         yield return StartCoroutine(GenerateRooms());
     }
 

@@ -19,8 +19,6 @@ public class StageGenerator : MonoBehaviour
 
     [Header("Hallway settings")]
     [SerializeField]
-    private GameObject hallway;
-    [SerializeField]
     private List<GameObject> hallways = new List<GameObject>();
 
     [Header("Room Settings")]

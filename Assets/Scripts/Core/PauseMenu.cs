@@ -8,10 +8,18 @@ namespace Core
         [SerializeField]
         public GameObject pauseMenu;
 
+        void Update () {
+            // Toggle pause menu
+            if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape)) {
+                pauseMenu.SetActive(!pauseMenu.activeSelf);
+            }
+        }
+
         public void Resume()
         {
             // This removes the pause menu overlay to continue the game
             pauseMenu.SetActive(false);
+            
             // Unpause the game
             // 1f for now, Depends in which scene we are and what the timescale is in that particular scene
             Time.timeScale = 1f;

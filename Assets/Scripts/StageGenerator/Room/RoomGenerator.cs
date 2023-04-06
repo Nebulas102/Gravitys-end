@@ -88,7 +88,10 @@ public class RoomGenerator
 
         foreach (StageHelper.roomDirections direction in System.Enum.GetValues(typeof(StageHelper.roomDirections)))
         {
-            openDirections.Add(direction);
+            if (direction != StageHelper.roomDirections.Undefined)
+            {
+                openDirections.Add(direction);
+            }
         }
 
         StageHelper.roomDirections doorDirection = StageHelper.RandomDirection();
@@ -104,10 +107,11 @@ public class RoomGenerator
             var pos = currentRoom.GetComponent<Room>().PlacementPos(doorDirection, door.GetComponent<Door>().cell);
             canPlace = currentRoom.GetComponent<Room>().CanPlace((int)pos["x"], (int)pos["z"]);
         }
-        else
+
+        if (!canPlace)
         {
             int iteration = 0;
-            while(!canPlace && iteration == 4)
+            while(!canPlace && iteration < 3)
             {
                 doorDirection = StageHelper.RandomDirection(openDirections);
 

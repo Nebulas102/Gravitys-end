@@ -81,8 +81,16 @@ public class StageHelper : MonoBehaviour
 
     public static roomDirections RandomDirection(List<roomDirections> directions)
     {
-        return directions[Random.Range(0, directions.Count + 1)];
-        //return (roomDirections)Random.Range(0, System.Enum.GetValues(typeof(roomDirections)).Length);
+        directions.Remove(roomDirections.Undefined);
+
+        if (directions != null)
+        {
+            return directions[Random.Range(0, directions.Count)];
+        }
+        else
+        {
+            return roomDirections.Undefined;
+        }
     }
 
     public static roomDirections GetOppositeDirection(roomDirections direction)

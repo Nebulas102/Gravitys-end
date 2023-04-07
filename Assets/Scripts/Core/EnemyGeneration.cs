@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Assets.Scripts.Core
 {
@@ -14,6 +15,9 @@ namespace Assets.Scripts.Core
 
         void Start()
         {
+            // Create walkable surface for enemies
+            StartCoroutine(NavMeshBaker());
+            // Spawn enemies
             spawnpointPos = gameObject.transform.position;
             Debug.Log(spawnpointPos.x);
             StartCoroutine(EnemyDrop());
@@ -36,6 +40,16 @@ namespace Assets.Scripts.Core
                 yield return new WaitForSeconds(0.1f);
                 enemyCount += 1;
             }
+        }
+
+        IEnumerator NavMeshBaker()
+        {
+            NavMeshSurface[] navMeshSurfaces = FindObjectsOfType<NavMeshSurface>();
+            for(int i = 0; i < navMeshSurfaces.Length; i++) 
+            {
+                navMeshSurfaces[i].BuildNavMesh();
+            }
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

@@ -2062,9 +2062,10 @@ MonoBehaviour:
   sizeY: 6
   sizeZ: 30
   cells: []
-  spawnChance: 0
+  weight: 0
   doors:
   - {fileID: 9179853730517305653}
+  doorReplacement: {fileID: 0}
 --- !u!1 &5348425861069544914
 GameObject:
   m_ObjectHideFlags: 0
@@ -4382,7 +4383,7 @@ GameObject:
   - component: {fileID: 8517388246299526091}
   m_Layer: 0
   m_Name: Door (2)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

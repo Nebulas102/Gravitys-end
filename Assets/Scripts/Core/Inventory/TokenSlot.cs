@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossRoom : Room
+public class TokenSlot : MonoBehaviour
 {
+    public bool isEquipped = false;
 
 }

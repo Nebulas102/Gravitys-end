@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 1079740414}
   m_Layer: 0
   m_Name: StageGenerator
-  m_TagString: Untagged
+  m_TagString: StageGenerator
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,16 +156,17 @@ MonoBehaviour:
   gridZ: 40
   offset: 10
   gridCell: {fileID: 5977070374732653095, guid: a31c9469b043ae94f95cc1e49fcf7a8d, type: 3}
-  hallway: {fileID: 3539307900891926368, guid: d46e19aa43b2a11478ccf217ad0e148e, type: 3}
+  debugMode: 0
   hallways:
-  - {fileID: 0}
+  - {fileID: 3539307900891926368, guid: d46e19aa43b2a11478ccf217ad0e148e, type: 3}
+  - {fileID: 3539307900891926368, guid: 7d5f34a08ebdcbf498aced53c8633b06, type: 3}
+  minWeightRoomsBranch: 2
+  maxWeightRoomsBranch: 5
   spawnRoom: {fileID: 5154548415723241550, guid: 491fa2f89b412b2429015c1af292354b, type: 3}
   bossRoom: {fileID: 5154548415723241550, guid: 60de7db663c44c144b6ec03426926d08, type: 3}
   rooms:
   - {fileID: 2915231218470790405, guid: f5b43880f44fcfd4f91aa005a9ab449a, type: 3}
-  maxRooms: 0
-  occupiedCellMaterial: {fileID: 2100000, guid: 6355cf7d3f3b12c4881b3dbda3d67122, type: 2}
-  doorCellMaterial: {fileID: 2100000, guid: 482f759315eb39c4db3eee9c422ba31a, type: 2}
+  - {fileID: 2915231218470790405, guid: e3477174c9e6e144e8c6242a8c3d6d6e, type: 3}
   cells: []
 --- !u!4 &1079740415
 Transform:

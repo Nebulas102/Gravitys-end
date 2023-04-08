@@ -8,16 +8,13 @@ public class StageHelper : MonoBehaviour
     public static StageHelper instance;
 
     [HideInInspector]
-    public enum roomDirections { Top, Right, Bottom, Left };
+    public enum roomDirections { Top, Right, Bottom, Left , Undefined };
 
-    [HideInInspector]
-    public static int gridX;
-    [HideInInspector]
-    public static int gridZ;
-    [HideInInspector]
-    public static int offset;
-    [HideInInspector]
-    public static List<Cell> cells;
+    private static int gridX;
+    private static int gridZ;
+    private static int offset;
+    private static List<Cell> cells;
+    private static List<GameObject> rooms;
 
     private void Awake() 
     {
@@ -27,9 +24,73 @@ public class StageHelper : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public static int GetGridX()
+    {
+        return gridX;
+    }
+
+    public static void SetGridX(int _gridX)
+    {
+        gridX = _gridX;
+    }
+
+    public static int GetGridZ()
+    {
+        return gridZ;
+    }
+
+    public static void SetGridZ(int _gridZ)
+    {
+        gridX = _gridZ;
+    }
+
+    public static int GetOffset()
+    {
+        return offset;
+    }
+
+    public static void SetOffset(int _offset)
+    {
+        offset = _offset;
+    }
+
+    public static List<Cell> GetCells()
+    {
+        return cells;
+    }
+
+    public static void SetCells(List<Cell> _cells)
+    {
+        cells = _cells;
+    }
+
+    public static List<GameObject> GetRooms()
+    {
+        return rooms;
+    }
+
+    public static void SetRooms(List<GameObject> _rooms)
+    {
+        rooms = _rooms;
+    }
+
     public static roomDirections RandomDirection()
     {
         return (roomDirections)Random.Range(0, System.Enum.GetValues(typeof(roomDirections)).Length);
+    }
+
+    public static roomDirections RandomDirection(List<roomDirections> directions)
+    {
+        directions.Remove(roomDirections.Undefined);
+
+        if (directions != null)
+        {
+            return directions[Random.Range(0, directions.Count)];
+        }
+        else
+        {
+            return roomDirections.Undefined;
+        }
     }
 
     public static roomDirections GetOppositeDirection(roomDirections direction)
@@ -54,5 +115,22 @@ public class StageHelper : MonoBehaviour
         }
 
         return oppositeDirection;
+    }
+
+    public static void ReplaceAllDoors(GameObject room)
+    {
+        var doors = room.GetComponent<Room>().GetDoors().Where(d => d.activeSelf == true).ToList();
+
+        foreach (GameObject _door in doors)
+        {
+            Vector3 doorPos = _door.transform.position;
+            Quaternion doorRot = _door.transform.rotation;
+
+            Destroy(_door);
+
+            GameObject wall = Instantiate(room.GetComponent<Room>().GetDoorReplacement(), doorPos, doorRot);
+
+            wall.transform.parent = room.transform;
+        }
     }
 }

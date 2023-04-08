@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Core
+namespace Core
 {
     public class Timer : MonoBehaviour
     {

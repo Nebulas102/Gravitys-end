@@ -13,19 +13,77 @@ public abstract class Room : MonoBehaviour
     public List<Cell> cells;
 
     [SerializeField]
-    private int spawnChance;
+    private int weight;
 
     [SerializeField]
     private List<GameObject> doors;
+
+    [SerializeField]
+    private GameObject doorReplacement;
+
+    public int GetWeight()
+    {
+        return weight;
+    }
 
     public List<GameObject> GetDoors()
     {
         return doors;
     }
 
-    public int GetSpawnChance()
+    public GameObject GetDoorReplacement()
     {
-        return spawnChance;
+        return doorReplacement;
+    }
+
+    public GameObject PlaceRoom(int posX, int posZ, StageHelper.roomDirections direction, GameObject spawndoor)
+    {
+        GameObject room = Instantiate(gameObject, new Vector3(posX, 0, posZ), Quaternion.identity);
+
+        spawndoor.GetComponent<Door>().gameObject.SetActive(false);
+        room.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().GetDirection() == StageHelper.GetOppositeDirection(direction)).SingleOrDefault().SetActive(false);
+
+        GameObject.FindWithTag("StageGenerator").GetComponent<StageGenerator>().AddRoomToMap(room.GetComponent<Room>());
+
+        return room;
+    }
+
+    public Dictionary<string, float> PlacementPos(StageHelper.roomDirections roomDirection, Cell doorCell)
+    {
+        Dictionary<string, float> pos = new Dictionary<string, float>();
+
+        float roomX = 0;
+        float roomZ = 0;
+
+        switch(roomDirection)
+        {
+            case StageHelper.roomDirections.Top:
+                roomX = doorCell.transform.position.x;
+                roomZ = doorCell.transform.position.z + (sizeZ / 2 - 5 + StageHelper.GetOffset());
+            break;
+            case StageHelper.roomDirections.Right:
+                roomX = doorCell.transform.position.x + (sizeX / 2 - 5 + StageHelper.GetOffset());
+                roomZ = doorCell.transform.position.z;
+            break;
+            case StageHelper.roomDirections.Bottom:
+                roomX = doorCell.transform.position.x;
+                roomZ = doorCell.transform.position.z - (sizeZ / 2 - 5 + StageHelper.GetOffset());
+            break;
+            case StageHelper.roomDirections.Left:
+                roomX = doorCell.transform.position.x - (sizeX / 2 - 5 + StageHelper.GetOffset());
+                roomZ = doorCell.transform.position.z;
+            break;
+            case StageHelper.roomDirections.Undefined:
+            Debug.Log("Is Undefined");
+                roomX = 0;
+                roomZ = 0;
+            break;
+        }
+
+        pos.Add("x", roomX);
+        pos.Add("z", roomZ);
+
+        return pos;
     }
 
     public void SetDoorCells()
@@ -40,7 +98,7 @@ public abstract class Room : MonoBehaviour
             int doorCellZ = room.cells.Select(mh => mh.z).Distinct()
                 .ToArray()[_door.GetComponent<Door>().roomPosZOffset];
 
-            doorCellRoom = StageHelper.cells.Where(c => c.x == doorCellX && c.z == doorCellZ).SingleOrDefault();
+            doorCellRoom = StageHelper.GetCells().Where(c => c.x == doorCellX && c.z == doorCellZ).SingleOrDefault();
             
             doorCellRoom.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
 
@@ -48,77 +106,10 @@ public abstract class Room : MonoBehaviour
         }
     }
 
-    public void PlaceRooms(GameObject spawnDoor)
-    {
-        bool initialSpawned = false;
-        GameObject previousRoom = null;
-
-        while (Random.Range(0, 2) == 1 || !initialSpawned)
-        {
-            Cell doorCell = null;
-            StageHelper.roomDirections placementSide;
-
-            if (initialSpawned)
-            {
-                placementSide = DeterminePlacementSide(previousRoom);
-                doorCell = previousRoom.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().GetDirection() == placementSide).SingleOrDefault().GetComponent<Door>().cell;
-            }
-            else
-            {
-                doorCell = spawnDoor.GetComponent<Door>().cell;
-                placementSide = spawnDoor.GetComponent<Door>().GetDirection();
-
-                var initialPos = RoomPlacementPos(placementSide, doorCell);
-                bool canPlace = CanPlaceRoom((int)initialPos["x"], (int)initialPos["z"]);
-
-                if (!canPlace)
-                {
-                    break;
-                }
-            }
-
-            var pos = RoomPlacementPos(placementSide, doorCell);
-
-            SetRoomCells((int)pos["x"], (int)pos["z"]);
-            SetDoorCells();
-
-            if (previousRoom != null)
-            {
-                previousRoom.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().GetDirection() == placementSide).SingleOrDefault().SetActive(false);
-            }
-
-            previousRoom = roomPlacement((int)pos["x"], (int)pos["z"], placementSide);
-
-            initialSpawned = true;
-        }
-    }
-
-    private StageHelper.roomDirections DeterminePlacementSide(GameObject previousRoom)
-    {
-        StageHelper.roomDirections doorDirection = StageHelper.RandomDirection();
-        var door = previousRoom.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().GetDirection() == doorDirection).SingleOrDefault();
-        var pos = RoomPlacementPos(doorDirection, door.GetComponent<Door>().cell);
-        bool canPlace = CanPlaceRoom((int)pos["x"], (int)pos["z"]);
-
-        while(door == null || door.GetComponent<Door>().hasNeighbour || door.GetComponent<Door>().GetDirection() != doorDirection || !canPlace)
-        {
-            doorDirection = StageHelper.RandomDirection();
-            door = previousRoom.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().hasNeighbour == false && 
-             d.GetComponent<Door>().GetDirection() == doorDirection).SingleOrDefault();       
-                
-            pos = RoomPlacementPos(doorDirection, door.GetComponent<Door>().cell);        
-            canPlace = CanPlaceRoom((int)pos["x"], (int)pos["z"]);        
-        }
-
-        door.GetComponent<Door>().hasNeighbour = true;
-
-        return doorDirection;
-    }
-
-    private bool CanPlaceRoom(int posX, int posZ)
+    public bool CanPlace(int posX, int posZ)
     {
         bool canPlace = true;
-        int offset = StageHelper.offset;
+        int offset = StageHelper.GetOffset();
 
         //Get the room X and Z length
         int roomX = (int)sizeX / offset;
@@ -140,7 +131,7 @@ public abstract class Room : MonoBehaviour
         {
             for (int j = startPosZ; j <= endPosZ; j++)
             {
-                Cell cell = StageHelper.cells.Where(c => c.x == i && c.z == j && c.isOccupied == false).SingleOrDefault();
+                Cell cell = StageHelper.GetCells().Where(c => c.x == i && c.z == j && c.isOccupied == false).SingleOrDefault();
 
                 if (cell == null)
                 {
@@ -152,52 +143,10 @@ public abstract class Room : MonoBehaviour
         return canPlace;
     }
 
-    private Dictionary<string, float> RoomPlacementPos(StageHelper.roomDirections roomDirection, Cell doorCell)
-    {
-        Dictionary<string, float> pos = new Dictionary<string, float>();
-
-        float roomX = 0;
-        float roomZ = 0;
-
-        switch(roomDirection)
-        {
-            case StageHelper.roomDirections.Top:
-                roomX = doorCell.transform.position.x;
-                roomZ = doorCell.transform.position.z + (sizeZ / 2 - 5 + StageHelper.offset);
-            break;
-            case StageHelper.roomDirections.Right:
-                roomX = doorCell.transform.position.x + (sizeX / 2 - 5 + StageHelper.offset);
-                roomZ = doorCell.transform.position.z;
-            break;
-            case StageHelper.roomDirections.Bottom:
-                roomX = doorCell.transform.position.x;
-                roomZ = doorCell.transform.position.z - (sizeZ / 2 - 5 + StageHelper.offset);
-            break;
-            case StageHelper.roomDirections.Left:
-                roomX = doorCell.transform.position.x - (sizeX / 2 - 5 + StageHelper.offset);
-                roomZ = doorCell.transform.position.z;
-            break;
-        }
-
-        pos.Add("x", roomX);
-        pos.Add("z", roomZ);
-
-        return pos;
-    }
-
-    private GameObject roomPlacement(int posX, int posZ, StageHelper.roomDirections direction)
-    {
-        GameObject room = Instantiate(gameObject, new Vector3(posX, 0, posZ), Quaternion.identity);
-
-        room.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().GetDirection() == StageHelper.GetOppositeDirection(direction)).SingleOrDefault().SetActive(false);
-
-        return room;
-    }
-
     //Set the room cells that are occupied by it
     public void SetRoomCells(int posX, int posZ)
     {
-        int offset = StageHelper.offset;
+        int offset = StageHelper.GetOffset();
 
         //Create a new list to store the cells in
         List<Cell> roomCells = new List<Cell>();
@@ -224,7 +173,7 @@ public abstract class Room : MonoBehaviour
         {
             for (int j = startPosZ; j <= endPosZ; j++)
             {
-                Cell cell = StageHelper.cells.Where(c => c.x == i && c.z == j && c.isOccupied == false).SingleOrDefault();
+                Cell cell = StageHelper.GetCells().Where(c => c.x == i && c.z == j && c.isOccupied == false).SingleOrDefault();
 
                 if (cell == null)
                 {

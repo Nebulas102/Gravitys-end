@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Assets.Scripts.Core
+namespace Core
 {
     public class EnemyGeneration : MonoBehaviour
     {

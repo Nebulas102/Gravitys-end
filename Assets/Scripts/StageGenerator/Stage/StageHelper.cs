@@ -44,7 +44,7 @@ public class StageHelper : MonoBehaviour
 
     public static void SetGridZ(int _gridZ)
     {
-        gridX = _gridZ;
+        gridZ = _gridZ;
     }
 
     public static int GetOffset()
@@ -154,11 +154,31 @@ public class StageHelper : MonoBehaviour
                 AddSourcesFromObject(obj, ref sources);
             }
 
+            Cell centerCell = CalculateCenterStage();
+
             // Build the NavMesh
             NavMeshData data = new NavMeshData();
-            data = NavMeshBuilder.BuildNavMeshData(settings, sources.ToList(), new Bounds(Vector3.zero, new Vector3(1000, 20, 2000)), Vector3.zero, Quaternion.identity);
+            data = NavMeshBuilder.BuildNavMeshData(settings, sources.ToList(), new Bounds(centerCell.gameObject.transform.position, 
+                    new Vector3(gridX * offset, 30, gridZ * offset)), Vector3.zero, Quaternion.identity);
             NavMesh.AddNavMeshData(data);
-            Debug.Log("NavMesh baked successfully");
+        }
+
+        private static Cell CalculateCenterStage()
+        {
+            float calcX = 0;
+            float calcZ = 0;
+
+            if (gridX % 2 == 0)
+            {
+                calcX = gridX / 2 - 1;
+            }
+
+            if (gridZ % 2 == 0)
+            {
+                calcZ = gridZ / 2 - 1;
+            }
+
+            return cells.Where(c => c.x == calcX && c.z == calcZ).SingleOrDefault();
         }
 
         private static void AddSourcesFromObject(GameObject obj, ref NavMeshBuildSource[] sources)
@@ -168,7 +188,7 @@ public class StageHelper : MonoBehaviour
             // Add a NavMeshBuildSource for each mesh filter
             foreach (MeshFilter filter in meshFilters)
             {
-                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door")
+                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" && obj.activeSelf)
                 {
                     NavMeshBuildSource source = new NavMeshBuildSource()
                     {

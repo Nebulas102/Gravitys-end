@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 2819755684014922582}
   m_Layer: 0
   m_Name: CornerWall (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -625,9 +625,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2915231218470790407}
   - component: {fileID: 2915231218470790406}
+  - component: {fileID: 657030237605926709}
   m_Layer: 0
   m_Name: TestStandardRoom1
-  m_TagString: Untagged
+  m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -679,6 +680,21 @@ MonoBehaviour:
   - {fileID: 6356833223409406187}
   - {fileID: 5819180978010445239}
   doorReplacement: {fileID: 5390974569567074888, guid: 183b5d8fdfcad5b42b1791f532cb39a0, type: 3}
+--- !u!114 &657030237605926709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2915231218470790405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94474810cf6c37f4487f291bffd548ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
+  spawnpointPos: {x: 0, y: 0, z: 0}
+  enemyCount: 0
 --- !u!1 &3239508812833337296
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,7 +706,7 @@ GameObject:
   - component: {fileID: 2751495485998730431}
   m_Layer: 0
   m_Name: CornerWall (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -723,7 +739,7 @@ GameObject:
   - component: {fileID: 6400391080202679114}
   m_Layer: 0
   m_Name: CornerWall (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -857,7 +873,7 @@ GameObject:
   - component: {fileID: 4446199308375210431}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -972,7 +988,7 @@ GameObject:
   - component: {fileID: 7668295729257451978}
   m_Layer: 0
   m_Name: Door (3)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1083,7 +1099,7 @@ GameObject:
   - component: {fileID: 5901737615555550199}
   m_Layer: 0
   m_Name: CornerWall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1217,7 +1233,7 @@ GameObject:
   - component: {fileID: 6385734671650039949}
   m_Layer: 0
   m_Name: Door (2)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1429,7 +1445,7 @@ GameObject:
   - component: {fileID: 6496038589188865113}
   m_Layer: 0
   m_Name: Door (1)
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

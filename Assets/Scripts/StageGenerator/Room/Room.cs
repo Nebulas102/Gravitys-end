@@ -43,7 +43,7 @@ public abstract class Room : MonoBehaviour
         spawndoor.GetComponent<Door>().gameObject.SetActive(false);
         room.GetComponent<Room>().doors.Where(d => d.GetComponent<Door>().GetDirection() == StageHelper.GetOppositeDirection(direction)).SingleOrDefault().SetActive(false);
 
-        GameObject.FindWithTag("StageGenerator").GetComponent<StageGenerator>().AddRoomToMap(room.GetComponent<Room>());
+        GameObject.FindWithTag("StageGenerator").GetComponent<StageGenerator>().AddRoomToMap(room);
 
         return room;
     }

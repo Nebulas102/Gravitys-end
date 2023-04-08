@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Core;
 
 public class StageGenerator : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class StageGenerator : MonoBehaviour
     private GameObject stageParent;
 
     private List<Hallway> mapHallways = new List<Hallway>();
-    private List<Room> mapRooms = new List<Room>();
+    private List<GameObject> mapRooms = new List<GameObject>();
 
     private RoomGenerator roomGenerator;
 
@@ -159,17 +160,34 @@ public class StageGenerator : MonoBehaviour
 
         yield return StartCoroutine(ReplaceDoors());
     }
-
+    
     private IEnumerator ReplaceDoors()
     {
-        foreach (Room room in mapRooms)
+        foreach (GameObject room in mapRooms)
         {
-            if (room.GetDoorReplacement() != null)
+            if (room.GetComponent<Room>().GetDoorReplacement() != null)
             {
-                StageHelper.ReplaceAllDoors(room.gameObject);
+                StageHelper.ReplaceAllDoors(room);
             }
         }
+        yield return StartCoroutine(StageNavMeshBaker());
+    }
 
+    private IEnumerator StageNavMeshBaker()
+    {
+        StageHelper.NavMeshBaker();
+        yield return StartCoroutine(StageEnemyGeneration());
+    }
+
+    private IEnumerator StageEnemyGeneration()
+    {
+        foreach (GameObject room in mapRooms)
+        {
+            if (room.GetComponent<EnemyGeneration>() != null)
+            {
+                room.GetComponent<EnemyGeneration>().SpawnEnemy();
+            }
+        }
         yield return null;
     }
 
@@ -293,7 +311,7 @@ public class StageGenerator : MonoBehaviour
         }
     }
 
-    public void AddRoomToMap(Room room)
+    public void AddRoomToMap(GameObject room)
     {
         mapRooms.Add(room);
     }

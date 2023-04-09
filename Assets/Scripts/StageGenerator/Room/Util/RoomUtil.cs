@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public static class RoomUtil
 {
-    public static Dictionary<string, float> CalculateSizeBasedOnChildren(GameObject gameObject)
+    public static Dictionary<string, float> CalculateSizeBasedOnChildren(GameObject parent)
     {
         Dictionary<string, float> sizes = new Dictionary<string, float>();
 
@@ -13,20 +14,21 @@ public static class RoomUtil
         float z = 0;
 
         float floorY = 0;
+        
+        Transform[] childrenFloor = parent.GetComponentsInChildren<Transform>().Where(g => g.CompareTag("Floor")).ToArray();
+        Transform[] childrenWalls = parent.GetComponentsInChildren<Transform>().Where(g => g.CompareTag("Wall")).ToArray();
 
-        foreach (Transform t in gameObject.transform)
+        x = childrenFloor.Max(g => g.transform.localScale.x);
+        z = childrenFloor.Max(g => g.transform.localScale.z);
+        floorY = childrenFloor.Max(g => g.transform.localScale.y);
+
+        foreach (Transform t in parent.transform)
         {
             float tempY = 0;
-
-            if (t.CompareTag("Floor")) floorY = t.localScale.y;
-
-            if (x < t.localScale.x) x = t.localScale.x;
 
             if (t.CompareTag("Wall")) tempY = t.localScale.y;
 
             if (y < tempY) y = tempY;
-
-            if (z < t.localScale.z) z = t.localScale.z;
         }
 
         sizes.Add("x", x);
@@ -34,5 +36,25 @@ public static class RoomUtil
         sizes.Add("z", z);
 
         return sizes;
+    }
+
+    public static GameObject GetRandomRoom(List<GameObject> rooms, int totalWeight)
+    {       
+            int randomWeightChance = Random.Range(0, totalWeight + 1);
+
+            foreach (GameObject r in rooms)
+            {
+                int hWeight = r.GetComponent<Room>().GetWeight();
+
+                randomWeightChance -= hWeight;
+
+                if (randomWeightChance <= 0)
+                {
+                    return r;
+                }
+            }
+
+        //Should never reach that point
+        return null;     
     }
 }

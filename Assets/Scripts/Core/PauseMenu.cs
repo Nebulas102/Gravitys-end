@@ -8,11 +8,32 @@ namespace Core
         [SerializeField]
         public GameObject pauseMenu;
 
+        private UIMenus _UIMenus;
+        private bool pauseMenuToggleInput;
+
+        private void Awake()
+        {
+            _UIMenus = new UIMenus();
+        }
+
+        private void OnEnable()
+        {
+            _UIMenus.Enable();
+            _UIMenus.Menus.TogglePauseMenu.performed += ctx => pauseMenuToggleInput = true;
+        }
+
+        private void OnDisable()
+        {
+            _UIMenus.Disable();
+        }
+
         void Update () {
             // Toggle pause menu
-            if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape)) {
+            if (pauseMenuToggleInput) {
                 pauseMenu.SetActive(!pauseMenu.activeSelf);
             }
+
+            pauseMenuToggleInput = false;
         }
 
         public void Resume()

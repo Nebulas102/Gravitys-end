@@ -95,8 +95,11 @@ namespace Assets.Scripts.Controllers.Player
             {
                 HandleInput();
             }
+            if (!isAttacking)
+            {
+                HandleRotation();
+            }
             HandleAttack();
-            HandleRotation();
         }
 
         void FixedUpdate()
@@ -265,9 +268,10 @@ namespace Assets.Scripts.Controllers.Player
             {
                 attackInput = false;
 
-                if (!isAttacking){
+                if (!isAttacking)
+                {
                     isAttacking = true;
-                    
+
                     PlayerAnimator.instance.ChangeAnimationState(ATTACK1);
                 }
 

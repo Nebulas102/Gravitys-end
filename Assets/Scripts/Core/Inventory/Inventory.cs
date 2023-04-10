@@ -7,6 +7,8 @@ namespace Core.Inventory
 {
     public class Inventory : MonoBehaviour
     {
+        // Delegate 
+        public delegate void OnItemChanged();
         /* 
             Add this method to the player movement controller Update() function, so when the inventory is opened the other movement actions wont be executed
             
@@ -19,10 +21,6 @@ namespace Core.Inventory
         // Singleton for inventory
         public static Inventory instance;
 
-        // Delegate 
-        public delegate void OnItemChanged();
-        public OnItemChanged onItemChangedCallback;
-
         // Space for each type of item
         public int space = 3;
         public GameObject inventoryUI;
@@ -30,6 +28,7 @@ namespace Core.Inventory
 
         private UIMenus _UIMenus;
         private bool inventoryToggleInput;
+        public OnItemChanged onItemChangedCallback;
 
 
         private void Awake()
@@ -38,8 +37,15 @@ namespace Core.Inventory
 
             if (instance != null)
                 return;
-            
+
             instance = this;
+            items.Add(Type.ARMOR, new List<Item>());
+            items.Add(Type.WEAPON, new List<Item>());
+        }
+
+        private void Update()
+        {
+            ToggleInventory();
         }
 
         private void OnEnable()
@@ -52,19 +58,14 @@ namespace Core.Inventory
         {
             _UIMenus.Disable();
         }
-        
-        private void Update()
-        {
-            ToggleInventory();
-        }
 
         public bool Add(Item item)
         {
             if (item.isDefaultItem)
                 return true;
-    
+
             // Check whether the dictionary key is already set, if not, set with new list
-            if (!items.TryGetValue(item.type, out List<Item> list))
+            if (!items.TryGetValue(item.type, out var list))
             {
                 list = new List<Item>();
                 items.Add(item.type, list);
@@ -72,7 +73,7 @@ namespace Core.Inventory
 
             if (list.Count >= space)
                 return false;
-    
+
             // Add item to list and update the dictionary with the updated list
             list.Add(item);
             items[item.type] = list;
@@ -84,7 +85,7 @@ namespace Core.Inventory
         public void Remove(Item item)
         {
             // Remove the item and also invoke the delegate so that the other methods can be notified
-            List<Item> list = items.First(x => x.Key == item.type).Value;
+            var list = items.First(x => x.Key == item.type).Value;
             list.Remove(item);
 
             items[item.type] = list;
@@ -96,10 +97,7 @@ namespace Core.Inventory
         private void ToggleInventory()
         {
             // Toggles the inventory
-            if (inventoryToggleInput)
-            {
-                inventoryUI.SetActive(!inventoryUI.activeSelf);
-            }
+            if (inventoryToggleInput) inventoryUI.SetActive(!inventoryUI.activeSelf);
 
             inventoryToggleInput = false;
         }

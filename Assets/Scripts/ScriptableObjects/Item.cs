@@ -30,25 +30,27 @@ namespace ScriptableObjects
                     InventoryUI.instance.CheckForAvailableSlots(Type.ARMOR)
                         .AddItem(InventoryUI.staticCurrentArmorSlot.GetItem());
                     Inventory.instance.Add(InventoryUI.staticCurrentArmorSlot.GetItem());
+
                     InventoryUI.staticCurrentArmorSlot.ClearSlot();
-                    return;
+                    break;
                 }
                 // Remove from the current slot; 
                 case Type.ARMOR:
                 {
                     itemSlot.ClearSlot();
-                    Inventory.instance.Remove(this);
+                    var oldItem = InventoryUI.staticCurrentArmorSlot.GetItem();
 
-                    // Check if the current slot has an item, if so, put the item of the current slot in this slot
-                    // and put this item in the current slot (Swapping the items.)
-                    if (InventoryUI.staticCurrentArmorSlot.GetItem() == null) return;
+                    if (oldItem != null)
+                    {
+                        itemSlot.AddItem(oldItem);
+                        Inventory.instance.Add(oldItem);
+                    }
 
-                    itemSlot.AddItem(InventoryUI.staticCurrentArmorSlot.GetItem());
-                    Inventory.instance.Add(InventoryUI.staticCurrentArmorSlot.GetItem());
                     InventoryUI.staticCurrentArmorSlot.ClearSlot();
 
                     // Add this item to the currentSlot
                     InventoryUI.staticCurrentArmorSlot.AddItem(this);
+                    Inventory.instance.Remove(this);
                     break;
                 }
                 case Type.WEAPON when itemSlot.isCurrentSlot:
@@ -71,18 +73,19 @@ namespace ScriptableObjects
                 case Type.WEAPON:
                 {
                     itemSlot.ClearSlot();
-                    Inventory.instance.Remove(this);
+                    var oldItem = InventoryUI.staticCurrentWeaponSlot.GetItem();
 
-                    // Check if the current slot has an item, if so, put the item of the current slot in this slot
-                    // and put this item in the current slot (Swapping the items.)
-                    if (InventoryUI.staticCurrentWeaponSlot.GetItem() == null) return;
+                    if (oldItem != null)
+                    {
+                        itemSlot.AddItem(oldItem);
+                        Inventory.instance.Add(oldItem);
+                    }
 
-                    itemSlot.AddItem(InventoryUI.staticCurrentWeaponSlot.GetItem());
-                    Inventory.instance.Add(InventoryUI.staticCurrentWeaponSlot.GetItem());
                     InventoryUI.staticCurrentWeaponSlot.ClearSlot();
 
                     // Add this item to the currentSlot
                     InventoryUI.staticCurrentWeaponSlot.AddItem(this);
+                    Inventory.instance.Remove(this);
                     break;
                 }
                 default:

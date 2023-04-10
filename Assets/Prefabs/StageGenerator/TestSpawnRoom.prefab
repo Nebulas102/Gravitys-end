@@ -2671,6 +2671,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e8cc9752-9c03-4af1-a98d-28f04b362544
     m_ActionName: Player/Look[/Mouse/position,/XInputControllerWindows/rightStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1d8186da-671a-4a67-ba55-cf52c1bc3783
+    m_ActionName: Player/Attack[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -3781,7 +3785,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d78a081dd1b482740a3cf1153d198689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovementController: {fileID: 15205422343326422}
 --- !u!1 &8138697401964318495
 GameObject:
   m_ObjectHideFlags: 0

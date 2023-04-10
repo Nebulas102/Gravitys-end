@@ -33,7 +33,6 @@ namespace Assets.Scripts
         public bool GetAttack()
         {
             bool attack = playerInputManager.Player.Attack.triggered;
-            Debug.Log(attack);
             return attack;
         }
     }

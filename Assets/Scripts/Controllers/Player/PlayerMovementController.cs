@@ -56,16 +56,37 @@ namespace Assets.Scripts.Controllers.Player
         private PlayerInput playerInput;
 
         private GameInput gameInput;
+        private bool dashInput, attackInput;
 
-        //variable for running animation to start
-        private bool isRunning;
-        private bool dashInput;
+        [SerializeField]
         private bool isDashing = false;
+        [SerializeField]
+        private bool isAttacking = false;
+
+        //Attack variables
+        private float nextFireTime = 0f;
+        private static int noOfClicks = 0;
+        float lastClickedTime = 0;
+        float maxComboDelay = 1f;
+
+        private Animator anim;
+
+        //Animation states
+        const string IDLE = "Idle";
+        const string RUNNING = "Running";
+        const string ATTACK1 = "Attack1";
+        const string ATTACK2 = "Attack2";
+        const string ATTACK3 = "Attack3";
 
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
             gameInput = FindObjectOfType<GameInput>();
+        }
+
+        private void Start()
+        {
+            anim = PlayerAnimator.instance.GetComponent<Animator>();
         }
 
         void Update()
@@ -74,17 +95,23 @@ namespace Assets.Scripts.Controllers.Player
             {
                 HandleInput();
             }
+            HandleAttack();
             HandleRotation();
         }
 
         void FixedUpdate()
         {
-            if (canMove)
+            if (canMove && !isAttacking)
             {
                 HandleMovement();
             }
-
             HandleDash();
+        }
+
+        public void OnDeviceChange(PlayerInput pi)
+        {
+            //check if gamepad is connected
+            isGamepad = pi.currentControlScheme.Equals("Gamepad") ? true : false;
         }
 
         void HandleInput()
@@ -93,12 +120,25 @@ namespace Assets.Scripts.Controllers.Player
             movementInput = gameInput.GetMovement();
             lookInput = gameInput.GetLookPosition();
             dashInput = gameInput.GetDash();
+            attackInput = gameInput.GetAttack();
         }
 
+
+        //////////////////////////////////////////////
+        // Movement                                 // 
+        //////////////////////////////////////////////
         void HandleMovement()
         {
-            //set running to true if movement direction is not zero for animation to start
-            isRunning = GetMovementDirection() != Vector3.zero;
+            //play running animation
+            if (GetMovementDirection() != Vector3.zero)
+            {
+                PlayerAnimator.instance.ChangeAnimationState(RUNNING);
+            }
+            else
+            {
+                PlayerAnimator.instance.ChangeAnimationState(IDLE);
+            }
+
             //move player
             controller.Move(GetMovementDirection() * Time.deltaTime * playerSpeed);
         }
@@ -170,6 +210,11 @@ namespace Assets.Scripts.Controllers.Player
             transform.LookAt(heighCorrectedPoint);
         }
 
+
+        //////////////////////////////////////////////
+        // Dashing                                  // 
+        //////////////////////////////////////////////
+
         public void HandleDash()
         {
             if (!dashAvailable && dashInput)
@@ -211,16 +256,32 @@ namespace Assets.Scripts.Controllers.Player
             dashAvailable = true;
         }
 
-
-        public void OnDeviceChange(PlayerInput pi)
+        //////////////////////////////////////////////
+        // Attacking                                // 
+        //////////////////////////////////////////////
+        public void HandleAttack()
         {
-            //check if gamepad is connected
-            isGamepad = pi.currentControlScheme.Equals("Gamepad") ? true : false;
+            if (attackInput)
+            {
+                attackInput = false;
+
+                if (!isAttacking){
+                    isAttacking = true;
+                    
+                    PlayerAnimator.instance.ChangeAnimationState(ATTACK1);
+                }
+
+                Invoke("AttackComplete", 1f);
+            }
         }
 
-        public bool IsRunning()
+        void AttackComplete()
         {
-            return isRunning;
+            isAttacking = false;
         }
     }
 }
+
+
+
+

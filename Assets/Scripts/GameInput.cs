@@ -4,7 +4,7 @@ namespace Assets.Scripts
 {
     public class GameInput : MonoBehaviour
     {
-        private PlayerInputManager playerInputManager;
+        public PlayerInputManager playerInputManager;
 
         private void Awake()
         {
@@ -12,10 +12,9 @@ namespace Assets.Scripts
             playerInputManager.Player.Enable();
         }
 
-        public Vector2 GetMovementVectorNormalized()
+        public Vector2 GetMovement()
         {
             Vector2 inputVector = playerInputManager.Player.Move.ReadValue<Vector2>();
-            inputVector = inputVector.normalized;
             return inputVector;
         }
 
@@ -25,11 +24,16 @@ namespace Assets.Scripts
             return lookPosition;
         }
 
-
         public bool GetDash()
         {
-            bool dash = playerInputManager.Player.Dash.triggered;
+            bool dash = playerInputManager.Player.Dash.ReadValue<float>() > 0;
             return dash;
+        }
+
+        public bool GetAttack()
+        {
+            bool attack = playerInputManager.Player.Attack.triggered;
+            return attack;
         }
     }
 }

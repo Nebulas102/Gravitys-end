@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Controllers.PlayerMovement
+namespace Assets.Scripts.Controllers.Player
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(PlayerInputManager))]
@@ -55,27 +55,38 @@ namespace Controllers.PlayerMovement
         private PlayerInputManager playerInputManager;
         private PlayerInput playerInput;
 
-        //variable for running animation to start
-        private bool isRunning;
-        private bool dashInput;
-        private bool isDashing = false;
+        private GameInput gameInput;
+        private bool dashInput, attackInput;
 
+        [SerializeField]
+        private bool isDashing = false;
+        [SerializeField]
+        private bool isAttacking = false;
+
+        //Attack variables
+        private float nextFireTime = 0f;
+        private static int noOfClicks = 0;
+        float lastClickedTime = 0;
+        float maxComboDelay = 1f;
+
+        private Animator anim;
+
+        //Animation states
+        const string IDLE = "Idle";
+        const string RUNNING = "Running";
+        const string ATTACK1 = "Attack1";
+        const string ATTACK2 = "Attack2";
+        const string ATTACK3 = "Attack3";
 
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
-            playerInputManager = new PlayerInputManager();
-            playerInput = GetComponent<PlayerInput>();
+            gameInput = FindObjectOfType<GameInput>();
         }
 
-        private void OnEnable()
+        private void Start()
         {
-            playerInputManager.Enable();
-        }
-
-        private void OnDisable()
-        {
-            playerInputManager.Disable();
+            anim = PlayerAnimator.instance.GetComponent<Animator>();
         }
 
         void Update()
@@ -84,31 +95,53 @@ namespace Controllers.PlayerMovement
             {
                 HandleInput();
             }
-            HandleRotation();
+            if (!isAttacking)
+            {
+                HandleRotation();
+            }
+            HandleAttack();
         }
 
         void FixedUpdate()
         {
-            if (canMove)
+            if (canMove && !isAttacking)
             {
                 HandleMovement();
             }
-
             HandleDash();
+        }
+
+        public void OnDeviceChange(PlayerInput pi)
+        {
+            //check if gamepad is connected
+            isGamepad = pi.currentControlScheme.Equals("Gamepad") ? true : false;
         }
 
         void HandleInput()
         {
             //get input from player input manager
-            movementInput = playerInputManager.Player.Move.ReadValue<Vector2>();
-            lookInput = playerInputManager.Player.Look.ReadValue<Vector2>();
-            dashInput = playerInputManager.Player.Dash.ReadValue<float>() > 0;
+            movementInput = gameInput.GetMovement();
+            lookInput = gameInput.GetLookPosition();
+            dashInput = gameInput.GetDash();
+            attackInput = gameInput.GetAttack();
         }
 
+
+        //////////////////////////////////////////////
+        // Movement                                 // 
+        //////////////////////////////////////////////
         void HandleMovement()
         {
-            //set running to true if movement direction is not zero for animation to start
-            isRunning = GetMovementDirection() != Vector3.zero;
+            //play running animation
+            if (GetMovementDirection() != Vector3.zero)
+            {
+                PlayerAnimator.instance.ChangeAnimationState(RUNNING);
+            }
+            else
+            {
+                PlayerAnimator.instance.ChangeAnimationState(IDLE);
+            }
+
             //move player
             controller.Move(GetMovementDirection() * Time.deltaTime * playerSpeed);
         }
@@ -180,6 +213,11 @@ namespace Controllers.PlayerMovement
             transform.LookAt(heighCorrectedPoint);
         }
 
+
+        //////////////////////////////////////////////
+        // Dashing                                  // 
+        //////////////////////////////////////////////
+
         public void HandleDash()
         {
             if (!dashAvailable && dashInput)
@@ -221,16 +259,33 @@ namespace Controllers.PlayerMovement
             dashAvailable = true;
         }
 
-
-        public void OnDeviceChange(PlayerInput pi)
+        //////////////////////////////////////////////
+        // Attacking                                // 
+        //////////////////////////////////////////////
+        public void HandleAttack()
         {
-            //check if gamepad is connected
-            isGamepad = pi.currentControlScheme.Equals("Gamepad") ? true : false;
+            if (attackInput)
+            {
+                attackInput = false;
+
+                if (!isAttacking)
+                {
+                    isAttacking = true;
+
+                    PlayerAnimator.instance.ChangeAnimationState(ATTACK1);
+                }
+
+                Invoke("AttackComplete", 1f);
+            }
         }
 
-        public bool IsRunning()
+        void AttackComplete()
         {
-            return isRunning;
+            isAttacking = false;
         }
     }
 }
+
+
+
+

@@ -28,12 +28,29 @@ namespace Core.Inventory
         public GameObject inventoryUI;
         public readonly IDictionary<Type, List<Item>> items = new Dictionary<Type, List<Item>>();
 
+        private UIMenus _UIMenus;
+        private bool inventoryToggleInput;
+
+
         private void Awake()
         {
+            _UIMenus = new UIMenus();
+
             if (instance != null)
                 return;
             
             instance = this;
+        }
+
+        private void OnEnable()
+        {
+            _UIMenus.Enable();
+            _UIMenus.Menus.ToggleInventory.performed += ctx => inventoryToggleInput = true;
+        }
+
+        private void OnDisable()
+        {
+            _UIMenus.Disable();
         }
         
         private void Update()
@@ -78,11 +95,13 @@ namespace Core.Inventory
 
         private void ToggleInventory()
         {
-            // TODO: This needs to be changed for the new input system
-
             // Toggles the inventory
-            if (Input.GetKeyDown(KeyCode.E))
+            if (inventoryToggleInput)
+            {
                 inventoryUI.SetActive(!inventoryUI.activeSelf);
+            }
+
+            inventoryToggleInput = false;
         }
 
         public void CloseInventory()

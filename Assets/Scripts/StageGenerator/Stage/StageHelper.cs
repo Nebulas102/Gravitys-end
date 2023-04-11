@@ -196,7 +196,7 @@ public class StageHelper : MonoBehaviour
             // Add a NavMeshBuildSource for each mesh filter
             foreach (MeshFilter filter in meshFilters)
             {
-                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" && obj.activeSelf)
+                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" || obj.tag == "RoomObstacle" && obj.activeSelf)
                 {
                     NavMeshBuildSource source = new NavMeshBuildSource()
                     {

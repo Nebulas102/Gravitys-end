@@ -55,22 +55,25 @@ public abstract class Room : MonoBehaviour
         float roomX = 0;
         float roomZ = 0;
 
+        int resizeZ = Mathf.RoundToInt(sizeZ / 2);
+        int resizeX = Mathf.RoundToInt(sizeZ / 2);
+
         switch(roomDirection)
         {
             case StageHelper.roomDirections.Top:
                 roomX = doorCell.transform.position.x;
-                roomZ = doorCell.transform.position.z + (sizeZ / 2 - 5 + StageHelper.GetOffset());
+                roomZ = doorCell.transform.position.z + (resizeZ - (StageHelper.GetOffset() / 2) + StageHelper.GetOffset());
             break;
             case StageHelper.roomDirections.Right:
-                roomX = doorCell.transform.position.x + (sizeX / 2 - 5 + StageHelper.GetOffset());
+                roomX = doorCell.transform.position.x + (resizeX - (StageHelper.GetOffset() / 2) + StageHelper.GetOffset());
                 roomZ = doorCell.transform.position.z;
             break;
             case StageHelper.roomDirections.Bottom:
                 roomX = doorCell.transform.position.x;
-                roomZ = doorCell.transform.position.z - (sizeZ / 2 - 5 + StageHelper.GetOffset());
+                roomZ = doorCell.transform.position.z - (resizeZ - (StageHelper.GetOffset() / 2) + StageHelper.GetOffset());
             break;
             case StageHelper.roomDirections.Left:
-                roomX = doorCell.transform.position.x - (sizeX / 2 - 5 + StageHelper.GetOffset());
+                roomX = doorCell.transform.position.x - (resizeX - (StageHelper.GetOffset() / 2) + StageHelper.GetOffset());
                 roomZ = doorCell.transform.position.z;
             break;
             case StageHelper.roomDirections.Undefined:
@@ -115,8 +118,8 @@ public abstract class Room : MonoBehaviour
         int roomX = (int)sizeX / offset;
         int roomZ = (int)sizeZ / offset;
 
-        int cellPosX = (posX % offset == 5 ? posX - 5 : posX) / offset;
-        int cellPosZ = (posZ % offset == 5 ? posZ - 5 : posZ) / offset;
+        int cellPosX = (posX % offset == (offset / 2) ? posX - (offset / 2) : posX) / offset;
+        int cellPosZ = (posZ % offset == (offset / 2) ? posZ - (offset / 2) : posZ) / offset;
 
         //Get the position X and Z of the cell in the scene
         int startPosX = cellPosX - roomX / 2;
@@ -157,8 +160,8 @@ public abstract class Room : MonoBehaviour
         int roomX = (int)sizeX / offset;
         int roomZ = (int)sizeZ / offset;
 
-        int cellPosX = (posX % offset == 5 ? posX - 5 : posX) / offset;
-        int cellPosZ = (posZ % offset == 5 ? posZ - 5 : posZ) / offset;
+        int cellPosX = (posX % offset == (offset / 2) ? posX - (offset / 2) : posX) / offset;
+        int cellPosZ = (posZ % offset == (offset / 2) ? posZ - (offset / 2) : posZ) / offset;
 
         //Get the position X and Z of the cell in the scene
         int startPosX = cellPosX - roomX / 2;

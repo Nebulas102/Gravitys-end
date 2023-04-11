@@ -172,10 +172,18 @@ public class StageHelper : MonoBehaviour
             {
                 calcX = gridX / 2 - 1;
             }
+            else
+            {
+                calcX = Mathf.RoundToInt(gridX / 2 - 1);
+            }
 
             if (gridZ % 2 == 0)
             {
                 calcZ = gridZ / 2 - 1;
+            }
+            else
+            {
+                calcZ = Mathf.RoundToInt(gridZ / 2 - 1);
             }
 
             return cells.Where(c => c.x == calcX && c.z == calcZ).SingleOrDefault();

@@ -1,12 +1,12 @@
 using ScriptableObjects;
 using UnityEngine;
 
-namespace Core.Inventory
+namespace Core.UI.Inventory
 {
     public class ItemPickup : MonoBehaviour
     {
         public Item item;
-        
+
         private void OnMouseDown()
         {
             // ONLY pick up ARMOR AND WEAPON ITEMS
@@ -14,7 +14,7 @@ namespace Core.Inventory
                 return;
 
             // Boolean to check if i was picked up (maybe the inventory was full or not)
-            bool wasPickedUp = Inventory.instance.Add(item);
+            var wasPickedUp = Inventory.Instance.Add(item);
 
             // If it was picked up, destroy that object from the scene
             if (wasPickedUp)

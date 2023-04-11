@@ -1,8 +1,7 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Core
+namespace Core.UI
 {
     public class CreditsMenu : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Core
+namespace Core.UI
 {
     public class PauseMenu : MonoBehaviour
     {
@@ -16,6 +16,14 @@ namespace Core
             _UIMenus = new UIMenus();
         }
 
+        private void Update()
+        {
+            // Toggle pause menu
+            if (pauseMenuToggleInput) pauseMenu.SetActive(!pauseMenu.activeSelf);
+
+            pauseMenuToggleInput = false;
+        }
+
         private void OnEnable()
         {
             _UIMenus.Enable();
@@ -27,20 +35,11 @@ namespace Core
             _UIMenus.Disable();
         }
 
-        void Update () {
-            // Toggle pause menu
-            if (pauseMenuToggleInput) {
-                pauseMenu.SetActive(!pauseMenu.activeSelf);
-            }
-
-            pauseMenuToggleInput = false;
-        }
-
         public void Resume()
         {
             // This removes the pause menu overlay to continue the game
             pauseMenu.SetActive(false);
-            
+
             // Unpause the game
             // 1f for now, Depends in which scene we are and what the timescale is in that particular scene
             Time.timeScale = 1f;

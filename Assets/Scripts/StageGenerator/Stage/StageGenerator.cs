@@ -128,16 +128,16 @@ public class StageGenerator : MonoBehaviour
                 break;
             }
 
-            int posX = (int)_spawnRoom.transform.position.x;
-            int posZ = 0;
+            float posX = _spawnRoom.transform.position.x;
+            float posZ = 0;
 
             if (latestHallway == null)
             {
-                posZ = (int)hallwayZ / 2 + (int)_spawnRoom.GetComponent<Room>().sizeZ - 5;
+                posZ = hallwayZ / 2 + _spawnRoom.GetComponent<Room>().sizeZ - (offset / 2);
             }
             else
             {
-                posZ = (int)(latestHallway.transform.position.z + latestHallway.sizeZ / 2) + (hallwayZ / 2);
+                posZ = (latestHallway.transform.position.z + Mathf.RoundToInt(latestHallway.sizeZ / 2)) + (Mathf.RoundToInt(hallwayZ / 2));
             }
 
             latestHallway = Instantiate(chosenHallway, new Vector3(posX, 0, posZ), Quaternion.identity).GetComponent<Room>();
@@ -150,7 +150,6 @@ public class StageGenerator : MonoBehaviour
 
         SpawnBossRoom(latestHallway.gameObject);
 
-        // yield return null;
         yield return StartCoroutine(GenerateRooms());
     }
 
@@ -196,8 +195,8 @@ public class StageGenerator : MonoBehaviour
         int spawnRoomX = (int)spawnRoom.GetComponent<Room>().sizeX;
         int spawnRoomZ = (int)spawnRoom.GetComponent<Room>().sizeZ;
 
-        int posX = gridX * offset / 2;
-        int posZ = spawnRoomZ / 2 - 5;
+        float posX = gridX * offset / 2;
+        float posZ = spawnRoomZ / 2 - (offset / 2);
 
         GameObject _spawnRoom = Instantiate(spawnRoom, new Vector3(posX, 0, posZ), Quaternion.identity);
         List<Cell> roomCells = SetRoomCells(_spawnRoom, posX, posZ);
@@ -215,8 +214,8 @@ public class StageGenerator : MonoBehaviour
         int spawnBossRoomX = (int)bossRoom.GetComponent<Room>().sizeX;
         int spawnBossRoomZ = (int)bossRoom.GetComponent<Room>().sizeZ;
 
-        int posX = gridX * offset / 2;
-        int posZ = (int)lastHallway.transform.position.z + ((int)lastHallway.GetComponent<Room>().sizeZ / 2)
+        float posX = gridX * offset / 2;
+        float posZ = lastHallway.transform.position.z + (Mathf.RoundToInt(lastHallway.GetComponent<Room>().sizeZ / 2))
                     + (spawnBossRoomZ / 2);
 
         GameObject _bossRoom = Instantiate(bossRoom, new Vector3(posX, 0, posZ), Quaternion.identity);
@@ -231,7 +230,7 @@ public class StageGenerator : MonoBehaviour
     }
 
     //Set the room cells that are occupied by it
-    private List<Cell> SetRoomCells(GameObject room, int posX, int posZ)
+    private List<Cell> SetRoomCells(GameObject room, float posX, float posZ)
     {
         //Create a new list to store the cells in
         List<Cell> roomCells = new List<Cell>();
@@ -242,8 +241,8 @@ public class StageGenerator : MonoBehaviour
         int roomX = (int)_room.sizeX / offset;
         int roomZ = (int)_room.sizeZ / offset;
 
-        int cellPosX = (posX % offset == 5 ? posX - 5 : posX) / offset;
-        int cellPosZ = (posZ % offset == 5 ? posZ - 5 : posZ) / offset;
+        int cellPosX = (int)(posX % offset == (offset / 2) ? posX - (offset / 2) : posX) / offset;
+        int cellPosZ = (int)(posZ % offset == (offset / 2) ? posZ - (offset / 2) : posZ) / offset;
 
         // cellPosX = roomX % 2 != 0 ? cellPosX : cellPosX + 1;
         // cellPosZ = roomZ % 2 != 0 ? cellPosZ : cellPosZ + 1;

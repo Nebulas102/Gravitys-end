@@ -188,7 +188,12 @@ public class StageGenerator : MonoBehaviour
                 room.GetComponent<EnemyGeneration>().SpawnEnemy();
             }
         }
-        yield return null;
+        yield return StartCoroutine(StageLootGeneration());
+    }
+
+    private IEnumerator StageLootGeneration()
+    {
+        
     }
 
     private GameObject SpawnRoom()

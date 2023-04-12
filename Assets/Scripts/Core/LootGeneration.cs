@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -6,7 +7,9 @@ namespace Core
 {
     public class LootGeneration : MonoBehaviour
     {
-        [SerializeField]
-        private List<Item> lootObjects;
+        private List<Item> _lootObjects;
+        private Vector3 _spawnPointPos;
+        
+        
     }
 }

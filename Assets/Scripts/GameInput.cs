@@ -1,39 +1,36 @@
 using UnityEngine;
 
-namespace Assets.Scripts
+public class GameInput : MonoBehaviour
 {
-    public class GameInput : MonoBehaviour
+    public PlayerInputManager playerInputManager;
+
+    private void Awake()
     {
-        public PlayerInputManager playerInputManager;
+        playerInputManager = new PlayerInputManager();
+        playerInputManager.Player.Enable();
+    }
 
-        private void Awake()
-        {
-            playerInputManager = new PlayerInputManager();
-            playerInputManager.Player.Enable();
-        }
+    public Vector2 GetMovement()
+    {
+        var inputVector = playerInputManager.Player.Move.ReadValue<Vector2>();
+        return inputVector;
+    }
 
-        public Vector2 GetMovement()
-        {
-            Vector2 inputVector = playerInputManager.Player.Move.ReadValue<Vector2>();
-            return inputVector;
-        }
+    public Vector2 GetLookPosition()
+    {
+        var lookPosition = playerInputManager.Player.Look.ReadValue<Vector2>();
+        return lookPosition;
+    }
 
-        public Vector2 GetLookPosition()
-        {
-            Vector2 lookPosition = playerInputManager.Player.Look.ReadValue<Vector2>();
-            return lookPosition;
-        }
+    public bool GetDash()
+    {
+        var dash = playerInputManager.Player.Dash.ReadValue<float>() > 0;
+        return dash;
+    }
 
-        public bool GetDash()
-        {
-            bool dash = playerInputManager.Player.Dash.ReadValue<float>() > 0;
-            return dash;
-        }
-
-        public bool GetAttack()
-        {
-            bool attack = playerInputManager.Player.Attack.triggered;
-            return attack;
-        }
+    public bool GetAttack()
+    {
+        var attack = playerInputManager.Player.Attack.triggered;
+        return attack;
     }
 }

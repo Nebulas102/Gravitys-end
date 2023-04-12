@@ -1,53 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour
+namespace Controllers
 {
-    public float lookRadius = 10f;
-
-    Transform target;
-    NavMeshAgent agent;
-
-    void Start()
+    public class EnemyController : MonoBehaviour
     {
-        target = PlayerManager.instance.player.transform; // See PlayerManager.cs for explanation
-        agent = GetComponent<NavMeshAgent>();
-    }
+        public float lookRadius = 10f;
+        private NavMeshAgent agent;
 
-    void Update()
-    {
-        float distance = Vector3.Distance(target.position, transform.position);
+        private Transform target;
 
-        if (distance > lookRadius)
-            return;
-            
-        agent.SetDestination(target.position);
-
-        if (distance <= agent.stoppingDistance)
+        private void Start()
         {
-            // Attack the player
-            // Face the player
-            FaceTarget();
+            target = PlayerManager.instance.player.transform; // See PlayerManager.cs for explanation
+            agent = GetComponent<NavMeshAgent>();
         }
-    }
 
-    // When the player is too close to the enemy, it wont rotate anymore
-    // This function fixes it
+        private void Update()
+        {
+            var distance = Vector3.Distance(target.position, transform.position);
 
-    void FaceTarget ()
-    {
-        Vector3 direction = (target.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-    }
+            if (distance > lookRadius)
+                return;
 
-    // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
-    void OnDrawGizmosSelected ()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
+            agent.SetDestination(target.position);
+
+            if (distance <= agent.stoppingDistance)
+            {
+                // Attack the player
+                // Face the player
+                FaceTarget();
+            }
+        }
+
+        // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, lookRadius);
+        }
+
+        // When the player is too close to the enemy, it wont rotate anymore
+        // This function fixes it
+
+        private void FaceTarget()
+        {
+            var direction = (target.position - transform.position).normalized;
+            var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
     }
 }

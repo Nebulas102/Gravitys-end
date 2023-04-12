@@ -9,6 +9,7 @@ namespace ScriptableObjects
     {
         public Sprite icon;
         public bool isDefaultItem;
+        public GameObject prefab;
 
         [SerializeField]
         public Type type;

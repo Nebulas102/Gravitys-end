@@ -1789,6 +1789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2915231218470790407}
   - component: {fileID: -5534617343654300323}
+  - component: {fileID: 4435606639821100504}
   m_Layer: 0
   m_Name: TestSpawnRoom
   m_TagString: Room
@@ -1844,14 +1845,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8c2e319505c4314a820769679d61832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 0
-  sizeY: 0
-  sizeZ: 0
+  sizeX: 25
+  sizeY: 4
+  sizeZ: 25
   cells: []
   weight: 0
   doors:
   - {fileID: 6356833223409406187}
   doorReplacement: {fileID: 0}
+--- !u!114 &4435606639821100504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2915231218470790405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cafce194fcf64bbebe156fcda908c579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootObjects:
+  - {fileID: 11400000, guid: 5a787e6fabda31b458a40269236f5132, type: 2}
+  - {fileID: 11400000, guid: 5a787e6fabda31b458a40269236f5132, type: 2}
+  - {fileID: 11400000, guid: 5a787e6fabda31b458a40269236f5132, type: 2}
+  - {fileID: 11400000, guid: 5a787e6fabda31b458a40269236f5132, type: 2}
+  - {fileID: 11400000, guid: 5a787e6fabda31b458a40269236f5132, type: 2}
 --- !u!1 &2942763008046420423
 GameObject:
   m_ObjectHideFlags: 0

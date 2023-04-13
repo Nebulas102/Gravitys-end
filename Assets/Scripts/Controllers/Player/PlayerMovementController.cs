@@ -8,9 +8,18 @@ namespace Controllers.Player
     [RequireComponent(typeof(PlayerInputManager))]
     public class PlayerMovementController : MonoBehaviour
     {
+        //Animation states
+        private const string IDLE = "Idle";
+        private const string RUNNING = "Running";
+        private const string ATTACK1 = "Attack1";
+        private const string ATTACK2 = "Attack2";
+        private const string ATTACK3 = "Attack3";
+        private static int _noOfClicks = 0;
+
         [Header("Movement")]
         [SerializeField]
         private float playerSpeed = 5f;
+
         [SerializeField]
         private bool canMove = true;
 
@@ -47,138 +56,116 @@ namespace Controllers.Player
         [SerializeField]
         private Camera _camera;
 
-        private CharacterController controller;
-
-        private Vector2 movementInput, lookInput;
-        private Vector3 playerVelocity;
-
-        private PlayerInputManager playerInputManager;
-        private PlayerInput playerInput;
-
-        private GameInput gameInput;
-        private bool dashInput, attackInput;
+        [SerializeField]
+        private bool isDashing;
 
         [SerializeField]
-        private bool isDashing = false;
-        [SerializeField]
-        private bool isAttacking = false;
+        private bool isAttacking;
+
+        private Animator _anim;
+
+        private CharacterController _controller;
+        private bool _dashInput, _attackInput;
+
+        private GameInput _gameInput;
+        private float _lastClickedTime = 0;
+        private float _maxComboDelay = 1f;
+
+        private Vector2 _movementInput, _lookInput;
 
         //Attack variables
-        private float nextFireTime = 0f;
-        private static int noOfClicks = 0;
-        float lastClickedTime = 0;
-        float maxComboDelay = 1f;
+        private float _nextFireTime = 0f;
+        private PlayerInput _playerInput;
 
-        private Animator anim;
-
-        //Animation states
-        const string IDLE = "Idle";
-        const string RUNNING = "Running";
-        const string ATTACK1 = "Attack1";
-        const string ATTACK2 = "Attack2";
-        const string ATTACK3 = "Attack3";
+        private PlayerInputManager _playerInputManager;
+        private Vector3 _playerVelocity;
 
         private void Awake()
         {
-            controller = GetComponent<CharacterController>();
-            gameInput = FindObjectOfType<GameInput>();
+            _controller = GetComponent<CharacterController>();
+            _gameInput = FindObjectOfType<GameInput>();
         }
 
         private void Start()
         {
-            anim = PlayerAnimator.instance.GetComponent<Animator>();
+            _anim = PlayerAnimator.instance.GetComponent<Animator>();
         }
 
-        void Update()
+        private void Update()
         {
-            if (!isDashing)
-            {
-                HandleInput();
-            }
-            if (!isAttacking)
-            {
-                HandleRotation();
-            }
+            if (!isDashing) HandleInput();
+            if (!isAttacking) HandleRotation();
+
             HandleAttack();
         }
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
-            if (canMove && !isAttacking)
-            {
-                HandleMovement();
-            }
+            if (canMove && !isAttacking) HandleMovement();
             HandleDash();
         }
 
         public void OnDeviceChange(PlayerInput pi)
         {
             //check if gamepad is connected
-            isGamepad = pi.currentControlScheme.Equals("Gamepad") ? true : false;
+            isGamepad = pi.currentControlScheme.Equals("Gamepad");
         }
 
-        void HandleInput()
+        private void HandleInput()
         {
             //get input from player input manager
-            movementInput = gameInput.GetMovement();
-            lookInput = gameInput.GetLookPosition();
-            dashInput = gameInput.GetDash();
-            attackInput = gameInput.GetAttack();
+            _movementInput = _gameInput.GetMovement();
+            _lookInput = _gameInput.GetLookPosition();
+            _dashInput = _gameInput.GetDash();
+            _attackInput = _gameInput.GetAttack();
         }
 
 
         //////////////////////////////////////////////
         // Movement                                 // 
         //////////////////////////////////////////////
-        void HandleMovement()
+        private void HandleMovement()
         {
             //play running animation
-            if (GetMovementDirection() != Vector3.zero)
-            {
-                PlayerAnimator.instance.ChangeAnimationState(RUNNING);
-            }
-            else
-            {
-                PlayerAnimator.instance.ChangeAnimationState(IDLE);
-            }
+            PlayerAnimator.instance.ChangeAnimationState(GetMovementDirection() != Vector3.zero ? RUNNING : IDLE);
 
             //move player
-            controller.Move(GetMovementDirection() * Time.deltaTime * playerSpeed);
+            _controller.Move(GetMovementDirection() * (Time.deltaTime * playerSpeed));
         }
 
-        public Vector3 GetMovementDirection()
+        private Vector3 GetMovementDirection()
         {
             //create vector3 from input
-            Vector3 movementDirection = new Vector3(movementInput.x, 0f, movementInput.y);
+            var movementDirection = new Vector3(_movementInput.x, 0f, _movementInput.y);
             //makes player move independent of camera rotation (W means north, S means south, etc.)
-            return movementDirection = Quaternion.Euler(0, _camera.gameObject.transform.eulerAngles.y, 0) * movementDirection;
+            return movementDirection =
+                Quaternion.Euler(0, _camera.gameObject.transform.eulerAngles.y, 0) * movementDirection;
         }
 
-        void HandleRotation()
+        private void HandleRotation()
         {
             if (isGamepad)
             {
-                float cameraEulerY = _camera.gameObject.transform.eulerAngles.y;
-                float rotateTowardsValue = gamepadRotateSmoothing * Time.deltaTime;
+                var cameraEulerY = _camera.gameObject.transform.eulerAngles.y;
+                var rotateTowardsValue = gamepadRotateSmoothing * Time.deltaTime;
 
-                Vector3 lookInputVector = new Vector3(lookInput.x, 0, lookInput.y);
-                float lookInputSqrMagnitude = lookInputVector.sqrMagnitude;
+                var lookInputVector = new Vector3(_lookInput.x, 0, _lookInput.y);
+                var lookInputSqrMagnitude = lookInputVector.sqrMagnitude;
 
                 //if input is greater than deadzone, rotate towards input
                 if (lookInputSqrMagnitude > controllerDeadzone * controllerDeadzone)
                 {
                     //rotate towards input
-                    Vector3 playerDirection = Vector3.right * lookInput.x + Vector3.forward * lookInput.y;
-                    if (playerDirection.sqrMagnitude > 0.0f)
-                    {
-                        Quaternion newrotation = Quaternion.LookRotation(playerDirection, Vector3.up) * Quaternion.Euler(0, cameraEulerY, 0);
-                        transform.rotation = Quaternion.RotateTowards(transform.rotation, newrotation, rotateTowardsValue);
-                    }
+                    var playerDirection = Vector3.right * _lookInput.x + Vector3.forward * _lookInput.y;
+                    if (!(playerDirection.sqrMagnitude > 0.0f)) return;
+
+                    var newRotation = Quaternion.LookRotation(playerDirection, Vector3.up) *
+                                      Quaternion.Euler(0, cameraEulerY, 0);
+                    transform.rotation =
+                        Quaternion.RotateTowards(transform.rotation, newRotation, rotateTowardsValue);
                 }
                 else
-                {
                     KeepRotationAfterMovement();
-                }
             }
             else
             {
@@ -195,40 +182,36 @@ namespace Controllers.Player
                 //     LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
                 // }
             }
-
         }
 
         private void KeepRotationAfterMovement()
         {
             if (GetMovementDirection() != Vector3.zero)
-            {
                 transform.rotation = Quaternion.LookRotation(GetMovementDirection(), Vector3.up);
-            }
         }
 
         private void LookAt(Vector3 lookPoint)
         {
             //corrects height of look point so player doesn't look up or down
-            Vector3 heighCorrectedPoint = new Vector3(lookPoint.x, transform.position.y, lookPoint.z);
-            transform.LookAt(heighCorrectedPoint);
+            var heightCorrectedPoint = new Vector3(lookPoint.x, transform.position.y, lookPoint.z);
+            transform.LookAt(heightCorrectedPoint);
         }
-
 
         //////////////////////////////////////////////
         // Dashing                                  // 
         //////////////////////////////////////////////
 
-        public void HandleDash()
+        private void HandleDash()
         {
-            if (!dashAvailable && dashInput)
+            switch (dashAvailable)
             {
-                //text on screen to tell player dash is on cooldown
-            }
-
-            if (dashAvailable && dashInput)
-            {
-                //when activation input is pressed, start dash cooldown
-                StartCoroutine(DashCoroutine());
+                case false when _dashInput:
+                    //text on screen to tell player dash is on cooldown
+                    break;
+                case true when _dashInput:
+                    //when activation input is pressed, start dash cooldown
+                    StartCoroutine(DashCoroutine());
+                    break;
             }
         }
 
@@ -239,14 +222,14 @@ namespace Controllers.Player
             dashAvailable = false;
             // set dash timer
             dashTimer = dashDuration;
-            Vector3 dashDir = new Vector3(movementInput.x, 0, movementInput.y);
+            var dashDir = new Vector3(_movementInput.x, 0, _movementInput.y);
             //makes player move independent of camera rotation (W means north, S means south, etc.)
             dashDir = Quaternion.Euler(0, _camera.gameObject.transform.eulerAngles.y, 0) * dashDir;
 
             while (dashTimer > 0)
             {
                 // move player
-                controller.Move(dashDir * dashSpeed * Time.deltaTime);
+                _controller.Move(dashDir * (dashSpeed * Time.deltaTime));
                 // decrease dash timer
                 dashTimer -= Time.deltaTime;
                 yield return null;
@@ -262,30 +245,25 @@ namespace Controllers.Player
         //////////////////////////////////////////////
         // Attacking                                // 
         //////////////////////////////////////////////
-        public void HandleAttack()
+        private void HandleAttack()
         {
-            if (attackInput)
+            if (!_attackInput) return;
+
+            _attackInput = false;
+
+            if (!isAttacking)
             {
-                attackInput = false;
+                isAttacking = true;
 
-                if (!isAttacking)
-                {
-                    isAttacking = true;
-
-                    PlayerAnimator.instance.ChangeAnimationState(ATTACK1);
-                }
-
-                Invoke("AttackComplete", 1f);
+                PlayerAnimator.instance.ChangeAnimationState(ATTACK1);
             }
+
+            Invoke(nameof(AttackComplete), 1f);
         }
 
-        void AttackComplete()
+        private void AttackComplete()
         {
             isAttacking = false;
         }
     }
 }
-
-
-
-

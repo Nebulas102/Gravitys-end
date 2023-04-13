@@ -10,6 +10,12 @@ namespace Core
         [SerializeField]
         private List<Item> lootObjects;
 
+        [SerializeField]
+        private Vector2 xRange;
+
+        [SerializeField]
+        private Vector2 zRange;
+
         private Vector3 _spawnPointPos;
 
         public IEnumerator SpawnLoot(GameObject spawnRoom)
@@ -18,10 +24,11 @@ namespace Core
             // Spawns amount of loot objects based on the amount of loot objects in the list
             foreach (var item in lootObjects)
             {
-                var xOffset = Random.Range(-12, 12);
-                var zOffset = Random.Range(-12, 12);
-                Instantiate(item.prefab, new Vector3(_spawnPointPos.x - xOffset, 0.5f, _spawnPointPos.z - zOffset),
-                    Quaternion.identity);
+                var xOffset = Random.Range(xRange.x, xRange.y);
+                var zOffset = Random.Range(zRange.x, zRange.y);
+
+                item.Spawn(new Vector3(_spawnPointPos.x - xOffset, item.prefab.transform.position.y,
+                    _spawnPointPos.z - zOffset));
                 // Waits 0.1 seconds before spawning the next loot object because of performance
                 yield return new WaitForSeconds(0.1f);
             }

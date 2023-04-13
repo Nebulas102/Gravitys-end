@@ -659,7 +659,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939553836368986236}
   m_LocalRotation: {x: 0.31598538, y: -0.3596048, z: 0.13088542, w: 0.8681629}
-  m_LocalPosition: {x: 6.61354, y: 7.7176104, z: -5.981648}
+  m_LocalPosition: {x: 6.61354, y: 7.7316103, z: -5.981648}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -925,7 +925,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930295915545554912}
   m_LocalRotation: {x: 0.31598538, y: -0.3596048, z: 0.13088542, w: 0.8681629}
-  m_LocalPosition: {x: 156.61356, y: 7.7176185, z: 4.0183496}
+  m_LocalPosition: {x: 6.61354, y: 7.7316103, z: -5.981648}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1123,7 +1123,7 @@ GameObject:
   - component: {fileID: 3438615595413257513}
   - component: {fileID: 5042336099368233358}
   - component: {fileID: 689641804871983852}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: MiniMapCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1848,11 +1848,11 @@ MonoBehaviour:
   sizeX: 25
   sizeY: 4
   sizeZ: 25
-  cells: []
   weight: 0
   doors:
   - {fileID: 6356833223409406187}
   doorReplacement: {fileID: 0}
+  cells: []
 --- !u!114 &4435606639821100504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1871,6 +1871,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5a787e6fabda31b458a40269236f5132, type: 2}
   - {fileID: 11400000, guid: 5a787e6fabda31b458a40269236f5132, type: 2}
   - {fileID: 11400000, guid: 5a787e6fabda31b458a40269236f5132, type: 2}
+  xRange: {x: -12, y: 12}
+  zRange: {x: -12, y: 12}
 --- !u!1 &2942763008046420423
 GameObject:
   m_ObjectHideFlags: 0
@@ -3684,9 +3686,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPosXOffset: 2
   roomPosZOffset: 4
-  cell: {fileID: 0}
   hasNeighbour: 0
   direction: 0
+  cell: {fileID: 0}
 --- !u!1 &6380419929868879385
 GameObject:
   m_ObjectHideFlags: 0
@@ -4187,7 +4189,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7356681710839472484}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.486, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4208,13 +4210,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.7
-  m_Radius: 0.3
+  m_Height: 2
+  m_Radius: 0.36
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.94, z: 0}
+  m_Center: {x: 0.03, y: 0.85, z: 0}
 --- !u!114 &254778676750896329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4294,6 +4296,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 1d8186da-671a-4a67-ba55-cf52c1bc3783
     m_ActionName: Player/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e9e0e3cf-d548-490e-a9bf-c2f9b75cdb4b
+    m_ActionName: Player/Loot Pickup[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

@@ -92,6 +92,11 @@ namespace ScriptableObjects
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        public void Spawn(Vector3 position)
+        {
+            Instantiate(prefab, position, Quaternion.identity);
+        }
     }
 
     public enum Type

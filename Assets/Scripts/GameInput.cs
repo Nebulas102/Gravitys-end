@@ -2,35 +2,41 @@ using UnityEngine;
 
 public class GameInput : MonoBehaviour
 {
-    public PlayerInputManager playerInputManager;
+    private PlayerInputManager _playerInputManager;
 
     private void Awake()
     {
-        playerInputManager = new PlayerInputManager();
-        playerInputManager.Player.Enable();
+        _playerInputManager = new PlayerInputManager();
+        _playerInputManager.Player.Enable();
     }
 
     public Vector2 GetMovement()
     {
-        var inputVector = playerInputManager.Player.Move.ReadValue<Vector2>();
+        var inputVector = _playerInputManager.Player.Move.ReadValue<Vector2>();
         return inputVector;
     }
 
     public Vector2 GetLookPosition()
     {
-        var lookPosition = playerInputManager.Player.Look.ReadValue<Vector2>();
+        var lookPosition = _playerInputManager.Player.Look.ReadValue<Vector2>();
         return lookPosition;
     }
 
     public bool GetDash()
     {
-        var dash = playerInputManager.Player.Dash.ReadValue<float>() > 0;
+        var dash = _playerInputManager.Player.Dash.ReadValue<float>() > 0;
         return dash;
     }
 
     public bool GetAttack()
     {
-        var attack = playerInputManager.Player.Attack.triggered;
+        var attack = _playerInputManager.Player.Attack.triggered;
         return attack;
+    }
+
+    public bool GetPickUp()
+    {
+        var pickup = _playerInputManager.Player.LootPickup.triggered;
+        return pickup;
     }
 }

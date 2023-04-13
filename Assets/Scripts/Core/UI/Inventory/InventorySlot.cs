@@ -2,7 +2,7 @@ using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Inventory
+namespace Core.UI.Inventory
 {
     public class InventorySlot : MonoBehaviour
     {
@@ -14,9 +14,6 @@ namespace Core.Inventory
 
         [SerializeField]
         public Button removeButton;
-
-        [SerializeField]
-        public Type type;
 
         private Item _item;
 
@@ -40,9 +37,12 @@ namespace Core.Inventory
 
             removeButton.interactable = false;
         }
-        
-        public Item GetItem() => _item != null ? _item : null;
-        
+
+        public Item GetItem()
+        {
+            return _item != null ? _item : null;
+        }
+
         public void OnRemoveButton()
         {
             // Something for later: Drop the item on the ground
@@ -55,7 +55,7 @@ namespace Core.Inventory
                 return;
             }
 
-            Inventory.instance.Remove(_item);
+            Inventory.Instance.Remove(_item);
         }
 
         public void UseItem()

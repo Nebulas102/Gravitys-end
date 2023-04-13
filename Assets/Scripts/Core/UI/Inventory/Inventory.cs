@@ -3,7 +3,7 @@ using System.Linq;
 using ScriptableObjects;
 using UnityEngine;
 
-namespace Core.Inventory
+namespace Core.UI.Inventory
 {
     public class Inventory : MonoBehaviour
     {
@@ -19,28 +19,31 @@ namespace Core.Inventory
         */
 
         // Singleton for inventory
-        public static Inventory instance;
+        public static Inventory Instance;
 
         // Space for each type of item
+        [SerializeField]
         public int space = 3;
-        public GameObject inventoryUI;
-        public readonly IDictionary<Type, List<Item>> items = new Dictionary<Type, List<Item>>();
 
-        private UIMenus _UIMenus;
-        private bool inventoryToggleInput;
-        public OnItemChanged onItemChangedCallback;
+        [SerializeField]
+        public GameObject inventoryUI;
+
+        public readonly IDictionary<Type, List<Item>> Items = new Dictionary<Type, List<Item>>();
+        private bool _inventoryToggleInput;
+
+        private UIMenus _uiMenus;
+        public OnItemChanged OnItemChangedCallback;
 
 
         private void Awake()
         {
-            _UIMenus = new UIMenus();
+            if (Instance == null)
+                Instance = this;
 
-            if (instance != null)
-                return;
+            _uiMenus = new UIMenus();
 
-            instance = this;
-            items.Add(Type.ARMOR, new List<Item>());
-            items.Add(Type.WEAPON, new List<Item>());
+            Items.Add(Type.ARMOR, new List<Item>());
+            Items.Add(Type.WEAPON, new List<Item>());
         }
 
         private void Update()
@@ -50,13 +53,13 @@ namespace Core.Inventory
 
         private void OnEnable()
         {
-            _UIMenus.Enable();
-            _UIMenus.Menus.ToggleInventory.performed += ctx => inventoryToggleInput = true;
+            _uiMenus.Enable();
+            _uiMenus.Menus.ToggleInventory.performed += _ => _inventoryToggleInput = true;
         }
 
         private void OnDisable()
         {
-            _UIMenus.Disable();
+            _uiMenus.Disable();
         }
 
         public bool Add(Item item)
@@ -65,10 +68,10 @@ namespace Core.Inventory
                 return true;
 
             // Check whether the dictionary key is already set, if not, set with new list
-            if (!items.TryGetValue(item.type, out var list))
+            if (!Items.TryGetValue(item.type, out var list))
             {
                 list = new List<Item>();
-                items.Add(item.type, list);
+                Items.Add(item.type, list);
             }
 
             if (list.Count >= space)
@@ -76,30 +79,29 @@ namespace Core.Inventory
 
             // Add item to list and update the dictionary with the updated list
             list.Add(item);
-            items[item.type] = list;
+            Items[item.type] = list;
 
-            onItemChangedCallback?.Invoke();
+            OnItemChangedCallback?.Invoke();
             return true;
         }
 
         public void Remove(Item item)
         {
             // Remove the item and also invoke the delegate so that the other methods can be notified
-            var list = items.First(x => x.Key == item.type).Value;
+            var list = Items.First(x => x.Key == item.type).Value;
             list.Remove(item);
 
-            items[item.type] = list;
+            Items[item.type] = list;
 
-            onItemChangedCallback?.Invoke();
+            OnItemChangedCallback?.Invoke();
         }
-
 
         private void ToggleInventory()
         {
             // Toggles the inventory
-            if (inventoryToggleInput) inventoryUI.SetActive(!inventoryUI.activeSelf);
+            if (_inventoryToggleInput) inventoryUI.SetActive(!inventoryUI.activeSelf);
 
-            inventoryToggleInput = false;
+            _inventoryToggleInput = false;
         }
 
         public void CloseInventory()

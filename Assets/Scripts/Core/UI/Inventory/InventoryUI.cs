@@ -4,13 +4,19 @@ using System.Linq;
 using ScriptableObjects;
 using UnityEngine;
 
-namespace Core.Inventory
+namespace Core.UI.Inventory
 {
     public class InventoryUI : MonoBehaviour
     {
+        public static InventorySlot StaticCurrentArmorSlot;
+        public static InventorySlot StaticCurrentWeaponSlot;
+
+        // Singleton for inventoryUI
+        public static InventoryUI Instance;
+
         [SerializeField]
         public Transform itemsParent;
-        
+
         [SerializeField]
         private List<InventorySlot> armorSlots;
 
@@ -23,39 +29,24 @@ namespace Core.Inventory
         [SerializeField]
         private InventorySlot currentWeaponSlot;
 
-        public static InventorySlot staticCurrentArmorSlot;
-        public static InventorySlot staticCurrentWeaponSlot;
-        public Inventory inventory;
-        public InventorySlot[] slots;
-        
-        // Singleton for inventoryUI
-        public static InventoryUI instance;
-
         private void Awake()
         {
-            if (instance != null)
-                return;
-
-            instance = this;
+            if (Instance == null)
+                Instance = this;
         }
 
         // Start is called before the first frame update
         private void Start()
         {
             // Get the singleton instance of the inventory and subscribe to the delegate
-            inventory = Inventory.instance;
-            inventory.onItemChangedCallback += UpdateGUI;
-
-            // Get all the inventory slots
-            slots = itemsParent.GetComponentsInChildren<InventorySlot>();
+            Inventory.Instance.OnItemChangedCallback += UpdateGUI;
 
             // Set the current slots to the static one's in order to obtain the right ones in other scripts
-            staticCurrentArmorSlot = currentArmorSlot;
-            staticCurrentWeaponSlot = currentWeaponSlot;
+            StaticCurrentArmorSlot = currentArmorSlot;
+            StaticCurrentWeaponSlot = currentWeaponSlot;
 
             UpdateGUI();
         }
-
 
         private void UpdateGUI()
         {
@@ -63,25 +54,20 @@ namespace Core.Inventory
             UpdateSlots(weaponSlots, Type.WEAPON);
         }
 
-        private void UpdateSlots(List<InventorySlot> inventorySlots, Type itemType)
+        private static void UpdateSlots(List<InventorySlot> inventorySlots, Type itemType)
         {
-            List<Item> items = inventory.items[itemType];
+            var items = Inventory.Instance.Items[itemType];
 
-            foreach (InventorySlot slot in inventorySlots)
+            foreach (var slot in inventorySlots)
             {
-                int index = inventorySlots.IndexOf(slot);
+                var index = inventorySlots.IndexOf(slot);
 
                 if (index < items.Count)
-                {
                     slot.AddItem(items[index]);
-                }
                 else
-                {
                     slot.ClearSlot();
-                }
             }
         }
-
 
         public InventorySlot CheckForAvailableSlots(Type type)
         {
@@ -92,27 +78,12 @@ namespace Core.Inventory
 
             return type switch
             {
-                Type.ARMOR => GetFirstAvailableSlot(armorSlots, inventory.items.First(x => x.Key == Type.ARMOR).Value),
+                Type.ARMOR => GetFirstAvailableSlot(armorSlots,
+                    Inventory.Instance.Items.First(x => x.Key == Type.ARMOR).Value),
                 Type.WEAPON => GetFirstAvailableSlot(weaponSlots,
-                    inventory.items.First(x => x.Key == Type.WEAPON).Value),
+                    Inventory.Instance.Items.First(x => x.Key == Type.WEAPON).Value),
                 _ => null
             };
         }
-
-        // InventorySlot SlotCheckingByType (Type type) {
-        //     if (type == Type.ARMOR)
-        //     {
-        //         for (int i = 0; i < armorSlots.Length; i++)
-        //         {
-        //             if (!(i < inventory.armorItems.Count))
-        //             {
-        //                 return armorSlots[i];
-        //             }
-
-
-        //         }
-
-        //     }
-        // }
     }
 }

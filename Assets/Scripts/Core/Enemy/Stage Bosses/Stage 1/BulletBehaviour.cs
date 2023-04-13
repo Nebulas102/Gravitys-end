@@ -1,28 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Controllers.Player;
+using ScriptableObjects;
 using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private GameObject boss;
+
     void Start()
     {
-        
+        boss = BossManager.instance.boss;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnCollisionEnter(Collision other) 
+    private void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.tag == "Player")
         {
-            //damage player
-        }
+            // Entity playerEntity = other.gameObject.GetComponent<PlayerStatsController>().GetPlayerObject().entity;
 
-        Destroy(gameObject); 
+            //take regularshooting damage and not boss damage
+            // playerEntity.TakeDamage(boss.GetComponent<Boss>().GetDamage(), 0.2f);
+
+            Destroy(other.gameObject);
+        } 
+        else if (other.gameObject.tag == "Wall")
+        {
+            Destroy(gameObject);
+        }
     }
 }

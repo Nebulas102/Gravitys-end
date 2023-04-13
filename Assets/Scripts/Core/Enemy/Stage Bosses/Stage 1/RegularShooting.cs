@@ -21,10 +21,12 @@ using UnityEngine;
         private float sprayInterval;
 
         private GameObject boss;
+        private GameObject player;
 
         private void Start()
         {
-            boss = GameObject.FindWithTag("Boss");
+            boss = BossManager.instance.boss;
+            player = PlayerManager.instance.player;
         }
 
         public override void UseBossAbility()
@@ -36,15 +38,17 @@ using UnityEngine;
         {
             for (int i = 0; i < sprayAmountBullets; i++)
             {
-                StartCoroutine(Shoot(i));
+                StartCoroutine(Shoot());
             }
 
             yield return new WaitForSeconds(sprayInterval);
         }
 
-        private IEnumerator Shoot(int i)
+        private IEnumerator Shoot()
         {
-            Debug.Log("Regular Shot " + i);
+            GameObject _bullet = Instantiate(bullet, transform.position, Quaternion.identity);
+            
+            _bullet.transform.position = Vector3.MoveTowards(_bullet.transform.position, player.transform.position, bulletSpeed * Time.deltaTime);
 
             yield return new WaitForSeconds(bulletInterval);
         }

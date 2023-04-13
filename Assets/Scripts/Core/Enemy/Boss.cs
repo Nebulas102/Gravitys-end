@@ -65,9 +65,6 @@ public class Boss : MonoBehaviour
             // Check if we've used the current ability enough times
             if (bossAbilityStages[currentAbilityIndex].GetAmountOfTimesUsed() >= bossAbilityStages[currentAbilityIndex].GetAmountOfTimes())
             {
-                Debug.Log("Next ability");
-                Debug.Log("====================================================");
-
                 // Reset the times used for the current ability
                 bossAbilityStages[currentAbilityIndex].SetAmountOfTimesUsed(0);
 
@@ -104,5 +101,15 @@ public class Boss : MonoBehaviour
     public List<BossAbilityStage> GetBossAbilityStages()
     {
         return bossAbilityStages;
+    }
+
+    public float GetDamage()
+    {
+        return damage;
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 }

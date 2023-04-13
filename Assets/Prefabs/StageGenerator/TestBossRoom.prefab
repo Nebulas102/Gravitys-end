@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1411590639457188658}
   - component: {fileID: 3265830571078259228}
-  - component: {fileID: 7472326979514953079}
+  - component: {fileID: 7713165644456181134}
   m_Layer: 0
   m_Name: EnterBossFight
   m_TagString: Untagged
@@ -240,7 +240,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7472326979514953079
+--- !u!114 &7713165644456181134
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 714412498181672757}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e4553e66ed0d4a4b802091be2ca705c, type: 3}
+  m_Script: {fileID: 11500000, guid: fea192b9b77086e4ba8c686cf9c3ced4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   teleportDestination: {fileID: 1083953835275307785}
@@ -691,7 +691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 292239137025907417}
-  - component: {fileID: 7331234002069197798}
+  - component: {fileID: 2859717733013606180}
   m_Layer: 0
   m_Name: TestBossRoom
   m_TagString: Room
@@ -725,7 +725,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7331234002069197798
+--- !u!114 &2859717733013606180
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -740,11 +740,11 @@ MonoBehaviour:
   sizeX: 0
   sizeY: 0
   sizeZ: 0
-  cells: []
   weight: 0
   doors:
   - {fileID: 9179853730517305653}
   doorReplacement: {fileID: 0}
+  cells: []
   roomBossSpawnPoint: {fileID: 0}
 --- !u!1 &5940459637176829714
 GameObject:
@@ -1366,9 +1366,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPosXOffset: 0
   roomPosZOffset: 4
-  cell: {fileID: 0}
   hasNeighbour: 0
   direction: 2
+  cell: {fileID: 0}
 --- !u!208 &97686952299059949
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -1392,9 +1392,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 292239137025907417}
     m_Modifications:
+    - target: {fileID: 386032337357196633, guid: 060ad79147367be4db949192a78d4109, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176069971641675334, guid: 060ad79147367be4db949192a78d4109, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2339821805137950932, guid: 060ad79147367be4db949192a78d4109, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6575595425671537587, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: m_Name
       value: Boss1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6575595425671537587, guid: 060ad79147367be4db949192a78d4109, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6620003225802983138, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: healthBar

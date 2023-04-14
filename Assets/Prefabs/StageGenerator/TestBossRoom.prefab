@@ -1460,7 +1460,11 @@ PrefabInstance:
       objectReference: {fileID: 7148784591487754067, guid: 5141181eba09bdb4495a24b4d8f78666, type: 3}
     - target: {fileID: 4825858785491114148, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: sprayInterval
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4825858785491114148, guid: 060ad79147367be4db949192a78d4109, type: 3}
+      propertyPath: bulletInterval
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5287812697702844115, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: bullet
@@ -1484,7 +1488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5287812697702844115, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: clockShotInterval
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6238608721912852120, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: m_Drag

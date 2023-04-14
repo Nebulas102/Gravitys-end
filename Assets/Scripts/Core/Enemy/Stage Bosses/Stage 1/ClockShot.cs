@@ -38,8 +38,6 @@ public class ClockShot : BossAbility
 
         private IEnumerator Shoot()
         {
-            Debug.Log("clockshot");
-
             Vector3 spawnPos = bossRoom.TransformPoint(boss.transform.localPosition);
 
             float angleIncrement = 360f / amountOfBullets;
@@ -58,6 +56,6 @@ public class ClockShot : BossAbility
                 _bullet.transform.forward = _bullet.transform.position - transform.position;
             }
 
-            yield return null;
+            yield return new WaitForSeconds(clockShotInterval);
         }
 }

@@ -10,8 +10,6 @@ using UnityEngine;
         [SerializeField]
         private GameObject bullet;
         [SerializeField]
-        private float bulletSpeed;
-        [SerializeField]
         private float bulletInterval;
 
         [Header("Spray logic")]
@@ -29,27 +27,24 @@ using UnityEngine;
             player = PlayerManager.instance.player;
         }
 
-        public override void UseBossAbility()
+        public override IEnumerator UseBossAbility()
         {
-            StartCoroutine(Spray());
+            yield return StartCoroutine(Spray());
         }
 
         private IEnumerator Spray()
         {
             for (int i = 0; i < sprayAmountBullets; i++)
             {
-                StartCoroutine(Shoot());
+                Shoot();
+                yield return new WaitForSeconds(bulletInterval);
             }
 
             yield return new WaitForSeconds(sprayInterval);
         }
 
-        private IEnumerator Shoot()
+        private void Shoot()
         {
-            GameObject _bullet = Instantiate(bullet, transform.position, Quaternion.identity);
-            
-            _bullet.transform.position = Vector3.MoveTowards(_bullet.transform.position, player.transform.position, bulletSpeed * Time.deltaTime);
-
-            yield return new WaitForSeconds(bulletInterval);
+            Instantiate(bullet, transform.position, Quaternion.identity);
         }
     }

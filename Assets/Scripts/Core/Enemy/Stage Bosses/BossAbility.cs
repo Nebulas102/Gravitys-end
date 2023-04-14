@@ -7,5 +7,5 @@ public abstract class BossAbility : MonoBehaviour
     [SerializeField]
     private float baseDamage;
 
-    public abstract void UseBossAbility();
+    public abstract IEnumerator UseBossAbility();
 }

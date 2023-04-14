@@ -57,13 +57,13 @@ public class Boss : MonoBehaviour
             currentBossAbility = bossAbilityStages[currentAbilityIndex].GetBossAbility();
 
             //Use the current ability
-            currentBossAbility.UseBossAbility();
+            yield return StartCoroutine(currentBossAbility.UseBossAbility());
 
             // Increment the number of times used for the current ability
             bossAbilityStages[currentAbilityIndex].IncrementAmountOfTimesUsed();
 
             // Check if we've used the current ability enough times
-            if (bossAbilityStages[currentAbilityIndex].GetAmountOfTimesUsed() >= bossAbilityStages[currentAbilityIndex].GetAmountOfTimes())
+            if (bossAbilityStages[currentAbilityIndex].GetAmountOfTimesUsed() == bossAbilityStages[currentAbilityIndex].GetAmountOfTimes())
             {
                 // Reset the times used for the current ability
                 bossAbilityStages[currentAbilityIndex].SetAmountOfTimesUsed(0);
@@ -75,11 +75,7 @@ public class Boss : MonoBehaviour
                     // We've reached the end of the abilities, so cycle back to the first ability
                     currentAbilityIndex = 0;
                 }
-
-                yield return new WaitForSeconds(1f);
             }
-
-            yield return new WaitForSeconds(1f);
         }
     }
 

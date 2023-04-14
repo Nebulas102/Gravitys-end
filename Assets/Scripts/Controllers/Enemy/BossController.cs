@@ -14,9 +14,9 @@ public class BossController : MonoBehaviour
     private void Start()
     {
         target = PlayerManager.instance.player.transform;
-        agent = GetComponent<NavMeshAgent>();
-        boss = GetComponent<Boss>();
-        bossRoom = GetComponent<BossRoom>();
+        agent = BossManager.instance.boss.GetComponent<NavMeshAgent>();
+        boss = BossManager.instance.boss.GetComponent<Boss>();
+        bossRoom = transform.root.gameObject.GetComponent<BossRoom>();
     }
 
     private void Update()

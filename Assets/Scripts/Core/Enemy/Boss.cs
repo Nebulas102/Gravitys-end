@@ -57,7 +57,7 @@ public class Boss : MonoBehaviour
             currentBossAbility = bossAbilityStages[currentAbilityIndex].GetBossAbility();
 
             //Use the current ability
-            currentBossAbility.UseBossAbility();
+            StartCoroutine(currentBossAbility.UseBossAbility());
 
             // Increment the number of times used for the current ability
             bossAbilityStages[currentAbilityIndex].IncrementAmountOfTimesUsed();
@@ -76,7 +76,7 @@ public class Boss : MonoBehaviour
                     currentAbilityIndex = 0;
                 }
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(0.5f);
             }
 
             yield return new WaitForSeconds(1f);

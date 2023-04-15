@@ -9,14 +9,14 @@ namespace Assets.Scripts.Controllers.Player
         [SerializeField]
         private ScriptableObjects.Player playerObject;
         [SerializeField]
-        private float health;
+        private float startHealth;
         [SerializeField]
-        private float damage;
+        private float startDamage;
 
         private void Start()
         {
-            playerObject.entity.SetBaseHealth(health);
-            playerObject.entity.SetBaseDamage(damage);
+            playerObject.entity.SetBaseHealth(startHealth);
+            playerObject.entity.SetBaseDamage(startDamage);
         }
 
         public ScriptableObjects.Player GetPlayerObject()

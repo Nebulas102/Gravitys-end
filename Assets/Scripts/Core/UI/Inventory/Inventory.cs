@@ -9,14 +9,6 @@ namespace Core.UI.Inventory
     {
         // Delegate 
         public delegate void OnItemChanged();
-        /* 
-            Add this method to the player movement controller Update() function, so when the inventory is opened the other movement actions wont be executed
-            
-            if (EventSystem.current.IsPointerOverGameObject()) {
-                return;
-            }
-        
-        */
 
         // Singleton for inventory
         public static Inventory Instance;
@@ -100,8 +92,17 @@ namespace Core.UI.Inventory
 
         private void ToggleInventory()
         {
+            if (PauseMenu.instance.isPaused)
+            {
+                return;
+            }
+            if (!inventoryOpened)
+            {
+                inventoryUI.SetActive(false);
+            }
             // Toggles the inventory
-            if (_inventoryToggleInput) {
+            if (_inventoryToggleInput)
+            {
                 inventoryUI.SetActive(!inventoryUI.activeSelf);
                 inventoryOpened = inventoryUI.activeSelf;
             }

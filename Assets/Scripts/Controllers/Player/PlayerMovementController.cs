@@ -1,5 +1,4 @@
 using System.Collections;
-using Core.UI.Inventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -73,7 +72,6 @@ namespace Controllers.Player
         private float _maxComboDelay = 1f;
 
         private Vector2 _movementInput, _lookInput;
-        private Inventory inventory;
 
         //Attack variables
         private float _nextFireTime = 0f;
@@ -97,9 +95,6 @@ namespace Controllers.Player
         {
             if (!isDashing) HandleInput();
             if (!isAttacking) HandleRotation();
-
-            // If the inventory is opened, prevent that the player can move, otherwise the player can move freely
-            canMove = Inventory.Instance.inventoryOpened ? false : true;
 
             HandleAttack();
         }

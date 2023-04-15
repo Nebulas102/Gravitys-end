@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Core.UI.Inventory;
-
 
 namespace Core.UI
 {
@@ -13,37 +11,15 @@ namespace Core.UI
         private UIMenus _UIMenus;
         private bool pauseMenuToggleInput;
 
-        // Singleton for inventory
-        public static PauseMenu instance;
-        public bool isPaused;
-
         private void Awake()
         {
-            if (instance == null)
-                instance = this;
-
             _UIMenus = new UIMenus();
-            isPaused = false;
         }
 
         private void Update()
         {
-            if (pauseMenu.activeSelf)
-            {
-                Time.timeScale = 0f;
-                Inventory.Inventory.Instance.inventoryOpened = false;
-            }
-            else
-            {
-                Time.timeScale = 1f;
-            }
-
             // Toggle pause menu
-            if (pauseMenuToggleInput)
-            {
-                pauseMenu.SetActive(!pauseMenu.activeSelf);
-                isPaused = pauseMenu.activeSelf;
-            }
+            if (pauseMenuToggleInput) pauseMenu.SetActive(!pauseMenu.activeSelf);
 
             pauseMenuToggleInput = false;
         }
@@ -65,9 +41,9 @@ namespace Core.UI
             pauseMenu.SetActive(false);
 
             // Unpause the game
-            // 1f for now, depends in which scene we are and what the timescale is in that particular scene
+            // 1f for now, Depends in which scene we are and what the timescale is in that particular scene
             Time.timeScale = 1f;
-            isPaused = false;
+            // Maybe set the boolean isPaused on false here if there is a boolean
         }
 
         public void GoToMainMenu()

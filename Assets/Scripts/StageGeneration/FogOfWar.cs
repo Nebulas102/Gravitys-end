@@ -1,20 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class FogOfWar : MonoBehaviour
+namespace StageGeneration
 {
-    [SerializeField]
-    Material transparent;
-
-    [SerializeField]
-    Transform Fog;
-
-    private void OnTriggerEnter(Collider other)
+    public class FogOfWar : MonoBehaviour
     {
-        if (other.gameObject.tag == "Player")
+        [SerializeField]
+        private Material transparent;
+
+        [SerializeField]
+        private Transform fog;
+
+        private void OnTriggerEnter(Collider other)
         {
-            Fog.GetComponent<Renderer>().material = transparent; ;
+            if (!other.gameObject.CompareTag("Player")) return;
+
+            fog.GetComponent<Renderer>().material = transparent;
         }
     }
 }

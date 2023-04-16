@@ -1,3 +1,4 @@
+using Assets.Scripts.Controllers.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,10 +12,14 @@ namespace Controllers
 
         private Transform target;
 
+        private EnemyAttackController enemyAttackController;
+
         private void Start()
         {
             target = PlayerManager.instance.player.transform; // See PlayerManager.cs for explanation
             agent = GetComponent<NavMeshAgent>();
+            enemyAttackController = GetComponent<EnemyAttackController>();
+
             Physics.IgnoreLayerCollision(gameObject.layer, gameObject.layer);
         }
 
@@ -37,6 +42,7 @@ namespace Controllers
             if (distance <= agent.stoppingDistance)
             {
                 // Attack the player
+                enemyAttackController.Attack();
                 // Face the player
                 FaceTarget();
             }

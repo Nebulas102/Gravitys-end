@@ -37,7 +37,7 @@ namespace Controllers.Player
         {
             if (sprint)
                 // character.animator.SetFloat("Velocity", input.magnitude + 0.5f, 0.5f, Time.deltaTime);
-                PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude + 0.5f, 0.2f, Time.deltaTime);
+                PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude + 0.35f, 0.2f, Time.deltaTime);
             else
                 stateMachine.ChangeState(character.standing);
         }

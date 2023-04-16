@@ -6,6 +6,7 @@ namespace Controllers.Player
     {
         private float playerSpeed;
         private bool sprint;
+        private bool drawWeapon;
 
         public StandingState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
@@ -17,6 +18,7 @@ namespace Controllers.Player
         {
             base.Enter();
             sprint = false;
+            drawWeapon = false;
             input = Vector2.zero;
 
             velocity = character.playerVelocity;
@@ -28,6 +30,7 @@ namespace Controllers.Player
             base.HandleInput();
 
             if (moveAction.triggered) sprint = true;
+            if (drawWeaponAction.triggered) drawWeapon = true;
 
             input = moveAction.ReadValue<Vector2>();
             velocity = new Vector3(input.x, 0, input.y);
@@ -40,6 +43,12 @@ namespace Controllers.Player
             PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude, 0.2f, Time.deltaTime);
 
             if (sprint) stateMachine.ChangeState(character.sprinting);
+            
+            if (drawWeapon)
+            {
+                stateMachine.ChangeState(character.combatting);
+                PlayerAnimator.Instance._animator.SetTrigger("drawWeapon");
+            }
         }
 
         public override void PhysicsUpdate()

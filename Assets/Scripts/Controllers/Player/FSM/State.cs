@@ -13,7 +13,9 @@ namespace Controllers.Player
 
         public InputAction moveAction;
         public InputAction lookAction;
+        public InputAction drawWeaponAction;
         public InputAction attackAction;
+
 
 
         public State(Character _character, StateMachine _stateMachine)
@@ -23,7 +25,9 @@ namespace Controllers.Player
 
             moveAction = character.playerInput.actions["Move"];
             lookAction = character.playerInput.actions["Look"];
+            drawWeaponAction = character.playerInput.actions["DrawWeapon"];
             attackAction = character.playerInput.actions["Attack"];
+            
         }
 
         public virtual void Enter()

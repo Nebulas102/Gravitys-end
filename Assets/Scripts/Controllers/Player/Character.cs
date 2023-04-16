@@ -22,11 +22,11 @@ namespace Controllers.Player
         [HideInInspector]
         public Vector3 playerVelocity;
 
-        public CombatState combatting;
 
         public StateMachine movementSM;
         public SprintState sprinting;
         public StandingState standing;
+        public CombatState combatting;
 
 
         // Start is called before the first frame update

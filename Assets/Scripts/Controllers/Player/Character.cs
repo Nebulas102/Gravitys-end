@@ -16,6 +16,7 @@ namespace Controllers.Player
         public StateMachine movementSM;
         public StandingState standing;
         public SprintState sprinting;
+        public CombatState combatting;
 
         [HideInInspector]
         public CharacterController controller;
@@ -37,6 +38,7 @@ namespace Controllers.Player
             movementSM = new StateMachine();
             standing = new StandingState(this, movementSM);
             sprinting = new SprintState(this, movementSM);
+            combatting = new CombatState(this, movementSM);
 
             movementSM.Initialize(standing);
         }

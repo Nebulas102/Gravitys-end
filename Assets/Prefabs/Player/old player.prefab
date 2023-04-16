@@ -1247,11 +1247,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7016986353574939163}
   - component: {fileID: 674533699514740984}
-  - component: {fileID: 2669143847188377480}
   - component: {fileID: 4242873945400858820}
+  - component: {fileID: 2669143847188377480}
   - component: {fileID: 3969632975920299300}
   m_Layer: 3
-  m_Name: PlayerObselete
+  m_Name: old player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1293,31 +1293,6 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.94, z: 0}
---- !u!114 &2669143847188377480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4655522436143563301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30d9e1a179ea5474aa2d4890c3e0477e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSpeed: 5
-  canMove: 1
-  dashSpeed: 20
-  dashDuration: 0.25
-  dashTimer: 0
-  dashCooldown: 3
-  dashAvailable: 1
-  controllerDeadzone: 0.1
-  gamepadRotateSmoothing: 1000
-  isGamepad: 0
-  _camera: {fileID: 0}
-  isDashing: 0
-  isAttacking: 0
 --- !u!114 &4242873945400858820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1381,6 +1356,31 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2669143847188377480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4655522436143563301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d9e1a179ea5474aa2d4890c3e0477e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSpeed: 5
+  canMove: 1
+  dashSpeed: 20
+  dashDuration: 0.25
+  dashTimer: 0
+  dashCooldown: 3
+  dashAvailable: 1
+  controllerDeadzone: 0.1
+  gamepadRotateSmoothing: 1000
+  isGamepad: 0
+  _camera: {fileID: 0}
+  isDashing: 0
+  isAttacking: 0
 --- !u!114 &3969632975920299300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1394,8 +1394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObject: {fileID: 11400000, guid: c795e57a668ce7442b78105f1e94ffa2, type: 2}
-  health: 100
-  damage: 5
+  startHealth: 0
+  startDamage: 0
 --- !u!1 &4769025483825524909
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ namespace Controllers.Player
         private bool sprint;
         private bool drawWeapon;
 
+
         public StandingState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
             character = _character;
@@ -43,11 +44,12 @@ namespace Controllers.Player
             PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude, 0.2f, Time.deltaTime);
 
             if (sprint) stateMachine.ChangeState(character.sprinting);
-            
+
             if (drawWeapon)
             {
                 stateMachine.ChangeState(character.combatting);
                 PlayerAnimator.Instance._animator.SetTrigger("drawWeapon");
+                EquipmentSystem.Instance.Invoke("DrawWeapon", 0.5f);
             }
         }
 

@@ -49,6 +49,8 @@ namespace Controllers.Player
             if (sheathWeapon)
             {
                 PlayerAnimator.Instance._animator.SetTrigger("sheathWeapon");
+                EquipmentSystem.Instance.Invoke("SheathWeapon", 1f);
+                
                 stateMachine.ChangeState(character.standing);
             }
         }

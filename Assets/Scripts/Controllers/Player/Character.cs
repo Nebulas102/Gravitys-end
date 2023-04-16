@@ -10,32 +10,12 @@ namespace Controllers.Player
     [RequireComponent(typeof(PlayerInputManager))]
     public class Character : MonoBehaviour
     {
-        [Header("Movement")]
-        public float playerSpeed = 10f;
-
-        [Header("Dash")]
-        public float dashSpeed = 20f;
-        public float dashTime = 0.5f;
-        public float dashCooldown = 3f;
-        public bool dashAvailable = true;
-
-        [Header("Gamepad")]
-        public float controllerDeadzone = 0.1f;
-        public float gamepadRotateSmoothing = 1000f;
-        public bool isGamepad;
-
-        [Header("Camera")]
-        [SerializeField]
-        public Camera _camera;
-
-        public Vector3 playerVelocity;
-
+        [Header("Controls")]
+        public float playerSpeed = 5.0f;
 
         public StateMachine movementSM;
-
         public StandingState standing;
-        public MovingState moving;
-        public DashingState dashing;
+        public SprintState sprinting;
 
         [HideInInspector]
         public CharacterController controller;
@@ -43,8 +23,8 @@ namespace Controllers.Player
         public PlayerInput playerInput;
         [HideInInspector]
         public Animator animator;
-
-
+        [HideInInspector]
+        public Vector3 playerVelocity;
 
 
         // Start is called before the first frame update
@@ -56,8 +36,7 @@ namespace Controllers.Player
 
             movementSM = new StateMachine();
             standing = new StandingState(this, movementSM);
-            moving = new MovingState(this, movementSM);
-            dashing = new DashingState(this, movementSM);
+            sprinting = new SprintState(this, movementSM);
 
             movementSM.Initialize(standing);
         }
@@ -72,13 +51,6 @@ namespace Controllers.Player
         private void FixedUpdate()
         {
             movementSM.currentState.PhysicsUpdate();
-        }
-
-        public void OnDeviceChange(PlayerInput pi)
-        {
-            //check if gamepad is connected
-            isGamepad = pi.currentControlScheme.Equals("Gamepad");
-            
         }
     }
 }

@@ -696,19 +696,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8143095d437a0b49bc7df66997016f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 20
-  dashSpeed: 20
-  dashTime: 0.5
-  dashCooldown: 3
-  dashAvailable: 1
-  controllerDeadzone: 0.1
-  gamepadRotateSmoothing: 1000
-  isGamepad: 0
-  _camera: {fileID: 530598974}
-  playerVelocity: {x: 0, y: 0, z: 0}
+  playerSpeed: 8
   controller: {fileID: 210098614}
   playerInput: {fileID: 210098615}
   animator: {fileID: 0}
+  playerVelocity: {x: 0, y: 0, z: 0}
 --- !u!224 &297668546 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5846862400795861748, guid: 865d2cae403f0d545983909174c270aa, type: 3}

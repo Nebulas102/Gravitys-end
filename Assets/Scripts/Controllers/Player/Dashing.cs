@@ -1,112 +1,115 @@
 using System.Collections;
 using UnityEngine;
 
-public class Dashing : MonoBehaviour
+namespace Controllers.Player
 {
-    [Header("Dash")]
-    [SerializeField]
-    private float dashSpeed = 20f;
-
-    [SerializeField]
-    [Tooltip("Dash duration in seconds")]
-    private float dashDuration = 0.25f;
-
-    [SerializeField]
-    [Tooltip("Dash countdown timer when starting dash")]
-    private float dashTimer;
-
-    [SerializeField]
-    [Tooltip("Time in seconds for dash to be available again")]
-    private float dashCooldown;
-
-    [SerializeField]
-    private bool dashAvailable = true;
-
-    [SerializeField]
-    private bool isDashing;
-
-    private CharacterController _controller;
-    private bool _dashInput;
-    private GameInput _gameInput;
-    private Vector2 _movementInput;
-
-    // Start is called before the first frame update
-    private void Start()
+    public class Dashing : MonoBehaviour
     {
-        _controller = GetComponent<CharacterController>();
-        _gameInput = FindObjectOfType<GameInput>();
-    }
+        [Header("Dash")]
+        [SerializeField]
+        private float dashSpeed = 20f;
 
-    // Update is called once per frame
-    private void Update()
-    {
-        if (!isDashing) HandleInput();
-    }
+        [SerializeField]
+        [Tooltip("Dash duration in seconds")]
+        private float dashDuration = 0.25f;
 
-    private void FixedUpdate()
-    {
-        if (!isDashing) HandleDash();
-    }
+        [SerializeField]
+        [Tooltip("Dash countdown timer when starting dash")]
+        private float dashTimer;
 
-    private void HandleInput()
-    {
-        _movementInput = _gameInput.GetMovement();
-        _dashInput = _gameInput.GetDash();
-    }
+        [SerializeField]
+        [Tooltip("Time in seconds for dash to be available again")]
+        private float dashCooldown;
 
+        [SerializeField]
+        private bool dashAvailable = true;
 
-    //////////////////////////////////////////////
-    // Dashing                                  // 
-    //////////////////////////////////////////////
+        [SerializeField]
+        private bool isDashing;
 
-    private void HandleDash()
-    {
-        switch (dashAvailable)
+        private CharacterController _controller;
+        private bool _dashInput;
+        private GameInput _gameInput;
+        private Vector2 _movementInput;
+
+        // Start is called before the first frame update
+        private void Start()
         {
-            case false when _dashInput:
-                //text on screen to tell player dash is on cooldown
-                break;
-            case true when _dashInput:
-                //when activation input is pressed, start dash cooldown
-                StartCoroutine(DashCoroutine());
-                break;
-        }
-    }
-
-    private IEnumerator DashCoroutine()
-    {
-        // disable user input
-        isDashing = true;
-        dashAvailable = false;
-        // set dash timer
-        dashTimer = dashDuration;
-        var dashDir = new Vector3(_movementInput.x, 0, _movementInput.y);
-        //makes player move independent of camera rotation (W means north, S means south, etc.)
-        dashDir = Quaternion.Euler(0, -45, 0) * dashDir;
-
-        while (dashTimer > 0)
-        {
-            // move player
-            _controller.Move(dashDir * (dashSpeed * Time.deltaTime));
-            // decrease dash timer
-            dashTimer -= Time.deltaTime;
-            yield return null;
+            _controller = GetComponent<CharacterController>();
+            _gameInput = FindObjectOfType<GameInput>();
         }
 
-        // enable user input after the dash
-        isDashing = false;
+        // Update is called once per frame
+        private void Update()
+        {
+            if (!isDashing) HandleInput();
+        }
 
-        yield return new WaitForSeconds(dashCooldown);
-        dashAvailable = true;
-    }
+        private void FixedUpdate()
+        {
+            if (!isDashing) HandleDash();
+        }
 
-    public float GetDashTimer()
-    {
-        return dashTimer;
-    }
+        private void HandleInput()
+        {
+            _movementInput = _gameInput.GetMovement();
+            _dashInput = _gameInput.GetDash();
+        }
 
-    public bool GetDashAvailable()
-    {
-        return dashAvailable;
+
+        //////////////////////////////////////////////
+        // Dashing                                  // 
+        //////////////////////////////////////////////
+
+        private void HandleDash()
+        {
+            switch (dashAvailable)
+            {
+                case false when _dashInput:
+                    //text on screen to tell player dash is on cooldown
+                    break;
+                case true when _dashInput:
+                    //when activation input is pressed, start dash cooldown
+                    StartCoroutine(DashCoroutine());
+                    break;
+            }
+        }
+
+        private IEnumerator DashCoroutine()
+        {
+            // disable user input
+            isDashing = true;
+            dashAvailable = false;
+            // set dash timer
+            dashTimer = dashDuration;
+            var dashDir = new Vector3(_movementInput.x, 0, _movementInput.y);
+            //makes player move independent of camera rotation (W means north, S means south, etc.)
+            dashDir = Quaternion.Euler(0, -45, 0) * dashDir;
+
+            while (dashTimer > 0)
+            {
+                // move player
+                _controller.Move(dashDir * (dashSpeed * Time.deltaTime));
+                // decrease dash timer
+                dashTimer -= Time.deltaTime;
+                yield return null;
+            }
+
+            // enable user input after the dash
+            isDashing = false;
+
+            yield return new WaitForSeconds(dashCooldown);
+            dashAvailable = true;
+        }
+
+        public float GetDashTimer()
+        {
+            return dashTimer;
+        }
+
+        public bool GetDashAvailable()
+        {
+            return dashAvailable;
+        }
     }
 }

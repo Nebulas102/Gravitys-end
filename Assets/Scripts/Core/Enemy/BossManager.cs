@@ -1,22 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BossManager : MonoBehaviour
+namespace Core.Enemy
 {
-    public GameObject boss;
-
-    #region Singleton
-
-    public static BossManager instance;
-
-    private void Awake()
+    public class BossManager : MonoBehaviour
     {
-        if(instance != null)
-        return;
+        public GameObject boss;
 
-        instance = this;
+        #region Singleton
+
+        public static BossManager Instance;
+
+        private void Awake()
+        {
+            if (Instance != null)
+                return;
+
+            Instance = this;
+        }
+
+        #endregion
     }
-
-    #endregion
 }

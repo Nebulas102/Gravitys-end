@@ -1,40 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.Controllers.Player;
+using Controllers.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+namespace Core.Player
 {
-    private GameObject player;
-    private Slider slider;
-
-    void OnAwake() {
-        slider.maxValue = player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
-    }
-
-    private void Start()
+    public class HealthBar : MonoBehaviour
     {
-        slider = GetComponent<Slider>();
-        //Cant get player on start because this UI element runs earlier than the spawnroom where the player is
-        // player = PlayerManager.instance.player;
+        private GameObject _player;
+        private Slider _slider;
 
-        // slider.maxValue = player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
-        // slider.value = slider.maxValue;
-    }
-
-    private void Update() 
-    {
-        if (player == null)
+        private void Start()
         {
-            player = PlayerManager.instance.player;
+            _slider = GetComponent<Slider>();
+            //Cant get player on start because this UI element runs earlier than the spawnroom where the player is
+            // player = PlayerManager.instance.player;
 
-            slider.maxValue = player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
-            slider.value = slider.maxValue;
+            // slider.maxValue = player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
+            // slider.value = slider.maxValue;
         }
-        else
+
+        private void Update()
         {
-            slider.value = player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
+            if (_player is null)
+            {
+                _player = PlayerManager.instance.player;
+
+                _slider.maxValue = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
+                _slider.value = _slider.maxValue;
+            }
+            else
+                _slider.value = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
+        }
+
+        private void OnAwake()
+        {
+            _slider.maxValue = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
         }
     }
 }

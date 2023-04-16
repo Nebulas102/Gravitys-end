@@ -1,44 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using Controllers.Player;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class DashTimer : MonoBehaviour
+namespace Core.Player
 {
-    [SerializeField]
-    private TextMeshProUGUI timer;
-
-    private GameObject player;
-    private float cooldown;
-
-    private void Start()
+    public class DashTimer : MonoBehaviour
     {
-        //Cant get player on start because this UI element runs earlier than the spawnroom where the player is
-        // player = PlayerManager.instance.player;
-    }
+        [SerializeField]
+        private TextMeshProUGUI timer;
 
-    private void Update()
-    {
-        if (player == null)
+        private float _cooldown;
+
+        private GameObject _player;
+
+        private void Start()
         {
-            player = PlayerManager.instance.player;
-
-            cooldown = player.GetComponent<Dashing>().GetDashTimer();
+            //Cant get player on start because this UI element runs earlier than the spawnroom where the player is
+            // player = PlayerManager.instance.player;
         }
-        else
+
+        private void Update()
         {
-
-            bool dashAvailable = player.GetComponent<Dashing>().GetDashAvailable();
-
-            if (dashAvailable)
+            if (_player == null)
             {
-                timer.text = "Dash";
+                _player = PlayerManager.instance.player;
+
+                _cooldown = _player.GetComponent<Dashing>().GetDashTimer();
             }
             else
             {
-                timer.text = "Cooldown";
+                var dashAvailable = _player.GetComponent<Dashing>().GetDashAvailable();
+
+                if (dashAvailable)
+                    timer.text = "Dash";
+                else
+                    timer.text = "Cooldown";
             }
-        }        
+        }
     }
 }

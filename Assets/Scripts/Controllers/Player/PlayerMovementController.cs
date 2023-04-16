@@ -70,13 +70,13 @@ namespace Controllers.Player
         private GameInput _gameInput;
 
         private Vector2 _movementInput, _lookInput;
-        private Inventory inventory;
 
         //Attack variables
         private PlayerInput _playerInput;
 
         private PlayerInputManager _playerInputManager;
         private Vector3 _playerVelocity;
+        private Inventory inventory;
 
         private void Awake()
         {
@@ -86,7 +86,7 @@ namespace Controllers.Player
 
         private void Start()
         {
-            _anim = PlayerAnimator.instance.GetComponent<Animator>();
+            _anim = PlayerAnimator.Instance.GetComponent<Animator>();
         }
 
         private void Update()
@@ -128,7 +128,7 @@ namespace Controllers.Player
         private void HandleMovement()
         {
             //play running animation
-            PlayerAnimator.instance.ChangeAnimationState(GetMovementDirection() != Vector3.zero ? RUNNING : IDLE);
+            PlayerAnimator.Instance.ChangeAnimationState(GetMovementDirection() != Vector3.zero ? RUNNING : IDLE);
 
             //move player
             _controller.Move(GetMovementDirection() * (Time.deltaTime * playerSpeed));
@@ -256,7 +256,7 @@ namespace Controllers.Player
             {
                 isAttacking = true;
 
-                PlayerAnimator.instance.ChangeAnimationState(ATTACK1);
+                PlayerAnimator.Instance.ChangeAnimationState(ATTACK1);
             }
 
             Invoke(nameof(AttackComplete), 1f);

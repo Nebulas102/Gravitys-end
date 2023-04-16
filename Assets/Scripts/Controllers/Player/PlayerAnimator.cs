@@ -4,16 +4,16 @@ namespace Controllers.Player
 {
     public class PlayerAnimator : MonoBehaviour
     {
-        public static PlayerAnimator instance;
+        public static PlayerAnimator Instance;
 
-        private Animator animator;
+        private Animator _animator;
 
-        private string currentState;
+        private string _currentState;
 
         private void Awake()
         {
-            if (instance == null) instance = this;
-            animator = GetComponent<Animator>();
+            if (Instance == null) Instance = this;
+            _animator = GetComponent<Animator>();
         }
 
         // Update is called once per frame
@@ -24,37 +24,37 @@ namespace Controllers.Player
         public void ChangeAnimationState(string newState)
         {
             //stop the same animation from interrupting itself
-            if (currentState == newState) return;
+            if (_currentState == newState) return;
             //play new animation
-            animator.Play(newState);
+            _animator.Play(newState);
             //update current state
-            currentState = newState;
+            _currentState = newState;
         }
 
 
         public void PlayRunning()
         {
-            animator.Play("Running");
+            _animator.Play("Running");
         }
 
         public void PlayIdle()
         {
-            animator.Play("Idle");
+            _animator.Play("Idle");
         }
 
         public void PlayAttack1()
         {
-            animator.Play("Attack1");
+            _animator.Play("Attack1");
         }
 
         public void PlayAttack2()
         {
-            animator.Play("Attack2");
+            _animator.Play("Attack2");
         }
 
         public void PlayAttack3()
         {
-            animator.Play("Attack3");
+            _animator.Play("Attack3");
         }
     }
 }

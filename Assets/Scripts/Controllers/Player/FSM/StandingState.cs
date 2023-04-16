@@ -36,7 +36,7 @@ namespace Controllers.Player
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            PlayerAnimator.instance.PlayIdle();
+            PlayerAnimator.Instance.PlayIdle();
 
             if (sprint) stateMachine.ChangeState(character.sprinting);
         }
@@ -50,8 +50,10 @@ namespace Controllers.Player
             character.controller.Move(velocity * Time.deltaTime * playerSpeed);
 
             if (velocity.sqrMagnitude > 0)
+            {
                 character.transform.rotation = Quaternion.Slerp(character.transform.rotation,
                     Quaternion.LookRotation(velocity), 0.2f);
+            }
         }
 
         public override void Exit()

@@ -1,43 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
+using Core.Enemy;
+using StageGeneration.Rooms.RoomTypes;
 using UnityEngine;
 using UnityEngine.AI;
-using StageGeneration.Rooms.RoomTypes;
 
-public class BossController : MonoBehaviour
+namespace Controllers.Enemy
 {
-    private Transform target;
-    private NavMeshAgent agent;
-    private Boss boss;
-    private BossRoom bossRoom;
-
-    private void Start()
+    public class BossController : MonoBehaviour
     {
-        target = PlayerManager.instance.player.transform;
-        agent = BossManager.instance.boss.GetComponent<NavMeshAgent>();
-        boss = BossManager.instance.boss.GetComponent<Boss>();
-        bossRoom = transform.root.gameObject.GetComponent<BossRoom>();
-    }
+        private NavMeshAgent _agent;
+        private Boss _boss;
+        private BossRoom _bossRoom;
+        private Transform _target;
 
-    private void Update()
-    {
-        if (boss.GetStartFight())
+        private void Start()
         {
-            float distance = Vector3.Distance(target.position, transform.position);
-                
-            agent.SetDestination(target.position);
+            _target = PlayerManager.instance.player.transform;
+            _agent = BossManager.Instance.boss.GetComponent<NavMeshAgent>();
+            _boss = BossManager.Instance.boss.GetComponent<Boss>();
+            _bossRoom = transform.root.gameObject.GetComponent<BossRoom>();
+        }
 
-            if (distance <= agent.stoppingDistance)
+        private void Update()
+        {
+            if (_boss.GetStartFight())
             {
-                FaceTarget();
+                var distance = Vector3.Distance(_target.position, transform.position);
+
+                _agent.SetDestination(_target.position);
+
+                if (distance <= _agent.stoppingDistance) FaceTarget();
             }
         }
-    }
 
-    private void FaceTarget()
-    {
-        Vector3 direction = (target.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        private void FaceTarget()
+        {
+            var direction = (_target.position - transform.position).normalized;
+            var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
     }
 }

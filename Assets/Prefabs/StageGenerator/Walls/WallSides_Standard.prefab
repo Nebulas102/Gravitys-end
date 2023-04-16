@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8708491114749417328}
   m_Layer: 0
   m_Name: WallSides_Standard
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,9 +181,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8174661402283868136, guid: 45eb2a5a44eaa7c4995b5a80c1b6ce84, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 45eb2a5a44eaa7c4995b5a80c1b6ce84, type: 3}
       propertyPath: m_Name
       value: Wall Basic
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 45eb2a5a44eaa7c4995b5a80c1b6ce84, type: 3}
+      propertyPath: m_TagString
+      value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852133131596804557, guid: 45eb2a5a44eaa7c4995b5a80c1b6ce84, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45eb2a5a44eaa7c4995b5a80c1b6ce84, type: 3}

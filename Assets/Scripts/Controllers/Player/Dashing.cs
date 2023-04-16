@@ -105,4 +105,13 @@ public class Dashing : MonoBehaviour
         dashAvailable = true;
     }
 
+    public float GetDashTimer()
+    {
+        return dashTimer;
+    }
+
+    public bool GetDashAvailable()
+    {
+        return dashAvailable;
+    }
 }

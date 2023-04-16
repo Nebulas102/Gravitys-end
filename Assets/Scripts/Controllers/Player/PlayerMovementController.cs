@@ -266,5 +266,15 @@ namespace Controllers.Player
         {
             isAttacking = false;
         }
+
+        public float GetDashCooldown()
+        {
+            return dashCooldown;
+        }
+
+        public bool GetDashAvailable()
+        {
+            return dashAvailable;
+        }
     }
 }

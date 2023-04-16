@@ -9,6 +9,10 @@ public class HealthBar : MonoBehaviour
     private GameObject player;
     private Slider slider;
 
+    void OnAwake() {
+        slider.maxValue = player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
+    }
+
     private void Start()
     {
         slider = GetComponent<Slider>();

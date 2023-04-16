@@ -16,7 +16,8 @@ namespace Controllers
 
         private void Start()
         {
-            target = PlayerManager.instance.player.transform; // See PlayerManager.cs for explanation
+            // See PlayerManager.cs for explanation
+            target = PlayerManager.instance.player.transform;
             agent = GetComponent<NavMeshAgent>();
             enemyAttackController = GetComponent<EnemyAttackController>();
 

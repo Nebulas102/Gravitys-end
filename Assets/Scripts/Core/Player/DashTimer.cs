@@ -24,12 +24,12 @@ public class DashTimer : MonoBehaviour
         {
             player = PlayerManager.instance.player;
 
-            cooldown = player.GetComponent<PlayerMovementController>().GetDashCooldown();
+            cooldown = player.GetComponent<Dashing>().GetDashTimer();
         }
         else
         {
 
-            bool dashAvailable = player.GetComponent<PlayerMovementController>().GetDashAvailable();
+            bool dashAvailable = player.GetComponent<Dashing>().GetDashAvailable();
 
             if (dashAvailable)
             {

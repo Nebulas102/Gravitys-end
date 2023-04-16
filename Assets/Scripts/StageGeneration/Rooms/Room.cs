@@ -40,7 +40,7 @@ namespace StageGeneration.Rooms
             return doorReplacement;
         }
 
-        public GameObject PlaceRoom(int posX, int posZ, StageHelper.roomDirections direction, GameObject spawnDoor)
+        public GameObject PlaceRoom(int posX, int posZ, StageHelper.RoomDirections direction, GameObject spawnDoor)
         {
             var room = Instantiate(gameObject, new Vector3(posX, 0, posZ), Quaternion.identity);
 
@@ -55,7 +55,7 @@ namespace StageGeneration.Rooms
             return room;
         }
 
-        public Dictionary<string, float> PlacementPos(StageHelper.roomDirections roomDirection, Cell doorCell)
+        public Dictionary<string, float> PlacementPos(StageHelper.RoomDirections roomDirection, Cell doorCell)
         {
             var pos = new Dictionary<string, float>();
 
@@ -74,27 +74,27 @@ namespace StageGeneration.Rooms
 
             switch (roomDirection)
             {
-                case StageHelper.roomDirections.Top:
+                case StageHelper.RoomDirections.TOP:
                     roomX = doorCellX;
                     roomZ = doorCellZ +
                             (resizeZ - divOffset) + offset;
                     break;
-                case StageHelper.roomDirections.Right:
+                case StageHelper.RoomDirections.RIGHT:
                     roomX = doorCellX +
                             (resizeX - divOffset) + offset;
                     roomZ = doorCellZ;
                     break;
-                case StageHelper.roomDirections.Bottom:
+                case StageHelper.RoomDirections.BOTTOM:
                     roomX = doorCellX;
                     roomZ = doorCellZ -
                             (resizeZ - divOffset + offset);
                     break;
-                case StageHelper.roomDirections.Left:
+                case StageHelper.RoomDirections.LEFT:
                     roomX = doorCellX -
                             (resizeX - divOffset + offset);
                     roomZ = doorCellZ;
                     break;
-                case StageHelper.roomDirections.Undefined:
+                case StageHelper.RoomDirections.UNDEFINED:
                     Debug.Log("Is Undefined");
                     roomX = 0;
                     roomZ = 0;

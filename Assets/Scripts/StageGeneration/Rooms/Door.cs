@@ -10,12 +10,12 @@ namespace StageGeneration.Rooms
 
         public bool hasNeighbour;
 
-        [SerializeField]
-        private StageHelper.roomDirections direction;
-
         public Cell cell;
 
-        public StageHelper.roomDirections GetDirection()
+        [SerializeField]
+        private StageHelper.RoomDirections direction;
+
+        public StageHelper.RoomDirections GetDirection()
         {
             return direction;
         }

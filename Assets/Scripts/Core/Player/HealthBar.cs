@@ -23,7 +23,7 @@ namespace Core.Player
         {
             if (_player is null)
             {
-                _player = PlayerManager.instance.player;
+                _player = PlayerManager.Instance.player;
 
                 _slider.maxValue = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
                 _slider.value = _slider.maxValue;

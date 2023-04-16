@@ -14,7 +14,7 @@ namespace Controllers.Enemy
 
         private void Start()
         {
-            _target = PlayerManager.instance.player.transform;
+            _target = PlayerManager.Instance.player.transform;
             _agent = BossManager.Instance.boss.GetComponent<NavMeshAgent>();
             _boss = BossManager.Instance.boss.GetComponent<Boss>();
             _bossRoom = transform.root.gameObject.GetComponent<BossRoom>();

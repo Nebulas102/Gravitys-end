@@ -25,7 +25,7 @@ namespace Core.Enemy.StageBosses.Stage1
         private void Start()
         {
             _boss = BossManager.Instance.boss;
-            _player = PlayerManager.instance.player;
+            _player = PlayerManager.Instance.player;
         }
 
         public override IEnumerator UseBossAbility()

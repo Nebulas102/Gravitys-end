@@ -1,111 +1,119 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Core.Enemy.StageBosses;
 using ScriptableObjects;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class Boss : MonoBehaviour
+namespace Core.Enemy
 {
-    [SerializeField]
-    private Entity entity;
-
-    [SerializeField]
-    private float health;
-    [SerializeField]
-    private float damage;
-    [SerializeField]
-    private Slider healthBar;
-    [SerializeField]
-    private TextMeshProUGUI bossNameBar;
-
-    [SerializeField]
-    private List<BossAbilityStage> bossAbilityStages;
-
-    private BossAbility currentBossAbility;
-    private bool startFight = false;
-    private bool startAbilitiesSequence = false;
-
-    private void Start()
+    public class Boss : MonoBehaviour
     {
-        entity.SetBaseHealth(health);
-        entity.SetBaseDamage(damage);
+        [SerializeField]
+        private Entity entity;
 
-        healthBar.maxValue = health;
-        healthBar.value = healthBar.maxValue;
+        [SerializeField]
+        private float health;
 
-        bossNameBar.text = entity.name;
-    }
+        [SerializeField]
+        private float damage;
 
-    private void Update()
-    {
-        if(startFight && !startAbilitiesSequence)
+        [SerializeField]
+        private Slider healthBar;
+
+        [SerializeField]
+        private TextMeshProUGUI bossNameBar;
+
+        [SerializeField]
+        private List<BossAbilityStage> bossAbilityStages;
+
+        private BossAbility _currentBossAbility;
+        private bool _startAbilitiesSequence;
+        private bool _startFight;
+
+        private void Start()
         {
-            StartCoroutine(LoopBossAbilities());
+            entity.SetBaseHealth(health);
+            entity.SetBaseDamage(damage);
 
-            startAbilitiesSequence = true;
+            healthBar.maxValue = health;
+            healthBar.value = healthBar.maxValue;
+
+            bossNameBar.text = entity.name;
         }
-    }
 
-    private IEnumerator LoopBossAbilities()
-    {
-        int currentAbilityIndex = 0;
-
-        while(true)
+        private void Update()
         {
-            // Set the current ability
-            currentBossAbility = bossAbilityStages[currentAbilityIndex].GetBossAbility();
-
-            //Use the current ability
-            yield return StartCoroutine(currentBossAbility.UseBossAbility());
-
-            // Increment the number of times used for the current ability
-            bossAbilityStages[currentAbilityIndex].IncrementAmountOfTimesUsed();
-
-            // Check if we've used the current ability enough times
-            if (bossAbilityStages[currentAbilityIndex].GetAmountOfTimesUsed() == bossAbilityStages[currentAbilityIndex].GetAmountOfTimes())
+            if (_startFight && !_startAbilitiesSequence)
             {
-                // Reset the times used for the current ability
-                bossAbilityStages[currentAbilityIndex].SetAmountOfTimesUsed(0);
+                StartCoroutine(LoopBossAbilities());
 
-                // Move to the next ability
-                currentAbilityIndex++;
-                if (currentAbilityIndex >= bossAbilityStages.Count)
+                _startAbilitiesSequence = true;
+            }
+        }
+
+        private IEnumerator LoopBossAbilities()
+        {
+            var currentAbilityIndex = 0;
+
+            while (true)
+            {
+                // Set the current ability
+                _currentBossAbility = bossAbilityStages[currentAbilityIndex].GetBossAbility();
+
+                //Use the current ability
+                yield return StartCoroutine(_currentBossAbility.UseBossAbility());
+
+                // Increment the number of times used for the current ability
+                bossAbilityStages[currentAbilityIndex].IncrementAmountOfTimesUsed();
+
+                // Check if we've used the current ability enough times
+                if (bossAbilityStages[currentAbilityIndex].GetAmountOfTimesUsed() ==
+                    bossAbilityStages[currentAbilityIndex].GetAmountOfTimes())
                 {
-                    // We've reached the end of the abilities, so cycle back to the first ability
-                    currentAbilityIndex = 0;
+                    // Reset the times used for the current ability
+                    bossAbilityStages[currentAbilityIndex].SetAmountOfTimesUsed(0);
+
+                    // Move to the next ability
+                    currentAbilityIndex++;
+                    if (currentAbilityIndex >= bossAbilityStages.Count)
+                    {
+                        // We've reached the end of the abilities, so cycle back to the first ability
+                        currentAbilityIndex = 0;
+                    }
                 }
             }
         }
-    }
 
-    public bool GetStartFight()
-    {
-        return startFight;
-    }
+        public bool GetStartFight()
+        {
+            return _startFight;
+        }
 
-    public void SetStartFight(bool _startFight)
-    {
-        startFight = _startFight;
-    }
+        public void SetStartFight(bool _startFight)
+        {
+            this._startFight = _startFight;
+        }
 
-    public BossAbility GetCurrentAbility()
-    {
-        return currentBossAbility;
-    }
+        public BossAbility GetCurrentAbility()
+        {
+            return _currentBossAbility;
+        }
 
-    public List<BossAbilityStage> GetBossAbilityStages()
-    {
-        return bossAbilityStages;
-    }
+        public List<BossAbilityStage> GetBossAbilityStages()
+        {
+            return bossAbilityStages;
+        }
 
-    public float GetDamage()
-    {
-        return damage;
-    }
+        public float GetDamage()
+        {
+            return damage;
+        }
 
-    public float GetHealth()
-    {
-        return health;
+        public float GetHealth()
+        {
+            return health;
+        }
     }
 }

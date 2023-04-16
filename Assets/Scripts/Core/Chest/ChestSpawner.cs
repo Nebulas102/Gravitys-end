@@ -1,57 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
-// using System;
 using UnityEngine;
 
-public class ChestSpawner : MonoBehaviour
+namespace Core.Chest
 {
-
-    [Range(0f, 1f)]
-    public float chestSpawnChance = 0.15f;
-
-    [SerializeField]
-    public Transform[] chestSpawnPoints;
-
-    private Transform roomPos;
-
-    [SerializeField]
-    public GameObject chest;
-
-    private bool chestWillSpawn = false;
-
-    private Vector3 spawnPointPos;
-
-
-    void DetermineChestSpawn()
+    public class ChestSpawner : MonoBehaviour
     {
-        float randValue = Random.value;
+        [Range(0f, 1f)]
+        public float chestSpawnChance = 0.15f;
 
-        // It will spawn a chest X% of time which is set in the inspector
-        if (randValue < chestSpawnChance)
+        [SerializeField]
+        public Transform[] chestSpawnPoints;
+
+        [SerializeField]
+        public GameObject chest;
+
+        private bool _chestWillSpawn;
+
+        private Transform _roomPos;
+
+        private Vector3 _spawnPointPos;
+
+
+        private void DetermineChestSpawn()
         {
-            chestWillSpawn = true;
+            var randValue = Random.value;
+
+            // It will spawn a chest X% of time which is set in the inspector
+            _chestWillSpawn = randValue < chestSpawnChance;
         }
-        else
+
+        public void SpawnChest()
         {
-            chestWillSpawn = false;
-        }
-    }
+            DetermineChestSpawn();
 
-    public void SpawnChest () {
-        DetermineChestSpawn();
+            if (_chestWillSpawn)
+            {
+                var chestSpawnPointKey = Random.Range(0, chestSpawnPoints.Length);
 
-        if (chestWillSpawn) {
-            int chestSpawnPointKey = Random.Range(0, chestSpawnPoints.Length);
+                _roomPos = gameObject.transform; // 0 0 0
 
-            roomPos = gameObject.transform; // 0 0 0
+                _spawnPointPos = chestSpawnPoints[chestSpawnPointKey].position;
+                Debug.Log(_spawnPointPos);
 
-            spawnPointPos = chestSpawnPoints[chestSpawnPointKey].position;
-            Debug.Log(spawnPointPos);
-
-            Instantiate(chest, roomPos.TransformPoint(spawnPointPos), Quaternion.identity);
-            Debug.LogWarning("Chest spawned");
-        } else {
-            Debug.Log("Chest Not spawned");
+                Instantiate(chest, _roomPos.TransformPoint(_spawnPointPos), Quaternion.identity);
+                Debug.LogWarning("Chest spawned");
+            }
+            else
+                Debug.Log("Chest Not spawned");
         }
     }
 }

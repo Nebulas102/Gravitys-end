@@ -1,30 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-
+namespace Core.Enemy.StageBosses.Stage1
+{
     public class RegularShooting : BossAbility
     {
         [Header("Bullet")]
         [SerializeField]
         private GameObject bullet;
+
         [SerializeField]
         private float bulletInterval;
 
         [Header("Spray logic")]
         [SerializeField]
         private float sprayAmountBullets;
+
         [SerializeField]
         private float sprayInterval;
 
-        private GameObject boss;
-        private GameObject player;
+        private GameObject _boss;
+        private GameObject _player;
 
         private void Start()
         {
-            boss = BossManager.instance.boss;
-            player = PlayerManager.instance.player;
+            _boss = BossManager.Instance.boss;
+            _player = PlayerManager.instance.player;
         }
 
         public override IEnumerator UseBossAbility()
@@ -34,7 +35,7 @@ using UnityEngine;
 
         private IEnumerator Spray()
         {
-            for (int i = 0; i < sprayAmountBullets; i++)
+            for (var i = 0; i < sprayAmountBullets; i++)
             {
                 Shoot();
                 yield return new WaitForSeconds(bulletInterval);
@@ -48,3 +49,4 @@ using UnityEngine;
             Instantiate(bullet, transform.position, Quaternion.identity);
         }
     }
+}

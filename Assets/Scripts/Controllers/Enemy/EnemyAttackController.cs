@@ -1,36 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
+using Controllers.Player;
 using UnityEngine;
-using Controllers;
-using Assets.Scripts.Controllers.Player;
 
-namespace Assets.Scripts.Controllers.Enemy
+namespace Controllers.Enemy
 {
     public class EnemyAttackController : MonoBehaviour
     {
         [SerializeField]
         private float attackCooldown;
 
-        private EnemyStatsController enemyStatsController;
-        private EnemyController enemyController;
-        private GameObject player;
+        private EnemyController _enemyController;
 
-        private float nextAttackTime = 0f;
+        private EnemyStatsController _enemyStatsController;
+
+        private float _nextAttackTime;
+        private GameObject _player;
 
         private void Start()
         {
-            enemyStatsController = gameObject.GetComponent<EnemyStatsController>();
-            enemyController = gameObject.GetComponent<EnemyController>();
+            _enemyStatsController = gameObject.GetComponent<EnemyStatsController>();
+            _enemyController = gameObject.GetComponent<EnemyController>();
 
-            player = PlayerManager.instance.player;
+            _player = PlayerManager.instance.player;
         }
 
         public void Attack()
         {
-            if (Time.time > nextAttackTime)
-            {   
-                player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(enemyStatsController.GetEntity().GetDamage(), 1f);
-                nextAttackTime = Time.time + attackCooldown;
+            if (Time.time > _nextAttackTime)
+            {
+                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity
+                    .TakeDamage(_enemyStatsController.GetEntity().GetDamage(), 1f);
+                _nextAttackTime = Time.time + attackCooldown;
             }
         }
     }

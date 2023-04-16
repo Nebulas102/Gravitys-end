@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using StageGeneration.Rooms;
+using Core.Enemy;
 using UnityEngine;
 
 namespace StageGeneration.Rooms.RoomTypes
@@ -10,35 +8,33 @@ namespace StageGeneration.Rooms.RoomTypes
         [SerializeField]
         private GameObject roomBossSpawnPoint;
 
-        private GameObject roomBoss;
-        private bool playerEnterBossFight = false;
-        
+        private bool _playerEnterBossFight;
+
+        private GameObject _roomBoss;
+
         private void Start()
         {
-            roomBoss = BossManager.instance.boss;
+            _roomBoss = BossManager.Instance.boss;
         }
 
         private void Update()
         {
-            if (playerEnterBossFight)
-            {
-                roomBoss.GetComponent<Boss>().SetStartFight(true);
-            }
+            if (_playerEnterBossFight) _roomBoss.GetComponent<Boss>().SetStartFight(true);
         }
 
         public bool GetPlayerEnterBossFight()
         {
-            return playerEnterBossFight;
+            return _playerEnterBossFight;
         }
 
         public void SetPlayerEnterBossFight(bool bossFight)
         {
-            playerEnterBossFight = bossFight;
+            _playerEnterBossFight = bossFight;
         }
 
         public GameObject GetRoomBoss()
         {
-            return roomBoss;
+            return _roomBoss;
         }
     }
 }

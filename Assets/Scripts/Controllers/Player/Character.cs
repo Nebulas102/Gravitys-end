@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using Controllers.Player.FSM;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XInput;
 
 namespace Controllers.Player
 {
@@ -13,19 +11,23 @@ namespace Controllers.Player
         [Header("Controls")]
         public float playerSpeed = 5.0f;
 
-        public StateMachine movementSM;
-        public StandingState standing;
-        public SprintState sprinting;
-        public CombatState combatting;
-
         [HideInInspector]
         public CharacterController controller;
+
         [HideInInspector]
         public PlayerInput playerInput;
+
         [HideInInspector]
         public Animator animator;
+
         [HideInInspector]
         public Vector3 playerVelocity;
+
+        public CombatState combatting;
+
+        public StateMachine movementSM;
+        public SprintState sprinting;
+        public StandingState standing;
 
 
         // Start is called before the first frame update

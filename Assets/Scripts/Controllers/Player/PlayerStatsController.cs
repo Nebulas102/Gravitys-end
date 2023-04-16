@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts.Controllers.Player
+namespace Controllers.Player
 {
     public class PlayerStatsController : MonoBehaviour
     {

@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Controllers.Player
 {
     public class SprintState : State
     {
-        bool sprint;
-        float playerSpeed;
+        private float playerSpeed;
+        private bool sprint;
 
         public SprintState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
@@ -33,20 +31,14 @@ namespace Controllers.Player
 
             //if there is no input, sprint is false
             sprint = moveAction.ReadValue<Vector2>() != Vector2.zero ? true : false;
-
         }
 
         public override void LogicUpdate()
         {
             if (sprint)
-            {
-                PlayerAnimator.instance.PlayRunning();
-            }
+                PlayerAnimator.Instance.PlayRunning();
             else
-            {
                 stateMachine.ChangeState(character.standing);
-            }
-
         }
 
         public override void PhysicsUpdate()
@@ -58,9 +50,8 @@ namespace Controllers.Player
 
 
             if (velocity.sqrMagnitude > 0)
-            {
-                character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(velocity), 0.5f);
-            }
+                character.transform.rotation = Quaternion.Slerp(character.transform.rotation,
+                    Quaternion.LookRotation(velocity), 0.5f);
         }
     }
 }

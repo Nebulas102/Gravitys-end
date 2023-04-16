@@ -1,4 +1,4 @@
-using Assets.Scripts.Controllers.Enemy;
+using Controllers.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 

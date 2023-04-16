@@ -6,6 +6,9 @@ namespace Controllers.Player
 {
     public class CombatState : State
     {
+        bool sheathWeapon;
+        float playerSpeed;
+        
         public CombatState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
             character = _character;

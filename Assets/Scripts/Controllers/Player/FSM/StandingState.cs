@@ -36,7 +36,8 @@ namespace Controllers.Player
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            PlayerAnimator.Instance.PlayIdle();
+            // PlayerAnimator.Instance.PlayIdle();
+            PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude, 0.2f, Time.deltaTime);
 
             if (sprint) stateMachine.ChangeState(character.sprinting);
         }

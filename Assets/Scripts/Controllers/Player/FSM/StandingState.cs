@@ -4,8 +4,8 @@ namespace Controllers.Player
 {
     public class StandingState : State
     {
-        bool sprint;
-        float playerSpeed;
+        private float playerSpeed;
+        private bool sprint;
 
         public StandingState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
@@ -27,10 +27,7 @@ namespace Controllers.Player
         {
             base.HandleInput();
 
-            if (moveAction.triggered)
-            {
-                sprint = true;
-            }
+            if (moveAction.triggered) sprint = true;
 
             input = moveAction.ReadValue<Vector2>();
             velocity = new Vector3(input.x, 0, input.y);
@@ -41,10 +38,7 @@ namespace Controllers.Player
             base.LogicUpdate();
             PlayerAnimator.instance.PlayIdle();
 
-            if (sprint)
-            {
-                stateMachine.ChangeState(character.sprinting);
-            }
+            if (sprint) stateMachine.ChangeState(character.sprinting);
         }
 
         public override void PhysicsUpdate()
@@ -56,10 +50,8 @@ namespace Controllers.Player
             character.controller.Move(velocity * Time.deltaTime * playerSpeed);
 
             if (velocity.sqrMagnitude > 0)
-            {
-                character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(velocity), 0.2f);
-            }
-
+                character.transform.rotation = Quaternion.Slerp(character.transform.rotation,
+                    Quaternion.LookRotation(velocity), 0.2f);
         }
 
         public override void Exit()
@@ -68,11 +60,7 @@ namespace Controllers.Player
 
             character.playerVelocity = new Vector3(input.x, 0, input.y);
 
-            if (velocity.sqrMagnitude > 0)
-            {
-                character.transform.rotation = Quaternion.LookRotation(velocity);
-            }
+            if (velocity.sqrMagnitude > 0) character.transform.rotation = Quaternion.LookRotation(velocity);
         }
-
     }
 }

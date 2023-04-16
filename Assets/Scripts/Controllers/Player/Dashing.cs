@@ -1,15 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Dashing : MonoBehaviour
 {
-    private CharacterController _controller;
-    private GameInput _gameInput;
-    private Vector2 _movementInput;
-    private bool _dashInput;
-
     [Header("Dash")]
     [SerializeField]
     private float dashSpeed = 20f;
@@ -32,21 +25,25 @@ public class Dashing : MonoBehaviour
     [SerializeField]
     private bool isDashing;
 
+    private CharacterController _controller;
+    private bool _dashInput;
+    private GameInput _gameInput;
+    private Vector2 _movementInput;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _controller = GetComponent<CharacterController>();
         _gameInput = FindObjectOfType<GameInput>();
-
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!isDashing) HandleInput();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (!isDashing) HandleDash();
     }
@@ -55,9 +52,7 @@ public class Dashing : MonoBehaviour
     {
         _movementInput = _gameInput.GetMovement();
         _dashInput = _gameInput.GetDash();
-
     }
-
 
 
     //////////////////////////////////////////////

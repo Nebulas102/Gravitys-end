@@ -1,3 +1,4 @@
+using System.Linq;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,8 +16,22 @@ namespace Core.UI.Inventory
         [SerializeField]
         public Button removeButton;
 
+        private GameObject _equippedSword;
+
         private Item _item;
 
+        private void Awake()
+        {
+            var player = GameObject.FindWithTag("Player");
+            _equippedSword = FindWeapon(player.transform);
+        }
+
+        private static GameObject FindWeapon(Transform root)
+        {
+            return root.Find("EquippedSword") is not null
+                ? root.Find("EquippedSword").gameObject
+                : (from Transform child in root select FindWeapon(child)).FirstOrDefault(result => result != null);
+        }
 
         public void AddItem(Item newItem)
         {
@@ -51,6 +66,9 @@ namespace Core.UI.Inventory
             // without removing the item from the array in inventory
             if (isCurrentSlot)
             {
+                if (_item.type == Type.WEAPON)
+                    _equippedSword.SetActive(false);
+
                 ClearSlot();
                 return;
             }
@@ -63,7 +81,8 @@ namespace Core.UI.Inventory
             // When the slot gets clicked and the slot isn't empty
             // Then you can use that particular item
             if (_item == null) return;
-            _item.Use(this);
+
+            _item.Use(this, _equippedSword);
         }
     }
 }

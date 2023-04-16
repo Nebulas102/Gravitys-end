@@ -20,7 +20,7 @@ namespace Core.UI.Inventory
         [SerializeField]
         public GameObject inventoryUI;
 
-        public bool inventoryOpened = false;
+        public bool inventoryOpened;
 
         public readonly IDictionary<Type, List<Item>> Items = new Dictionary<Type, List<Item>>();
         private bool _inventoryToggleInput;
@@ -92,14 +92,8 @@ namespace Core.UI.Inventory
 
         private void ToggleInventory()
         {
-            if (PauseMenu.instance.isPaused)
-            {
-                return;
-            }
-            if (!inventoryOpened)
-            {
-                inventoryUI.SetActive(false);
-            }
+            if (PauseMenu.instance.isPaused) return;
+            if (!inventoryOpened) inventoryUI.SetActive(false);
             // Toggles the inventory
             if (_inventoryToggleInput)
             {

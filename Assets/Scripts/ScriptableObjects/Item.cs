@@ -14,7 +14,7 @@ namespace ScriptableObjects
         [SerializeField]
         public Type type;
 
-        public void Use(InventorySlot itemSlot)
+        public void Use(InventorySlot itemSlot, GameObject equippedWeapon)
         {
             switch (type)
             {
@@ -66,6 +66,7 @@ namespace ScriptableObjects
                         .AddItem(InventoryUI.StaticCurrentWeaponSlot.GetItem());
                     Inventory.Instance.Add(InventoryUI.StaticCurrentWeaponSlot.GetItem());
                     InventoryUI.StaticCurrentWeaponSlot.ClearSlot();
+                    equippedWeapon.SetActive(false);
 
                     return;
                 }
@@ -86,6 +87,7 @@ namespace ScriptableObjects
                     // Add this item to the currentSlot
                     InventoryUI.StaticCurrentWeaponSlot.AddItem(this);
                     Inventory.Instance.Remove(this);
+                    equippedWeapon.SetActive(true);
                     break;
                 }
                 default:

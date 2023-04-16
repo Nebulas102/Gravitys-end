@@ -7,6 +7,7 @@ namespace Core.Gear.Weapons
     public class Sword : MonoBehaviour
     {
         public Item item;
+        private bool _canPickUp;
         private GameInput _gameInput;
         private bool _isPickingUp;
 
@@ -18,16 +19,22 @@ namespace Core.Gear.Weapons
         private void Update()
         {
             _isPickingUp = _gameInput.GetPickUp();
+            HandlePickup();
+        }
+
+        private void OnTriggerExit(Collider hit)
+        {
+            _canPickUp = false;
         }
 
         private void OnTriggerStay(Collider hit)
         {
-            if (hit.gameObject.layer == LayerMask.NameToLayer("Entity")) HandlePickup();
+            _canPickUp = hit.gameObject.layer == LayerMask.NameToLayer("Entity");
         }
 
         private void HandlePickup()
         {
-            if (!_isPickingUp) return;
+            if (!_isPickingUp || !_canPickUp) return;
 
             if (item.type is not (Type.ARMOR or Type.WEAPON))
                 return;

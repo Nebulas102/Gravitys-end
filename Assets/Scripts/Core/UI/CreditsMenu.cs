@@ -7,7 +7,7 @@ namespace Core.UI
     {
         public void GoToMainMenu()
         {
-            SceneManager.LoadScene("MainMenuScene");
+            SceneManager.LoadSceneAsync(0);
         }
     }
 }

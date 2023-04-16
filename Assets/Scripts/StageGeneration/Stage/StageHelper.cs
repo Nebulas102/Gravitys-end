@@ -200,8 +200,10 @@ namespace StageGeneration.Stage
                         area = 0
                     };
 
+                    #if UNITY_EDITOR
                     // Add the NavMeshBuildSource to the sources array
                     ArrayUtility.Add(ref sources, source);
+                    #endif
                 }
 
             // Recursively add sources from all children

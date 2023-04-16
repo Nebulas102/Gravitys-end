@@ -553,8 +553,8 @@ GameObject:
   - component: {fileID: 210098610}
   - component: {fileID: 210098615}
   - component: {fileID: 210098614}
-  - component: {fileID: 210098613}
   - component: {fileID: 210098618}
+  - component: {fileID: 210098619}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -578,31 +578,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &210098613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 210098609}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30d9e1a179ea5474aa2d4890c3e0477e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSpeed: 5
-  canMove: 1
-  dashSpeed: 20
-  dashDuration: 0.25
-  dashTimer: 0
-  dashCooldown: 3
-  dashAvailable: 1
-  controllerDeadzone: 0.1
-  gamepadRotateSmoothing: 1000
-  isGamepad: 0
-  _camera: {fileID: 530598974}
-  isDashing: 0
-  isAttacking: 0
 --- !u!143 &210098614
 CharacterController:
   m_ObjectHideFlags: 0
@@ -645,7 +620,7 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 210098613}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Assets.Scripts.Controllers.PlayerMovement.PlayerMovementController,
           Assembly-CSharp
         m_MethodName: OnDeviceChange
@@ -701,6 +676,24 @@ MonoBehaviour:
   playerInput: {fileID: 210098615}
   animator: {fileID: 0}
   playerVelocity: {x: 0, y: 0, z: 0}
+--- !u!114 &210098619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210098609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13939f2f52dcefc4595b58707758870e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSpeed: 20
+  dashDuration: 0.25
+  dashTimer: 0
+  dashCooldown: 3
+  dashAvailable: 1
+  isDashing: 0
 --- !u!224 &297668546 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5846862400795861748, guid: 865d2cae403f0d545983909174c270aa, type: 3}

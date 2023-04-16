@@ -6,12 +6,9 @@ namespace Controllers.Player
 {
     public class SprintState : State
     {
-        Vector3 currentVelocity;
-
         bool sprint;
-        bool dash;
         float playerSpeed;
-        Vector3 cVelocity;
+
         public SprintState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
             character = _character;
@@ -23,11 +20,8 @@ namespace Controllers.Player
             base.Enter();
 
             sprint = false;
-
             input = Vector2.zero;
             velocity = Vector3.zero;
-            currentVelocity = Vector3.zero;
-
             playerSpeed = character.playerSpeed;
         }
 
@@ -47,7 +41,6 @@ namespace Controllers.Player
             if (sprint)
             {
                 PlayerAnimator.instance.PlayRunning();
-                // character.animator.SetFloat("speed", input.magnitude + 0.5f, character.speedDampTime, Time.deltaTime);
             }
             else
             {
@@ -61,7 +54,6 @@ namespace Controllers.Player
             base.PhysicsUpdate();
 
             velocity = Quaternion.Euler(0, -45, 0) * velocity;
-            // currentVelocity = Vector3.SmoothDamp(currentVelocity, velocity, ref cVelocity, 0.9f);
             character.controller.Move(velocity * Time.deltaTime * playerSpeed);
 
 

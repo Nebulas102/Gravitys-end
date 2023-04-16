@@ -15,7 +15,6 @@ namespace Controllers.Player
         private const string ATTACK1 = "Attack1";
         private const string ATTACK2 = "Attack2";
         private const string ATTACK3 = "Attack3";
-        private static int _noOfClicks = 0;
 
         [Header("Movement")]
         [SerializeField]
@@ -69,14 +68,11 @@ namespace Controllers.Player
         private bool _dashInput, _attackInput;
 
         private GameInput _gameInput;
-        private float _lastClickedTime = 0;
-        private float _maxComboDelay = 1f;
 
         private Vector2 _movementInput, _lookInput;
         private Inventory inventory;
 
         //Attack variables
-        private float _nextFireTime = 0f;
         private PlayerInput _playerInput;
 
         private PlayerInputManager _playerInputManager;

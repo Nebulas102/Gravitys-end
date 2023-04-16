@@ -59,7 +59,7 @@ namespace Controllers.Player
 
             if (velocity.sqrMagnitude > 0)
             {
-                character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(velocity), 0.2f);
+                character.transform.rotation = Quaternion.Slerp(character.transform.rotation, Quaternion.LookRotation(velocity), 0.5f);
             }
         }
     }

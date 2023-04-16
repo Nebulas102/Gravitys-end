@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using StageGeneration.Rooms.RoomTypes;
+using Cinemachine;
 
 namespace StageGeneration.Rooms.BossRoomUtil
 {
@@ -13,6 +14,8 @@ namespace StageGeneration.Rooms.BossRoomUtil
 
         [SerializeField]
         private Canvas bossFightCanvas;
+
+        private CinemachineVirtualCamera topDownCamera;
 
         private GameObject bossRoom;
         private GameObject player;
@@ -47,6 +50,10 @@ namespace StageGeneration.Rooms.BossRoomUtil
         private void TeleportPlayer()
         {
             player.transform.position = teleportDestination.transform.position;
+            
+            topDownCamera = GameObject.Find("Cinemachine Camera").GetComponent<CinemachineVirtualCamera>();
+            topDownCamera.m_Lens.OrthographicSize = 7.5f;
+            
         }
     }
 }

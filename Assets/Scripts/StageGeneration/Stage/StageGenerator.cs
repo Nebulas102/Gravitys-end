@@ -184,6 +184,13 @@ namespace StageGeneration.Stage
         {
             foreach (var room in _mapRooms.Where(room => room.GetComponent<EnemyGeneration>() is not null))
                 room.GetComponent<EnemyGeneration>().SpawnEnemy();
+            yield return StartCoroutine(StageChestGeneration());
+        }
+
+        private IEnumerator StageChestGeneration()
+        {
+            foreach (var room in _mapRooms.Where(room => room.GetComponent<ChestSpawner>() is not null))
+                room.GetComponent<ChestSpawner>().SpawnChest();
             yield return null;
         }
 

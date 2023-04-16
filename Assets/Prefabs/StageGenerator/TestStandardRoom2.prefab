@@ -690,6 +690,7 @@ GameObject:
   - component: {fileID: 2915231218470790407}
   - component: {fileID: 2915231218470790406}
   - component: {fileID: 2837679787116606899}
+  - component: {fileID: 7270485677924902561}
   m_Layer: 0
   m_Name: TestStandardRoom2
   m_TagString: Room
@@ -741,10 +742,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d837a51561f58d441a53bf195c507ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 0
-  sizeY: 0
-  sizeZ: 0
-  cells: []
+  sizeX: 25
+  sizeY: 4
+  sizeZ: 25
   weight: 30
   doors:
   - {fileID: 8071986999989766767}
@@ -752,6 +752,32 @@ MonoBehaviour:
   - {fileID: 6356833223409406187}
   - {fileID: 8765766093873253068}
   doorReplacement: {fileID: 5390974569567074888, guid: 183b5d8fdfcad5b42b1791f532cb39a0, type: 3}
+  cells:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &2837679787116606899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +793,26 @@ MonoBehaviour:
   enemy: {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
   spawnpointPos: {x: 0, y: 0, z: 0}
   enemyCount: 0
+--- !u!114 &7270485677924902561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2915231218470790405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc0d22d4ed96124c820f91091ad20a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chestSpawnChance: 0.5
+  chestSpawnPoints:
+  - {fileID: 6236186374434244383, guid: 136f2c00bd0ecd14fa08219e8f1113b3, type: 3}
+  - {fileID: 7626817443821325120, guid: 7afb9acaff8285946808fff9a2da13d3, type: 3}
+  - {fileID: 1134386407973734669, guid: 6f643027b43940941bb225f2bcf873ac, type: 3}
+  - {fileID: 4717076967082531442, guid: a3edb6a11c77c154a8cf8d26e5f5233e, type: 3}
+  roomPos: {fileID: 0}
+  chest: {fileID: 7531347011508158876, guid: 759439ab11a7031409a5aa051d74c7ae, type: 3}
 --- !u!1 &3165673305984273053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1624,9 +1670,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPosXOffset: 2
   roomPosZOffset: 4
-  cell: {fileID: 0}
   hasNeighbour: 0
   direction: 0
+  cell: {fileID: 0}
 --- !u!1 &6499041524985554381
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,9 +1785,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPosXOffset: 4
   roomPosZOffset: 2
-  cell: {fileID: 0}
   hasNeighbour: 0
   direction: 1
+  cell: {fileID: 0}
 --- !u!1 &6569560372342884945
 GameObject:
   m_ObjectHideFlags: 0
@@ -2081,9 +2127,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPosXOffset: 2
   roomPosZOffset: 0
-  cell: {fileID: 0}
   hasNeighbour: 0
   direction: 2
+  cell: {fileID: 0}
 --- !u!1 &8704626971354877464
 GameObject:
   m_ObjectHideFlags: 0
@@ -2326,6 +2372,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPosXOffset: 0
   roomPosZOffset: 2
-  cell: {fileID: 0}
   hasNeighbour: 0
   direction: 3
+  cell: {fileID: 0}

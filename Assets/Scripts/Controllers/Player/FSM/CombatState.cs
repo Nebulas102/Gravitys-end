@@ -8,6 +8,7 @@ namespace Controllers.Player
     {
         bool sheathWeapon;
         float playerSpeed;
+        bool attack;
 
         public CombatState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
@@ -20,6 +21,7 @@ namespace Controllers.Player
             base.Enter();
 
             sheathWeapon = false;
+            attack = false;
             input = Vector2.zero;
 
             velocity = character.playerVelocity;
@@ -33,6 +35,11 @@ namespace Controllers.Player
             if (drawWeaponAction.triggered)
             {
                 sheathWeapon = true;
+            }
+
+            if (attackAction.triggered)
+            {
+                attack = true;
             }
 
             input = moveAction.ReadValue<Vector2>();
@@ -52,6 +59,12 @@ namespace Controllers.Player
                 EquipmentSystem.Instance.Invoke("SheathWeapon", 1f);
                 
                 stateMachine.ChangeState(character.standing);
+            }
+
+            if (attack)
+            {
+                PlayerAnimator.Instance._animator.SetTrigger("attack");
+                stateMachine.ChangeState(character.attacking);
             }
         }
 

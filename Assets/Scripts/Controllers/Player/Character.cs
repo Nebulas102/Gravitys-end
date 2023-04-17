@@ -27,6 +27,7 @@ namespace Controllers.Player
         public SprintState sprinting;
         public StandingState standing;
         public CombatState combatting;
+        public AttackState attacking;
 
 
         // Start is called before the first frame update
@@ -40,6 +41,7 @@ namespace Controllers.Player
             standing = new StandingState(this, movementSM);
             sprinting = new SprintState(this, movementSM);
             combatting = new CombatState(this, movementSM);
+            attacking = new AttackState(this, movementSM);
 
             movementSM.Initialize(standing);
         }

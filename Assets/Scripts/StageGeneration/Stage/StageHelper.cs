@@ -29,6 +29,8 @@ namespace StageGeneration.Stage
         private static List<Cell> _cells;
         private static List<GameObject> _rooms;
 
+        private static List<NavMeshBuildSource> sources;
+
         private void Awake()
         {
             if (Instance == null) Instance = this;
@@ -151,16 +153,16 @@ namespace StageGeneration.Stage
             var settings = NavMesh.GetSettingsByID(0);
 
             // Create an array to hold the NavMeshBuildSources
-            var sources = new NavMeshBuildSource[0];
+            sources = new List<NavMeshBuildSource>();
 
             // Iterate through all the tagged game objects and their children
-            foreach (var obj in taggedObjects) AddSourcesFromObject(obj, ref sources);
+            foreach (var obj in taggedObjects) AddSourcesFromObject(obj);
 
             var centerCell = CalculateCenterStage();
 
             // Build the NavMesh
             var data = new NavMeshData();
-            data = NavMeshBuilder.BuildNavMeshData(settings, sources.ToList(), new Bounds(
+            data = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(
                 centerCell.gameObject.transform.position,
                 new Vector3(_gridX * _offset, 30, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
             NavMesh.AddNavMeshData(data);
@@ -184,7 +186,7 @@ namespace StageGeneration.Stage
             return _cells.Where(c => c.x == calcX && c.z == calcZ).SingleOrDefault();
         }
 
-        private static void AddSourcesFromObject(GameObject obj, ref NavMeshBuildSource[] sources)
+        private static void AddSourcesFromObject(GameObject obj)
         {
             var meshFilters = obj.GetComponentsInChildren<MeshFilter>();
 
@@ -200,14 +202,22 @@ namespace StageGeneration.Stage
                         area = 0
                     };
 
-                    #if UNITY_EDITOR
-                    // Add the NavMeshBuildSource to the sources array
-                    ArrayUtility.Add(ref sources, source);
-                    #endif
+                    // #if UNITY_EDITOR
+                    // // Add the NavMeshBuildSource to the sources array
+                    // ArrayUtility.Add(ref sources, source);
+                    // #else
+                    ArrayUtilAdd(source);
+                    // #endif
                 }
 
             // Recursively add sources from all children
-            foreach (Transform child in obj.transform) AddSourcesFromObject(child.gameObject, ref sources);
+            foreach (Transform child in obj.transform) AddSourcesFromObject(child.gameObject);
+        }
+
+
+        private static void ArrayUtilAdd(NavMeshBuildSource element)
+        {
+            sources.Add(element);
         }
     }
 }

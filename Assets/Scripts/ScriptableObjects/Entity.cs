@@ -36,7 +36,6 @@ namespace ScriptableObjects
 
             // Damage character
             _health -= damage;
-            Debug.Log(_health);
         }
 
         public float GetDamage()
@@ -46,7 +45,6 @@ namespace ScriptableObjects
 
         public void Die()
         {
-            Debug.Log("Entity has died");
             SceneManager.LoadScene("MainMenuScene");
         }
     }

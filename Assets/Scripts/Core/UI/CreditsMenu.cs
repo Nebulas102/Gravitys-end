@@ -5,9 +5,10 @@ namespace Core.UI
 {
     public class CreditsMenu : MonoBehaviour
     {
-        public void GoToMainMenu()
+        public void GoToMainMenu2()
         {
-            SceneManager.LoadSceneAsync(0);
+            Debug.Log("komt hiering main menu");
+            SceneManager.LoadScene("MainMenuScene");
         }
     }
 }

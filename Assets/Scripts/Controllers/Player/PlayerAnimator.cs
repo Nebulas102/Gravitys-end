@@ -6,7 +6,7 @@ namespace Controllers.Player
     {
         public static PlayerAnimator Instance;
 
-        private Animator _animator;
+        public Animator _animator;
 
         private string _currentState;
 

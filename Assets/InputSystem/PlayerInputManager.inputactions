@@ -33,21 +33,30 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack",
-                    "type": "Button",
-                    "id": "1d8186da-671a-4a67-ba55-cf52c1bc3783",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Loot Pickup",
                     "type": "Button",
                     "id": "e9e0e3cf-d548-490e-a9bf-c2f9b75cdb4b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "1d8186da-671a-4a67-ba55-cf52c1bc3783",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DrawWeapon",
+                    "type": "Button",
+                    "id": "826b5ffc-0db1-4673-99bd-e1b048d24665",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -181,6 +190,28 @@
                     "processors": "",
                     "groups": "Gamepad;Controller",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac92d8d4-78e1-4614-86c4-0b96870ea5ac",
+                    "path": "<Keyboard>/r",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "DrawWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4de47067-a086-4a07-8153-0ea50a03b37f",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "DrawWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

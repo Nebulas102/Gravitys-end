@@ -39,13 +39,9 @@ namespace Core.Chest
                 _roomPos = gameObject.transform; // 0 0 0
 
                 _spawnPointPos = chestSpawnPoints[chestSpawnPointKey].position;
-                Debug.Log(_spawnPointPos);
 
                 Instantiate(chest, _roomPos.TransformPoint(_spawnPointPos), Quaternion.identity);
-                Debug.LogWarning("Chest spawned");
             }
-            else
-                Debug.Log("Chest Not spawned");
         }
     }
 }

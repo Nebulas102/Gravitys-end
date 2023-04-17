@@ -26,7 +26,7 @@ namespace Core.UI.Inventory
             _equippedSword = FindWeapon(player.transform);
         }
 
-        private static GameObject FindWeapon(Transform root)
+        public static GameObject FindWeapon(Transform root)
         {
             return root.Find("EquippedSword") is not null
                 ? root.Find("EquippedSword").gameObject

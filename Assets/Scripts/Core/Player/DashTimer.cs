@@ -23,7 +23,7 @@ namespace Core.Player
         {
             if (_player == null)
             {
-                _player = PlayerManager.instance.player;
+                _player = PlayerManager.Instance.player;
 
                 _cooldown = _player.GetComponent<Dashing>().GetDashTimer();
             }

@@ -12,6 +12,12 @@ namespace Core.UI
         [SerializeField]
         private GameObject loadingScreen;
 
+        private void Awake()
+        {
+            loadingScreen.SetActive(false);
+            mainMenu.SetActive(true);
+        }
+
         public void LoadLevel(int sceneIndex)
         {
             StartCoroutine(LoadAsynchronously(sceneIndex));

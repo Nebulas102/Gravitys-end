@@ -46,13 +46,13 @@ namespace StageGeneration.Rooms
 
                 Cell doorCell = null;
                 var currentSpawnDoor = spawnDoor;
-                StageHelper.roomDirections placementSide;
+                StageHelper.RoomDirections placementSide;
 
                 if (initialSpawned)
                 {
                     placementSide = DeterminePlacementSide(_previousRoom);
 
-                    if (placementSide == StageHelper.roomDirections.Undefined) break;
+                    if (placementSide == StageHelper.RoomDirections.UNDEFINED) break;
 
                     currentSpawnDoor = _previousRoom.GetComponent<Room>()
                         .GetDoors().SingleOrDefault(d => d.GetComponent<Door>().GetDirection() == placementSide);
@@ -83,10 +83,10 @@ namespace StageGeneration.Rooms
             }
         }
 
-        private StageHelper.roomDirections DeterminePlacementSide(GameObject previousRoom)
+        private StageHelper.RoomDirections DeterminePlacementSide(GameObject previousRoom)
         {
-            var openDirections = Enum.GetValues(typeof(StageHelper.roomDirections)).Cast<StageHelper.roomDirections>()
-                .Where(direction => direction != StageHelper.roomDirections.Undefined).ToList();
+            var openDirections = Enum.GetValues(typeof(StageHelper.RoomDirections)).Cast<StageHelper.RoomDirections>()
+                .Where(direction => direction != StageHelper.RoomDirections.UNDEFINED).ToList();
 
             var doorDirection = StageHelper.RandomDirection();
 
@@ -95,7 +95,7 @@ namespace StageGeneration.Rooms
             var canPlace = false;
             GameObject door = null;
 
-            if (doorDirection != StageHelper.roomDirections.Undefined)
+            if (doorDirection != StageHelper.RoomDirections.UNDEFINED)
             {
                 door = previousRoom.GetComponent<Room>()
                     .GetDoors().SingleOrDefault(d => d.GetComponent<Door>().GetDirection() == doorDirection);
@@ -125,7 +125,7 @@ namespace StageGeneration.Rooms
             }
 
             if (!canPlace)
-                doorDirection = StageHelper.roomDirections.Undefined;
+                doorDirection = StageHelper.RoomDirections.UNDEFINED;
             else
                 door.GetComponent<Door>().hasNeighbour = true;
 

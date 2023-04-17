@@ -45,12 +45,10 @@ namespace Core.Enemy
 
         private void Update()
         {
-            if (_startFight && !_startAbilitiesSequence)
-            {
-                StartCoroutine(LoopBossAbilities());
+            if (!_startFight || _startAbilitiesSequence) return;
 
-                _startAbilitiesSequence = true;
-            }
+            StartCoroutine(LoopBossAbilities());
+            _startAbilitiesSequence = true;
         }
 
         private IEnumerator LoopBossAbilities()
@@ -91,9 +89,9 @@ namespace Core.Enemy
             return _startFight;
         }
 
-        public void SetStartFight(bool _startFight)
+        public void SetStartFight(bool startFight)
         {
-            this._startFight = _startFight;
+            _startFight = startFight;
         }
 
         public BossAbility GetCurrentAbility()

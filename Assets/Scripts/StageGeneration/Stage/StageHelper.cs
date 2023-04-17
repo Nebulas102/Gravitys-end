@@ -12,113 +12,113 @@ namespace StageGeneration.Stage
     public class StageHelper : MonoBehaviour
     {
         [HideInInspector]
-        public enum roomDirections
+        public enum RoomDirections
         {
-            Top,
-            Right,
-            Bottom,
-            Left,
-            Undefined
+            TOP,
+            RIGHT,
+            BOTTOM,
+            LEFT,
+            UNDEFINED
         }
 
-        public static StageHelper instance;
+        public static StageHelper Instance;
 
-        private static int gridX;
-        private static int gridZ;
-        private static int offset;
-        private static List<Cell> cells;
-        private static List<GameObject> rooms;
+        private static int _gridX;
+        private static int _gridZ;
+        private static int _offset;
+        private static List<Cell> _cells;
+        private static List<GameObject> _rooms;
 
         private void Awake()
         {
-            if (instance == null) instance = this;
-            else if (instance != null) Destroy(gameObject);
+            if (Instance == null) Instance = this;
+            else if (Instance != null) Destroy(gameObject);
 
             DontDestroyOnLoad(gameObject);
         }
 
         public static int GetGridX()
         {
-            return gridX;
+            return _gridX;
         }
 
-        public static void SetGridX(int _gridX)
+        public static void SetGridX(int gridX)
         {
-            gridX = _gridX;
+            _gridX = gridX;
         }
 
         public static int GetGridZ()
         {
-            return gridZ;
+            return _gridZ;
         }
 
-        public static void SetGridZ(int _gridZ)
+        public static void SetGridZ(int gridZ)
         {
-            gridZ = _gridZ;
+            _gridZ = gridZ;
         }
 
         public static int GetOffset()
         {
-            return offset;
+            return _offset;
         }
 
         public static void SetOffset(int _offset)
         {
-            offset = _offset;
+            StageHelper._offset = _offset;
         }
 
         public static List<Cell> GetCells()
         {
-            return cells;
+            return _cells;
         }
 
         public static void SetCells(List<Cell> _cells)
         {
-            cells = _cells;
+            StageHelper._cells = _cells;
         }
 
         public static List<GameObject> GetRooms()
         {
-            return rooms;
+            return _rooms;
         }
 
         public static void SetRooms(List<GameObject> _rooms)
         {
-            rooms = _rooms;
+            StageHelper._rooms = _rooms;
         }
 
-        public static roomDirections RandomDirection()
+        public static RoomDirections RandomDirection()
         {
-            return (roomDirections)Random.Range(0, Enum.GetValues(typeof(roomDirections)).Length);
+            return (RoomDirections)Random.Range(0, Enum.GetValues(typeof(RoomDirections)).Length);
         }
 
-        public static roomDirections RandomDirection(List<roomDirections> directions)
+        public static RoomDirections RandomDirection(List<RoomDirections> directions)
         {
-            directions.Remove(roomDirections.Undefined);
+            directions.Remove(RoomDirections.UNDEFINED);
 
             if (directions != null)
                 return directions[Random.Range(0, directions.Count)];
-            return roomDirections.Undefined;
+            return RoomDirections.UNDEFINED;
         }
 
-        public static roomDirections GetOppositeDirection(roomDirections direction)
+        public static RoomDirections GetOppositeDirection(RoomDirections direction)
         {
             //Cant be null so I gave just a value that will always be changed
-            var oppositeDirection = roomDirections.Top;
+            var oppositeDirection = RoomDirections.TOP;
 
             switch (direction)
             {
-                case roomDirections.Top:
-                    oppositeDirection = roomDirections.Bottom;
+                case RoomDirections.TOP:
+                    oppositeDirection = RoomDirections.BOTTOM;
                     break;
-                case roomDirections.Right:
-                    oppositeDirection = roomDirections.Left;
+                case RoomDirections.RIGHT:
+                    oppositeDirection = RoomDirections.LEFT;
                     break;
-                case roomDirections.Bottom:
-                    oppositeDirection = roomDirections.Top;
+                case RoomDirections.BOTTOM:
+                    oppositeDirection = RoomDirections.TOP;
                     break;
-                case roomDirections.Left:
-                    oppositeDirection = roomDirections.Right;
+                case RoomDirections.LEFT:
+                    oppositeDirection = RoomDirections.RIGHT;
                     break;
             }
 
@@ -162,7 +162,7 @@ namespace StageGeneration.Stage
             var data = new NavMeshData();
             data = NavMeshBuilder.BuildNavMeshData(settings, sources.ToList(), new Bounds(
                 centerCell.gameObject.transform.position,
-                new Vector3(gridX * offset, 30, gridZ * offset)), Vector3.zero, Quaternion.identity);
+                new Vector3(_gridX * _offset, 30, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
             NavMesh.AddNavMeshData(data);
         }
 
@@ -171,17 +171,17 @@ namespace StageGeneration.Stage
             float calcX = 0;
             float calcZ = 0;
 
-            if (gridX % 2 == 0)
-                calcX = gridX / 2 - 1;
+            if (_gridX % 2 == 0)
+                calcX = _gridX / 2 - 1;
             else
-                calcX = Mathf.RoundToInt(gridX / 2 - 1);
+                calcX = Mathf.RoundToInt(_gridX / 2 - 1);
 
-            if (gridZ % 2 == 0)
-                calcZ = gridZ / 2 - 1;
+            if (_gridZ % 2 == 0)
+                calcZ = _gridZ / 2 - 1;
             else
-                calcZ = Mathf.RoundToInt(gridZ / 2 - 1);
+                calcZ = Mathf.RoundToInt(_gridZ / 2 - 1);
 
-            return cells.Where(c => c.x == calcX && c.z == calcZ).SingleOrDefault();
+            return _cells.Where(c => c.x == calcX && c.z == calcZ).SingleOrDefault();
         }
 
         private static void AddSourcesFromObject(GameObject obj, ref NavMeshBuildSource[] sources)
@@ -200,8 +200,10 @@ namespace StageGeneration.Stage
                         area = 0
                     };
 
+                    #if UNITY_EDITOR
                     // Add the NavMeshBuildSource to the sources array
                     ArrayUtility.Add(ref sources, source);
+                    #endif
                 }
 
             // Recursively add sources from all children

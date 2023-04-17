@@ -4,16 +4,16 @@ namespace Utils
 {
     public class LockRotation : MonoBehaviour
     {
-        private Quaternion lockedRotation;
+        private Quaternion _lockedRotation;
 
         private void Start()
         {
-            lockedRotation = transform.rotation;
+            _lockedRotation = transform.rotation;
         }
 
         private void Update()
         {
-            transform.rotation = lockedRotation;
+            transform.rotation = _lockedRotation;
         }
     }
 }

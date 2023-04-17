@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using StageGeneration.Rooms.RoomTypes;
 using Cinemachine;
+using StageGeneration.Rooms.RoomTypes;
+using UnityEngine;
 
 namespace StageGeneration.Rooms.BossRoomUtil
 {
@@ -15,22 +12,22 @@ namespace StageGeneration.Rooms.BossRoomUtil
         [SerializeField]
         private Canvas bossFightCanvas;
 
-        private CinemachineVirtualCamera topDownCamera;
-
         private GameObject bossRoom;
         private GameObject player;
 
-        void Start()
+        private CinemachineVirtualCamera topDownCamera;
+
+        private void Start()
         {
             bossRoom = transform.root.gameObject;
-            player = PlayerManager.instance.player;
+            player = PlayerManager.Instance.player;
 
             bossFightCanvas.enabled = false;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            BossRoom _bossRoom = bossRoom.GetComponent<BossRoom>();
+            var _bossRoom = bossRoom.GetComponent<BossRoom>();
 
             if (other.tag == "Player")
             {
@@ -50,10 +47,9 @@ namespace StageGeneration.Rooms.BossRoomUtil
         private void TeleportPlayer()
         {
             player.transform.position = teleportDestination.transform.position;
-            
+
             topDownCamera = GameObject.Find("Cinemachine Camera").GetComponent<CinemachineVirtualCamera>();
             topDownCamera.m_Lens.OrthographicSize = 7.5f;
-            
         }
     }
 }

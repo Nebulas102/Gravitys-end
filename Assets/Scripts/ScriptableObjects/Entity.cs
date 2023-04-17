@@ -8,7 +8,6 @@ namespace ScriptableObjects
     {
         private float _health;
         private float _baseDamage;
-        public string Name;
 
         public void SetBaseHealth(float health)
         {

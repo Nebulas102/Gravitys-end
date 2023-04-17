@@ -7,6 +7,9 @@ namespace Controllers.Enemy
 {
     public class BossController : MonoBehaviour
     {
+        [SerializeField]
+        private float rotationSpeed;
+
         private NavMeshAgent _agent;
         private Boss _boss;
         private BossRoom _bossRoom;
@@ -14,7 +17,7 @@ namespace Controllers.Enemy
 
         private void Start()
         {
-            _target = PlayerManager.instance.player.transform;
+            _target = PlayerManager.Instance.player.transform;
             _agent = BossManager.Instance.boss.GetComponent<NavMeshAgent>();
             _boss = BossManager.Instance.boss.GetComponent<Boss>();
             _bossRoom = transform.root.gameObject.GetComponent<BossRoom>();
@@ -22,21 +25,20 @@ namespace Controllers.Enemy
 
         private void Update()
         {
-            if (_boss.GetStartFight())
-            {
-                var distance = Vector3.Distance(_target.position, transform.position);
+            if (!_boss.GetStartFight()) return;
 
-                _agent.SetDestination(_target.position);
+            var distance = Vector3.Distance(_target.position, transform.position);
 
-                if (distance <= _agent.stoppingDistance) FaceTarget();
-            }
+            _agent.SetDestination(_target.position);
+
+            if (distance <= _agent.stoppingDistance) FaceTarget();
         }
 
         private void FaceTarget()
         {
             var direction = (_target.position - transform.position).normalized;
             var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
     }
 }

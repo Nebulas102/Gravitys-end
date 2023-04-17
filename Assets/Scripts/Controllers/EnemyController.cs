@@ -10,14 +10,14 @@ namespace Controllers
         public float minDistance = 2f;
         private NavMeshAgent agent;
 
-        private Transform target;
-
         private EnemyAttackController enemyAttackController;
+
+        private Transform target;
 
         private void Start()
         {
             // See PlayerManager.cs for explanation
-            target = PlayerManager.instance.player.transform;
+            target = PlayerManager.Instance.player.transform;
             agent = GetComponent<NavMeshAgent>();
             enemyAttackController = GetComponent<EnemyAttackController>();
 
@@ -26,18 +26,21 @@ namespace Controllers
 
         private void Update()
         {
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
             var distance = Vector3.Distance(target.position, transform.position);
-            Vector3 enemyDirection = target.position - transform.position;
+            var enemyDirection = target.position - transform.position;
 
             if (distance > lookRadius)
                 return;
-            
+
             // Check if there is no wall in between the player and the enemy, if there is then return
-            if (Physics.Raycast(transform.position, enemyDirection.normalized, out RaycastHit hit, distance, LayerMask.GetMask("Default")))
+            if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,
+                    LayerMask.GetMask("Default")))
+            {
                 if (hit.collider.tag != "Enemy")
                     return;
-            
+            }
+
             agent.SetDestination(target.position);
 
             if (distance <= agent.stoppingDistance)
@@ -48,24 +51,20 @@ namespace Controllers
                 FaceTarget();
             }
 
-            foreach (GameObject enemy in enemies)
-            {
+            foreach (var enemy in enemies)
                 if (enemy != gameObject) // don't compare to itself
                 {
                     // Checks distance between enemies
-                    float enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);
+                    var enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);
 
                     if (enemyDistance < minDistance)
                     {
-                        Vector3 direction = transform.position - enemy.transform.position;
+                        var direction = transform.position - enemy.transform.position;
                         direction.y = 0f; // don't move up/down
                         // Move enemies away from eachother so they don't collide
                         GetComponent<NavMeshAgent>().Move(direction.normalized * Time.deltaTime);
                     }
                 }
-            }
-            
-            
         }
 
         // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you

@@ -20,7 +20,7 @@ namespace Controllers.Enemy
             _enemyStatsController = gameObject.GetComponent<EnemyStatsController>();
             _enemyController = gameObject.GetComponent<EnemyController>();
 
-            _player = PlayerManager.instance.player;
+            _player = PlayerManager.Instance.player;
         }
 
         public void Attack()

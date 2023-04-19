@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core.Enemy.StageBosses;
 using ScriptableObjects;
 using TMPro;
+using UI.Damage;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,13 +12,13 @@ namespace Core.Enemy
     public class Boss : MonoBehaviour
     {
         [SerializeField]
-        private Entity entity;
-
-        [SerializeField]
         private float health;
 
         [SerializeField]
-        private float damage;
+        private int startDamage;
+
+        [SerializeField]
+        private int endDamage;
 
         [SerializeField]
         private Slider healthBar;
@@ -28,23 +29,36 @@ namespace Core.Enemy
         [SerializeField]
         private List<BossAbilityStage> bossAbilityStages;
 
+        [SerializeField]
+        public GameObject damageDisplay;
+
+        private Canvas canvas;
+        private float currentHealth;
+
         private BossAbility _currentBossAbility;
         private bool _startAbilitiesSequence;
         private bool _startFight;
 
         private void Start()
         {
-            entity.SetBaseHealth(health);
-            entity.SetBaseDamage(damage);
+            currentHealth = health;
 
             healthBar.maxValue = health;
             healthBar.value = healthBar.maxValue;
 
-            bossNameBar.text = entity.name;
+            bossNameBar.text = name;
+
+            canvas = GetComponentInChildren<Canvas>();
         }
 
         private void Update()
         {
+            //Test taking damage
+            // if (Input.GetKeyDown(KeyCode.G))
+            // {
+            //     TakeDamage(0f);
+            // }
+
             if (!_startFight || _startAbilitiesSequence) return;
 
             StartCoroutine(LoopBossAbilities());
@@ -84,6 +98,20 @@ namespace Core.Enemy
             }
         }
 
+        public void TakeDamage(float modifier)
+        {
+            int damage = Random.Range(startDamage, endDamage);
+            damage -= (Mathf.RoundToInt(modifier / 100)) * damage;
+            damage = Mathf.Clamp(damage, 0, int.MaxValue);
+
+            if (damageDisplay != null)
+            {
+                damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, canvas);
+            }
+
+            currentHealth -= damage;
+        }
+
         public bool GetStartFight()
         {
             return _startFight;
@@ -104,14 +132,9 @@ namespace Core.Enemy
             return bossAbilityStages;
         }
 
-        public float GetDamage()
-        {
-            return damage;
-        }
-
         public float GetHealth()
         {
-            return health;
+            return currentHealth;
         }
     }
 }

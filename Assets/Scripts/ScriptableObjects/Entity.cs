@@ -1,3 +1,4 @@
+using UI.Damage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,9 @@ namespace ScriptableObjects
     {
         private float _health;
         private float _baseDamage;
+        
+        private GameObject _damageCounter;
+        private Canvas _canvas;
 
         public void SetBaseHealth(float health)
         {
@@ -34,13 +38,40 @@ namespace ScriptableObjects
             damage -= (modifier / 100) * damage;
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
+            if (_damageCounter != null)
+            {
+                // _damageCounter.GetComponent<DamageDisplay>().Show(damage.ToString(), this);
+            }
+
             // Damage character
             _health -= damage;
+
+            Debug.Log(_health);
         }
 
         public float GetDamage()
         {
             return _baseDamage;
+        }
+
+        public GameObject GetDamageCounter()
+        {
+            return _damageCounter;
+        }
+
+        public void SetDamageCounter(GameObject damageCounter)
+        {
+            _damageCounter = damageCounter;
+        }
+
+        public Canvas GetCanvas()
+        {
+            return _canvas;
+        }
+
+        public void SetCanvas(Canvas canvas)
+        {
+            _canvas = canvas;
         }
 
         public void Die()

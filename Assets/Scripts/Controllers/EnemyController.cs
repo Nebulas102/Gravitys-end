@@ -1,3 +1,4 @@
+using System.Collections;
 using Controllers.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,27 +9,44 @@ namespace Controllers
     {
         public float lookRadius = 10f;
         public float minDistance = 2f;
-        private NavMeshAgent agent;
+        public Material hitMaterial;
 
-        private EnemyAttackController enemyAttackController;
+        private NavMeshAgent _agent;
+        private EnemyAttackController _enemyAttackController;
 
-        private Transform target;
+        private Material _originalMaterial;
+
+        private Transform _target;
+        private Renderer renderer;
 
         private void Start()
         {
             // See PlayerManager.cs for explanation
-            target = PlayerManager.Instance.player.transform;
-            agent = GetComponent<NavMeshAgent>();
-            enemyAttackController = GetComponent<EnemyAttackController>();
+            _target = PlayerManager.Instance.player.transform;
+            _agent = GetComponent<NavMeshAgent>();
+            _enemyAttackController = GetComponent<EnemyAttackController>();
+            renderer = GetComponentInChildren<Renderer>();
 
-            Physics.IgnoreLayerCollision(gameObject.layer, gameObject.layer);
+            _originalMaterial = renderer.material;
+
+            var o = gameObject;
+            Physics.IgnoreLayerCollision(o.layer, o.layer);
         }
 
         private void Update()
         {
             var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            var distance = Vector3.Distance(target.position, transform.position);
-            var enemyDirection = target.position - transform.position;
+
+            var targetPosition = _target.position;
+            var transformPosition = transform.position;
+            var distance = Vector3.Distance(targetPosition, transformPosition);
+            var enemyDirection = targetPosition - transformPosition;
+
+            //test feedback hit
+            // if (Input.GetKeyDown(KeyCode.H))
+            // {
+            //     StartCoroutine(HitFeedback());
+            // }
 
             if (distance > lookRadius)
                 return;
@@ -37,16 +55,16 @@ namespace Controllers
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,
                     LayerMask.GetMask("Default")))
             {
-                if (hit.collider.tag != "Enemy")
+                if (!hit.collider.CompareTag("Enemy"))
                     return;
             }
 
-            agent.SetDestination(target.position);
+            _agent.SetDestination(_target.position);
 
-            if (distance <= agent.stoppingDistance)
+            if (distance <= _agent.stoppingDistance)
             {
                 // Attack the player
-                enemyAttackController.Attack();
+                _enemyAttackController.Attack();
                 // Face the player
                 FaceTarget();
             }
@@ -57,14 +75,19 @@ namespace Controllers
                     // Checks distance between enemies
                     var enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);
 
-                    if (enemyDistance < minDistance)
-                    {
-                        var direction = transform.position - enemy.transform.position;
-                        direction.y = 0f; // don't move up/down
-                        // Move enemies away from eachother so they don't collide
-                        GetComponent<NavMeshAgent>().Move(direction.normalized * Time.deltaTime);
-                    }
+                    if (!(enemyDistance < minDistance)) continue;
+
+                    var direction = transform.position - enemy.transform.position;
+                    direction.y = 0f; // don't move up/down
+                    // Move enemies away from eachother so they don't collide
+                    GetComponent<NavMeshAgent>().Move(direction.normalized * Time.deltaTime);
                 }
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            //Hit on weapon or some logic needs to be implemented
+            if (other.gameObject.CompareTag("Player")) StartCoroutine(HitFeedback());
         }
 
         // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
@@ -79,10 +102,17 @@ namespace Controllers
 
         private void FaceTarget()
         {
-            var direction = (target.position - transform.position).normalized;
+            var direction = (_target.position - transform.position).normalized;
             var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
+
+        private IEnumerator HitFeedback()
+        {
+            renderer.material = hitMaterial;
+            yield return new WaitForSeconds(1f);
+            renderer.material = _originalMaterial;
         }
     }
 }

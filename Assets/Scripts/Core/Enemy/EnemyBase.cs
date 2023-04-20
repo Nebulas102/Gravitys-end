@@ -1,0 +1,64 @@
+using UI.Enemy;
+using UnityEngine;
+
+namespace Core.Enemy
+{
+    public class EnemyBase : MonoBehaviour
+    {
+        [SerializeField]
+        public string name;
+
+        [SerializeField]
+        public int startDamage;
+
+        [SerializeField]
+        public int endDamage;
+
+        [SerializeField]
+        public float health;
+
+        [SerializeField]
+        public GameObject damageDisplay;
+
+        private Canvas _canvas;
+
+        private float _currentHealth;
+
+        private void Start()
+        {
+            _canvas = GetComponentInChildren<Canvas>();
+
+            _currentHealth = health;
+        }
+
+        private void Update()
+        {
+            //Test taking damage
+            // if (Input.GetKeyDown(KeyCode.G))
+            // {
+            //     TakeDamage(0f);
+            // }
+
+            if (_currentHealth <= 0) Destroy(gameObject);
+        }
+
+        public int GetDamage()
+        {
+            return Random.Range(startDamage, endDamage);
+        }
+
+        public void TakeDamage(float modifier)
+        {
+            var damage = Random.Range(startDamage, endDamage);
+            damage -= Mathf.RoundToInt(modifier / 100) * damage;
+            damage = Mathf.Clamp(damage, 0, int.MaxValue);
+
+            if (damageDisplay != null)
+                damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
+
+            _currentHealth -= damage;
+
+            Debug.Log(_currentHealth);
+        }
+    }
+}

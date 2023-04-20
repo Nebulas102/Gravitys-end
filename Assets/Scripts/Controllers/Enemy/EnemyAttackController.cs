@@ -1,4 +1,5 @@
 using Controllers.Player;
+using Core.Enemy;
 using UnityEngine;
 
 namespace Controllers.Enemy
@@ -8,16 +9,16 @@ namespace Controllers.Enemy
         [SerializeField]
         private float attackCooldown;
 
-        private EnemyController _enemyController;
+        private EnemyBase _enemyBase;
 
-        private EnemyStatsController _enemyStatsController;
+        private EnemyController _enemyController;
 
         private float _nextAttackTime;
         private GameObject _player;
 
         private void Start()
         {
-            _enemyStatsController = gameObject.GetComponent<EnemyStatsController>();
+            _enemyBase = gameObject.GetComponent<EnemyBase>();
             _enemyController = gameObject.GetComponent<EnemyController>();
 
             _player = PlayerManager.Instance.player;
@@ -25,12 +26,11 @@ namespace Controllers.Enemy
 
         public void Attack()
         {
-            if (Time.time > _nextAttackTime)
-            {
-                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity
-                    .TakeDamage(_enemyStatsController.GetEntity().GetDamage(), 1f);
-                _nextAttackTime = Time.time + attackCooldown;
-            }
+            if (!(Time.time > _nextAttackTime)) return;
+
+            _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity
+                .TakeDamage(_enemyBase.GetDamage(), 0f);
+            _nextAttackTime = Time.time + attackCooldown;
         }
     }
 }

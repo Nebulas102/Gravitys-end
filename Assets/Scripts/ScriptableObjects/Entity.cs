@@ -6,41 +6,29 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "Entity", menuName = "ScriptableObjects/Entity")]
     public class Entity : ScriptableObject
     {
-        private float _health;
-        private float _baseDamage;
-
-        public void SetBaseHealth(float health)
-        {
-            _health = health;
-            if(_health <= 0)
-            {
-                Die();
-            }
-        }
-
-        public float GetHealth()
-        {
-            return _health;
-        }
-
-        public void SetBaseDamage(float damage)
-        {
-            _baseDamage = damage;
-        }
+        public float baseDamage;
+        public Canvas canvas;
+        public GameObject damageCounter;
+        public float health;
 
         public void TakeDamage(float damage, float modifier)
         {
-            // Substract the armor value
-            damage -= (modifier / 100) * damage;
+            // Subtract the armor value
+            damage -= modifier / 100 * damage;
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
-            // Damage character
-            _health -= damage;
-        }
+            if (damageCounter is not null)
+            {
+                // _damageCounter.GetComponent<DamageDisplay>().Show(damage.ToString(), this);
+            }
 
-        public float GetDamage()
-        {
-            return _baseDamage;
+            // Damage character
+            health -= damage;
+
+            if (health <= 0)
+                Die();
+
+            Debug.Log(health);
         }
 
         public void Die()

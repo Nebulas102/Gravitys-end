@@ -10,15 +10,16 @@ namespace Controllers.Enemy
     {
         [SerializeField]
         private float rotationSpeed;
+
         [SerializeField]
         private Material hitMaterial;
 
         private NavMeshAgent _agent;
         private Boss _boss;
         private BossRoom _bossRoom;
-        private Transform _target;
         private Material _originalMaterial;
         private Renderer _renderer;
+        private Transform _target;
 
         private void Start()
         {
@@ -35,9 +36,10 @@ namespace Controllers.Enemy
         {
             if (!_boss.GetStartFight()) return;
 
-            var distance = Vector3.Distance(_target.position, transform.position);
+            var position = _target.position;
+            var distance = Vector3.Distance(position, transform.position);
 
-            _agent.SetDestination(_target.position);
+            _agent.SetDestination(position);
 
             if (distance <= _agent.stoppingDistance) FaceTarget();
 
@@ -48,6 +50,12 @@ namespace Controllers.Enemy
             // }
         }
 
+        private void OnCollisionEnter(Collision other)
+        {
+            //Hit on weapon or some logic needs to be implemented
+            if (other.gameObject.CompareTag("Player")) StartCoroutine(HitFeedback());
+        }
+
         private void FaceTarget()
         {
             var direction = (_target.position - transform.position).normalized;
@@ -55,18 +63,11 @@ namespace Controllers.Enemy
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
 
-        private IEnumerator HitFeedback() {
+        private IEnumerator HitFeedback()
+        {
             _renderer.material = hitMaterial;
             yield return new WaitForSeconds(1f);
             _renderer.material = _originalMaterial;
-        }
-
-        private void OnCollisionEnter(Collision other)
-        {
-            //Hit on weapon or some logic needs to be implemented
-            if (other.gameObject.tag == "Player") {
-                StartCoroutine(HitFeedback());
-            }
         }
     }
 }

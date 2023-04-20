@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Core.Enemy.StageBosses;
-using ScriptableObjects;
 using TMPro;
-using UI.Damage;
+using UI.Enemy;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,23 +31,23 @@ namespace Core.Enemy
         [SerializeField]
         public GameObject damageDisplay;
 
-        private Canvas canvas;
-        private float currentHealth;
+        private Canvas _canvas;
 
         private BossAbility _currentBossAbility;
+        private float _currentHealth;
         private bool _startAbilitiesSequence;
         private bool _startFight;
 
         private void Start()
         {
-            currentHealth = health;
+            _currentHealth = health;
 
             healthBar.maxValue = health;
             healthBar.value = healthBar.maxValue;
 
             bossNameBar.text = name;
 
-            canvas = GetComponentInChildren<Canvas>();
+            _canvas = GetComponentInChildren<Canvas>();
         }
 
         private void Update()
@@ -81,35 +80,32 @@ namespace Core.Enemy
                 bossAbilityStages[currentAbilityIndex].IncrementAmountOfTimesUsed();
 
                 // Check if we've used the current ability enough times
-                if (bossAbilityStages[currentAbilityIndex].GetAmountOfTimesUsed() ==
-                    bossAbilityStages[currentAbilityIndex].GetAmountOfTimes())
-                {
-                    // Reset the times used for the current ability
-                    bossAbilityStages[currentAbilityIndex].SetAmountOfTimesUsed(0);
+                if (bossAbilityStages[currentAbilityIndex].GetAmountOfTimesUsed() !=
+                    bossAbilityStages[currentAbilityIndex].GetAmountOfTimes()) continue;
 
-                    // Move to the next ability
-                    currentAbilityIndex++;
-                    if (currentAbilityIndex >= bossAbilityStages.Count)
-                    {
-                        // We've reached the end of the abilities, so cycle back to the first ability
-                        currentAbilityIndex = 0;
-                    }
+                // Reset the times used for the current ability
+                bossAbilityStages[currentAbilityIndex].SetAmountOfTimesUsed(0);
+
+                // Move to the next ability
+                currentAbilityIndex++;
+                if (currentAbilityIndex >= bossAbilityStages.Count)
+                {
+                    // We've reached the end of the abilities, so cycle back to the first ability
+                    currentAbilityIndex = 0;
                 }
             }
         }
 
         public void TakeDamage(float modifier)
         {
-            int damage = Random.Range(startDamage, endDamage);
-            damage -= (Mathf.RoundToInt(modifier / 100)) * damage;
+            var damage = Random.Range(startDamage, endDamage);
+            damage -= Mathf.RoundToInt(modifier / 100) * damage;
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
             if (damageDisplay != null)
-            {
-                damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, canvas);
-            }
+                damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
 
-            currentHealth -= damage;
+            _currentHealth -= damage;
         }
 
         public bool GetStartFight()
@@ -134,7 +130,7 @@ namespace Core.Enemy
 
         public float GetHealth()
         {
-            return currentHealth;
+            return _currentHealth;
         }
     }
 }

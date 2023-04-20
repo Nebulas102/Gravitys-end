@@ -1,63 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
-using UI.Damage;
+using UI.Enemy;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+namespace Core.Enemy
 {
-    [SerializeField]
-    public string name;
-    [SerializeField]
-    public int startDamage;
-    [SerializeField]
-    public int endDamage;
-    [SerializeField]
-    public float health;
-    [SerializeField]
-    public GameObject damageDisplay;
-
-    private float currentHealth;
-    private Canvas canvas;
-
-    private void Start()
+    public class EnemyBase : MonoBehaviour
     {
-        canvas = GetComponentInChildren<Canvas>();
+        [SerializeField]
+        public string name;
 
-        currentHealth = health;
-    }
+        [SerializeField]
+        public int startDamage;
 
-    private void Update()
-    {
-        //Test taking damage
-        // if (Input.GetKeyDown(KeyCode.G))
-        // {
-        //     TakeDamage(0f);
-        // }
+        [SerializeField]
+        public int endDamage;
 
-        if (currentHealth <= 0)
+        [SerializeField]
+        public float health;
+
+        [SerializeField]
+        public GameObject damageDisplay;
+
+        private Canvas _canvas;
+
+        private float _currentHealth;
+
+        private void Start()
         {
-            Destroy(gameObject);
-        }
-    }
+            _canvas = GetComponentInChildren<Canvas>();
 
-    public int GetDamage()
-    {
-        return Random.Range(startDamage, endDamage);
-    }
-
-    public void TakeDamage(float modifier)
-    {
-        int damage = Random.Range(startDamage, endDamage);
-        damage -= (Mathf.RoundToInt(modifier / 100)) * damage;
-        damage = Mathf.Clamp(damage, 0, int.MaxValue);
-
-        if (damageDisplay != null)
-        {
-            damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, canvas);
+            _currentHealth = health;
         }
 
-        currentHealth -= damage;
+        private void Update()
+        {
+            //Test taking damage
+            // if (Input.GetKeyDown(KeyCode.G))
+            // {
+            //     TakeDamage(0f);
+            // }
 
-        Debug.Log(currentHealth);
+            if (_currentHealth <= 0) Destroy(gameObject);
+        }
+
+        public int GetDamage()
+        {
+            return Random.Range(startDamage, endDamage);
+        }
+
+        public void TakeDamage(float modifier)
+        {
+            var damage = Random.Range(startDamage, endDamage);
+            damage -= Mathf.RoundToInt(modifier / 100) * damage;
+            damage = Mathf.Clamp(damage, 0, int.MaxValue);
+
+            if (damageDisplay != null)
+                damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
+
+            _currentHealth -= damage;
+
+            Debug.Log(_currentHealth);
+        }
     }
 }

@@ -9,10 +9,15 @@ namespace Core.Player
         private GameObject _player;
         private Slider _slider;
 
+        private void Awake()
+        {
+            _slider.maxValue = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.health;
+        }
+
         private void Start()
         {
             _slider = GetComponent<Slider>();
-            //Cant get player on start because this UI element runs earlier than the spawnroom where the player is
+            //Cant get player on start because this UI element runs earlier than the spawn room where the player is
             // player = PlayerManager.instance.player;
 
             // slider.maxValue = player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
@@ -25,16 +30,11 @@ namespace Core.Player
             {
                 _player = PlayerManager.Instance.player;
 
-                _slider.maxValue = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
+                _slider.maxValue = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.health;
                 _slider.value = _slider.maxValue;
             }
             else
-                _slider.value = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
-        }
-
-        private void OnAwake()
-        {
-            _slider.maxValue = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.GetHealth();
+                _slider.value = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.health;
         }
     }
 }

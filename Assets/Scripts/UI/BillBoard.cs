@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BillBoard : MonoBehaviour
+namespace UI
 {
-    private Transform cam;
-
-    private void Start()
+    public class BillBoard : MonoBehaviour
     {
-        cam = GameObject.FindWithTag("MainCamera").transform;
-    }
+        private Transform _cam;
 
-    private void LateUpdate()
-    {
-        transform.LookAt(transform.position + cam.forward);    
+        private void Start()
+        {
+            _cam = GameObject.FindWithTag("MainCamera").transform;
+        }
+
+        private void LateUpdate()
+        {
+            transform.LookAt(transform.position + _cam.forward);
+        }
     }
 }

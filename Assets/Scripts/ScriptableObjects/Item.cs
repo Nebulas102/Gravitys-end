@@ -1,5 +1,5 @@
 using System;
-using Core.Inventory;
+using Core.UI.Inventory;
 using UnityEngine;
 
 namespace ScriptableObjects
@@ -7,14 +7,14 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/Item")]
     public class Item : ScriptableObject
     {
-        public string Name;
         public Sprite icon;
         public bool isDefaultItem;
+        public GameObject prefab;
 
         [SerializeField]
         public Type type;
 
-        public virtual void Use(InventorySlot itemSlot)
+        public void Use(InventorySlot itemSlot, GameObject equippedWeapon)
         {
             switch (type)
             {
@@ -25,32 +25,32 @@ namespace ScriptableObjects
                     // Check if other (non current slots) are available to put this item in
                     // If so remove everything from the current slot and put it in the available one
                     // Else dont do anything
-                    if (InventoryUI.instance.CheckForAvailableSlots(Type.ARMOR) == null) return;
+                    if (InventoryUI.Instance.CheckForAvailableSlots(Type.ARMOR) == null) return;
 
-                    InventoryUI.instance.CheckForAvailableSlots(Type.ARMOR)
-                        .AddItem(InventoryUI.staticCurrentArmorSlot.GetItem());
-                    Inventory.instance.Add(InventoryUI.staticCurrentArmorSlot.GetItem());
+                    InventoryUI.Instance.CheckForAvailableSlots(Type.ARMOR)
+                        .AddItem(InventoryUI.StaticCurrentArmorSlot.GetItem());
+                    Inventory.Instance.Add(InventoryUI.StaticCurrentArmorSlot.GetItem());
 
-                    InventoryUI.staticCurrentArmorSlot.ClearSlot();
+                    InventoryUI.StaticCurrentArmorSlot.ClearSlot();
                     break;
                 }
                 // Remove from the current slot; 
                 case Type.ARMOR:
                 {
                     itemSlot.ClearSlot();
-                    var oldItem = InventoryUI.staticCurrentArmorSlot.GetItem();
+                    var oldItem = InventoryUI.StaticCurrentArmorSlot.GetItem();
 
                     if (oldItem != null)
                     {
                         itemSlot.AddItem(oldItem);
-                        Inventory.instance.Add(oldItem);
+                        Inventory.Instance.Add(oldItem);
                     }
 
-                    InventoryUI.staticCurrentArmorSlot.ClearSlot();
+                    InventoryUI.StaticCurrentArmorSlot.ClearSlot();
 
                     // Add this item to the currentSlot
-                    InventoryUI.staticCurrentArmorSlot.AddItem(this);
-                    Inventory.instance.Remove(this);
+                    InventoryUI.StaticCurrentArmorSlot.AddItem(this);
+                    Inventory.Instance.Remove(this);
                     break;
                 }
                 case Type.WEAPON when itemSlot.isCurrentSlot:
@@ -60,12 +60,13 @@ namespace ScriptableObjects
                     // Check if other (non current slots) are available to put this item in
                     // If so remove everything from the current slot and put it in the available one
                     // Else dont do anything
-                    if (InventoryUI.instance.CheckForAvailableSlots(Type.WEAPON) == null) return;
+                    if (InventoryUI.Instance.CheckForAvailableSlots(Type.WEAPON) == null) return;
 
-                    InventoryUI.instance.CheckForAvailableSlots(Type.WEAPON)
-                        .AddItem(InventoryUI.staticCurrentWeaponSlot.GetItem());
-                    Inventory.instance.Add(InventoryUI.staticCurrentWeaponSlot.GetItem());
-                    InventoryUI.staticCurrentWeaponSlot.ClearSlot();
+                    InventoryUI.Instance.CheckForAvailableSlots(Type.WEAPON)
+                        .AddItem(InventoryUI.StaticCurrentWeaponSlot.GetItem());
+                    Inventory.Instance.Add(InventoryUI.StaticCurrentWeaponSlot.GetItem());
+                    InventoryUI.StaticCurrentWeaponSlot.ClearSlot();
+                    equippedWeapon.SetActive(false);
 
                     return;
                 }
@@ -73,24 +74,30 @@ namespace ScriptableObjects
                 case Type.WEAPON:
                 {
                     itemSlot.ClearSlot();
-                    var oldItem = InventoryUI.staticCurrentWeaponSlot.GetItem();
+                    var oldItem = InventoryUI.StaticCurrentWeaponSlot.GetItem();
 
                     if (oldItem != null)
                     {
                         itemSlot.AddItem(oldItem);
-                        Inventory.instance.Add(oldItem);
+                        Inventory.Instance.Add(oldItem);
                     }
 
-                    InventoryUI.staticCurrentWeaponSlot.ClearSlot();
+                    InventoryUI.StaticCurrentWeaponSlot.ClearSlot();
 
                     // Add this item to the currentSlot
-                    InventoryUI.staticCurrentWeaponSlot.AddItem(this);
-                    Inventory.instance.Remove(this);
+                    InventoryUI.StaticCurrentWeaponSlot.AddItem(this);
+                    Inventory.Instance.Remove(this);
+                    equippedWeapon.SetActive(true);
                     break;
                 }
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public void Spawn(Vector3 position)
+        {
+            Instantiate(prefab, position, Quaternion.identity);
         }
     }
 

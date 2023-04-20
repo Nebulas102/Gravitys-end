@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -10,14 +8,14 @@ public class PlayerManager : MonoBehaviour
 
     #region Singleton
 
-    public static PlayerManager instance;
+    public static PlayerManager Instance;
 
     private void Awake()
     {
-        if(instance != null)
-        return;
+        if (Instance != null)
+            return;
 
-        instance = this;
+        Instance = this;
     }
 
     #endregion

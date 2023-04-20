@@ -1,0 +1,223 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using StageGeneration.Rooms;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.AI;
+using Random = UnityEngine.Random;
+
+namespace StageGeneration.Stage
+{
+    public class StageHelper : MonoBehaviour
+    {
+        [HideInInspector]
+        public enum RoomDirections
+        {
+            TOP,
+            RIGHT,
+            BOTTOM,
+            LEFT,
+            UNDEFINED
+        }
+
+        public static StageHelper Instance;
+
+        private static int _gridX;
+        private static int _gridZ;
+        private static int _offset;
+        private static List<Cell> _cells;
+        private static List<GameObject> _rooms;
+
+        private static List<NavMeshBuildSource> sources;
+
+        private void Awake()
+        {
+            if (Instance == null) Instance = this;
+            else if (Instance != null) Destroy(gameObject);
+
+            DontDestroyOnLoad(gameObject);
+        }
+
+        public static int GetGridX()
+        {
+            return _gridX;
+        }
+
+        public static void SetGridX(int gridX)
+        {
+            _gridX = gridX;
+        }
+
+        public static int GetGridZ()
+        {
+            return _gridZ;
+        }
+
+        public static void SetGridZ(int gridZ)
+        {
+            _gridZ = gridZ;
+        }
+
+        public static int GetOffset()
+        {
+            return _offset;
+        }
+
+        public static void SetOffset(int _offset)
+        {
+            StageHelper._offset = _offset;
+        }
+
+        public static List<Cell> GetCells()
+        {
+            return _cells;
+        }
+
+        public static void SetCells(List<Cell> _cells)
+        {
+            StageHelper._cells = _cells;
+        }
+
+        public static List<GameObject> GetRooms()
+        {
+            return _rooms;
+        }
+
+        public static void SetRooms(List<GameObject> _rooms)
+        {
+            StageHelper._rooms = _rooms;
+        }
+
+        public static RoomDirections RandomDirection()
+        {
+            return (RoomDirections)Random.Range(0, Enum.GetValues(typeof(RoomDirections)).Length);
+        }
+
+        public static RoomDirections RandomDirection(List<RoomDirections> directions)
+        {
+            directions.Remove(RoomDirections.UNDEFINED);
+
+            if (directions != null)
+                return directions[Random.Range(0, directions.Count)];
+            return RoomDirections.UNDEFINED;
+        }
+
+        public static RoomDirections GetOppositeDirection(RoomDirections direction)
+        {
+            //Cant be null so I gave just a value that will always be changed
+            var oppositeDirection = RoomDirections.TOP;
+
+            switch (direction)
+            {
+                case RoomDirections.TOP:
+                    oppositeDirection = RoomDirections.BOTTOM;
+                    break;
+                case RoomDirections.RIGHT:
+                    oppositeDirection = RoomDirections.LEFT;
+                    break;
+                case RoomDirections.BOTTOM:
+                    oppositeDirection = RoomDirections.TOP;
+                    break;
+                case RoomDirections.LEFT:
+                    oppositeDirection = RoomDirections.RIGHT;
+                    break;
+            }
+
+            return oppositeDirection;
+        }
+
+        public static void ReplaceAllDoors(GameObject room)
+        {
+            var doors = room.GetComponent<Room>().GetDoors().Where(d => d.activeSelf).ToList();
+
+            foreach (var _door in doors)
+            {
+                var doorPos = _door.transform.position;
+                var doorRot = _door.transform.rotation;
+
+                Destroy(_door);
+
+                var wall = Instantiate(room.GetComponent<Room>().GetDoorReplacement(), doorPos, doorRot);
+
+                wall.transform.parent = room.transform;
+            }
+        }
+
+        public static void NavMeshBaker()
+        {
+            // Find all game objects with the specified tag
+            var taggedObjects = GameObject.FindGameObjectsWithTag("Room");
+
+            // Create a NavMeshBuildSettings object
+            var settings = NavMesh.GetSettingsByID(0);
+
+            // Create an array to hold the NavMeshBuildSources
+            sources = new List<NavMeshBuildSource>();
+
+            // Iterate through all the tagged game objects and their children
+            foreach (var obj in taggedObjects) AddSourcesFromObject(obj);
+
+            var centerCell = CalculateCenterStage();
+
+            // Build the NavMesh
+            var data = new NavMeshData();
+            data = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(
+                centerCell.gameObject.transform.position,
+                new Vector3(_gridX * _offset, 30, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
+            NavMesh.AddNavMeshData(data);
+        }
+
+        private static Cell CalculateCenterStage()
+        {
+            float calcX = 0;
+            float calcZ = 0;
+
+            if (_gridX % 2 == 0)
+                calcX = _gridX / 2 - 1;
+            else
+                calcX = Mathf.RoundToInt(_gridX / 2 - 1);
+
+            if (_gridZ % 2 == 0)
+                calcZ = _gridZ / 2 - 1;
+            else
+                calcZ = Mathf.RoundToInt(_gridZ / 2 - 1);
+
+            return _cells.Where(c => c.x == calcX && c.z == calcZ).SingleOrDefault();
+        }
+
+        private static void AddSourcesFromObject(GameObject obj)
+        {
+            var meshFilters = obj.GetComponentsInChildren<MeshFilter>();
+
+            // Add a NavMeshBuildSource for each mesh filter
+            foreach (var filter in meshFilters)
+                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" && obj.activeSelf)
+                {
+                    var source = new NavMeshBuildSource
+                    {
+                        transform = filter.transform.localToWorldMatrix,
+                        shape = NavMeshBuildSourceShape.Mesh,
+                        sourceObject = filter.sharedMesh,
+                        area = 0
+                    };
+
+                    // #if UNITY_EDITOR
+                    // // Add the NavMeshBuildSource to the sources array
+                    // ArrayUtility.Add(ref sources, source);
+                    // #else
+                    ArrayUtilAdd(source);
+                    // #endif
+                }
+
+            // Recursively add sources from all children
+            foreach (Transform child in obj.transform) AddSourcesFromObject(child.gameObject);
+        }
+
+
+        private static void ArrayUtilAdd(NavMeshBuildSource element)
+        {
+            sources.Add(element);
+        }
+    }
+}

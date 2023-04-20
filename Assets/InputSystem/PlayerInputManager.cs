@@ -55,12 +55,30 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Loot Pickup"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9e0e3cf-d548-490e-a9bf-c2f9b75cdb4b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""1d8186da-671a-4a67-ba55-cf52c1bc3783"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": ""Tap"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DrawWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""826b5ffc-0db1-4673-99bd-e1b048d24665"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -135,7 +153,7 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""2e220b74-d42f-44c5-b708-c6947502d107"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Dash"",
@@ -146,7 +164,7 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c2e2fcc1-3627-49fc-b549-0a65b565adeb"",
                     ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Dash"",
@@ -179,7 +197,7 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""4b841da9-f689-4e4a-9d48-eedc70d7f4fa"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Attack"",
@@ -190,10 +208,54 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""f55ca129-9934-408b-aab3-52ba4e3c774d"",
                     ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Controller"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ac92d8d4-78e1-4614-86c4-0b96870ea5ac"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""DrawWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4de47067-a086-4a07-8153-0ea50a03b37f"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Attack"",
+                    ""action"": ""DrawWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5ab9db0-9772-4b55-9c18-3232fe984d72"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Loot Pickup"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bcdfa17e-4105-4cd4-a06f-65705c5d53b8"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Loot Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -235,7 +297,9 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+        m_Player_LootPickup = m_Player.FindAction("Loot Pickup", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        m_Player_DrawWeapon = m_Player.FindAction("DrawWeapon", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -298,7 +362,9 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Look;
+    private readonly InputAction m_Player_LootPickup;
     private readonly InputAction m_Player_Attack;
+    private readonly InputAction m_Player_DrawWeapon;
     public struct PlayerActions
     {
         private @PlayerInputManager m_Wrapper;
@@ -306,7 +372,9 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @Look => m_Wrapper.m_Player_Look;
+        public InputAction @LootPickup => m_Wrapper.m_Player_LootPickup;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
+        public InputAction @DrawWeapon => m_Wrapper.m_Player_DrawWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -325,9 +393,15 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
+                @LootPickup.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLootPickup;
+                @LootPickup.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLootPickup;
+                @LootPickup.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLootPickup;
                 @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @DrawWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawWeapon;
+                @DrawWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawWeapon;
+                @DrawWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawWeapon;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -341,9 +415,15 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @LootPickup.started += instance.OnLootPickup;
+                @LootPickup.performed += instance.OnLootPickup;
+                @LootPickup.canceled += instance.OnLootPickup;
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
+                @DrawWeapon.started += instance.OnDrawWeapon;
+                @DrawWeapon.performed += instance.OnDrawWeapon;
+                @DrawWeapon.canceled += instance.OnDrawWeapon;
             }
         }
     }
@@ -371,6 +451,8 @@ public partial class @PlayerInputManager : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnLootPickup(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+        void OnDrawWeapon(InputAction.CallbackContext context);
     }
 }

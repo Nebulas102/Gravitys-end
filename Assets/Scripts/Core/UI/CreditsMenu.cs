@@ -1,13 +1,19 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 namespace Core.UI
 {
     public class CreditsMenu : MonoBehaviour
     {
-        public void GoToMainMenu2()
+        public GameObject mainMenuButton;
+
+        void Update() {
+            EventSystem.current.SetSelectedGameObject(mainMenuButton);
+        }
+
+        public void GoToMainMenu()
         {
-            Debug.Log("komt hiering main menu");
             SceneManager.LoadScene("MainMenuScene");
         }
     }

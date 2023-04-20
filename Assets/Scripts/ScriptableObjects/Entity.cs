@@ -33,7 +33,8 @@ namespace ScriptableObjects
 
         public void Die()
         {
-            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+            //Load the death scene
+            SceneManager.LoadScene("GameOverScene", LoadSceneMode.Single);
         }
     }
 }

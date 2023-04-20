@@ -12,6 +12,9 @@ namespace Core.UI
         [SerializeField]
         private GameObject loadingScreen;
 
+        [SerializeField]
+        private float minLoadingTime = 5f;
+
         private void Awake()
         {
             loadingScreen.SetActive(false);
@@ -25,11 +28,22 @@ namespace Core.UI
 
         private IEnumerator LoadAsynchronously(int sceneIndex)
         {
-            var operation = SceneManager.LoadSceneAsync(sceneIndex);
+            var time = Time.time;
+            var operation = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Single);
+            operation.allowSceneActivation = false;
+
             loadingScreen.SetActive(true);
             mainMenu.SetActive(false);
 
-            while (!operation.isDone) yield return null;
+            while (!operation.isDone)
+            {
+                var currentDuration = Time.time - time;
+                if (currentDuration < minLoadingTime)
+                    yield return new WaitForSeconds(minLoadingTime - currentDuration);
+
+                operation.allowSceneActivation = true;
+                yield return null;
+            }
         }
 
         public void GoToCreditsMenu()

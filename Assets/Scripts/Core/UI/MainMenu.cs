@@ -50,5 +50,10 @@ namespace Core.UI
         {
             SceneManager.LoadScene("CreditsMenu");
         }
+
+        public void GoToSettingsMenu()
+        {
+            SceneManager.LoadScene("SettingsMenu");
+        }
     }
 }

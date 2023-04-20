@@ -1,4 +1,5 @@
 using System.Collections;
+using Core.UI.Inventory;
 using UnityEngine;
 
 namespace Controllers.Player
@@ -47,6 +48,9 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
+            if (Inventory.Instance.inventoryOpened) {
+                return;
+            }
             if (!isDashing) HandleDash();
         }
 
@@ -110,6 +114,10 @@ namespace Controllers.Player
         public bool GetDashAvailable()
         {
             return dashAvailable;
+        }
+
+        public void SetDashAvailable(bool available) {
+            dashAvailable = available;
         }
     }
 }

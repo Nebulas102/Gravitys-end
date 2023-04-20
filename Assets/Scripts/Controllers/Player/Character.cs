@@ -1,3 +1,4 @@
+using Core.UI.Inventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,6 +30,8 @@ namespace Controllers.Player
         public CombatState combatting;
         public AttackState attacking;
 
+        private GameObject _player;
+
 
         // Start is called before the first frame update
         private void Start()
@@ -44,13 +47,19 @@ namespace Controllers.Player
             attacking = new AttackState(this, movementSM);
 
             movementSM.Initialize(standing);
+
+            _player = PlayerManager.Instance.player;
         }
 
         private void Update()
         {
-            movementSM.currentState.HandleInput();
+            if (Inventory.Instance.inventoryOpened) {
+                movementSM.ChangeState(standing);
+            } else {
+                movementSM.currentState.HandleInput();
+                movementSM.currentState.LogicUpdate();
+            }
 
-            movementSM.currentState.LogicUpdate();
         }
 
         private void FixedUpdate()

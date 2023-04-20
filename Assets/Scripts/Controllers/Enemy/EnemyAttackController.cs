@@ -10,14 +10,14 @@ namespace Controllers.Enemy
 
         private EnemyController _enemyController;
 
-        private EnemyStatsController _enemyStatsController;
+        private EnemyBase _enemyBase;
 
         private float _nextAttackTime;
         private GameObject _player;
 
         private void Start()
         {
-            _enemyStatsController = gameObject.GetComponent<EnemyStatsController>();
+            _enemyBase = gameObject.GetComponent<EnemyBase>();
             _enemyController = gameObject.GetComponent<EnemyController>();
 
             _player = PlayerManager.Instance.player;
@@ -28,7 +28,7 @@ namespace Controllers.Enemy
             if (Time.time > _nextAttackTime)
             {
                 _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity
-                    .TakeDamage(_enemyStatsController.GetEntity().GetDamage(), 1f);
+                    .TakeDamage(_enemyBase.GetDamage(), 0f);
                 _nextAttackTime = Time.time + attackCooldown;
             }
         }

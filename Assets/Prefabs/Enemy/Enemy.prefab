@@ -302,6 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookRadius: 10
   minDistance: 2
+  hitMaterial: {fileID: 2100000, guid: 03a535ea21aad5f4d96fe054fad5306a, type: 2}
 --- !u!114 &-3826132810974882305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,6 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: Test Enemy
-  damage: 1
+  startDamage: 0
+  endDamage: 0
   health: 40
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}

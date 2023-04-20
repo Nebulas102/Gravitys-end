@@ -1,3 +1,4 @@
+using System.Collections;
 using Controllers.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,11 +9,15 @@ namespace Controllers
     {
         public float lookRadius = 10f;
         public float minDistance = 2f;
-        private NavMeshAgent agent;
+        public Material hitMaterial;
 
+        private NavMeshAgent agent;
         private EnemyAttackController enemyAttackController;
 
         private Transform target;
+        private Renderer renderer;
+
+        private Material originalMaterial;
 
         private void Start()
         {
@@ -20,6 +25,9 @@ namespace Controllers
             target = PlayerManager.Instance.player.transform;
             agent = GetComponent<NavMeshAgent>();
             enemyAttackController = GetComponent<EnemyAttackController>();
+            renderer = GetComponentInChildren<Renderer>();
+
+            originalMaterial = renderer.material;
 
             Physics.IgnoreLayerCollision(gameObject.layer, gameObject.layer);
         }
@@ -29,6 +37,12 @@ namespace Controllers
             var enemies = GameObject.FindGameObjectsWithTag("Enemy");
             var distance = Vector3.Distance(target.position, transform.position);
             var enemyDirection = target.position - transform.position;
+
+            //test feedback hit
+            // if (Input.GetKeyDown(KeyCode.H))
+            // {
+            //     StartCoroutine(HitFeedback());
+            // }
 
             if (distance > lookRadius)
                 return;
@@ -83,6 +97,20 @@ namespace Controllers
             var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
+
+        private IEnumerator HitFeedback() {
+            renderer.material = hitMaterial;
+            yield return new WaitForSeconds(1f);
+            renderer.material = originalMaterial;
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            //Hit on weapon or some logic needs to be implemented
+            if (other.gameObject.tag == "Player") {
+                StartCoroutine(HitFeedback());
+            }
         }
     }
 }

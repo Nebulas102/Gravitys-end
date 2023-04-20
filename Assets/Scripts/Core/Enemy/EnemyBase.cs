@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UI.Damage;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class EnemyBase : MonoBehaviour
 {
     [SerializeField]
     public string name;
@@ -38,6 +38,11 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public int GetDamage()
+    {
+        return Random.Range(startDamage, endDamage);
     }
 
     public void TakeDamage(float modifier)

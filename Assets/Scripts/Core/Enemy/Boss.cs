@@ -54,7 +54,7 @@ namespace Core.Enemy
         private void Update()
         {
             //Test taking damage
-            // if (Input.GetKeyDown(KeyCode.G))
+            // if (Input.GetKeyDown(KeyCode.H))
             // {
             //     TakeDamage(0f);
             // }

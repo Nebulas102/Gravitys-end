@@ -24,6 +24,7 @@ namespace Core.UI.Inventory
 
         public readonly IDictionary<Type, List<Item>> Items = new Dictionary<Type, List<Item>>();
         private bool _inventoryToggleInput;
+        private GameObject _player;
 
         private UIMenus _uiMenus;
         public OnItemChanged OnItemChangedCallback;
@@ -38,6 +39,11 @@ namespace Core.UI.Inventory
 
             Items.Add(Type.ARMOR, new List<Item>());
             Items.Add(Type.WEAPON, new List<Item>());
+        }
+
+        private void Start()
+        {
+            _player = GameObject.Find("Player");
         }
 
         private void Update()
@@ -86,6 +92,9 @@ namespace Core.UI.Inventory
             list.Remove(item);
 
             Items[item.type] = list;
+
+            // Spawn the item back on the ground
+            item.Spawn(_player.transform.position);
 
             OnItemChangedCallback?.Invoke();
         }

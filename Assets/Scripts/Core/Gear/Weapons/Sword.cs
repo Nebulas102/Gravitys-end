@@ -6,6 +6,9 @@ namespace Core.Gear.Weapons
 {
     public class Sword : MonoBehaviour
     {
+        [SerializeField]
+        private float yCoordinate;
+
         public Item item;
         private bool _canPickUp;
         private GameInput _gameInput;
@@ -14,6 +17,10 @@ namespace Core.Gear.Weapons
         private void Awake()
         {
             _gameInput = FindObjectOfType<GameInput>();
+
+            // Reset y position for better collision detection
+            var position = transform.position;
+            transform.SetPositionAndRotation(new Vector3(position.x, yCoordinate, position.z), Quaternion.identity);
         }
 
         private void Update()

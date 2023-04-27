@@ -32,6 +32,12 @@ namespace StageGeneration.Stage
         [SerializeField]
         private List<GameObject> hallways = new();
 
+        [SerializeField]
+        private GameObject hallwayEndLeft;
+
+        [SerializeField]
+        private GameObject hallwayEndRight;
+
         [Header("Room Settings")]
         [SerializeField]
         private int minWeightRoomsBranch;
@@ -47,8 +53,6 @@ namespace StageGeneration.Stage
 
         [SerializeField]
         private List<GameObject> rooms;
-        // [SerializeField]
-        // private int maxRooms;
 
         [HideInInspector]
         public List<Cell> cells;
@@ -81,43 +85,48 @@ namespace StageGeneration.Stage
 
             _roomGenerator = new RoomGenerator();
 
-            //Start making the finite hallway
-            StartCoroutine(HallwayGenerator());
+            //Start spawning bossroom
+            StartCoroutine(BossRoomGenerator());
         }
 
-        //Spawn cell in the grid on the calculated location
-        private void SpawnCell(int x, int z)
+        private IEnumerator BossRoomGenerator()
         {
-            //Create the position of the cell to place in scene
-            var cellPos = new Vector3(x * offset, -4f, z * offset);
+            var _spawnRoomObject = SpawnRoom();
+            var hallway = _spawnRoomObject.GetComponent<SpawnRoom>().bossRoomHallway;
+            var _spawnRoom = _spawnRoomObject.GetComponent<Room>();
+            
+            float posX = _spawnRoom.transform.position.x;
+            var posZ = Mathf.RoundToInt((_spawnRoom.transform.position.z + _spawnRoom.sizeZ / 2) + (hallway.GetComponent<Room>().sizeZ / 2));
 
-            //Place the game object in the scene
-            var newCell = Instantiate(gridCell, cellPos, Quaternion.identity);
+            hallway = Instantiate(hallway, new Vector3(posX, 0, posZ), Quaternion.identity);
 
-            //Set the cell X and Z position of the grid
-            newCell.GetComponent<Cell>().x = x;
-            newCell.GetComponent<Cell>().z = z;
+            var roomCells = SetRoomCells(hallway, posX, posZ);
+            hallway.GetComponent<Room>().cells = roomCells;
 
-            //Set the cell in the Stage gameobject and rename the cell to its position in the grid
-            newCell.transform.parent = _stageParent.transform;
-            newCell.name = "Cell: X = " + x + ", Z = " + z;
+            _mapHallways.Add(hallway.GetComponent<Hallway>());
 
-            if (!debugMode) newCell.GetComponent<Renderer>().enabled = false;
+            var _bossRoom = SpawnBossRoom(hallway);
 
-            //Add the cell to the cells list
-            cells.Add(newCell.GetComponent<Cell>());
+            yield return StartCoroutine(HallwayGenerator(_spawnRoom));
         }
 
         //Generate the finite hallway in the game
-        private IEnumerator HallwayGenerator()
+        private IEnumerator HallwayGenerator(Room initialRoom)
         {
-            var room = SpawnRoom().GetComponent<Room>();
+            var _spawnRoom = initialRoom;
 
-            var totalHallwayZ = gridZ - (spawnRoom.GetComponent<Room>().sizeZ / offset +
-                                         bossRoom.GetComponent<Room>().sizeZ / offset);
+            //Counts for each side and not total
+            var hallwayXlengthLeft = (Mathf.RoundToInt(gridX / 2)) - (int)(spawnRoom.GetComponent<Room>().sizeX / offset) - 
+                                ((int)(hallwayEndLeft.GetComponent<Room>().sizeX / offset));
+
+            var hallwayXlengthRight = (Mathf.RoundToInt(gridX / 2)) - (int)(spawnRoom.GetComponent<Room>().sizeX / offset) - 
+                                ((int)(hallwayEndRight.GetComponent<Room>().sizeX / offset));
 
             Room latestHallway = null;
             var generateHallway = true;
+
+            var currentHallwayXlength = hallwayXlengthLeft;
+            var isLeft = true;
 
             while (generateHallway)
             {
@@ -128,35 +137,60 @@ namespace StageGeneration.Stage
                 var hallwayX = (int)chosenHallway.GetComponent<Room>().sizeX;
                 var hallwayZ = (int)chosenHallway.GetComponent<Room>().sizeZ;
 
-                totalHallwayZ -= hallwayZ / offset;
+                currentHallwayXlength -= hallwayX / offset;
 
-                if (totalHallwayZ <= 0)
-                {
-                    generateHallway = false;
-                    break;
-                }
-
-                var posX = room.transform.position.x;
-                float posZ = 0;
+                float posX = 0;
+                float posZ = _spawnRoom.transform.position.z;
 
                 if (latestHallway is null)
-                    posZ = hallwayZ / 2 + room.GetComponent<Room>().sizeZ - offset / 2;
+                {
+                    if (isLeft)
+                    {
+                        posX = Mathf.RoundToInt((_spawnRoom.transform.position.x - _spawnRoom.sizeX / 2) - (hallwayX / 2));
+                    }
+                    else
+                    {
+                        posX = Mathf.RoundToInt((_spawnRoom.transform.position.x + _spawnRoom.sizeX / 2) + (hallwayX / 2));
+                    }
+                }
                 else
                 {
-                    posZ = latestHallway.transform.position.z + Mathf.RoundToInt(latestHallway.sizeZ / 2) +
-                           Mathf.RoundToInt(hallwayZ / 2);
+                    if (isLeft)
+                    {
+                        posX = latestHallway.transform.position.x - Mathf.RoundToInt(latestHallway.sizeX / 2) -
+                           Mathf.RoundToInt(hallwayX / 2);
+                    }
+                    else
+                    {
+                        posX = latestHallway.transform.position.x + Mathf.RoundToInt(latestHallway.sizeX / 2) +
+                           Mathf.RoundToInt(hallwayX / 2);
+                    }
                 }
 
-                latestHallway = Instantiate(chosenHallway, new Vector3(posX, 0, posZ), Quaternion.identity)
-                    .GetComponent<Room>();
+                if (currentHallwayXlength <= 0)
+                {
+                    if (isLeft)
+                    {
+                        isLeft = false;
+                        latestHallway = null;
+                        currentHallwayXlength = hallwayXlengthRight;
 
-                var roomCells = SetRoomCells(chosenHallway, posX, posZ);
-                latestHallway.GetComponent<Room>().cells = roomCells;
+                        CreateHallwayEnd(posX, posZ, hallwayEndLeft);
 
-                _mapHallways.Add(latestHallway.GetComponent<Hallway>());
+                        continue;
+                    }
+                    else
+                    {
+                        generateHallway = false;
+
+                        CreateHallwayEnd(posX, posZ, hallwayEndRight);
+
+                        break;
+                    }
+                }
+
+                latestHallway = CreateHallway(posX, posZ, chosenHallway);
             }
-
-            if (latestHallway is not null) SpawnBossRoom(latestHallway.gameObject);
 
             yield return StartCoroutine(GenerateRooms());
         }
@@ -200,8 +234,8 @@ namespace StageGeneration.Stage
             var spawnRoomX = (int)spawnRoom.GetComponent<Room>().sizeX;
             var spawnRoomZ = (int)spawnRoom.GetComponent<Room>().sizeZ;
 
-            float posX = gridX * offset / 2;
-            float posZ = spawnRoomZ / 2 - offset / 2;
+            float posX = Mathf.RoundToInt(gridX * offset / 2);
+            float posZ = Mathf.RoundToInt(gridZ * offset / 2);
 
             var room = Instantiate(spawnRoom, new Vector3(posX, 0, posZ), Quaternion.identity);
             var roomCells = SetRoomCells(room, posX, posZ);
@@ -209,7 +243,10 @@ namespace StageGeneration.Stage
             room.GetComponent<Room>().cells = roomCells;
             room.name = "Spawn Room";
 
-            room.GetComponent<Room>().GetDoors()[0].SetActive(false);
+            room.GetComponent<Room>().GetDoors().ForEach(d => d.SetActive(false));
+            
+            //currently open for testing, needs later a condition when the door may open
+            room.GetComponent<SpawnRoom>().bossDoor.SetActive(false);
 
             var lootGeneration = room.GetComponent<LootGeneration>();
             StartCoroutine(lootGeneration.SpawnLoot(room));
@@ -288,12 +325,62 @@ namespace StageGeneration.Stage
             return roomCells;
         }
 
+        private Room CreateHallway(float posX, float posZ, GameObject chosenHallway)
+        {
+            var _hallway = Instantiate(chosenHallway, new Vector3(posX, 0, posZ), Quaternion.identity)
+                .GetComponent<Room>();
+
+            var roomCells = SetRoomCells(chosenHallway, posX, posZ);
+            _hallway.GetComponent<Room>().cells = roomCells;
+
+            _mapHallways.Add(_hallway.GetComponent<Hallway>());
+
+            return _hallway;
+        }
+
+        private void CreateHallwayEnd(float posX, float posZ, GameObject hallwayEnd)
+        {
+            var _hallway = Instantiate(hallwayEnd, new Vector3(posX, 0, posZ), Quaternion.identity)
+                .GetComponent<Room>();
+
+            var roomCells = SetRoomCells(hallwayEnd, posX, posZ);
+            _hallway.GetComponent<Room>().cells = roomCells;
+
+            _mapHallways.Add(_hallway.GetComponent<Hallway>());
+        }
+
+        //Spawn cell in the grid on the calculated location
+        private void SpawnCell(int x, int z)
+        {
+            //Create the position of the cell to place in scene
+            var cellPos = new Vector3(x * offset, -4f, z * offset);
+
+            //Place the game object in the scene
+            var newCell = Instantiate(gridCell, cellPos, Quaternion.identity);
+
+            //Set the cell X and Z position of the grid
+            newCell.GetComponent<Cell>().x = x;
+            newCell.GetComponent<Cell>().z = z;
+
+            //Set the cell in the Stage gameobject and rename the cell to its position in the grid
+            newCell.transform.parent = _stageParent.transform;
+            newCell.name = "Cell: X = " + x + ", Z = " + z;
+
+            if (!debugMode) newCell.GetComponent<Renderer>().enabled = false;
+
+            //Add the cell to the cells list
+            cells.Add(newCell.GetComponent<Cell>());
+        }
+
         private void InitializeRoomSizes()
         {
             var allRooms = new List<GameObject>
             {
                 spawnRoom,
-                bossRoom
+                spawnRoom.GetComponent<SpawnRoom>().bossRoomHallway,
+                bossRoom,
+                hallwayEndLeft,
+                hallwayEndRight
             };
 
             allRooms.AddRange(rooms);

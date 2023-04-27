@@ -113,21 +113,25 @@ namespace StageGeneration.Rooms
         {
             var room = gameObject.GetComponent<Room>();
 
-            foreach (var door in room.doors)
+            if (room.doors is not null)
             {
-                var doorCellX = room.cells.Select(mh => mh.x).Distinct()
-                    .ToArray()[door.GetComponent<Door>().roomPosXOffset];
-                var doorCellZ = room.cells.Select(mh => mh.z).Distinct()
-                    .ToArray()[door.GetComponent<Door>().roomPosZOffset];
+                foreach (var door in room.doors)
+                {
+                    var doorCellX = room.cells.Select(mh => mh.x).Distinct()
+                        .ToArray()[door.GetComponent<Door>().roomPosXOffset];
+                    var doorCellZ = room.cells.Select(mh => mh.z).Distinct()
+                        .ToArray()[door.GetComponent<Door>().roomPosZOffset];
 
-                var doorCellRoom = StageHelper.GetCells()
-                    .SingleOrDefault(c => c.x == doorCellX && c.z == doorCellZ);
+                    var doorCellRoom = StageHelper.GetCells()
+                        .SingleOrDefault(c => c.x == doorCellX && c.z == doorCellZ);
 
-                if (doorCellRoom is null) continue;
-                doorCellRoom.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
+                    if (doorCellRoom is null) continue;
+                    doorCellRoom.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
 
-                door.GetComponent<Door>().cell = doorCellRoom;
+                    door.GetComponent<Door>().cell = doorCellRoom;
+                }
             }
+
         }
 
         public bool CanPlace(int posX, int posZ)

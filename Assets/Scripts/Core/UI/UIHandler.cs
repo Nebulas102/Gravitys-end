@@ -12,6 +12,7 @@ public class UIHandler : MonoBehaviour
 
     [SerializeField] GameObject inventoryMenuFirstSelected;
     [SerializeField] GameObject pauseMenuFirstSelected;
+    [SerializeField] GameObject UICursor;
 
     private bool inventorySelected = false;
     private bool pauseMenuSelected = false;
@@ -40,6 +41,13 @@ public class UIHandler : MonoBehaviour
             m_EventSystem.SetSelectedGameObject(pauseMenuFirstSelected);
             inventorySelected = false;
             pauseMenuSelected = true;
+        }
+
+        
+        if (inventorySelected || pauseMenuSelected) {
+            UICursor.SetActive(true);
+        } else {
+            UICursor.SetActive(false);
         }
 
     }

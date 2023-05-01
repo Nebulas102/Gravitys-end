@@ -12,6 +12,7 @@ namespace Core.UI
 
         private UIMenus _UIMenus;
         private bool pauseMenuToggleInput;
+        private bool closeMenuInput;
 
         // Singleton for inventory
         public static PauseMenu instance;
@@ -45,13 +46,21 @@ namespace Core.UI
                 isPaused = pauseMenu.activeSelf;
             }
 
+            if (closeMenuInput) {
+                if (isPaused) {
+                    Resume();
+                }
+            }
+
             pauseMenuToggleInput = false;
+            closeMenuInput = false;
         }
 
         private void OnEnable()
         {
             _UIMenus.Enable();
             _UIMenus.Menus.TogglePauseMenu.performed += ctx => pauseMenuToggleInput = true;
+            _UIMenus.Menus.CloseMenu.performed += ctx => closeMenuInput = true;
         }
 
         private void OnDisable()

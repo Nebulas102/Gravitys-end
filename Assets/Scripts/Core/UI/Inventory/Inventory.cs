@@ -24,6 +24,8 @@ namespace Core.UI.Inventory
 
         public readonly IDictionary<Type, List<Item>> Items = new Dictionary<Type, List<Item>>();
         private bool _inventoryToggleInput;
+        private bool closeMenuInput;
+
         private GameObject _player;
 
         private UIMenus _uiMenus;
@@ -55,6 +57,7 @@ namespace Core.UI.Inventory
         {
             _uiMenus.Enable();
             _uiMenus.Menus.ToggleInventory.performed += _ => _inventoryToggleInput = true;
+            _uiMenus.Menus.CloseMenu.performed += ctx => closeMenuInput = true;
         }
 
         private void OnDisable()
@@ -110,7 +113,16 @@ namespace Core.UI.Inventory
                 inventoryOpened = inventoryUI.activeSelf;
             }
 
+            if (closeMenuInput)
+            {
+                if (inventoryOpened)
+                {
+                    CloseInventory();
+                }
+            }
+
             _inventoryToggleInput = false;
+            closeMenuInput = false;
         }
 
         public void CloseInventory()

@@ -44,6 +44,15 @@ public partial class @UIMenus : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CloseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""82837639-dcd6-40cb-b835-a6fe5f4b0b7f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -101,6 +110,17 @@ public partial class @UIMenus : IInputActionCollection2, IDisposable
                     ""action"": ""TogglePauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e9898d4-3d55-4d3b-9fe1-47f9c52fb52f"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CloseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -117,6 +137,7 @@ public partial class @UIMenus : IInputActionCollection2, IDisposable
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_ToggleInventory = m_Menus.FindAction("ToggleInventory", throwIfNotFound: true);
         m_Menus_TogglePauseMenu = m_Menus.FindAction("TogglePauseMenu", throwIfNotFound: true);
+        m_Menus_CloseMenu = m_Menus.FindAction("CloseMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -178,12 +199,14 @@ public partial class @UIMenus : IInputActionCollection2, IDisposable
     private IMenusActions m_MenusActionsCallbackInterface;
     private readonly InputAction m_Menus_ToggleInventory;
     private readonly InputAction m_Menus_TogglePauseMenu;
+    private readonly InputAction m_Menus_CloseMenu;
     public struct MenusActions
     {
         private @UIMenus m_Wrapper;
         public MenusActions(@UIMenus wrapper) { m_Wrapper = wrapper; }
         public InputAction @ToggleInventory => m_Wrapper.m_Menus_ToggleInventory;
         public InputAction @TogglePauseMenu => m_Wrapper.m_Menus_TogglePauseMenu;
+        public InputAction @CloseMenu => m_Wrapper.m_Menus_CloseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Menus; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -199,6 +222,9 @@ public partial class @UIMenus : IInputActionCollection2, IDisposable
                 @TogglePauseMenu.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnTogglePauseMenu;
                 @TogglePauseMenu.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnTogglePauseMenu;
                 @TogglePauseMenu.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnTogglePauseMenu;
+                @CloseMenu.started -= m_Wrapper.m_MenusActionsCallbackInterface.OnCloseMenu;
+                @CloseMenu.performed -= m_Wrapper.m_MenusActionsCallbackInterface.OnCloseMenu;
+                @CloseMenu.canceled -= m_Wrapper.m_MenusActionsCallbackInterface.OnCloseMenu;
             }
             m_Wrapper.m_MenusActionsCallbackInterface = instance;
             if (instance != null)
@@ -209,6 +235,9 @@ public partial class @UIMenus : IInputActionCollection2, IDisposable
                 @TogglePauseMenu.started += instance.OnTogglePauseMenu;
                 @TogglePauseMenu.performed += instance.OnTogglePauseMenu;
                 @TogglePauseMenu.canceled += instance.OnTogglePauseMenu;
+                @CloseMenu.started += instance.OnCloseMenu;
+                @CloseMenu.performed += instance.OnCloseMenu;
+                @CloseMenu.canceled += instance.OnCloseMenu;
             }
         }
     }
@@ -226,5 +255,6 @@ public partial class @UIMenus : IInputActionCollection2, IDisposable
     {
         void OnToggleInventory(InputAction.CallbackContext context);
         void OnTogglePauseMenu(InputAction.CallbackContext context);
+        void OnCloseMenu(InputAction.CallbackContext context);
     }
 }

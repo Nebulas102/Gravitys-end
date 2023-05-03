@@ -44,7 +44,8 @@ namespace StageGeneration.Rooms
         {
             var room = Instantiate(gameObject, new Vector3(posX, 0, posZ), Quaternion.identity);
 
-            spawnDoor.GetComponent<Door>().gameObject.SetActive(false);
+            spawnDoor.SetActive(false);
+
             room.GetComponent<Room>().doors
                 .SingleOrDefault(d =>
                     d.GetComponent<Door>().GetDirection() == StageHelper.GetOppositeDirection(direction))
@@ -63,7 +64,7 @@ namespace StageGeneration.Rooms
             float roomZ = 0;
 
             var resizeZ = Mathf.RoundToInt(sizeZ / 2);
-            var resizeX = Mathf.RoundToInt(sizeZ / 2);
+            var resizeX = Mathf.RoundToInt(sizeX / 2);
 
             var position = doorCell.transform.position;
 

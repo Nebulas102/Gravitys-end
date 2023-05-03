@@ -55,7 +55,7 @@ namespace StageGeneration.Rooms
                     if (placementSide == StageHelper.RoomDirections.UNDEFINED) break;
 
                     currentSpawnDoor = _previousRoom.GetComponent<Room>()
-                        .GetDoors().SingleOrDefault(d => d.GetComponent<Door>().GetDirection() == placementSide);
+                        .GetDoors().SingleOrDefault(d => d.GetComponent<Door>().GetDirection() == placementSide);    
 
                     if (currentSpawnDoor is not null) doorCell = currentSpawnDoor.GetComponent<Door>().cell;
                 }

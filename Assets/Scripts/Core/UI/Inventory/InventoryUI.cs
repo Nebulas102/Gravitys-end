@@ -63,7 +63,9 @@ namespace Core.UI.Inventory
                 var index = inventorySlots.IndexOf(slot);
 
                 if (index < items.Count)
+                {
                     slot.AddItem(items[index]);
+                }
                 else
                     slot.ClearSlot();
             }

@@ -68,7 +68,6 @@ public class CursorController : MonoBehaviour
             cursorSprite.enabled = false;
             // Move the cursor sprite to the mouse position
             transform.position = _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            Debug.Log(2);
 
             // Check if the cursor is hovering over a button
             PointerEventData pointerEventData = new PointerEventData(EventSystem.current);

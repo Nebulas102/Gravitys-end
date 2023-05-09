@@ -27,8 +27,6 @@ namespace ScriptableObjects
 
             if (health <= 0)
                 Die();
-
-            Debug.Log(health);
         }
 
         public void Die()

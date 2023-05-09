@@ -53,7 +53,7 @@ namespace Controllers
 
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,
-                    LayerMask.GetMask("Default")))
+                    LayerMask.GetMask("Entity")))
             {
                 if (!hit.collider.CompareTag("Enemy"))
                     return;
@@ -84,10 +84,10 @@ namespace Controllers
                 }
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
             //Hit on weapon or some logic needs to be implemented
-            if (other.gameObject.CompareTag("Player")) StartCoroutine(HitFeedback());
+            if (other.gameObject.CompareTag("Item")) StartCoroutine(HitFeedback());
         }
 
         // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
@@ -111,7 +111,7 @@ namespace Controllers
         private IEnumerator HitFeedback()
         {
             renderer.material = hitMaterial;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.1f);
             renderer.material = _originalMaterial;
         }
     }

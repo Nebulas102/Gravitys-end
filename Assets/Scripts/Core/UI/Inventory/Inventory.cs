@@ -22,7 +22,7 @@ namespace Core.UI.Inventory
 
         public bool inventoryOpened;
 
-        public readonly IDictionary<Type, List<Item>> Items = new Dictionary<Type, List<Item>>();
+        public readonly IDictionary<Type, List<GameObject>> Items = new Dictionary<Type, List<GameObject>>();
         private bool _inventoryToggleInput;
         private bool closeMenuInput;
 
@@ -31,7 +31,6 @@ namespace Core.UI.Inventory
         private UIMenus _uiMenus;
         public OnItemChanged OnItemChangedCallback;
 
-
         private void Awake()
         {
             if (Instance == null)
@@ -39,8 +38,8 @@ namespace Core.UI.Inventory
 
             _uiMenus = new UIMenus();
 
-            Items.Add(Type.ARMOR, new List<Item>());
-            Items.Add(Type.WEAPON, new List<Item>());
+            Items.Add(Type.ARMOR, new List<GameObject>());
+            Items.Add(Type.WEAPON, new List<GameObject>());
         }
 
         private void Start()
@@ -65,15 +64,18 @@ namespace Core.UI.Inventory
             _uiMenus.Disable();
         }
 
-        public bool Add(Item item)
+        public bool Add(GameObject itemObject)
         {
+            // Debug.Log(itemObject.name);
+            Item item = itemObject.GetComponent<BaseItem>().item;
+
             if (item.isDefaultItem)
                 return true;
 
             // Check whether the dictionary key is already set, if not, set with new list
             if (!Items.TryGetValue(item.type, out var list))
             {
-                list = new List<Item>();
+                list = new List<GameObject>();
                 Items.Add(item.type, list);
             }
 
@@ -81,23 +83,31 @@ namespace Core.UI.Inventory
                 return false;
 
             // Add item to list and update the dictionary with the updated list
-            list.Add(item);
+            list.Add(itemObject);
             Items[item.type] = list;
 
             OnItemChangedCallback?.Invoke();
             return true;
         }
 
-        public void Remove(Item item)
+        public void RemoveDrop(GameObject itemObject)
         {
-            // Remove the item and also invoke the delegate so that the other methods can be notified
-            var list = Items.First(x => x.Key == item.type).Value;
-            list.Remove(item);
-
-            Items[item.type] = list;
+            RemoveSlot(itemObject);
 
             // Spawn the item back on the ground
-            item.Spawn(_player.transform.position);
+            itemObject.GetComponent<BaseItem>().item.Spawn(_player.transform.position);
+
+            OnItemChangedCallback?.Invoke();
+        }
+
+        public void RemoveSlot(GameObject itemObject)
+        {
+            Item item = itemObject.GetComponent<BaseItem>().item;
+            // Remove the item and also invoke the delegate so that the other methods can be notified
+            var list = Items.First(x => x.Key == item.type).Value;
+            list.Remove(itemObject);
+
+            Items[item.type] = list;
 
             OnItemChangedCallback?.Invoke();
         }

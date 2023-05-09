@@ -1,26 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
 using Core.UI.Inventory;
 using ScriptableObjects;
 using UnityEngine;
 
-namespace Core.Gear.Weapons
+public class HandlePickUp : MonoBehaviour
 {
-    public class Sword : MonoBehaviour
-    {
-        [SerializeField]
-        private float yCoordinate;
-
-        public Item item;
+        private Item item;
         private bool _canPickUp;
         private GameInput _gameInput;
         private bool _isPickingUp;
 
         private void Awake()
         {
+            item = gameObject.GetComponent<BaseItem>().item;
             _gameInput = FindObjectOfType<GameInput>();
-
-            // Reset y position for better collision detection
-            var position = transform.position;
-            transform.SetPositionAndRotation(new Vector3(position.x, yCoordinate, position.z), Quaternion.identity);
         }
 
         private void Update()
@@ -35,7 +29,7 @@ namespace Core.Gear.Weapons
         }
 
         private void OnTriggerStay(Collider hit)
-        {
+        {   
             _canPickUp = hit.gameObject.layer == LayerMask.NameToLayer("Entity");
         }
 
@@ -49,9 +43,8 @@ namespace Core.Gear.Weapons
             // Boolean to check if i was picked up (maybe the inventory was full or not)
             var wasPickedUp = Inventory.Instance.Add(gameObject);
 
-            // If it was picked up, destroy that object from the scene
+            // If it was picked up, set the object unactive
             if (wasPickedUp)
-                Destroy(gameObject);
+                gameObject.SetActive(false);
         }
-    }
 }

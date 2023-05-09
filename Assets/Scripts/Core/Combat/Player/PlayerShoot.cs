@@ -31,7 +31,7 @@ public class PlayerShoot : MonoBehaviour
         //     Debug.Log("Not null");
         // }
 
-        attackAction = playerManager.GetComponent<Character>().movementSM.currentState.attackAction;
+        // attackAction = playerManager.GetComponent<Character>().movementSM.currentState.attackAction;
         weapon = gameObject.GetComponent<RangeWeapon>();
     }
 
@@ -42,12 +42,17 @@ public class PlayerShoot : MonoBehaviour
         //     attackAction = playerManager.GetComponent<Character>().movementSM.currentState.attackAction;
         // }
 
-        if (attackAction.triggered && attackAction != null)
+        // if (attackAction.triggered && attackAction != null)
+        // {
+        //     shootInput?.Invoke();
+        // }
+
+        if (Input.GetMouseButtonDown(0))
         {
             shootInput?.Invoke();
         }
 
-        if (weapon.currentAmmo < 0)
+        if (weapon.currentAmmo <= 0)
         {
             reloadEvent?.Invoke();
         }

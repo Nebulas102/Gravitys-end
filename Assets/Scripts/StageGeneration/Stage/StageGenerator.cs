@@ -248,8 +248,8 @@ namespace StageGeneration.Stage
             //currently open for testing, needs later a condition when the door may open
             room.GetComponent<SpawnRoom>().bossDoor.SetActive(false);
 
-            var lootGeneration = room.GetComponent<LootGeneration>();
-            StartCoroutine(lootGeneration.SpawnLoot(room));
+            // var lootGeneration = room.GetComponent<LootGeneration>();
+            // StartCoroutine(lootGeneration.SpawnLoot(room));
 
             return room;
         }

@@ -1,4 +1,5 @@
 using System.Linq;
+using Controllers.Player;
 using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,28 +17,27 @@ namespace Core.UI.Inventory
         [SerializeField]
         public Button removeButton;
 
-        private GameObject _equippedSword;
-
-        private Item _item;
+        private GameObject itemObject;
 
         private void Awake()
         {
             var player = GameObject.FindWithTag("Player");
-            _equippedSword = FindWeapon(player.transform);
         }
 
-        public static GameObject FindWeapon(Transform root)
+        private void Update()
         {
-            return root.Find("EquippedSword") is not null
-                ? root.Find("EquippedSword").gameObject
-                : (from Transform child in root select FindWeapon(child)).FirstOrDefault(result => result != null);
+            // if (isCurrentSlot && itemObject != null)
+            // {
+            //     EquipmentSystem.Instance.SetCurrentWeapon(itemObject);
+            // }
         }
 
-        public void AddItem(Item newItem)
+        public void AddItem(GameObject newItemObject)
         {
             // item and its contents are to be initialized
-            _item = newItem;
-            icon.sprite = _item.icon;
+            itemObject = newItemObject;
+            // Debug.Log(itemObject.name);
+            icon.sprite = itemObject.GetComponent<BaseItem>().item.icon;
             icon.enabled = true;
 
             removeButton.interactable = true;
@@ -46,16 +46,16 @@ namespace Core.UI.Inventory
         public void ClearSlot()
         {
             // item and its contents are set to null
-            _item = null;
+            itemObject = null;
             icon.sprite = null;
             icon.enabled = false;
 
             removeButton.interactable = false;
         }
 
-        public Item GetItem()
+        public GameObject GetItem()
         {
-            return _item != null ? _item : null;
+            return itemObject != null ? itemObject : null;
         }
 
         public void OnRemoveButton()
@@ -66,23 +66,29 @@ namespace Core.UI.Inventory
             // without removing the item from the array in inventory
             if (isCurrentSlot)
             {
-                if (_item.type == Type.WEAPON)
-                    _equippedSword.SetActive(false);
+                Item item = itemObject.GetComponent<BaseItem>().item;
+                if (item.type == Type.WEAPON)
+                    // _equippedSword.SetActive(false);
 
                 ClearSlot();
                 return;
             }
 
-            Inventory.Instance.Remove(_item);
+            Inventory.Instance.RemoveDrop(itemObject);
         }
 
         public void UseItem()
         {
             // When the slot gets clicked and the slot isn't empty
             // Then you can use that particular item
-            if (_item == null) return;
+            if (itemObject == null) return;
 
-            _item.Use(this, _equippedSword);
+            itemObject.GetComponent<BaseItem>().item.Use(this, itemObject);
+
+            // if (isCurrentSlot)
+            // {
+            //     EquipmentSystem.Instance.SetCurrentWeapon(itemObject);
+            // }
         }
     }
 }

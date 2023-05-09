@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using Core.Enemy;
+using ScriptableObjects;
 using UnityEngine;
 
 public class RangeWeapon : MonoBehaviour
 {
     [Header("Shooting")]
-    public float damage;
+    public int startDamage;
+    public int endDamage;
     public float maxDistance;
 
     [Header("Reloading")]
@@ -20,10 +22,11 @@ public class RangeWeapon : MonoBehaviour
     [Header("Bullet")]
     public GameObject bullet;
 
-    float timeSinceLastShot;
-
     [SerializeField]
     private Transform bulletOutput;
+
+    private float timeSinceLastShot;
+    private bool isEquipped;
 
     private void Start() {
         PlayerShoot.shootInput += Shoot;
@@ -32,12 +35,14 @@ public class RangeWeapon : MonoBehaviour
 
     private void OnDisable() => reloading = false;
 
-    private void StartReload() {
+    private void StartReload() 
+    {
         if (!reloading && this.gameObject.activeSelf)
             StartCoroutine(Reload());
     }
 
-    private IEnumerator Reload() {
+    private IEnumerator Reload() 
+    {
         reloading = true;
 
         yield return new WaitForSeconds(reloadTime);
@@ -49,7 +54,8 @@ public class RangeWeapon : MonoBehaviour
 
     private bool CanShoot() => !reloading && timeSinceLastShot > 1f / (fireRate / 60f);
 
-    private void Shoot() {
+    private void Shoot() 
+    {
         if (currentAmmo > 0) 
         {
             if (CanShoot()) 
@@ -61,16 +67,19 @@ public class RangeWeapon : MonoBehaviour
         }
     }
 
-    private void Update() {
+    private void Update() 
+    {
         timeSinceLastShot += Time.deltaTime;
 
-        Debug.DrawRay(bulletOutput.position, bulletOutput.forward * maxDistance);
+        // Debug.DrawRay(bulletOutput.position, bulletOutput.forward * maxDistance);
     }
 
     private void OnGunShot()
     {
-        GameObject newBullet = Instantiate(bullet, bulletOutput.position, Quaternion.identity);
+        Vector3 bulletOutputWorldPos = bulletOutput.TransformPoint(Vector3.zero);
 
-        newBullet.GetComponent<BulletBehaviour>().SetDamage(damage);
+        GameObject newBullet = Instantiate(bullet, bulletOutputWorldPos, bullet.transform.rotation);
+
+        newBullet.GetComponent<BulletBehaviour>().SetDamage(startDamage, endDamage);
     }
 }

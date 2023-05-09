@@ -8,11 +8,23 @@ public class BulletBehaviour : MonoBehaviour
     [SerializeField]
     private float bulletSpeed = 5f;
 
-    private float damage;
+    private int startDamage;
+    private int endDamage;
+    private PlayerManager playerManager;
+    private Vector3 direction;
+
+    private void Start()
+    {
+        playerManager = PlayerManager.Instance;
+
+        direction = transform.up;
+    }
 
     private void Update()
     {
-        transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
+        // transform.rotation = Quaternion.LookRotation(transform.forward, direction);
+
+        transform.Translate(direction * bulletSpeed * Time.deltaTime, Space.World);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -21,7 +33,7 @@ public class BulletBehaviour : MonoBehaviour
         {
             if (other.gameObject.GetComponent<EnemyBase>())
             {
-                other.gameObject.GetComponent<EnemyBase>().TakeDamage(damage);
+                other.gameObject.GetComponent<EnemyBase>().TakeDamage(startDamage, endDamage, 0);
             }
 
             Destroy(gameObject);
@@ -30,8 +42,9 @@ public class BulletBehaviour : MonoBehaviour
         if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) Destroy(gameObject);
     }
 
-    public void SetDamage(float _damage)
+    public void SetDamage(int _startDamage, int _endDamage)
     {
-        damage = _damage;
+        startDamage = _startDamage;
+        endDamage = _endDamage;
     }
 }

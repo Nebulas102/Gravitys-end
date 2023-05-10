@@ -21,6 +21,9 @@ namespace Controllers.Player
         public Camera camera;
 
         [HideInInspector]
+        public Vector3 lookAtPosition;
+
+        [HideInInspector]
         public Animator animator;
 
         [HideInInspector]
@@ -74,7 +77,12 @@ namespace Controllers.Player
             if (groundPlane.Raycast(ray, out rayDistance))
             {
                 Vector3 pointToLook = ray.GetPoint(rayDistance);
-                _player.transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+
+                lookAtPosition = new Vector3(pointToLook.x, transform.position.y, pointToLook.z);
+
+                // Debug.Log(lookAtPosition);
+
+                _player.transform.LookAt(lookAtPosition);
             }
         }
 

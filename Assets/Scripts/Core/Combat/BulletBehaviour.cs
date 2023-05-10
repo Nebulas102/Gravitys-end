@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Controllers.Player;
 using Core.Enemy;
 using UnityEngine;
 
@@ -10,24 +11,19 @@ public class BulletBehaviour : MonoBehaviour
 
     private int startDamage;
     private int endDamage;
-    private PlayerManager playerManager;
     private Vector3 direction;
 
     private void Start()
     {
-        playerManager = PlayerManager.Instance;
-
-        direction = transform.up;
+        transform.rotation = Quaternion.LookRotation(direction, Vector3.forward);
     }
 
     private void Update()
     {
-        // transform.rotation = Quaternion.LookRotation(transform.forward, direction);
-
         transform.Translate(direction * bulletSpeed * Time.deltaTime, Space.World);
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
@@ -46,5 +42,10 @@ public class BulletBehaviour : MonoBehaviour
     {
         startDamage = _startDamage;
         endDamage = _endDamage;
+    }
+
+    public void SetDirection(Vector3 direction)
+    {
+        this.direction = direction.normalized;
     }
 }

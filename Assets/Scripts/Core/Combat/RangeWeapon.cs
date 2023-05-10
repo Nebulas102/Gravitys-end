@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Controllers.Player;
 using Core.Enemy;
 using ScriptableObjects;
 using UnityEngine;
@@ -28,9 +29,13 @@ public class RangeWeapon : MonoBehaviour
     private float timeSinceLastShot;
     private bool isEquipped;
 
+    private PlayerManager playerManager;
+
     private void Start() {
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadEvent += StartReload;
+
+        playerManager = PlayerManager.Instance;
     }
 
     private void OnDisable() => reloading = false;
@@ -80,6 +85,9 @@ public class RangeWeapon : MonoBehaviour
 
         GameObject newBullet = Instantiate(bullet, bulletOutputWorldPos, bullet.transform.rotation);
 
+        Vector3 bulletDirection = playerManager.player.GetComponent<Character>().lookAtPosition - playerManager.player.transform.position;
+
         newBullet.GetComponent<BulletBehaviour>().SetDamage(startDamage, endDamage);
+        newBullet.GetComponent<BulletBehaviour>().SetDirection(bulletDirection);
     }
 }

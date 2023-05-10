@@ -19,42 +19,51 @@ public class PlayerShoot : MonoBehaviour
 
     private void Start()
     {
-        playerManager = PlayerManager.Instance;
-
-        // if (playerManager)
-        // {
-
-        // }
-
-        // if (playerManager.GetComponent<Character>().movementSM != null)
-        // {
-        //     Debug.Log("Not null");
-        // }
-
-        // attackAction = playerManager.GetComponent<Character>().movementSM.currentState.attackAction;
         weapon = gameObject.GetComponent<RangeWeapon>();
     }
 
     private void Update()
     {
-        // if (playerManager.GetComponent<Character>() != null)
-        // {
-        //     attackAction = playerManager.GetComponent<Character>().movementSM.currentState.attackAction;
-        // }
+        if (playerManager != null)
+        {
+            if (playerManager.player.GetComponent<Character>().movementSM.currentState == playerManager.player.GetComponent<Character>().attacking)
+            {
+                attackAction = playerManager.player.GetComponent<Character>().movementSM.currentState.attackAction;
+            }
+            else
+            {
+                attackAction = null;
+            }
+        }
+        else
+        {
+            playerManager = PlayerManager.Instance;
+        }
 
-        // if (attackAction.triggered && attackAction != null)
-        // {
-        //     shootInput?.Invoke();
-        // }
-
-        if (Input.GetMouseButtonDown(0))
+        if (attackAction != null && attackAction.triggered)
         {
             shootInput?.Invoke();
         }
+
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     shootInput?.Invoke();
+        // }
 
         if (weapon.currentAmmo <= 0)
         {
             reloadEvent?.Invoke();
         }
     }
+
+    // private void FixedUpdate()
+    // {
+    //     if (playerManager.GetComponent<Character>() != null)
+    //     {
+    //         if (playerManager.GetComponent<Character>().movementSM.currentState == playerManager.GetComponent<Character>().attacking)
+    //         {
+    //             attackAction = playerManager.GetComponent<Character>().movementSM.currentState.attackAction;
+    //         }
+    //     }    
+    // }
 }

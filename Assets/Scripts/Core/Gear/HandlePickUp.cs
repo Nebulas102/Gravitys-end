@@ -40,6 +40,9 @@ public class HandlePickUp : MonoBehaviour
             if (item.type is not (Type.ARMOR or Type.WEAPON))
                 return;
 
+            if (gameObject.GetComponent<BaseItem>().isInInventory)
+                return;    
+
             // Boolean to check if i was picked up (maybe the inventory was full or not)
             var wasPickedUp = Inventory.Instance.Add(gameObject);
 

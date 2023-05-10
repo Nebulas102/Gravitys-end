@@ -69,6 +69,8 @@ namespace Core.UI.Inventory
             // Debug.Log(itemObject.name);
             Item item = itemObject.GetComponent<BaseItem>().item;
 
+            itemObject.GetComponent<BaseItem>().isInInventory = true;
+
             if (item.isDefaultItem)
                 return true;
 
@@ -96,6 +98,8 @@ namespace Core.UI.Inventory
 
             // Spawn the item back on the ground
             itemObject.GetComponent<BaseItem>().item.Spawn(_player.transform.position);
+
+            itemObject.GetComponent<BaseItem>().isInInventory = false;
 
             OnItemChangedCallback?.Invoke();
         }

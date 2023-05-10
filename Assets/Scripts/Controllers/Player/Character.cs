@@ -18,6 +18,9 @@ namespace Controllers.Player
         public PlayerInput playerInput;
 
         [HideInInspector]
+        public Camera camera;
+
+        [HideInInspector]
         public Animator animator;
 
         [HideInInspector]
@@ -39,6 +42,7 @@ namespace Controllers.Player
             controller = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
             playerInput = GetComponent<PlayerInput>();
+            camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
 
             movementSM = new StateMachine();
             standing = new StandingState(this, movementSM);
@@ -60,6 +64,18 @@ namespace Controllers.Player
                 movementSM.currentState.LogicUpdate();
             }
 
+            //Look at mouse
+            Vector2 mousePosition = playerInput.actions["Look"].ReadValue<Vector2>();
+
+            Ray ray = camera.ScreenPointToRay(mousePosition);
+            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+            float rayDistance;
+
+            if (groundPlane.Raycast(ray, out rayDistance))
+            {
+                Vector3 pointToLook = ray.GetPoint(rayDistance);
+                _player.transform.LookAt(new Vector3(pointToLook.x, transform.position.y, pointToLook.z));
+            }
         }
 
         private void FixedUpdate()

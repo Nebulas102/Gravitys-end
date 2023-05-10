@@ -14,6 +14,8 @@ public class MeleeWeapon : MonoBehaviour
     private bool isEquipped = false;
     private Collider hitbox;
 
+    public bool allowAttack = false;
+
     private void Start()
     {
         hitbox = gameObject.GetComponent<Collider>();
@@ -27,7 +29,7 @@ public class MeleeWeapon : MonoBehaviour
     //it wont even read the enemy or other objects, only the player
     private void OnTriggerEnter(Collider other) 
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") && allowAttack)
         {
             other.GetComponent<EnemyBase>().TakeDamage(startDamage, endDamage, 0);
         }

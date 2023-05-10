@@ -6,4 +6,7 @@ using UnityEngine;
 public class BaseItem : MonoBehaviour
 {
     public Item item;
+
+    [HideInInspector]
+    public bool isInInventory = false;
 }

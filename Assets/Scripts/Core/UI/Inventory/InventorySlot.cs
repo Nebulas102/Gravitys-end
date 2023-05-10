@@ -36,7 +36,6 @@ namespace Core.UI.Inventory
         {
             // item and its contents are to be initialized
             itemObject = newItemObject;
-            // Debug.Log(itemObject.name);
             icon.sprite = itemObject.GetComponent<BaseItem>().item.icon;
             icon.enabled = true;
 

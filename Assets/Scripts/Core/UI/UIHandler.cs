@@ -27,8 +27,6 @@ public class UIHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("inv " + inventorySelected);
-        Debug.Log("pause " + pauseMenuSelected);
         // if the inventory is opened and it is not yet selected then select the first button
         if (Inventory.Instance.inventoryOpened && !inventorySelected)
         {

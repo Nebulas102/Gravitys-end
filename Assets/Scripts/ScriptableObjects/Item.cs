@@ -1,4 +1,5 @@
 using System;
+using Controllers.Player;
 using Core.UI.Inventory;
 using UnityEngine;
 
@@ -49,8 +50,8 @@ namespace ScriptableObjects
                     InventoryUI.StaticCurrentArmorSlot.ClearSlot();
 
                     // Add this item to the currentSlot
-                    InventoryUI.StaticCurrentArmorSlot.AddItem(this);
-                    Inventory.Instance.Remove(this);
+                    InventoryUI.StaticCurrentArmorSlot.AddItem(equippedWeapon);
+                    Inventory.Instance.RemoveSlot(equippedWeapon);
                     break;
                 }
                 case Type.WEAPON when itemSlot.isCurrentSlot:
@@ -66,6 +67,8 @@ namespace ScriptableObjects
                         .AddItem(InventoryUI.StaticCurrentWeaponSlot.GetItem());
                     Inventory.Instance.Add(InventoryUI.StaticCurrentWeaponSlot.GetItem());
                     InventoryUI.StaticCurrentWeaponSlot.ClearSlot();
+                    
+                    EquipmentSystem.Instance.currentWeaponInHand = null;
                     equippedWeapon.SetActive(false);
 
                     return;
@@ -85,9 +88,15 @@ namespace ScriptableObjects
                     InventoryUI.StaticCurrentWeaponSlot.ClearSlot();
 
                     // Add this item to the currentSlot
-                    InventoryUI.StaticCurrentWeaponSlot.AddItem(this);
-                    Inventory.Instance.Remove(this);
+                    InventoryUI.StaticCurrentWeaponSlot.AddItem(equippedWeapon);
+                    Inventory.Instance.RemoveSlot(equippedWeapon);
                     equippedWeapon.SetActive(true);
+
+                    if (InventoryUI.StaticCurrentWeaponSlot.isCurrentSlot)
+                    {
+                        EquipmentSystem.Instance.SetCurrentWeapon(InventoryUI.StaticCurrentWeaponSlot.GetItem());
+                    }
+                    
                     break;
                 }
                 default:

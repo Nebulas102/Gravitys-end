@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 3865394def4c45a41bb00934579eef32, type: 2}
+  isInInventory: 0
 --- !u!114 &5099098534359381256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,7 +64,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d027b195eb492db4cbcb394decd81c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 50
+  startDamage: 5
+  endDamage: 10
   maxDistance: 100
   currentAmmo: 10
   magSize: 11

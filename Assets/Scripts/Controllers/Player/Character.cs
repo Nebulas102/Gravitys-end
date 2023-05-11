@@ -66,7 +66,10 @@ namespace Controllers.Player
                 movementSM.currentState.HandleInput();
                 movementSM.currentState.LogicUpdate();
             }
+        }
 
+        private void FixedUpdate()
+        {
             //Look at mouse
             Vector2 mousePosition = playerInput.actions["Look"].ReadValue<Vector2>();
 
@@ -80,14 +83,9 @@ namespace Controllers.Player
 
                 lookAtPosition = new Vector3(pointToLook.x, transform.position.y, pointToLook.z);
 
-                // Debug.Log(lookAtPosition);
-
                 _player.transform.LookAt(lookAtPosition);
             }
-        }
 
-        private void FixedUpdate()
-        {
             movementSM.currentState.PhysicsUpdate();
         }
     }

@@ -29,16 +29,6 @@ namespace Controllers.Player
         public override void HandleInput()
         {
             base.HandleInput();
-            if (attackAction.triggered)
-            {
-                attack = true;
-
-                if (EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>())
-                {
-                    EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>().allowAttack = true;
-                    Debug.Log("Allow attack - Attack State");
-                }
-            }
         }
 
         public override void LogicUpdate()
@@ -65,8 +55,6 @@ namespace Controllers.Player
             if (EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>())
             {
                 EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>().allowAttack = false;
-
-                Debug.Log("Disallow attack - Attack State");
             }
 
             base.Exit();

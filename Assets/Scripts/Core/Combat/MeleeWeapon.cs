@@ -26,7 +26,6 @@ public class MeleeWeapon : MonoBehaviour
    
     }
 
-    //it wont even read the enemy or other objects, only the player
     private void OnTriggerEnter(Collider other) 
     {
         if (other.CompareTag("Enemy") && allowAttack)

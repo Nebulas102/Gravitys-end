@@ -45,25 +45,9 @@ public class PlayerShoot : MonoBehaviour
             shootInput?.Invoke();
         }
 
-        // if (Input.GetMouseButtonDown(0))
-        // {
-        //     shootInput?.Invoke();
-        // }
-
         if (weapon.currentAmmo <= 0)
         {
             reloadEvent?.Invoke();
         }
     }
-
-    // private void FixedUpdate()
-    // {
-    //     if (playerManager.GetComponent<Character>() != null)
-    //     {
-    //         if (playerManager.GetComponent<Character>().movementSM.currentState == playerManager.GetComponent<Character>().attacking)
-    //         {
-    //             attackAction = playerManager.GetComponent<Character>().movementSM.currentState.attackAction;
-    //         }
-    //     }    
-    // }
 }

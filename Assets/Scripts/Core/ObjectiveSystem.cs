@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.Enemy;
 using TMPro;
 using UnityEngine;
 
@@ -13,26 +14,31 @@ public class ObjectiveSystem : MonoBehaviour
     [SerializeField] int objectiveFontSize = 24;
     [SerializeField] int objectiveHorizontalPosition = -75;
 
+    private int enemiesKilledCount;
+
     // Start is called before the first frame update
     void Start()
     {
+        EnemyBase.OnEnemyKilled += HandleEnemyKilled;
+
         objectivesHolder = GameObject.Find("ObjectivesHolder");
+
         Objective objective1 = new Objective();
-        objective1.name = "Collect the Key";
+        objective1.name = "Find the bossroom key";
         objective1.type = ObjectiveType.CollectItem;
         objective1.completed = false;
         objective1.color = Color.white;
         objectives.Add(objective1);
 
         Objective objective2 = new Objective();
-        objective2.name = "Defeat the Boss";
+        objective2.name = "Kill 30 enemies";
         objective2.type = ObjectiveType.DefeatEnemy;
         objective2.completed = false;
         objective2.color = Color.white;
         objectives.Add(objective2);
 
         Objective objective3 = new Objective();
-        objective3.name = "Third objective";
+        objective3.name = "Defeat the Boss";
         objective3.type = ObjectiveType.DefeatEnemy;
         objective3.completed = false;
         objective3.color = Color.white;
@@ -99,7 +105,6 @@ public class ObjectiveSystem : MonoBehaviour
                 objectiveText.color = objective.color;
             }
 
-            Debug.Log("Objective completed: " + objectiveName);
         }
         else
         {
@@ -109,13 +114,24 @@ public class ObjectiveSystem : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("HallwayTrigger"))
+        if (other.CompareTag("Key"))
         {
-            // Remove the key from the scene
-            Destroy(other.gameObject);
-
             // Mark the "Collect the Key" objective as completed
-            FindObjectOfType<ObjectiveSystem>().CompleteObjective("Collect the Key");
+            FindObjectOfType<ObjectiveSystem>().CompleteObjective("Find the bossroom key");
+        }
+    }
+
+    void OnDestroy()
+    {
+        EnemyBase.OnEnemyKilled -= HandleEnemyKilled;
+    }
+
+    void HandleEnemyKilled(EnemyBase enemy)
+    {
+        enemiesKilledCount++;
+        if (enemiesKilledCount == 30) {
+            // Mark the "Collect the Key" objective as completed
+            FindObjectOfType<ObjectiveSystem>().CompleteObjective("Kill 30 enemies");
         }
     }
 

@@ -5,6 +5,9 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
+    // Singleton for DialogueManager
+    public static DialogueManager Instance;
+
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI dialogueText;
 
@@ -14,17 +17,19 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<string> sentences;
 
+    public bool dialogueActive;
     private bool textIsTyping;
     private string currentSentence;
 
-    // Start is called before the first frame update
     void Start()
     {
+        if (Instance == null) Instance = this;
         sentences = new Queue<string>();
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
+        dialogueActive = true;
         animator.SetBool("IsOpen", true);
 
         nameText.text = dialogue.name;
@@ -74,6 +79,7 @@ public class DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
+        dialogueActive = false;
         animator.SetBool("IsOpen", false);
     }
 }

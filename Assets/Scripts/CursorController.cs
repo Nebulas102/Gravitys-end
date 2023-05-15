@@ -34,8 +34,6 @@ public class CursorController : MonoBehaviour
                 clampedPosition.y = Mathf.Clamp(clampedPosition.y, 0.0f, Screen.height);
                 transform.position = clampedPosition;
 
-                Debug.Log(1);
-
                 // Check if the cursor is hovering over a button
                 PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
                 pointerEventData.position = transform.position;
@@ -56,7 +54,6 @@ public class CursorController : MonoBehaviour
             if (Gamepad.current.aButton.isPressed)
             {
                 // Simulate a mouse click
-                Debug.Log("Click");
             }
         }
         // Check if mouse is being used

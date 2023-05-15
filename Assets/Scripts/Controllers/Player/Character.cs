@@ -60,9 +60,12 @@ namespace Controllers.Player
 
         private void Update()
         {
-            if (Inventory.Instance.inventoryOpened) {
+            if (Inventory.Instance.inventoryOpened)
+            {
                 movementSM.ChangeState(standing);
-            } else {
+            }
+            else
+            {
                 movementSM.currentState.HandleInput();
                 movementSM.currentState.LogicUpdate();
             }

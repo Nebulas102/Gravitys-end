@@ -60,7 +60,7 @@ namespace Controllers.Player
 
         private void Update()
         {
-            if (Inventory.Instance.inventoryOpened) {
+            if (Inventory.Instance.inventoryOpened || DialogueManager.Instance.dialogueActive) {
                 movementSM.ChangeState(standing);
             } else {
                 movementSM.currentState.HandleInput();

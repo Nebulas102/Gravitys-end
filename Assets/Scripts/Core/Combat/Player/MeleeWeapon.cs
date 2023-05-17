@@ -14,6 +14,7 @@ public class MeleeWeapon : MonoBehaviour
     private bool isEquipped = false;
     private Collider hitbox;
 
+    [HideInInspector]
     public bool allowAttack = false;
 
     private void Start()

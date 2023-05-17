@@ -122,14 +122,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289270883698796394}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.27059805, y: 0.6532815, z: -0.6532815, w: 0.27059805}
   m_LocalPosition: {x: 0, y: 10.014, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3357355433393599820}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 135, z: 0}
 --- !u!20 &2451819262515506027
 Camera:
   m_ObjectHideFlags: 0
@@ -547,6 +547,8 @@ MonoBehaviour:
   playerSpeed: 6
   controller: {fileID: 2818501734216326601}
   playerInput: {fileID: 5879345192023916831}
+  camera: {fileID: 0}
+  lookAtPosition: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}
   playerVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &99395234236917975
@@ -596,6 +598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 1503709254792651134}
   sheathHolder: {fileID: 9153746418663765294}
+  currentWeaponInHand: {fileID: 0}
 --- !u!1 &872677986746474466
 GameObject:
   m_ObjectHideFlags: 0

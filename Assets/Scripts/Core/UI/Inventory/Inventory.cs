@@ -66,7 +66,6 @@ namespace Core.UI.Inventory
 
         public bool Add(GameObject itemObject)
         {
-            // Debug.Log(itemObject.name);
             Item item = itemObject.GetComponent<BaseItem>().item;
 
             itemObject.GetComponent<BaseItem>().isInInventory = true;

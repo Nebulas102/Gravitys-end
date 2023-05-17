@@ -1,100 +1,94 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-[System.Serializable]
-public class RoomData {
-	[System.Serializable]
-	class TileTypeSerializable {
-		public int Model;
-		public List<int> Materials;
-		public float[] Rotation;
-		public float SpawnChanceWeight;
+[Serializable]
+public class RoomData
+{
+    // Room basic data
+    public int Width;
+    public int Height;
+    public int WallHeight;
 
-		public TileTypeSerializable(RoomBuilder.TileType aTileType) {
-			Model = aTileType.Model;
+    // Door data
+    public int[] DoorPositions;
+    public int DoorMaterial;
+    public float FloorRandomSpawnChance;
+    public float WallRandomSpawnChance;
 
-			Materials = aTileType.Materials;
+    // Floor data
+    private TileTypeSerializable[] _floorTileTypes;
 
-			Vector3 lVec = aTileType.Rotation.eulerAngles;
-			Rotation = new float[3] {lVec.x, lVec.y, lVec.z};
+    // Wall data
+    private TileTypeSerializable[] _wallTileTypes;
 
-			SpawnChanceWeight = aTileType.SpawnChanceWeight;
-		}
+    public RoomData(int aWidth, int aHeight, int aWallHeight, int[] aDoorPositions, int aDoorMaterial,
+        List<RoomBuilder.TileType> aFloorTileTypes, float aFloorRandomSpawnChance,
+        List<RoomBuilder.TileType> aWallTileTypes, float aWallRandomSpawnChance)
+    {
+        Width      = aWidth;
+        Height     = aHeight;
+        WallHeight = aWallHeight;
 
-		public RoomBuilder.TileType GetTileType() {
-			Quaternion lRot = Quaternion.identity;
-			lRot.eulerAngles = new Vector3(Rotation[0], Rotation[1], Rotation[2]);
+        DoorPositions = aDoorPositions;
+        DoorMaterial  = aDoorMaterial;
 
-			return new RoomBuilder.TileType(Model, Materials, lRot, SpawnChanceWeight);
-		}
-	}
+        FloorTileTypes         = aFloorTileTypes;
+        FloorRandomSpawnChance = aFloorRandomSpawnChance;
 
-	// Room basic data
-	public int Width;
-	public int Height;
-	public int WallHeight;
+        WallTileTypes         = aWallTileTypes;
+        WallRandomSpawnChance = aWallRandomSpawnChance;
+    }
 
-	// Door data
-	public int[] DoorPositions;
-	public int DoorMaterial;
+    public List<RoomBuilder.TileType> FloorTileTypes
+    {
+        get { return _floorTileTypes.Select(t => t.GetTileType()).ToList(); }
+        set
+        {
+            _floorTileTypes = new TileTypeSerializable[value.Count];
 
-	// Floor data
-	TileTypeSerializable[] _floorTileTypes;
-	public List<RoomBuilder.TileType> FloorTileTypes {
-		get {
-			List<RoomBuilder.TileType> lTileTypes = new List<RoomBuilder.TileType>();
+            for (var i = 0; i < value.Count; i++) _floorTileTypes[i] = new TileTypeSerializable(value[i]);
+        }
+    }
 
-			for (int i = 0; i < _floorTileTypes.Length; i++) {
-				lTileTypes.Add(_floorTileTypes[i].GetTileType());
-			}
+    public List<RoomBuilder.TileType> WallTileTypes
+    {
+        get { return _wallTileTypes.Select(t => t.GetTileType()).ToList(); }
+        set
+        {
+            _wallTileTypes = new TileTypeSerializable[value.Count];
 
-			return lTileTypes;
-		}
-		set {
-			_floorTileTypes = new TileTypeSerializable[value.Count];
+            for (var i = 0; i < value.Count; i++) _wallTileTypes[i] = new TileTypeSerializable(value[i]);
+        }
+    }
 
-			for (int i = 0; i < value.Count; i++) {
-				_floorTileTypes[i] = new TileTypeSerializable(value[i]);
-			}
-		}
-	}
-	public float FloorRandomSpawnChance = 0.0f;
+    [Serializable]
+    private class TileTypeSerializable
+    {
+        public int Model;
+        public List<int> Materials;
+        public float[] Rotation;
+        public float SpawnChanceWeight;
 
-	// Wall data
-	TileTypeSerializable[] _wallTileTypes;
-	public List<RoomBuilder.TileType> WallTileTypes {
-		get {
-			List<RoomBuilder.TileType> lTileTypes = new List<RoomBuilder.TileType>();
+        public TileTypeSerializable(RoomBuilder.TileType aTileType)
+        {
+            Model = aTileType.Model;
 
-			for (int i = 0; i < _wallTileTypes.Length; i++) {
-				lTileTypes.Add(_wallTileTypes[i].GetTileType());
-			}
+            Materials = aTileType.Materials;
 
-			return lTileTypes;
-		}
-		set {
-			_wallTileTypes = new TileTypeSerializable[value.Count];
+            var lVec = aTileType.Rotation.eulerAngles;
+            Rotation = new float[3] { lVec.x, lVec.y, lVec.z };
 
-			for (int i = 0; i < value.Count; i++) {
-				_wallTileTypes[i] = new TileTypeSerializable(value[i]);
-			}
-		}
-	}
-	public float WallRandomSpawnChance = 0.0f;
+            SpawnChanceWeight = aTileType.SpawnChanceWeight;
+        }
 
-	public RoomData(int aWidth, int aHeight, int aWallHeight, int[] aDoorPositions, int aDoorMaterial, List<RoomBuilder.TileType> aFloorTileTypes, float aFloorRandomSpawnChance, List<RoomBuilder.TileType> aWallTileTypes, float aWallRandomSpawnChance) {
-		Width = aWidth;
-		Height = aHeight;
-		WallHeight = aWallHeight;
+        public RoomBuilder.TileType GetTileType()
+        {
+            var lRot = Quaternion.identity;
+            lRot.eulerAngles = new Vector3(Rotation[0], Rotation[1], Rotation[2]);
 
-		DoorPositions = aDoorPositions;
-		DoorMaterial = aDoorMaterial;
-
-		FloorTileTypes = aFloorTileTypes;
-		FloorRandomSpawnChance = aFloorRandomSpawnChance;
-
-		WallTileTypes = aWallTileTypes;
-		WallRandomSpawnChance = aWallRandomSpawnChance;
-	}
+            return new RoomBuilder.TileType(Model, Materials, lRot, SpawnChanceWeight);
+        }
+    }
 }

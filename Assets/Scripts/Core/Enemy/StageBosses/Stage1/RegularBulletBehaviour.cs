@@ -39,7 +39,7 @@ namespace Core.Enemy.StageBosses.Stage1
             {
                 var playerEntity = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity;
 
-                playerEntity.TakeDamage(bulletDamage, 0.2f);
+                // playerEntity.TakeDamage(bulletDamage, 0.2f);
 
                 Destroy(gameObject);
             }

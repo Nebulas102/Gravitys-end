@@ -11,10 +11,11 @@ namespace ScriptableObjects
         public GameObject damageCounter;
         public float health;
 
-        public void TakeDamage(float damage, float modifier)
+        public void TakeDamage(int startDamage, int endDamage, float modifier)
         {
+            var damage = Random.Range(startDamage, endDamage);
             // Subtract the armor value
-            damage -= modifier / 100 * damage;
+            damage -= Mathf.RoundToInt(modifier / 100) * damage;
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
             if (damageCounter is not null)

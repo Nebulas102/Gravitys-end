@@ -28,8 +28,8 @@ namespace Controllers.Enemy
         {
             if (!(Time.time > _nextAttackTime)) return;
 
-            _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity
-                .TakeDamage(_enemyBase.GetDamage(), 0f);
+            // _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity
+            //     .TakeDamage(_enemyBase.GetDamage(), 0f);
             _nextAttackTime = Time.time + attackCooldown;
         }
     }

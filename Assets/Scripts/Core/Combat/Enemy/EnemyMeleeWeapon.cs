@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Controllers.Player;
 using Core.Enemy;
 using ScriptableObjects;
 using UnityEngine;
 
-public class MeleeWeapon : MonoBehaviour
+public class EnemyMeleeWeapon : MonoBehaviour
 {    
     [SerializeField]
     private int startDamage = 5;
@@ -17,16 +18,16 @@ public class MeleeWeapon : MonoBehaviour
 
     private void Start()
     {
-        hitbox.GetComponent<MeleeWeaponHitbox>().SetDamageHitbox(startDamage, endDamage);
+        hitbox.GetComponent<EnemyMeleeWeaponHitbox>().SetDamageHitbox(startDamage, endDamage);
     }
 
     public void AllowHitbox()
     {
-        hitbox.GetComponent<MeleeWeaponHitbox>().allowAttack = true;
+        hitbox.GetComponent<EnemyMeleeWeaponHitbox>().allowAttack = true;
     }
 
     public void DisAllowHitbox()
     {
-        hitbox.GetComponent<MeleeWeaponHitbox>().allowAttack = false;
+        hitbox.GetComponent<EnemyMeleeWeaponHitbox>().allowAttack = false;
     }
 }

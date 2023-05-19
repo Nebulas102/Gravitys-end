@@ -54,7 +54,7 @@ namespace Controllers.Player
         {
             if (EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>())
             {
-                EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>().allowAttack = false;
+                EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>().DisAllowHitbox();
             }
 
             base.Exit();

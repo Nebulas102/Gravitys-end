@@ -43,7 +43,7 @@ namespace Controllers.Player
 
                 if (EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>())
                 {
-                    EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>().allowAttack = true;
+                    EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>().AllowHitbox();
                 }
             }
 

@@ -11,12 +11,8 @@ public class EnemyBulletBehaviour : MonoBehaviour
 
     private int startDamage;
     private int endDamage;
+    [SerializeField]
     private Vector3 direction;
-
-    private void Start()
-    {
-        transform.rotation = Quaternion.LookRotation(direction, Vector3.forward);
-    }
 
     private void Update()
     {

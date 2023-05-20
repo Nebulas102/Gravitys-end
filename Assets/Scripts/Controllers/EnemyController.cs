@@ -57,7 +57,14 @@ namespace Controllers
                     return;
             }
 
-            _agent.SetDestination(_target.position);
+            if (distance < minDistance)
+            {
+                Vector3 retreatDestination = transform.position + (transform.position - targetPosition).normalized * 4;
+                _agent.SetDestination(retreatDestination);
+                Debug.Log("Retreating");
+            } else {
+                _agent.SetDestination(_target.position);
+            }
 
             if (distance <= _agent.stoppingDistance)
             {

@@ -12,8 +12,7 @@ namespace StageGeneration.Rooms
 
         public Cell cell;
 
-        [SerializeField]
-        private StageHelper.RoomDirections direction;
+        public StageHelper.RoomDirections direction;
 
         public StageHelper.RoomDirections GetDirection()
         {

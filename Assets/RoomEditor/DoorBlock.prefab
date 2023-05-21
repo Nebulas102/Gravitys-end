@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3635177375949994593}
   - component: {fileID: 3635177375949994594}
   - component: {fileID: 3635177375949994595}
+  - component: {fileID: -6634433759250106084}
   m_Layer: 0
   m_Name: DoorBlock
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,3 +98,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-6634433759250106084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3635177375949994596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7634e1751621343ac67586ff5fde2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomPosXOffset: 0
+  roomPosZOffset: 0
+  hasNeighbour: 0
+  cell: {fileID: 0}
+  direction: 0

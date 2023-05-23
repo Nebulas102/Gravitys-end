@@ -13,14 +13,11 @@ namespace StageGeneration.Rooms
         public float sizeY;
         public float sizeZ;
 
-        [SerializeField]
-        private int weight;
+        public List<GameObject> doors;
 
-        [SerializeField]
-        private List<GameObject> doors;
+        public int weight;
 
-        [SerializeField]
-        private GameObject doorReplacement;
+        public GameObject doorReplacement;
 
         [HideInInspector]
         public List<Cell> cells;

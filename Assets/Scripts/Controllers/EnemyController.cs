@@ -61,7 +61,6 @@ namespace Controllers
             {
                 Vector3 retreatDestination = transform.position + (transform.position - targetPosition).normalized * 4;
                 _agent.SetDestination(retreatDestination);
-                Debug.Log("Retreating");
             } else {
                 _agent.SetDestination(_target.position);
             }

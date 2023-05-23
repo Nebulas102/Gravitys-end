@@ -10,27 +10,23 @@ public class MeleeWeapon : MonoBehaviour
     private int startDamage = 5;
     [SerializeField]
     private int endDamage = 10;
+    [SerializeField]
+    private GameObject hitbox;
 
     private bool isEquipped = false;
-    private Collider hitbox;
-
-    public bool allowAttack = false;
 
     private void Start()
     {
-        hitbox = gameObject.GetComponent<Collider>();
+        hitbox.GetComponent<MeleeWeaponHitbox>().SetDamageHitbox(startDamage, endDamage);
     }
 
-    private void Update()
+    public void AllowHitbox()
     {
-   
+        hitbox.GetComponent<MeleeWeaponHitbox>().allowAttack = true;
     }
 
-    private void OnTriggerEnter(Collider other) 
+    public void DisAllowHitbox()
     {
-        if (other.CompareTag("Enemy") && allowAttack)
-        {
-            other.GetComponent<EnemyBase>().TakeDamage(startDamage, endDamage, 0);
-        }
+        hitbox.GetComponent<MeleeWeaponHitbox>().allowAttack = false;
     }
 }

@@ -12,7 +12,6 @@ namespace Controllers
         public Material hitMaterial;
 
         private NavMeshAgent _agent;
-        private EnemyAttackController _enemyAttackController;
 
         private Material _originalMaterial;
 
@@ -24,7 +23,6 @@ namespace Controllers
             // See PlayerManager.cs for explanation
             _target = PlayerManager.Instance.player.transform;
             _agent = GetComponent<NavMeshAgent>();
-            _enemyAttackController = GetComponent<EnemyAttackController>();
             renderer = GetComponentInChildren<Renderer>();
 
             _originalMaterial = renderer.material;
@@ -59,12 +57,23 @@ namespace Controllers
                     return;
             }
 
-            _agent.SetDestination(_target.position);
+            if (distance < minDistance)
+            {
+                Vector3 retreatDestination = transform.position + (transform.position - targetPosition).normalized * 4;
+                _agent.SetDestination(retreatDestination);
+                Debug.Log("Retreating");
+            } else {
+                _agent.SetDestination(_target.position);
+            }
 
             if (distance <= _agent.stoppingDistance)
             {
-                // Attack the player
-                _enemyAttackController.Attack();
+                // If melee enemy
+                if (gameObject.GetComponent<EnemyMeleeAttackController>() != null)
+                {
+                    gameObject.GetComponent<EnemyMeleeAttackController>().Attack();
+                }
+
                 // Face the player
                 FaceTarget();
             }
@@ -105,7 +114,7 @@ namespace Controllers
             var direction = (_target.position - transform.position).normalized;
             var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * .5f);
         }
 
         private IEnumerator HitFeedback()

@@ -9,7 +9,7 @@ namespace Core.Enemy.StageBosses.Stage1
         private float bulletSpeed = 5f;
 
         [SerializeField]
-        private float bulletDamage = 10f;
+        private int bulletDamage = 10;
 
         private GameObject _boss;
         private GameObject _player;
@@ -25,7 +25,7 @@ namespace Core.Enemy.StageBosses.Stage1
             _startPosition = transform.position;
             _targetPosition = _player.transform.position;
 
-            transform.LookAt(new Vector3(_targetPosition.x, _startPosition.y, _targetPosition.z));
+            transform.LookAt(new Vector3(_targetPosition.x, _startPosition.y, _targetPosition.z), transform.forward);
         }
 
         private void Update()
@@ -33,18 +33,16 @@ namespace Core.Enemy.StageBosses.Stage1
             transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
         }
 
-        private void OnCollisionEnter(Collision other)
+private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
         {
-            if (other.gameObject.CompareTag("Player"))
-            {
-                var playerEntity = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity;
+            other.gameObject.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(bulletDamage, bulletDamage, 0);
 
-                // playerEntity.TakeDamage(bulletDamage, 0.2f);
-
-                Destroy(gameObject);
-            }
-
-            if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) Destroy(gameObject);
+            Destroy(gameObject);
         }
+
+        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) Destroy(gameObject);
+    }
     }
 }

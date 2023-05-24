@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Controllers.Enemy;
 using Core.Enemy.StageBosses;
 using TMPro;
 using UI.Enemy;
@@ -40,10 +41,11 @@ namespace Core.Enemy
         private int _currentStageIndex = 0;
         private int _currentSequenceIndex = 0;
 
-        [SerializeField]
         private float _currentHealth;
         private bool _startAbilitiesSequence;
         private bool _startFight;
+
+        private BossController _bossController;
 
         private void Start()
         {
@@ -57,6 +59,7 @@ namespace Core.Enemy
             _currentBossStage = bossAbilityStages[_currentStageIndex];
 
             _canvas = GetComponentInChildren<Canvas>();
+            _bossController = GetComponent<BossController>();
         }
 
         private void Update()
@@ -130,6 +133,13 @@ namespace Core.Enemy
             _currentHealth -= damage;
 
             healthBar.value = _currentHealth;
+
+            StartCoroutine(_bossController.HitFeedback());
+
+            if (_currentHealth <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
 
         public bool GetStartFight()

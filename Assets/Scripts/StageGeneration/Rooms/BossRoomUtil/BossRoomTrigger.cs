@@ -40,6 +40,9 @@ namespace StageGeneration.Rooms.BossRoomUtil
                 bossFightCanvas.enabled = true;
 
                 gameObject.SetActive(false);
+
+                // Play the boss music
+                BackgroundMusicManager.SwitchToBossBackgroundMusic();
             }
         }
 

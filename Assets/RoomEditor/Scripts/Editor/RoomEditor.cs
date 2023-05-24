@@ -239,7 +239,7 @@ namespace RoomEditor {
 	        {
 	            _builder.RoomWidth  = EditorGUILayout.IntField("Room Width", _builder.RoomWidth);
 	            _builder.RoomHeight = EditorGUILayout.IntField("Room Height", _builder.RoomHeight);
-	            GUILayout.Label("Room dimensions must follow y = 20x + 5,\nwhere x is a positive integer.");
+	            GUILayout.Label("Room dimensions must follow y = 20x + 15,\nwhere x is a positive integer.");
 	            _builder.WallHeight = EditorGUILayout.IntField("Wall Height", _builder.WallHeight);
 	            GUILayout.Label("Wall height must be a positive multiple of 5.");
 							_builder.RoomWeight = EditorGUILayout.IntField("Room Weight", _builder.RoomWeight);

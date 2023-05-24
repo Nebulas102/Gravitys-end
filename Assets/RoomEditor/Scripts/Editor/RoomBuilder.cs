@@ -16,10 +16,7 @@ namespace RoomEditor {
 	        West = 3
 	    }
 
-	    private const int FloorTileWidth = 5;
-	    private const int FloorTileHeight = 5;
-	    private const int WallTileWidth = 5;
-	    private const int WallTileHeight = 5;
+			private const int CellSize = 5;
 			private Quaternion DefaultFloorRotation = Quaternion.identity;
 	    private Quaternion DefaultWallRotation = Quaternion.identity;
 
@@ -216,9 +213,9 @@ namespace RoomEditor {
 
 	    private bool CompliantRoomDimension(int a)
 	    {
-	        // Check if a follows the rule y=20x+5, where a is y and x is an integer
+	        // Check if a follows the rule y=20x+15, where a is y and x is an integer
 	        float y = a;
-	        float x = (y - 5.0f) / 20.0f;
+	        float x = (y - 15.0f) / 20.0f;
 	        return x == Mathf.Floor(x);
 	    }
 
@@ -228,7 +225,7 @@ namespace RoomEditor {
 	    //
 	    private void PopulateFloorTiles()
 	    {
-	        _floorTiles = new FloorTile[RoomWidth / FloorTileWidth, RoomHeight / FloorTileHeight];
+	        _floorTiles = new FloorTile[RoomWidth / CellSize, RoomHeight / CellSize];
 	        for (var x = 0; x < _floorTiles.GetLength(0); x++)
 	        {
 	            for (var y = 0; y < _floorTiles.GetLength(1); y++)
@@ -322,9 +319,9 @@ namespace RoomEditor {
 	                var lCanPlaceTile = true;
 	                var lScale = _assets.FloorTileModelScales[_floorTileTypes[lType].Model];
 	                // Ensures that the tile doesn't stick out of the room
-	                if (x + lScale - 1 >= _width / FloorTileWidth)
+	                if (x + lScale - 1 >= _width / CellSize)
 	                    lCanPlaceTile = false;
-	                if (y + lScale - 1 >= _height / FloorTileHeight)
+	                if (y + lScale - 1 >= _height / CellSize)
 	                    lCanPlaceTile = false;
 	                // Ensures that the tile doesn't overlap any other custom tiles
 	                if (NewFloorTileOverlapsAnyCustomTiles(x, y, lScale))
@@ -383,19 +380,19 @@ namespace RoomEditor {
 	                // Base position ("origin" for the whole floor)
 	                var lBasePos = _room.transform.position;
 	                lBasePos -= new Vector3((float)RoomWidth / 2, 0, (float)RoomHeight / 2);
-	                lBasePos += new Vector3((float)FloorTileWidth / 2, 0, (float)FloorTileHeight / 2);
+	                lBasePos += new Vector3((float)CellSize / 2, 0, (float)CellSize / 2);
 	                float x, y;
 
 	                // Position of the frame relative to lBasePos
 	                x = ix;
 	                y = iy;
-	                var lFramePos = lBasePos + new Vector3(x * FloorTileWidth, 0, y * FloorTileHeight);
+	                var lFramePos = lBasePos + new Vector3(x * CellSize, 0, y * CellSize);
 
 	                // Position of the tile relative to lBasePos
 	                var lTile = _floorTiles[ix, iy];
 	                x = lTile.x;
 	                y = lTile.y;
-	                var lPos = lBasePos + new Vector3(x * FloorTileWidth, 0, y * FloorTileHeight);
+	                var lPos = lBasePos + new Vector3(x * CellSize, 0, y * CellSize);
 
 	                // Sets rotation and material
 	                var lTileType = _floorTileTypes[lTile.TileType];
@@ -420,10 +417,10 @@ namespace RoomEditor {
 	    // Fills _wallTiles with arrays of the correct size based on the room dimensions
 	    private void PrepareWallTileArrays()
 	    {
-	        _wallTiles[(int)WallSide.North] = new WallTile[RoomWidth / WallTileWidth, WallHeight / WallTileHeight];
-	        _wallTiles[(int)WallSide.South] = new WallTile[RoomWidth / WallTileWidth, WallHeight / WallTileHeight];
-	        _wallTiles[(int)WallSide.West]  = new WallTile[RoomHeight / WallTileWidth, WallHeight / WallTileHeight];
-	        _wallTiles[(int)WallSide.East]  = new WallTile[RoomHeight / WallTileWidth, WallHeight / WallTileHeight];
+	        _wallTiles[(int)WallSide.North] = new WallTile[RoomWidth / CellSize, WallHeight / CellSize];
+	        _wallTiles[(int)WallSide.South] = new WallTile[RoomWidth / CellSize, WallHeight / CellSize];
+	        _wallTiles[(int)WallSide.West]  = new WallTile[RoomHeight / CellSize, WallHeight / CellSize];
+	        _wallTiles[(int)WallSide.East]  = new WallTile[RoomHeight / CellSize, WallHeight / CellSize];
 	    }
 
 	    // Fills all of _wallTiles with the deafault wall tile types
@@ -502,9 +499,9 @@ namespace RoomEditor {
 	        {
 	            if (_doorPositions[i] < 0) continue;
 
-	            var x = _doorPositions[i] / WallTileWidth;
+	            var x = _doorPositions[i] / CellSize;
 	            var y = 0;
-	            _wallTiles[i][x, y] = new WallTile(x, y, i, 0, _doorDefaultMaterial, true);
+	            _wallTiles[i][x, y] = new WallTile(x, y, i, 0, -1, true);
 	        }
 	    }
 
@@ -516,12 +513,18 @@ namespace RoomEditor {
 	            for (var y = 0; y < _wallTiles[aSide].GetLength(1); y++)
 	            {
 	                // Gets the position for this slot (frame and tile)
-	                var lPos = aBasePos + x * aXOffset + y * aYOffset;
+	                Vector3 lPos = aBasePos + x * aXOffset + y * aYOffset;
 
-	                // Gets the material
-	                var lTile = _wallTiles[aSide][x, y];
-	                var lTileType = _wallTileTypes[lTile.TileType];
-	                var lMaterial = lTileType.Materials[lTile.Material];
+	                // Gets the tile
+	                WallTile lTile = _wallTiles[aSide][x, y];
+	                TileType lTileType = _wallTileTypes[lTile.TileType];
+
+									// Gets the material
+	                int lMaterial;
+									if (lTile.Material >= 0)
+									 	lMaterial = lTileType.Materials[lTile.Material];
+									else
+										lMaterial = -1;
 
 	                // Creates wall frame
 	                if (!_wallTiles[aSide][x, y].IsDoor)
@@ -551,41 +554,41 @@ namespace RoomEditor {
 	                lBasePos is the origin (0,0) on this wall
 	                lRot is the rotation for wall tiles/frames on this wall
 	            */
-	            var lBasePos = _room.transform.position;
-	            var lRot = Quaternion.identity;
-	            var lXOffset = Vector3.zero;
-	            var lYOffset = new Vector3(0, WallTileHeight, 0);
-	            var w = (float)RoomWidth / 2;
-	            var h = (float)RoomHeight / 2;
+	            Vector3 lBasePos = _room.transform.position;
+	            Quaternion lRot = Quaternion.identity;
+	            Vector3 lXOffset = Vector3.zero;
+	            Vector3 lYOffset = new Vector3(0, CellSize, 0);
+	            float w = (float)RoomWidth / 2;
+	            float h = (float)RoomHeight / 2;
 	            switch (side)
 	            {
 	                case WallSide.North:
 	                    lBasePos.x       -= w;
 	                    lBasePos.z       += h;
 	                    lRot.eulerAngles =  new Vector3(-90, 180, 0);
-	                    lXOffset         =  new Vector3(WallTileWidth, 0, 0);
-	                    lBasePos.x       += (float)WallTileWidth / 2;
+	                    lXOffset         =  new Vector3(CellSize, 0, 0);
+	                    lBasePos.x       += (float)CellSize / 2;
 	                    break;
 	                case WallSide.South:
 	                    lBasePos.x       -= w;
 	                    lBasePos.z       -= h;
 	                    lRot.eulerAngles =  new Vector3(-90, 0, 0);
-	                    lXOffset         =  new Vector3(WallTileWidth, 0, 0);
-	                    lBasePos.x       += (float)WallTileWidth / 2;
+	                    lXOffset         =  new Vector3(CellSize, 0, 0);
+	                    lBasePos.x       += (float)CellSize / 2;
 	                    break;
 	                case WallSide.West:
 	                    lBasePos.x       -= w;
 	                    lBasePos.z       -= h;
 	                    lRot.eulerAngles =  new Vector3(-90, 90, 0);
-	                    lXOffset         =  new Vector3(0, 0, WallTileWidth);
-	                    lBasePos.z       += (float)WallTileWidth / 2;
+	                    lXOffset         =  new Vector3(0, 0, CellSize);
+	                    lBasePos.z       += (float)CellSize / 2;
 	                    break;
 	                case WallSide.East:
 	                    lBasePos.x       += w;
 	                    lBasePos.z       -= h;
 	                    lRot.eulerAngles =  new Vector3(-90, 270, 0);
-	                    lXOffset         =  new Vector3(0, 0, WallTileWidth);
-	                    lBasePos.z       += (float)WallTileWidth / 2;
+	                    lXOffset         =  new Vector3(0, 0, CellSize);
+	                    lBasePos.z       += (float)CellSize / 2;
 	                    break;
 	            }
 
@@ -657,7 +660,7 @@ namespace RoomEditor {
 	        BuildWalls();
 
 	        // Builds the objects to be used by the stage generator and AI
-	        _room.CreateBlocks(_width, _height, _wallHeight, _roomWeight, _assets.DoorReplacementModel, WallTileHeight, 0.1f, _doorPositions);
+	        _room.CreateBlocks(_width, _height, _wallHeight, CellSize, _roomWeight, _assets.DoorReplacementModel, CellSize, _doorPositions);
 	    }
 
 	    /*   ==========================   */

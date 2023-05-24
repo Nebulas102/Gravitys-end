@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 951584250274489066}
   - component: {fileID: 1713624545258544147}
   - component: {fileID: 8231464708119102933}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9150711340537752698}
   - component: {fileID: 4825858785491114148}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RegularShooting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDamage: 5
-  bullet: {fileID: 7148784591487754067, guid: 5141181eba09bdb4495a24b4d8f78666, type: 3}
+  bullet: {fileID: 685390340712900621, guid: 412e614bbc1cb7f479377b5051f6121d, type: 3}
   bulletInterval: 2
   sprayAmountBullets: 3
   sprayInterval: 5
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 5552815920429485539}
   - component: {fileID: 8752759943914641993}
   - component: {fileID: 5546059350180620720}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: EnemyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6814638867787660476}
   - component: {fileID: 5287812697702844115}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Clock Shot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDamage: 5
-  bullet: {fileID: 0}
+  bullet: {fileID: 7148784591487754067, guid: 643ca2cd7d1ada2419276da2cb49bcfc, type: 3}
   radius: 3
   clockShotInterval: 0
   bossRoom: {fileID: 0}
@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 7478065289428076924}
   - component: {fileID: 6027007116294292627}
   - component: {fileID: 7891677649469897255}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -404,7 +404,9 @@ GameObject:
   - component: {fileID: 6620003225802983138}
   - component: {fileID: 8828537752519385422}
   - component: {fileID: 6494643800520604456}
-  m_Layer: 0
+  - component: {fileID: 8949265210913366691}
+  - component: {fileID: 5027864339115608838}
+  m_Layer: 3
   m_Name: Boss1
   m_TagString: Boss
   m_Icon: {fileID: 0}
@@ -448,11 +450,18 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   bossNameBar: {fileID: 0}
   bossAbilityStages:
-  - bossAbility: {fileID: 4825858785491114148}
-    amountOfTimes: 3
-  - bossAbility: {fileID: 5287812697702844115}
-    amountOfTimes: 1
+  - bossAbilitySequences:
+    - bossAbility: {fileID: 4825858785491114148}
+      amountOfTimes: 3
+    healthStageActivation: 100
+  - bossAbilitySequences:
+    - bossAbility: {fileID: 4825858785491114148}
+      amountOfTimes: 2
+    - bossAbility: {fileID: 5287812697702844115}
+      amountOfTimes: 2
+    healthStageActivation: 70
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}
+  _currentHealth: 0
 --- !u!114 &8828537752519385422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf76ff9de9c3c141b0912d6f16897c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 0
+  rotationSpeed: 15
   hitMaterial: {fileID: 2100000, guid: 03a535ea21aad5f4d96fe054fad5306a, type: 2}
 --- !u!195 &6494643800520604456
 NavMeshAgent:
@@ -489,3 +498,32 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &8949265210913366691
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6575595425671537587}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.60971165, y: 1.6412765, z: 0.9999999}
+  m_Center: {x: 0.01178085, y: 0.7121249, z: 0}
+--- !u!54 &5027864339115608838
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6575595425671537587}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

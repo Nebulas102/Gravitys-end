@@ -36,24 +36,12 @@ namespace Controllers.Enemy
         {
             if (!_boss.GetStartFight()) return;
 
-            var position = _target.position;
-            var distance = Vector3.Distance(position, transform.position);
+            var target = _target.position;
+            var distance = Vector3.Distance(target, transform.position);
 
-            _agent.SetDestination(position);
+            _agent.SetDestination(target);
 
             if (distance <= _agent.stoppingDistance) FaceTarget();
-
-            //Test boss hit
-            // if (Input.GetKeyDown(KeyCode.H))
-            // {
-            //     StartCoroutine(HitFeedback());
-            // }
-        }
-
-        private void OnCollisionEnter(Collision other)
-        {
-            //Hit on weapon or some logic needs to be implemented
-            if (other.gameObject.CompareTag("Player")) StartCoroutine(HitFeedback());
         }
 
         private void FaceTarget()
@@ -63,10 +51,10 @@ namespace Controllers.Enemy
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
 
-        private IEnumerator HitFeedback()
+        public IEnumerator HitFeedback()
         {
             _renderer.material = hitMaterial;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.5f);
             _renderer.material = _originalMaterial;
         }
     }

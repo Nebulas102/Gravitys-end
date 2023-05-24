@@ -192,7 +192,7 @@ namespace StageGeneration.Stage
 
             // Add a NavMeshBuildSource for each mesh filter
             foreach (var filter in meshFilters)
-                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" && obj.activeSelf)
+                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" || obj.tag == "Obstacle" && obj.activeSelf)
                 {
                     var source = new NavMeshBuildSource
                     {

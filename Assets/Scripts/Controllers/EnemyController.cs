@@ -49,6 +49,9 @@ namespace Controllers
             if (distance > lookRadius)
                 return;
 
+            // Face the player
+            FaceTarget();
+
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,
                     LayerMask.GetMask("Entity")))
@@ -72,9 +75,6 @@ namespace Controllers
                 {
                     gameObject.GetComponent<EnemyMeleeAttackController>().Attack();
                 }
-
-                // Face the player
-                FaceTarget();
             }
 
             foreach (var enemy in enemies)

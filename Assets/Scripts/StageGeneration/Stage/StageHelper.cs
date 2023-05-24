@@ -96,7 +96,8 @@ namespace StageGeneration.Stage
 
         public static RoomDirections RandomDirectionFromRoom(GameObject room)
         {
-            var openDirections = room.GetComponent<Room>().GetDoors().Select(d => d.GetComponent<Door>().GetDirection()).ToList();
+            var openDirections = room.GetComponent<Room>().GetDoors().Where(d => d.GetComponent<Door>().hasNeighbour != false)
+                .Select(d => d.GetComponent<Door>().GetDirection()).ToList();
 
             return (RoomDirections)Random.Range(0, openDirections.Count);
         }

@@ -88,7 +88,7 @@ namespace StageGeneration.Rooms
             var openDirections = Enum.GetValues(typeof(StageHelper.RoomDirections)).Cast<StageHelper.RoomDirections>()
                 .Where(direction => direction != StageHelper.RoomDirections.UNDEFINED).ToList();
 
-            var doorDirection = StageHelper.RandomDirection();
+            var doorDirection = StageHelper.RandomDirectionFromRoom(previousRoom);
 
             openDirections.Remove(doorDirection);
 

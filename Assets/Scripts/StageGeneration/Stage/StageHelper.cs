@@ -94,6 +94,13 @@ namespace StageGeneration.Stage
             return (RoomDirections)Random.Range(0, Enum.GetValues(typeof(RoomDirections)).Length);
         }
 
+        public static RoomDirections RandomDirectionFromRoom(GameObject room)
+        {
+            var openDirections = room.GetComponent<Room>().GetDoors().Select(d => d.GetComponent<Door>().GetDirection()).ToList();
+
+            return (RoomDirections)Random.Range(0, openDirections.Count);
+        }
+
         public static RoomDirections RandomDirection(List<RoomDirections> directions)
         {
             directions.Remove(RoomDirections.UNDEFINED);

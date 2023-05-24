@@ -1,19 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Core
 {
     public class Timer : MonoBehaviour
     {
-        public float time = 1800;
-        public float dangerZone = 600;
-        public bool timerIsRunning = false;
-        public Text display;
+        [SerializeField] float time = 1800;
+        [SerializeField] float dangerZone = 600;
+        
+        [SerializeField] TextMeshProUGUI display;
+
+        bool timerIsRunning = false;
 
         private void Start()
         {
-            // Starts the timer
-            timerIsRunning = true;
+            StartTimer();
         }
 
         void Update()
@@ -29,10 +31,17 @@ namespace Core
                 else
                 {
                     time = 0;
-                    Debug.Log("Time has run out!");
+                    DisplayTime(time);
                     timerIsRunning = false;
+                    GameOver.Instance.PlayerGameOver();
                 }
             }
+        }
+
+        public void StartTimer()
+        {
+            // Starts the timer
+            timerIsRunning = true;
         }
 
         void DisplayTime(float ttd)

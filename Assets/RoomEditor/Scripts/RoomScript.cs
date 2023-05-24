@@ -89,24 +89,26 @@ namespace RoomEditor {
 			return true;
 		}
 
-		public void CreateBlocks(float aWidth, float aHeight, float aWallHeight, int aRoomWeight, GameObject aDoorReplacementModel, float aDoorCellSize, float aThickness,
-			int[] aDoorPositions)
+		public void CreateBlocks(float aWidth, float aHeight, float aWallHeight, float aCellSize, int aRoomWeight,
+			GameObject aDoorReplacementModel, float aThickness, int[] aDoorPositions)
 		{
 			// Creates floor block
 			var lPos = transform.position + new Vector3(0.0f, 0.0f - aThickness / 2.0f, 0.0f);
-			var lScale = new Vector3(aWidth, aThickness, aHeight);
+			var lScale = new Vector3(aWidth + 2*aCellSize, aThickness, aHeight + 2*aCellSize);
 			CreateBlock(Assets.FloorBlock, lPos, lScale);
 
 			// Creates wall blocks
 			for (int i = 0; i < 4; i++) {
-				CreateWallBlocks(i, aWidth, aHeight, aWallHeight, aDoorCellSize, aThickness, aDoorPositions[i]);
+				int lDoorPos = aDoorPositions[i];
+				if (lDoorPos >= 0) lDoorPos += (int)aCellSize;
+				CreateWallBlocks(i, aWidth + 2*aCellSize, aHeight + 2*aCellSize, aWallHeight, aCellSize, aThickness, lDoorPos);
 			}
 
 			// Adds room script to room object
 			StageGeneration.Rooms.RoomTypes.StandardRoom lRoom = _parent.gameObject.AddComponent<StageGeneration.Rooms.RoomTypes.StandardRoom>();
-			lRoom.sizeX = aWidth;
+			lRoom.sizeX = aWidth + 2*aCellSize;
 			lRoom.sizeY = aWallHeight;
-			lRoom.sizeZ = aHeight;
+			lRoom.sizeZ = aHeight + 2*aCellSize;
 			lRoom.doors = _doorBlocks;
 			lRoom.weight = aRoomWeight;
 			lRoom.doorReplacement = aDoorReplacementModel;
@@ -292,8 +294,11 @@ namespace RoomEditor {
 	        int aMaterial)
 	    {
 	        var lObject = Instantiate(aModel, aPosition, aRotation, aParent);
-	        var lMaterial = Assets.Materials[aMaterial];
-	        lObject.GetComponent<Renderer>().material = lMaterial;
+					if (aMaterial >= 0)
+					{
+	            var lMaterial = Assets.Materials[aMaterial];
+	            lObject.GetComponent<Renderer>().material = lMaterial;
+					}
 	    }
 	}
 }

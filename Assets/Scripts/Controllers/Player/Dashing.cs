@@ -1,5 +1,6 @@
 using System.Collections;
 using Core.UI.Inventory;
+using UI;
 using UnityEngine;
 
 namespace Controllers.Player
@@ -48,7 +49,7 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            if (Inventory.Instance.inventoryOpened) {
+            if (OverlayBehaviour.instance.inventoryOpened) {
                 return;
             }
             if (!isDashing) HandleDash();

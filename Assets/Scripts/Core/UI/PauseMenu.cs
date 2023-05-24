@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Core.UI.Inventory;
-
+using UI;
 
 namespace Core.UI
 {
@@ -33,7 +33,7 @@ namespace Core.UI
             {
                 //This doesn't work, the game doesn't use Time.DeltaTime for enemy behaviour and such so nothing actually stops.
                 Time.timeScale = 0f;
-                Inventory.Inventory.Instance.inventoryOpened = false;
+                OverlayBehaviour.instance.inventoryOpened = false;
             }
             else
             {

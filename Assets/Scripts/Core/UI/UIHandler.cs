@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.UI;
 using Core.UI.Inventory;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -28,7 +29,7 @@ public class UIHandler : MonoBehaviour
     void Update()
     {
         // if the inventory is opened and it is not yet selected then select the first button
-        if (Inventory.Instance.inventoryOpened && !inventorySelected)
+        if (OverlayBehaviour.instance.inventoryOpened && !inventorySelected)
         {
             m_EventSystem.SetSelectedGameObject(inventoryMenuFirstSelected);
             inventorySelected = true;
@@ -46,7 +47,7 @@ public class UIHandler : MonoBehaviour
         if (!PauseMenu.instance.isPaused) {
             pauseMenuSelected = false;
         }
-        if (!Inventory.Instance.inventoryOpened) {
+        if (!OverlayBehaviour.instance.inventoryOpened) {
             inventorySelected = false;
         }
 

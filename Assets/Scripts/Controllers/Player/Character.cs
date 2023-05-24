@@ -1,4 +1,5 @@
 using Core.UI.Inventory;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -60,7 +61,7 @@ namespace Controllers.Player
 
         private void Update()
         {
-            if (Inventory.Instance.inventoryOpened || DialogueManager.Instance.dialogueActive) {
+            if (OverlayBehaviour.instance.inventoryOpened || DialogueManager.Instance.dialogueActive) {
                 movementSM.ChangeState(standing);
             }
             else

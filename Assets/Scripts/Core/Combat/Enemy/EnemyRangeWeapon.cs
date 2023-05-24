@@ -82,6 +82,7 @@ public class EnemyRangeWeapon : MonoBehaviour
         timeSinceLastShot += Time.deltaTime;
     }
 
+    //optimize
     private void FixedUpdate()
     {
         if (Physics.Raycast(bulletOutput.transform.position, transform.TransformDirection(Vector3.back), out hit, maxDistance))
@@ -90,8 +91,6 @@ public class EnemyRangeWeapon : MonoBehaviour
             {
                 Shoot();
             }
-
-            Debug.DrawRay(bulletOutput.transform.position, transform.TransformDirection(Vector3.back) * hit.distance, Color.yellow);
         }
     }
 

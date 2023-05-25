@@ -146,9 +146,9 @@ namespace StageGeneration.Stage
 
                 Destroy(_door);
 
-                var wall = Instantiate(room.GetComponent<Room>().GetDoorReplacement(), doorPos, doorRot);
+                //var wall = Instantiate(room.GetComponent<Room>().GetDoorReplacement(), doorPos, doorRot);
 
-                wall.transform.parent = room.transform;
+                //wall.transform.parent = room.transform;
             }
         }
 

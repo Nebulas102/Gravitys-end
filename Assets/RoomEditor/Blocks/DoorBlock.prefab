@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3635177375949994594}
   - component: {fileID: 3635177375949994595}
   - component: {fileID: -6634433759250106084}
+  - component: {fileID: 473117584069182078}
   m_Layer: 0
   m_Name: DoorBlock
   m_TagString: Door
@@ -115,3 +116,16 @@ MonoBehaviour:
   hasNeighbour: 0
   cell: {fileID: 0}
   direction: 0
+--- !u!114 &473117584069182078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3635177375949994596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ecd1883c348842c198d17d8a816c704, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WallBlock: {fileID: 3256389696473021489, guid: bd3faffee6d2743769c4ed7cce8c2432, type: 3}

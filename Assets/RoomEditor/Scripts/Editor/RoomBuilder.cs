@@ -532,7 +532,7 @@ namespace RoomEditor {
 
 	                // Creates wall tile
 	                if (lTile.IsDoor)
-	                    _room.CreateDoor(lPos, aRot, lMaterial);
+	                    _room.CreateDoor(lPos, aRot, lMaterial, aSide);
 	                else
 	                    _room.CreateWallTile(lTileType.Model, lPos, aRot, lMaterial);
 	            }

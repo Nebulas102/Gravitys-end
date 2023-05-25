@@ -35,7 +35,7 @@ public class ObjectiveSystem : MonoBehaviour
         objectives.Add(objective1);
 
         Objective objective2 = new Objective();
-        objective2.name = "Kill 30 enemies";
+        objective2.name = "Kill 50 enemies";
         objective2.type = ObjectiveType.DefeatEnemy;
         objective2.completed = false;
         objective2.color = Color.white;
@@ -138,11 +138,16 @@ public class ObjectiveSystem : MonoBehaviour
     void HandleEnemyKilled(EnemyBase enemy)
     {
         enemiesKilledCount++;
-        if (enemiesKilledCount == 30)
+        if (enemiesKilledCount == 50)
         {
             // Mark the "Collect the Key" objective as completed
-            FindObjectOfType<ObjectiveSystem>().CompleteObjective("Kill 30 enemies");
+            FindObjectOfType<ObjectiveSystem>().CompleteObjective("Kill 50 enemies");
         }
+    }
+
+    public static void HandleBossKilled() {
+        // Mark the "Collect the Key" objective as completed
+        FindObjectOfType<ObjectiveSystem>().CompleteObjective("Defeat the Boss");
     }
 
     public int getCompletedObjectives()

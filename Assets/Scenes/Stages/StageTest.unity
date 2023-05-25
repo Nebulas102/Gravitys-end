@@ -1831,11 +1831,11 @@ RectTransform:
   m_Children:
   - {fileID: 1479392940}
   m_Father: {fileID: 1453812605}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 796, y: 458}
+  m_AnchoredPosition: {x: -834, y: -455}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &990391576
@@ -3033,6 +3033,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339831059}
   m_CullTransparentMesh: 1
+--- !u!114 &1363750003 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8297585340468739377, guid: 4a22256b156019143b2ec73bc3e6caa9, type: 3}
+  m_PrefabInstance: {fileID: 8297585341295595842}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1401048208
 GameObject:
   m_ObjectHideFlags: 0
@@ -3043,7 +3054,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1401048209}
   - component: {fileID: 1401048211}
-  - component: {fileID: 1401048210}
+  - component: {fileID: 1401048212}
   m_Layer: 5
   m_Name: ObjectivesText
   m_TagString: Untagged
@@ -3071,19 +3082,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 33}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1401048210
+--- !u!222 &1401048211
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1401048208}
+  m_CullTransparentMesh: 1
+--- !u!114 &1401048212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1401048208}
---- !u!114 &1363750003 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8297585340468739377, guid: 4a22256b156019143b2ec73bc3e6caa9, type: 3}
-  m_PrefabInstance: {fileID: 8297585341295595842}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -3106,8 +3119,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3132,7 +3145,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -3160,20 +3173,12 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -353.21634, y: -47.67871, z: -47.738136, w: -7.9079094}
+  m_margin: {x: -353.21634, y: -47.67871, z: -47.738136, w: -620.06195}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1401048211
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1401048208}
-  m_CullTransparentMesh: 1
 --- !u!1 &1435317731
 GameObject:
   m_ObjectHideFlags: 0
@@ -3539,8 +3544,8 @@ RectTransform:
   - {fileID: 24510197}
   - {fileID: 1880259735}
   - {fileID: 1531415990}
-  - {fileID: 990391575}
   - {fileID: 44549557}
+  - {fileID: 990391575}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4814,7 +4819,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 631c59308e0e43b4793ce141da9645f4, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.75
+  m_Volume: 0.069
   m_Pitch: 1
   Loop: 1
   Mute: 0

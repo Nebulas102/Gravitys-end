@@ -38,6 +38,11 @@ namespace Core.Enemy
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                TakeDamage(1000, 2000, 0f);
+            }
+
             if (_currentHealth <= 0)
             {
                 Destroy(gameObject);

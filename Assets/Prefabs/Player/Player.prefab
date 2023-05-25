@@ -140,7 +140,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BackGroundColor: {r: 0.08627451, g: 0.10980392, b: 0.10980392, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -422,6 +422,7 @@ GameObject:
   - component: {fileID: 99395234236917975}
   - component: {fileID: 4482070294439889658}
   - component: {fileID: 8640217738828214446}
+  - component: {fileID: 2423374132334498903}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -436,7 +437,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781004467383644964}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.54, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -598,6 +599,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 1503709254792651134}
   sheathHolder: {fileID: 9153746418663765294}
+--- !u!114 &2423374132334498903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781004467383644964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 535c045600c2a6349ae848dd5a8281da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectivesHolder: {fileID: 6814322269142151893, guid: d312d53ebb9735940b5ac231f3ef7b92, type: 3}
   currentWeaponInHand: {fileID: 0}
 --- !u!1 &872677986746474466
 GameObject:

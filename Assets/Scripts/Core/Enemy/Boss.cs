@@ -138,6 +138,7 @@ namespace Core.Enemy
 
             if (_currentHealth <= 0)
             {
+                ObjectiveSystem.HandleBossKilled();
                 Destroy(gameObject);
             }
         }

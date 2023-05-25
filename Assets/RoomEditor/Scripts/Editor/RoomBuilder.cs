@@ -660,7 +660,7 @@ namespace RoomEditor {
 	        BuildWalls();
 
 	        // Builds the objects to be used by the stage generator and AI
-	        _room.CreateBlocks(_width, _height, _wallHeight, CellSize, _roomWeight, _assets.DoorReplacementModel, CellSize, _doorPositions);
+	        _room.FinishRoom(_width, _height, _wallHeight, CellSize, _doorPositions, _roomWeight);
 	    }
 
 	    /*   ==========================   */

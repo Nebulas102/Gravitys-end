@@ -36,48 +36,48 @@ namespace RoomEditor {
 		// Door model objects
 		private GameObject[] _doorModels = new GameObject[4];
 
-	    public void CreateParents()
-	    {
-	        // Creates the parent object for all objects
-	        _parent = new GameObject("Room").transform;
-	        _parent.SetParent(transform);
+		public void CreateParents()
+		{
+			// Creates the parent object for all objects
+			_parent = new GameObject("Room").transform;
+			_parent.SetParent(transform);
 
-	        // Creates the parent object for all blocks
-	        _parentBlocks = new GameObject("Blocks").transform;
-	        _parentBlocks.SetParent(_parent);
+			// Creates the parent object for all blocks
+			_parentBlocks = new GameObject("Blocks").transform;
+			_parentBlocks.SetParent(_parent);
 
-	        // Creates the parent object for all 3D models
-	        _parentModels = new GameObject("Room Models").transform;
-	        _parentModels.SetParent(_parent);
+			// Creates the parent object for all 3D models
+			_parentModels = new GameObject("Room Models").transform;
+			_parentModels.SetParent(_parent);
 
-	        // Creates parent object for all floors
-	        _parentFloor = new GameObject("Floors").transform;
-	        _parentFloor.SetParent(_parentModels);
+			// Creates parent object for all floors
+			_parentFloor = new GameObject("Floors").transform;
+			_parentFloor.SetParent(_parentModels);
 
-	        // Creates parent object for floor frames
-	        _parentFloorFrames = new GameObject("Frames").transform;
-	        _parentFloorFrames.SetParent(_parentFloor);
+			// Creates parent object for floor frames
+			_parentFloorFrames = new GameObject("Frames").transform;
+			_parentFloorFrames.SetParent(_parentFloor);
 
-	        // Creates parent object for floor tiles
-	        _parentFloorTiles = new GameObject("Tiles").transform;
-	        _parentFloorTiles.SetParent(_parentFloor);
+			// Creates parent object for floor tiles
+			_parentFloorTiles = new GameObject("Tiles").transform;
+			_parentFloorTiles.SetParent(_parentFloor);
 
-	        // Creates parent object for all walls
-	        _parentWalls = new GameObject("Walls").transform;
-	        _parentWalls.SetParent(_parentModels);
+			// Creates parent object for all walls
+			_parentWalls = new GameObject("Walls").transform;
+			_parentWalls.SetParent(_parentModels);
 
-	        // Creates parent object for wall frames
-	        _parentWallFrames = new GameObject("Frames").transform;
-	        _parentWallFrames.SetParent(_parentWalls);
+			// Creates parent object for wall frames
+			_parentWallFrames = new GameObject("Frames").transform;
+			_parentWallFrames.SetParent(_parentWalls);
 
-	        // Creates parent object for wall tiles
-	        _parentWallTiles = new GameObject("Tiles").transform;
-	        _parentWallTiles.SetParent(_parentWalls);
+			// Creates parent object for wall tiles
+			_parentWallTiles = new GameObject("Tiles").transform;
+			_parentWallTiles.SetParent(_parentWalls);
 
-	        // Creates parent object for doors
-	        _parentDoors = new GameObject("Doors").transform;
-	        _parentDoors.SetParent(_parentWalls);
-	    }
+			// Creates parent object for doors
+			_parentDoors = new GameObject("Doors").transform;
+			_parentDoors.SetParent(_parentWalls);
+		}
 
 		public bool ClearAllObjects()
 		{
@@ -92,95 +92,101 @@ namespace RoomEditor {
 			return true;
 		}
 
-		public void CreateBlocks(float aWidth, float aHeight, float aWallHeight, float aCellSize, int aRoomWeight,
-			GameObject aDoorReplacementModel, float aThickness, int[] aDoorPositions)
+		public void FinishRoom(float aWidth, float aHeight, float aWallHeight, float aCellSize, int[] aDoorPositions,
+			int aRoomWeight)
 		{
 			// Creates floor block
-			var lPos = transform.position + new Vector3(0.0f, 0.0f - aThickness / 2.0f, 0.0f);
-			var lScale = new Vector3(aWidth + 2*aCellSize, aThickness, aHeight + 2*aCellSize);
-			CreateBlock(Assets.FloorBlock, lPos, lScale);
+			CreateFloorBlock(aWidth, aHeight, aCellSize);
 
 			// Creates wall blocks
-			for (int i = 0; i < 4; i++) {
-				int lDoorPos = aDoorPositions[i];
-				if (lDoorPos >= 0) lDoorPos += (int)aCellSize;
-				CreateWallBlocks(i, aWidth + 2*aCellSize, aHeight + 2*aCellSize, aWallHeight, aCellSize, aThickness, lDoorPos);
-			}
+			CreateAllWallBlocks(aWidth, aHeight, aCellSize, aWallHeight, aDoorPositions);
 
+			// Adds scripts to the Room object
+			AddRoomScript(aWidth, aHeight, aWallHeight, aCellSize, aRoomWeight);
+			AddEnemyGenScript();
+			AddChestSpawnerScript();
+			AddFogOfWarScript(aWidth, aHeight, aWallHeight, aCellSize);
+			AddBoxCollider(aWidth, aHeight, aWallHeight, aCellSize);
+		}
+
+		/*  ===  Adding Scripts/Components  ===  */
+
+		private void AddRoomScript(float aWidth, float aHeight, float aWallHeight, float aCellSize, int aRoomWeight)
+		{
 			// Adds room script to room object
 			StageGeneration.Rooms.RoomTypes.StandardRoom lRoom = _parent.gameObject.AddComponent<StageGeneration.Rooms.RoomTypes.StandardRoom>();
+
+			// Sets the values for that room script
 			lRoom.sizeX = aWidth + 2*aCellSize;
 			lRoom.sizeY = aWallHeight;
 			lRoom.sizeZ = aHeight + 2*aCellSize;
 			lRoom.doors = _doorBlocks;
 			lRoom.weight = aRoomWeight;
-			lRoom.doorReplacement = aDoorReplacementModel;
 		}
 
-		private void CreateWallSingleBlock(int aSide, float aMin, float aMax, float aHeight,
-			float aThickness, Vector3 aWallSideOrigin, float aVerticalOffset)
+		private void AddEnemyGenScript()
 		{
-			// If wall block has no width, don't create the block
-			float lWidth = aMax - aMin;
-			if (lWidth <= 0.0f) return;
-
-			// Calculates the scale and position of the wall block
-			Vector3 lScale = new Vector3();
-			Vector3 lRelPos = new Vector3();
-			switch (aSide) {
-				case NORTH:
-				case SOUTH:
-					lScale = new Vector3(lWidth, aHeight, aThickness);
-					lRelPos = new Vector3(aMin + lWidth / 2.0f, aVerticalOffset + aHeight / 2.0f, 0.0f);
-					break;
-				case WEST:
-				case EAST:
-					lScale = new Vector3(aThickness, aHeight, lWidth);
-					lRelPos = new Vector3(0.0f, aVerticalOffset + aHeight / 2.0f, aMin + lWidth / 2.0f);
-					break;
-			}
-			Vector3 lPos = aWallSideOrigin + lRelPos;
-
-			// Creates the wall block
-			CreateBlock(Assets.WallBlock, lPos, lScale);
+			_parent.gameObject.AddComponent<Core.EnemyGeneration>();
 		}
 
-		private void CreateDoorBlock(int aSide, float aCellSize, float aDoorPosition,
-			float aThickness, Vector3 aWallSideOrigin, float aRoomWidth, float aRoomHeight)
+		private void AddChestSpawnerScript()
 		{
-			// Calculates the scale and position for this door block
-			Vector3 lScale = new Vector3();
-			Vector3 lRelPos = new Vector3();
-			switch (aSide) {
-				case NORTH:
-				case SOUTH:
-					lScale = new Vector3(aCellSize, aCellSize, aThickness);
-					lRelPos = new Vector3(aDoorPosition + aCellSize / 2.0f, aCellSize / 2.0f, 0.0f);
-					break;
-				case WEST:
-				case EAST:
-					lScale = new Vector3(aThickness, aCellSize, aCellSize);
-					lRelPos = new Vector3(0.0f, aCellSize / 2.0f, aDoorPosition + aCellSize / 2.0f);
-					break;
-			}
-			Vector3 lPos = aWallSideOrigin + lRelPos;
+			// Adds chest spawner script to room object
+			Core.Chest.ChestSpawner lChestSpawnScript = _parent.gameObject.AddComponent<Core.Chest.ChestSpawner>();
 
-			// Creates the door block GameObject
-			GameObject lObject = CreateBlock(Assets.DoorBlock, lPos, lScale);
+			// Sets the values for that chest spawner script
+			lChestSpawnScript.chest = Assets.DefaultChest;
+		}
 
-			// Links the door model to this door block
-			lObject.GetComponent<DoorBlock>().DoorModelObject = _doorModels[aSide];
+		private void AddFogOfWarScript(float aWidth, float aHeight, float aWallHeight, float aCellSize)
+		{
+			// Adds fog of war script to room object
+			StageGeneration.FogOfWar lFogOfWarScript = _parent.gameObject.AddComponent<StageGeneration.FogOfWar>();
 
-			// Adds the door block GameObject to the list for the room script later
-			_doorBlocks.Add(lObject);
+			// Creates the fog of war mask
+			Vector3 lPos = _parentBlocks.position;
+			lPos.y += aWallHeight + 0.1f;
+			GameObject lFogObject = Instantiate(Assets.FogOfWarPlane, lPos, Quaternion.identity, _parentBlocks);
 
-			// Creates and sets the door script on this door block
-			StageGeneration.Rooms.Door lDoor = lObject.GetComponent<StageGeneration.Rooms.Door>();
+			// Sets the fog of war mask scale
+			float lFogWidth = (aWidth + aCellSize*2) * 0.1f;
+			float lFogHeight = (aHeight + aCellSize*2) * 0.1f;
+			Vector3 lScale = new Vector3(lFogWidth, 1.0f, lFogHeight);
+			lFogObject.transform.localScale = lScale;
+
+			// Sets the values for that fog of war script
+			lFogOfWarScript.fog = lFogObject.transform;
+			lFogOfWarScript.transparent = Assets.TransparentMaterial;
+		}
+
+		private void AddBoxCollider(float aWidth, float aHeight, float aWallHeight, float aCellSize)
+		{
+			// Adds the collider to the room object
+			BoxCollider lCollider = _parent.gameObject.AddComponent<BoxCollider>();
+
+			// Sets the scale of the collider
+			float lWidth = aWidth + aCellSize;
+			float lHeight = aHeight + aCellSize;
+			Vector3 lScale = new Vector3(lWidth, aWallHeight, lHeight);
+			lCollider.size = lScale;
+
+			// Sets the position of the collider
+			Vector3 lPos = new Vector3(0.0f, aWallHeight / 2.0f, 0.0f);
+			lCollider.center = lPos;
+
+			// Makes the collider a trigger
+			lCollider.isTrigger = true;
+		}
+
+		private void AddDoorBlockScript(GameObject aDoorBlockObject, Vector3 aPos, int aSide,
+			float aRoomWidth, float aRoomHeight, float aCellSize)
+		{
+			StageGeneration.Rooms.Door lDoor = aDoorBlockObject.GetComponent<StageGeneration.Rooms.Door>();
 			if (lDoor != null)
 			{
 				// Sets the values for the door script
-				lDoor.roomPosXOffset = (int)((lPos.x + aRoomWidth / 2.0f) / aCellSize);
-				lDoor.roomPosZOffset = (int)((lPos.z + aRoomHeight / 2.0f) / aCellSize);
+				lDoor.roomPosXOffset = (int)((aPos.x + aRoomWidth / 2.0f) / aCellSize);
+				lDoor.roomPosZOffset = (int)((aPos.z + aRoomHeight / 2.0f) / aCellSize);
 				switch (aSide) {
 					case NORTH:
 						lDoor.direction = StageGeneration.Stage.StageHelper.RoomDirections.TOP;
@@ -202,8 +208,27 @@ namespace RoomEditor {
 			}
 		}
 
-		private void CreateWallBlocks(int aSide, float aWidth, float aHeight, float aWallHeight, float aCellSize,
-			float aThickness, float aDoorPosition)
+		/*  ===  Creating Blocks  ===  */
+
+		private void CreateFloorBlock(float aWidth, float aHeight, float aCellSize)
+		{
+			Vector3 lPos = transform.position + new Vector3(0.0f, 0.0f - aCellSize / 2.0f, 0.0f);
+			Vector3 lScale = new Vector3(aWidth + 2*aCellSize, aCellSize, aHeight + 2*aCellSize);
+			CreateBlock(Assets.FloorBlock, lPos, lScale);
+		}
+
+		private void CreateAllWallBlocks(float aWidth, float aHeight, float aCellSize, float aWallHeight,
+			int[] aDoorPositions)
+		{
+			for (int i = 0; i < 4; i++) {
+				int lDoorPos = aDoorPositions[i];
+				if (lDoorPos >= 0) lDoorPos += (int)aCellSize;
+				CreateWallBlockSide(i, aWidth + 2*aCellSize, aHeight + 2*aCellSize, aWallHeight, aCellSize, lDoorPos);
+			}
+		}
+
+		private void CreateWallBlockSide(int aSide, float aWidth, float aHeight, float aWallHeight, float aCellSize,
+			float aDoorPosition)
 		{
 			float lWallLength = 0.0f;
 
@@ -215,24 +240,24 @@ namespace RoomEditor {
 					lWallLength = aWidth;
 
 					lWallSideOrigin.x = -aWidth / 2.0f;
-					lWallSideOrigin.z = aHeight / 2.0f - aThickness / 2.0f;
+					lWallSideOrigin.z = aHeight / 2.0f - aCellSize / 2.0f;
 					break;
 				case SOUTH:
 					lWallLength = aWidth;
 
 					lWallSideOrigin.x = -aWidth / 2.0f;
-					lWallSideOrigin.z = -(aHeight / 2.0f - aThickness / 2.0f);
+					lWallSideOrigin.z = -(aHeight / 2.0f - aCellSize / 2.0f);
 					break;
 				case WEST:
 					lWallLength = aHeight;
 
-					lWallSideOrigin.x = -(aWidth / 2.0f - aThickness / 2.0f);
+					lWallSideOrigin.x = -(aWidth / 2.0f - aCellSize / 2.0f);
 					lWallSideOrigin.z = -aHeight / 2.0f;
 					break;
 				case EAST:
 					lWallLength = aHeight;
 
-					lWallSideOrigin.x = aWidth / 2.0f - aThickness / 2.0f;
+					lWallSideOrigin.x = aWidth / 2.0f - aCellSize / 2.0f;
 					lWallSideOrigin.z = -aHeight / 2.0f;
 					break;
 			}
@@ -240,55 +265,118 @@ namespace RoomEditor {
 			if (aDoorPosition < 0.0f)
 			{
 				// Creates the entire wall in one block (if there is no door)
-				CreateWallSingleBlock(aSide, 0.0f, lWallLength, aWallHeight, aThickness, lWallSideOrigin, 0.0f);
+				CreateWallSingleBlock(aSide, 0.0f, lWallLength, aWallHeight, aCellSize, lWallSideOrigin, 0.0f);
 			}
 			else
 			{
 				// Creates bottom layer of wall (with gap for door)
-				CreateWallSingleBlock(aSide, 0.0f, aDoorPosition, aCellSize, aThickness, lWallSideOrigin, 0.0f);
-				CreateWallSingleBlock(aSide, aDoorPosition + aCellSize, lWallLength, aCellSize, aThickness, lWallSideOrigin, 0.0f);
+				CreateWallSingleBlock(aSide, 0.0f, aDoorPosition, aCellSize, aCellSize, lWallSideOrigin, 0.0f);
+				CreateWallSingleBlock(aSide, aDoorPosition + aCellSize, lWallLength, aCellSize, aCellSize, lWallSideOrigin, 0.0f);
 
 				// Creates door block
-				CreateDoorBlock(aSide, aCellSize, aDoorPosition, aThickness, lWallSideOrigin, aWidth, aHeight);
+				CreateDoorBlock(aSide, aCellSize, aDoorPosition, lWallSideOrigin, aWidth, aHeight);
 
 				// Creates top layer of wall (if there was a door and the wall is taller than the door)
 				if (aWallHeight > aCellSize)
 				{
-					CreateWallSingleBlock(aSide, 0.0f, lWallLength, aWallHeight - aCellSize, aThickness, lWallSideOrigin, aCellSize);
+					CreateWallSingleBlock(aSide, 0.0f, lWallLength, aWallHeight - aCellSize, aCellSize, lWallSideOrigin, aCellSize);
 				}
 			}
 		}
 
-	    private GameObject CreateBlock(GameObject aModel, Vector3 aPosition, Vector3 aScale)
-	    {
-	        GameObject lObject = Instantiate(aModel, aPosition, Quaternion.identity, _parentBlocks);
-	        lObject.transform.localScale = aScale;
-					return lObject;
-	    }
+		private void CreateWallSingleBlock(int aSide, float aMin, float aMax, float aHeight, float aCellSize,
+			Vector3 aWallSideOrigin, float aVerticalOffset)
+		{
+			// If wall block has no width, don't create the block
+			float lWidth = aMax - aMin;
+			if (lWidth <= 0.0f) return;
 
-	    public void CreateFloorFrame(Vector3 aPosition, Quaternion aRotation, int aMaterial)
-	    {
-	        var lModel = Assets.FloorFrameModel;
-	        CreateObject(_parentFloorFrames, lModel, aPosition, aRotation, aMaterial);
-	    }
+			// Calculates the scale and position of the wall block
+			Vector3 lScale = new Vector3();
+			Vector3 lRelPos = new Vector3();
+			switch (aSide) {
+				case NORTH:
+				case SOUTH:
+					lScale = new Vector3(lWidth, aHeight, aCellSize);
+					lRelPos = new Vector3(aMin + lWidth / 2.0f, aVerticalOffset + aHeight / 2.0f, 0.0f);
+					break;
+				case WEST:
+				case EAST:
+					lScale = new Vector3(aCellSize, aHeight, lWidth);
+					lRelPos = new Vector3(0.0f, aVerticalOffset + aHeight / 2.0f, aMin + lWidth / 2.0f);
+					break;
+			}
+			Vector3 lPos = aWallSideOrigin + lRelPos;
 
-	    public void CreateFloorTile(int aModel, Vector3 aPosition, Quaternion aRotation, int aMaterial)
-	    {
-	        var lModel = Assets.FloorTileModels[aModel];
-	        CreateObject(_parentFloorTiles, lModel, aPosition, aRotation, aMaterial);
-	    }
+			// Creates the wall block
+			CreateBlock(Assets.WallBlock, lPos, lScale);
+		}
 
-	    public void CreateWallFrame(Vector3 aPosition, Quaternion aRotation, int aMaterial)
-	    {
-	        var lModel = Assets.WallFrameModel;
-	        CreateObject(_parentWallFrames, lModel, aPosition, aRotation, aMaterial);
-	    }
+		private void CreateDoorBlock(int aSide, float aCellSize, float aDoorPosition, Vector3 aWallSideOrigin,
+			float aRoomWidth, float aRoomHeight)
+		{
+			// Calculates the scale and position for this door block
+			Vector3 lScale = new Vector3();
+			Vector3 lRelPos = new Vector3();
+			switch (aSide) {
+				case NORTH:
+				case SOUTH:
+					lScale = new Vector3(aCellSize, aCellSize, aCellSize);
+					lRelPos = new Vector3(aDoorPosition + aCellSize / 2.0f, aCellSize / 2.0f, 0.0f);
+					break;
+				case WEST:
+				case EAST:
+					lScale = new Vector3(aCellSize, aCellSize, aCellSize);
+					lRelPos = new Vector3(0.0f, aCellSize / 2.0f, aDoorPosition + aCellSize / 2.0f);
+					break;
+			}
+			Vector3 lPos = aWallSideOrigin + lRelPos;
 
-	    public void CreateWallTile(int aModel, Vector3 aPosition, Quaternion aRotation, int aMaterial)
-	    {
-	        var lModel = Assets.WallTileModels[aModel];
-	        CreateObject(_parentWallTiles, lModel, aPosition, aRotation, aMaterial);
-	    }
+			// Creates the door block GameObject
+			GameObject lObject = CreateBlock(Assets.DoorBlock, lPos, lScale);
+
+			// Links the door model to this door block
+			lObject.GetComponent<DoorBlock>().DoorModelObject = _doorModels[aSide];
+
+			// Adds the door block GameObject to the list for the room script later
+			_doorBlocks.Add(lObject);
+
+			// Creates and sets the door script on this door block
+			AddDoorBlockScript(lObject, lPos, aSide, aRoomWidth, aRoomHeight, aCellSize);
+		}
+
+		private GameObject CreateBlock(GameObject aModel, Vector3 aPosition, Vector3 aScale)
+		{
+			GameObject lObject = Instantiate(aModel, aPosition, Quaternion.identity, _parentBlocks);
+			lObject.transform.localScale = aScale;
+			return lObject;
+		}
+
+		/*  ===  Creating Models  ===  */
+
+		public void CreateFloorFrame(Vector3 aPosition, Quaternion aRotation, int aMaterial)
+		{
+			var lModel = Assets.FloorFrameModel;
+			CreateObject(_parentFloorFrames, lModel, aPosition, aRotation, aMaterial);
+		}
+
+		public void CreateFloorTile(int aModel, Vector3 aPosition, Quaternion aRotation, int aMaterial)
+		{
+			var lModel = Assets.FloorTileModels[aModel];
+			CreateObject(_parentFloorTiles, lModel, aPosition, aRotation, aMaterial);
+		}
+
+		public void CreateWallFrame(Vector3 aPosition, Quaternion aRotation, int aMaterial)
+		{
+			var lModel = Assets.WallFrameModel;
+			CreateObject(_parentWallFrames, lModel, aPosition, aRotation, aMaterial);
+		}
+
+		public void CreateWallTile(int aModel, Vector3 aPosition, Quaternion aRotation, int aMaterial)
+		{
+			var lModel = Assets.WallTileModels[aModel];
+			CreateObject(_parentWallTiles, lModel, aPosition, aRotation, aMaterial);
+		}
 
 		public void CreateDoor(Vector3 aPosition, Quaternion aRotation, int aMaterial, int aSide)
 		{
@@ -296,16 +384,18 @@ namespace RoomEditor {
 			_doorModels[aSide] = lModelObject;
 		}
 
-	    private GameObject CreateObject(Transform aParent, GameObject aModel, Vector3 aPosition, Quaternion aRotation,
-	        int aMaterial)
-	    {
-	        GameObject lObject = Instantiate(aModel, aPosition, aRotation, aParent);
-					if (aMaterial >= 0)
-					{
-	            var lMaterial = Assets.Materials[aMaterial];
-	            lObject.GetComponent<Renderer>().material = lMaterial;
-					}
-					return lObject;
-	    }
-	}
+		private GameObject CreateObject(Transform aParent, GameObject aModel, Vector3 aPosition,
+			Quaternion aRotation, int aMaterial)
+		{
+			GameObject lObject = Instantiate(aModel, aPosition, aRotation, aParent);
+
+			if (aMaterial >= 0)
+			{
+				var lMaterial = Assets.Materials[aMaterial];
+				lObject.GetComponent<Renderer>().material = lMaterial;
+			}
+
+			return lObject;
+			}
+		}
 }

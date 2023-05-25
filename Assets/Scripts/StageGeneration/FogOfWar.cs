@@ -5,10 +5,10 @@ namespace StageGeneration
     public class FogOfWar : MonoBehaviour
     {
         [SerializeField]
-        private Material transparent;
+        public Material transparent;
 
         [SerializeField]
-        private Transform fog;
+        public Transform fog;
 
         private void OnTriggerEnter(Collider other)
         {

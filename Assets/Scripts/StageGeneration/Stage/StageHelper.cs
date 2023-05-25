@@ -144,11 +144,17 @@ namespace StageGeneration.Stage
                 var doorPos = _door.transform.position;
                 var doorRot = _door.transform.rotation;
 
-                Destroy(_door);
+                // Tells the door block to replace itself with a wall and open the door model
+                // If no door block component was found, the door is destroyed like before
+                RoomEditor.DoorBlock lDoorBlock = _door.GetComponent<RoomEditor.DoorBlock>();
+                if (lDoorBlock != null)
+                    lDoorBlock.CloseDoor();
+                else
+                    Destroy(_door);
 
-                var wall = Instantiate(room.GetComponent<Room>().GetDoorReplacement(), doorPos, doorRot);
+                //var wall = Instantiate(room.GetComponent<Room>().GetDoorReplacement(), doorPos, doorRot);
 
-                wall.transform.parent = room.transform;
+                //wall.transform.parent = room.transform;
             }
         }
 

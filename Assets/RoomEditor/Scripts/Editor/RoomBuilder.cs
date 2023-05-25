@@ -532,7 +532,7 @@ namespace RoomEditor {
 
 	                // Creates wall tile
 	                if (lTile.IsDoor)
-	                    _room.CreateDoor(lPos, aRot, lMaterial);
+	                    _room.CreateDoor(lPos, aRot, lMaterial, aSide);
 	                else
 	                    _room.CreateWallTile(lTileType.Model, lPos, aRot, lMaterial);
 	            }
@@ -660,7 +660,7 @@ namespace RoomEditor {
 	        BuildWalls();
 
 	        // Builds the objects to be used by the stage generator and AI
-	        _room.CreateBlocks(_width, _height, _wallHeight, CellSize, _roomWeight, _assets.DoorReplacementModel, CellSize, _doorPositions);
+	        _room.FinishRoom(_width, _height, _wallHeight, CellSize, _doorPositions, _roomWeight);
 	    }
 
 	    /*   ==========================   */

@@ -13,11 +13,8 @@ namespace Controllers.Player
         [SerializeField] GameObject weaponHolder;
         [SerializeField] GameObject sheathHolder;
 
-
-        private GameObject _equippedSword;
-
-        GameObject currentWeaponInHand;
-        GameObject currentWeaponInSheath;
+        public GameObject currentWeaponInHand;
+        // GameObject currentWeaponInSheath;
 
         private void Awake()
         {
@@ -27,26 +24,36 @@ namespace Controllers.Player
         void Start()
         {
             var player = GameObject.FindWithTag("Player");
-            _equippedSword = InventorySlot.FindWeapon(player.transform);
         }
 
+        public void SetCurrentWeapon(GameObject weapon)
+        {
+            currentWeaponInHand = weapon;
+
+            //Debug purposes
+            currentWeaponInHand.name = "CurrentWeaponInHand";
+
+            currentWeaponInHand.SetActive(false);
+        }
 
         public void DrawWeapon()
         {
-            Debug.Log("DrawWeapon");
             SetWeaponHolder(weaponHolder.transform);
         }
 
         public void SheathWeapon()
         {
-            Debug.Log("SheathWeapon");
             SetWeaponHolder(sheathHolder.transform);
         }
 
         private void SetWeaponHolder(Transform holder)
         {
-            _equippedSword.transform.SetParent(holder);
-            _equippedSword.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            if (currentWeaponInHand != null)
+            {
+                currentWeaponInHand.SetActive(true);
+                currentWeaponInHand.transform.SetParent(holder);
+                currentWeaponInHand.transform.SetLocalPositionAndRotation(Vector3.zero, currentWeaponInHand.transform.rotation);
+            }
         }
 
 

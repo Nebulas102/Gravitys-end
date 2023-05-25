@@ -40,6 +40,11 @@ namespace Controllers.Player
             if (attackAction.triggered)
             {
                 attack = true;
+
+                if (EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>())
+                {
+                    EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>().AllowHitbox();
+                }
             }
 
             input = moveAction.ReadValue<Vector2>();

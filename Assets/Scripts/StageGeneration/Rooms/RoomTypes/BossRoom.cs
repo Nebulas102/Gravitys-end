@@ -19,7 +19,7 @@ namespace StageGeneration.Rooms.RoomTypes
 
         private void Update()
         {
-            if (_playerEnterBossFight) _roomBoss.GetComponent<Boss>().SetStartFight(true);
+            if (_playerEnterBossFight && _roomBoss != null) _roomBoss.GetComponent<Boss>().SetStartFight(true);
         }
 
         public bool GetPlayerEnterBossFight()

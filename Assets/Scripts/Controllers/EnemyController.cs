@@ -12,7 +12,6 @@ namespace Controllers
         public Material hitMaterial;
 
         private NavMeshAgent _agent;
-        private EnemyAttackController _enemyAttackController;
 
         private Material _originalMaterial;
 
@@ -24,7 +23,6 @@ namespace Controllers
             // See PlayerManager.cs for explanation
             _target = PlayerManager.Instance.player.transform;
             _agent = GetComponent<NavMeshAgent>();
-            _enemyAttackController = GetComponent<EnemyAttackController>();
             renderer = GetComponentInChildren<Renderer>();
 
             _originalMaterial = renderer.material;
@@ -51,22 +49,32 @@ namespace Controllers
             if (distance > lookRadius)
                 return;
 
+            // Face the player
+            FaceTarget();
+
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,
-                    LayerMask.GetMask("Default")))
+                    LayerMask.GetMask("Entity")))
             {
                 if (!hit.collider.CompareTag("Enemy"))
                     return;
             }
 
-            _agent.SetDestination(_target.position);
+            if (distance < minDistance)
+            {
+                Vector3 retreatDestination = transform.position + (transform.position - targetPosition).normalized * 4;
+                _agent.SetDestination(retreatDestination);
+            } else {
+                _agent.SetDestination(_target.position);
+            }
 
             if (distance <= _agent.stoppingDistance)
             {
-                // Attack the player
-                _enemyAttackController.Attack();
-                // Face the player
-                FaceTarget();
+                // If melee enemy
+                if (gameObject.GetComponent<EnemyMeleeAttackController>() != null)
+                {
+                    gameObject.GetComponent<EnemyMeleeAttackController>().Attack();
+                }
             }
 
             foreach (var enemy in enemies)
@@ -84,10 +92,10 @@ namespace Controllers
                 }
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
             //Hit on weapon or some logic needs to be implemented
-            if (other.gameObject.CompareTag("Player")) StartCoroutine(HitFeedback());
+            if (other.gameObject.CompareTag("Item")) StartCoroutine(HitFeedback());
         }
 
         // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
@@ -105,13 +113,13 @@ namespace Controllers
             var direction = (_target.position - transform.position).normalized;
             var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * .5f);
         }
 
         private IEnumerator HitFeedback()
         {
             renderer.material = hitMaterial;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.1f);
             renderer.material = _originalMaterial;
         }
     }

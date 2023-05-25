@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core.Enemy.StageBosses
@@ -7,36 +8,19 @@ namespace Core.Enemy.StageBosses
     public class BossAbilityStage
     {
         [SerializeField]
-        private BossAbility bossAbility;
+        private List<BossAbilitySequence> bossAbilitySequences;
 
         [SerializeField]
-        private int amountOfTimes;
+        private int healthStageActivation;
 
-        private int _amountOfTimesUsed;
-
-        public BossAbility GetBossAbility()
+        public List<BossAbilitySequence> GetBossAbilitySequences()
         {
-            return bossAbility;
+            return bossAbilitySequences;
         }
 
-        public int GetAmountOfTimes()
+        public int GetHealhStageActivation()
         {
-            return amountOfTimes;
-        }
-
-        public int GetAmountOfTimesUsed()
-        {
-            return _amountOfTimesUsed;
-        }
-
-        public void SetAmountOfTimesUsed(int used)
-        {
-            _amountOfTimesUsed = used;
-        }
-
-        public void IncrementAmountOfTimesUsed()
-        {
-            _amountOfTimesUsed++;
+            return healthStageActivation;
         }
     }
 }

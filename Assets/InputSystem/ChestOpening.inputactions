@@ -1,0 +1,62 @@
+{
+    "name": "ChestOpening",
+    "maps": [
+        {
+            "name": "Chest",
+            "id": "39bc6a0a-b6b0-4b25-9470-ced70f6eabe6",
+            "actions": [
+                {
+                    "name": "OpenChest",
+                    "type": "Button",
+                    "id": "6139bb7e-b453-47c0-8d66-9980988d0c6d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c8362c9d-3568-4b4b-91d6-24e9b01f5ab6",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Chest",
+                    "action": "OpenChest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e849fb66-4311-4708-829d-d4d400d9ecd2",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Chest",
+                    "action": "OpenChest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Chest",
+            "bindingGroup": "Chest",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

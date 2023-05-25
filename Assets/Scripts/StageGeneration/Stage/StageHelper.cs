@@ -94,6 +94,14 @@ namespace StageGeneration.Stage
             return (RoomDirections)Random.Range(0, Enum.GetValues(typeof(RoomDirections)).Length);
         }
 
+        public static RoomDirections RandomDirectionFromRoom(GameObject room)
+        {
+            var openDirections = room.GetComponent<Room>().GetDoors().Where(d => d.GetComponent<Door>().hasNeighbour != false)
+                .Select(d => d.GetComponent<Door>().GetDirection()).ToList();
+
+            return (RoomDirections)Random.Range(0, openDirections.Count);
+        }
+
         public static RoomDirections RandomDirection(List<RoomDirections> directions)
         {
             directions.Remove(RoomDirections.UNDEFINED);
@@ -192,7 +200,7 @@ namespace StageGeneration.Stage
 
             // Add a NavMeshBuildSource for each mesh filter
             foreach (var filter in meshFilters)
-                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" && obj.activeSelf)
+                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" || obj.tag == "Obstacle" && obj.activeSelf)
                 {
                     var source = new NavMeshBuildSource
                     {

@@ -34,7 +34,6 @@ public class CursorController : MonoBehaviour
                 clampedPosition.y = Mathf.Clamp(clampedPosition.y, 0.0f, Screen.height);
                 transform.position = clampedPosition;
 
-
                 // Check if the cursor is hovering over a button
                 PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
                 pointerEventData.position = transform.position;

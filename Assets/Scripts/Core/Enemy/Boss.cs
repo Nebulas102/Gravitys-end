@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Controllers.Enemy;
 using Core.Enemy.StageBosses;
 using TMPro;
 using UI.Enemy;
@@ -33,10 +34,18 @@ namespace Core.Enemy
 
         private Canvas _canvas;
 
+        private BossAbilityStage _currentBossStage;
+        private BossAbilitySequence _currentBossSequence;
         private BossAbility _currentBossAbility;
+
+        private int _currentStageIndex = 0;
+        private int _currentSequenceIndex = 0;
+
         private float _currentHealth;
         private bool _startAbilitiesSequence;
         private bool _startFight;
+
+        private BossController _bossController;
 
         private void Start()
         {
@@ -47,58 +56,74 @@ namespace Core.Enemy
 
             bossNameBar.text = name;
 
+            _currentBossStage = bossAbilityStages[_currentStageIndex];
+
             _canvas = GetComponentInChildren<Canvas>();
+            _bossController = GetComponent<BossController>();
         }
 
         private void Update()
         {
-            //Test taking damage
-            // if (Input.GetKeyDown(KeyCode.H))
-            // {
-            //     TakeDamage(0f);
-            // }
-
             if (!_startFight || _startAbilitiesSequence) return;
 
-            StartCoroutine(LoopBossAbilities());
+            StartCoroutine(LoopBossSequence());
             _startAbilitiesSequence = true;
         }
 
-        private IEnumerator LoopBossAbilities()
+        private void LoopBossStages()
         {
-            var currentAbilityIndex = 0;
-
-            while (true)
+            // Check if it wont go out of bounds
+            if (_currentStageIndex + 1 < bossAbilityStages.Count)
             {
-                // Set the current ability
-                _currentBossAbility = bossAbilityStages[currentAbilityIndex].GetBossAbility();
-
-                //Use the current ability
-                yield return StartCoroutine(_currentBossAbility.UseBossAbility());
-
-                // Increment the number of times used for the current ability
-                bossAbilityStages[currentAbilityIndex].IncrementAmountOfTimesUsed();
-
-                // Check if we've used the current ability enough times
-                if (bossAbilityStages[currentAbilityIndex].GetAmountOfTimesUsed() !=
-                    bossAbilityStages[currentAbilityIndex].GetAmountOfTimes()) continue;
-
-                // Reset the times used for the current ability
-                bossAbilityStages[currentAbilityIndex].SetAmountOfTimesUsed(0);
-
-                // Move to the next ability
-                currentAbilityIndex++;
-                if (currentAbilityIndex >= bossAbilityStages.Count)
+                // If the current health is or lower than the next health stage activation
+                // Set the next stage as current stage
+                if (_currentHealth <= bossAbilityStages[_currentStageIndex + 1].GetHealhStageActivation())
                 {
-                    // We've reached the end of the abilities, so cycle back to the first ability
-                    currentAbilityIndex = 0;
+                     _currentBossStage = bossAbilityStages[++_currentStageIndex];
+                     _currentSequenceIndex = 0;
                 }
             }
         }
 
-        public void TakeDamage(float modifier)
+        private IEnumerator LoopBossSequence()
         {
-            var damage = Random.Range(startDamage, endDamage);
+            while (true)
+            {
+                // Loop boss stages
+                LoopBossStages();
+                
+                // Set the current sequence
+                _currentBossSequence = _currentBossStage.GetBossAbilitySequences()[_currentSequenceIndex];
+
+                // Set the current ability of the sequence
+                _currentBossAbility = _currentBossSequence.GetBossAbility();
+
+                //Use the current ability of the sequence
+                yield return StartCoroutine(_currentBossAbility.UseBossAbility());
+
+                // Increment the number of times used for the current sequence
+                _currentBossSequence.IncrementAmountOfTimesUsed();
+
+                // Check if we've used the current sequence enough times
+                if (_currentBossSequence.GetAmountOfTimesUsed() !=_currentBossSequence.GetAmountOfTimes()) 
+                    continue;
+
+                // Reset the times used for the current sequence
+                _currentBossSequence.SetAmountOfTimesUsed(0);
+
+                // Move to the next sequence
+                _currentSequenceIndex++;
+                if (_currentSequenceIndex >= _currentBossStage.GetBossAbilitySequences().Count)
+                {
+                    // We've reached the end of the sequences, so cycle back to the first sequence
+                    _currentSequenceIndex = 0;
+                }
+            }
+        }
+
+        public void TakeDamage(int takeStartDamage, int takeEndDamage, float modifier)
+        {
+            var damage = Random.Range(takeStartDamage, takeEndDamage);
             damage -= Mathf.RoundToInt(modifier / 100) * damage;
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
@@ -106,6 +131,15 @@ namespace Core.Enemy
                 damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
 
             _currentHealth -= damage;
+
+            healthBar.value = _currentHealth;
+
+            StartCoroutine(_bossController.HitFeedback());
+
+            if (_currentHealth <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
 
         public bool GetStartFight()

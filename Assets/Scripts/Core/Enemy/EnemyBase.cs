@@ -38,12 +38,6 @@ namespace Core.Enemy
 
         private void Update()
         {
-            // Test taking damage
-            // if (Input.GetKeyDown(KeyCode.G))
-            // {
-            //     TakeDamage(0f);
-            // }
-
             if (_currentHealth <= 0)
             {
                 Destroy(gameObject);
@@ -59,9 +53,9 @@ namespace Core.Enemy
             return Random.Range(startDamage, endDamage);
         }
 
-        public void TakeDamage(float modifier)
+        public void TakeDamage(int takeStartDamage, int takeEndDamage, float modifier)
         {
-            var damage = Random.Range(startDamage, endDamage);
+            var damage = Random.Range(takeStartDamage, takeEndDamage);
             damage -= Mathf.RoundToInt(modifier / 100) * damage;
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
@@ -69,8 +63,6 @@ namespace Core.Enemy
                 damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
 
             _currentHealth -= damage;
-
-            Debug.Log(_currentHealth);
         }
     }
 }

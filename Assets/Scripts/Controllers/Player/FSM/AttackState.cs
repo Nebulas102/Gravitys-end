@@ -29,7 +29,6 @@ namespace Controllers.Player
         public override void HandleInput()
         {
             base.HandleInput();
-            if (attackAction.triggered) attack = true;
         }
 
         public override void LogicUpdate()
@@ -39,9 +38,11 @@ namespace Controllers.Player
             clipLength = PlayerAnimator.Instance._animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
             clipSpeed = PlayerAnimator.Instance._animator.GetCurrentAnimatorStateInfo(1).speed;
             
-            if (timePassed >= clipLength / clipSpeed && attack){
+            if (timePassed >= clipLength / clipSpeed && attack)
+            {
                 stateMachine.ChangeState(character.attacking);
             }
+
             if (timePassed >= clipLength / clipSpeed)
             {
                 stateMachine.ChangeState(character.combatting);
@@ -51,6 +52,11 @@ namespace Controllers.Player
 
         public override void Exit()
         {
+            if (EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>())
+            {
+                EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>().DisAllowHitbox();
+            }
+
             base.Exit();
         }
 

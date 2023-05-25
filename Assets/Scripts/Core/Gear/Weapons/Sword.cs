@@ -47,7 +47,7 @@ namespace Core.Gear.Weapons
                 return;
 
             // Boolean to check if i was picked up (maybe the inventory was full or not)
-            var wasPickedUp = Inventory.Instance.Add(item);
+            var wasPickedUp = Inventory.Instance.Add(gameObject);
 
             // If it was picked up, destroy that object from the scene
             if (wasPickedUp)

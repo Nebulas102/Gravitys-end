@@ -16,6 +16,10 @@ public class ObjectiveSystem : MonoBehaviour
 
     private int enemiesKilledCount;
 
+    private int objectivesCompleted = 0;
+    private bool keycardCollected = false;
+    private bool bossKilled = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +61,6 @@ public class ObjectiveSystem : MonoBehaviour
 
             // Set the text of the TextMeshPro component
             textMeshProComponent.text = objective.name;
-
 
             // Set the font size of the text
             textMeshProComponent.fontSize = objectiveFontSize;
@@ -103,6 +106,10 @@ public class ObjectiveSystem : MonoBehaviour
                 // Get the TextMeshProUGUI component of the UI element and set its color
                 TextMeshProUGUI objectiveText = objectiveUI.GetComponent<TextMeshProUGUI>();
                 objectiveText.color = objective.color;
+
+                objectivesCompleted++;
+
+                //TODO: Maybe play a sound effect here to let the player know an objective is completed
             }
 
         }
@@ -118,6 +125,8 @@ public class ObjectiveSystem : MonoBehaviour
         {
             // Mark the "Collect the Key" objective as completed
             FindObjectOfType<ObjectiveSystem>().CompleteObjective("Find the bossroom key");
+            Destroy(other.gameObject);
+            keycardCollected = true;
         }
     }
 
@@ -129,10 +138,26 @@ public class ObjectiveSystem : MonoBehaviour
     void HandleEnemyKilled(EnemyBase enemy)
     {
         enemiesKilledCount++;
-        if (enemiesKilledCount == 30) {
+        if (enemiesKilledCount == 30)
+        {
             // Mark the "Collect the Key" objective as completed
             FindObjectOfType<ObjectiveSystem>().CompleteObjective("Kill 30 enemies");
         }
+    }
+
+    public int getCompletedObjectives()
+    {
+        return objectivesCompleted;
+    }
+
+    public bool getKeycardCollected()
+    {
+        return keycardCollected;
+    }
+
+    public bool getBossKilled()
+    {
+        return bossKilled;
     }
 
     public enum ObjectiveType

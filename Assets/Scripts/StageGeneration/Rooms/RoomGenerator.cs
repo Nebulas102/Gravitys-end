@@ -50,6 +50,7 @@ namespace StageGeneration.Rooms
 
                 if (initialSpawned)
                 {
+                    Debug.Log("Initial Spawned");
                     placementSide = DeterminePlacementSide(_previousRoom);
 
                     if (placementSide == StageHelper.RoomDirections.UNDEFINED) break;
@@ -85,8 +86,9 @@ namespace StageGeneration.Rooms
 
         private StageHelper.RoomDirections DeterminePlacementSide(GameObject previousRoom)
         {
-            var openDirections = Enum.GetValues(typeof(StageHelper.RoomDirections)).Cast<StageHelper.RoomDirections>()
-                .Where(direction => direction != StageHelper.RoomDirections.UNDEFINED).ToList();
+            var openDirections = previousRoom.GetComponent<Room>().GetDoors()
+                .Where(d => d.GetComponent<Door>().GetDirection() != StageHelper.RoomDirections.UNDEFINED)
+                .Select(d => d.GetComponent<Door>().GetDirection()).ToList();
 
             var doorDirection = StageHelper.RandomDirectionFromRoom(previousRoom);
 
@@ -107,7 +109,9 @@ namespace StageGeneration.Rooms
             if (!canPlace)
             {
                 var iteration = 0;
-                while (!canPlace && iteration < 3)
+                var previousRoomMaxDoors = previousRoom.GetComponent<Room>().GetDoors().Count;
+
+                while (!canPlace && iteration < previousRoomMaxDoors)
                 {
                     doorDirection = StageHelper.RandomDirection(openDirections);
 
@@ -117,9 +121,16 @@ namespace StageGeneration.Rooms
                         d.GetComponent<Door>().hasNeighbour == false &&
                         d.GetComponent<Door>().GetDirection() == doorDirection);
 
-                    var pos = _currentRoom.GetComponent<Room>()
+                    Debug.Log(doorDirection);
+                    Debug.Log(door);
+
+                    if (door != null)
+                    {
+                        var pos = _currentRoom.GetComponent<Room>()
                         .PlacementPos(doorDirection, door.GetComponent<Door>().cell);
-                    canPlace = _currentRoom.GetComponent<Room>().CanPlace((int)pos["x"], (int)pos["z"]);
+
+                        canPlace = _currentRoom.GetComponent<Room>().CanPlace((int)pos["x"], (int)pos["z"]);
+                    }
 
                     iteration++;
                 }

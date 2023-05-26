@@ -1999,7 +1999,7 @@ RectTransform:
   m_Children:
   - {fileID: 1479392940}
   m_Father: {fileID: 1453812605}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2286,7 +2286,7 @@ MonoBehaviour:
   gridZ: 60
   offset: 5
   gridCell: {fileID: 5977070374732653095, guid: a31c9469b043ae94f95cc1e49fcf7a8d, type: 3}
-  debugMode: 0
+  debugMode: 1
   hallways:
   - {fileID: 3539307900891926368, guid: f0bfcba491da72e47a94f627248f2d96, type: 3}
   hallwayEndLeft: {fileID: 3539307900891926368, guid: 19a44dcc1b05cd74f9d603e531111113, type: 3}
@@ -2296,8 +2296,8 @@ MonoBehaviour:
   spawnRoom: {fileID: 2915231218470790405, guid: 489f9c7cf7ded294b986c05e22eb3da2, type: 3}
   bossRoom: {fileID: 5154548415723241550, guid: 60de7db663c44c144b6ec03426926d08, type: 3}
   rooms:
-  - {fileID: 2915231218470790405, guid: 0a4e4c0fd8138cf499552e493b8a6591, type: 3}
-  - {fileID: 2915231218470790405, guid: e3477174c9e6e144e8c6242a8c3d6d6e, type: 3}
+  - {fileID: 4086980606181407461, guid: cb03ec8bb5906f84d92c02433570fae4, type: 3}
+  - {fileID: 8466067596004491804, guid: e918ae271739684419d8ec315b0f6482, type: 3}
   cells: []
 --- !u!4 &1079740415
 Transform:
@@ -3336,17 +3336,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339831059}
   m_CullTransparentMesh: 1
---- !u!114 &1363750003 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8297585340468739377, guid: 4a22256b156019143b2ec73bc3e6caa9, type: 3}
-  m_PrefabInstance: {fileID: 8297585341295595842}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1401048208
 GameObject:
   m_ObjectHideFlags: 0
@@ -3847,11 +3836,9 @@ RectTransform:
   - {fileID: 24510197}
   - {fileID: 1880259735}
   - {fileID: 1531415990}
-  - {fileID: 44549557}
   - {fileID: 990391575}
-  - {fileID: 990391575}
-  - {fileID: 1994769531}
   - {fileID: 1684389765}
+  - {fileID: 1994769531}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5927,7 +5914,7 @@ RectTransform:
   - {fileID: 664669727}
   - {fileID: 1060488584}
   m_Father: {fileID: 1453812605}
-  m_RootOrder: 7
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

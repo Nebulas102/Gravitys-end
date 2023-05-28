@@ -26,6 +26,7 @@ namespace StageGeneration.Stage
         private static int _gridX;
         private static int _gridZ;
         private static int _offset;
+        private static GameObject _keyRoom;
         private static List<Cell> _cells;
         private static List<GameObject> _rooms;
 
@@ -87,6 +88,16 @@ namespace StageGeneration.Stage
         public static void SetRooms(List<GameObject> _rooms)
         {
             StageHelper._rooms = _rooms;
+        }
+
+        public static GameObject GetKeyRoom()
+        {
+            return _keyRoom;
+        }
+
+        public static void SetKeyRoom(GameObject _keyRoom)
+        {
+            StageHelper._keyRoom = _keyRoom;
         }
 
         public static RoomDirections RandomDirection()
@@ -188,7 +199,7 @@ namespace StageGeneration.Stage
             var data = new NavMeshData();
             data = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(
                 centerCell.gameObject.transform.position,
-                new Vector3(_gridX * _offset, 30, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
+                new Vector3(_gridX * _offset, 20, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
             NavMesh.AddNavMeshData(data);
         }
 

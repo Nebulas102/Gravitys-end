@@ -52,6 +52,9 @@ namespace StageGeneration.Stage
         private GameObject bossRoom;
 
         [SerializeField]
+        private GameObject keyRoom;
+
+        [SerializeField]
         private List<GameObject> rooms;
 
         [HideInInspector]
@@ -80,6 +83,7 @@ namespace StageGeneration.Stage
             StageHelper.SetOffset(offset);
             StageHelper.SetCells(cells);
             StageHelper.SetRooms(rooms);
+            StageHelper.SetKeyRoom(keyRoom);
 
             InitializeRoomSizes();
 

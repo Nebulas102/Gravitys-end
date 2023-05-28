@@ -55,7 +55,6 @@ namespace StageGeneration.Rooms
 
         public Dictionary<string, float> PlacementPos(StageHelper.RoomDirections roomDirection, Cell doorCell)
         {
-            Debug.Log("PlacementPos " + roomDirection);
             var pos = new Dictionary<string, float>();
 
             float roomX = 0;

@@ -29,7 +29,7 @@ namespace StageGeneration.Rooms
         {
             var weightTotal = StageHelper.GetRooms().Sum(h => h.GetComponent<Room>().GetWeight());
 
-            hallwayDoorCount = mapHallways.Count;
+            hallwayDoorCount = mapHallways.Count * 4;
             startDoorsLeftCount =  hallwayDoorCount / 2 - 4;
             startDoorsRightCount = hallwayDoorCount - 4;
 
@@ -51,16 +51,18 @@ namespace StageGeneration.Rooms
             }
         }
 
-        private void SpawnKeyRoom(bool initialSpawned, GameObject spawnDoor)
+        private void SpawnKeyRoom(bool _initialSpawned, GameObject _spawnDoor)
         {   
             _currentRoom = StageHelper.GetKeyRoom();
 
             Cell doorCell = null;
-            var currentSpawnDoor = spawnDoor;
+            var currentSpawnDoor = _spawnDoor;
             StageHelper.RoomDirections placementSide;
-            var canPlace = false;
 
-            if (initialSpawned)
+            var canPlace = false;
+            var isInitial = false;
+
+            if (_initialSpawned)
             {
                 placementSide = DeterminePlacementSide(_previousRoom);
 
@@ -81,6 +83,8 @@ namespace StageGeneration.Rooms
 
                 canPlace = _currentRoom.GetComponent<Room>()
                     .CanPlace((int)initialPos["x"], (int)initialPos["z"]);
+
+                isInitial = true;
             }
 
             if (canPlace)
@@ -94,6 +98,8 @@ namespace StageGeneration.Rooms
                     .PlaceRoom((int)pos["x"], (int)pos["z"], placementSide, currentSpawnDoor);
 
                 keyRoomInBranch = true;
+
+                if (isInitial) initialSpawned = true;
             }
         }
 
@@ -106,16 +112,16 @@ namespace StageGeneration.Rooms
             for (var i = 0; i < branchLength; i++)
             {
                 // If there is no key room spawned in a branch
-                // if (!keyRoomInBranch)
-                // {   
-                //     // Pick only a door at the end of the right or left hallway
-                //     if (currentHallwayDoorCount >= startDoorsLeftCount && currentHallwayDoorCount <= (startDoorsLeftCount + 4)
-                //         || currentHallwayDoorCount >= startDoorsRightCount && currentHallwayDoorCount <= (startDoorsRightCount + 4))
-                //     {
-                //         SpawnKeyRoom(initialSpawned, spawnDoor);
-                //         continue;
-                //     }
-                // }
+                if (!keyRoomInBranch)
+                {   
+                    // Pick only a door at the end of the right or left hallway
+                    if (currentHallwayDoorCount >= startDoorsLeftCount && currentHallwayDoorCount <= (startDoorsLeftCount + 4)
+                        || currentHallwayDoorCount >= startDoorsRightCount && currentHallwayDoorCount <= (startDoorsRightCount + 4))
+                    {
+                        SpawnKeyRoom(initialSpawned, spawnDoor);
+                        continue;
+                    }
+                }
 
                 _currentRoom = RoomUtil.GetRandomRoom(StageHelper.GetRooms(), weightTotal);
 

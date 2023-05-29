@@ -19,7 +19,7 @@ namespace UI
                 instance = this;
             else
                 Destroy(gameObject);
-            
+
             _uiMenus = new UIMenus();
         }
 

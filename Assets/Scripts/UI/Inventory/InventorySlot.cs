@@ -41,13 +41,13 @@ namespace UI.Inventory
             iconImage.sprite = sprite;
 
             // Enable or disable the icon display and remove button based on whether the slot is empty
-            var isEmpty             = IsEmpty();
-            iconImage.enabled       = !isEmpty;
-            iconButton.enabled      = !isEmpty;
+            var isEmpty = IsEmpty();
+            iconImage.enabled = !isEmpty;
+            iconButton.enabled = !isEmpty;
             iconButton.interactable = !isEmpty;
-            removeImage.enabled     = !isEmpty;
-            removeBtn.enabled       = !isEmpty;
-            removeBtn.interactable  = !isEmpty;
+            removeImage.enabled = !isEmpty;
+            removeBtn.enabled = !isEmpty;
+            removeBtn.interactable = !isEmpty;
         }
 
         public bool IsEmpty()

@@ -25,28 +25,28 @@ namespace UI
         [SerializeField]
         private float padding = 25f;
 
-        private bool previousMouseState;
-        private Mouse virtualMouse;
-        private Camera mainCamera;
-        private Mouse currentMouse;
-        private string previousControlScheme = string.Empty;
+        private bool _previousMouseState;
+        private Mouse _virtualMouse;
+        private Camera _mainCamera;
+        private Mouse _currentMouse;
+        private string _previousControlScheme = string.Empty;
 
         private void OnEnable()
         {
-            mainCamera = Camera.main;
-            currentMouse = Mouse.current;
+            _mainCamera = Camera.main;
+            _currentMouse = Mouse.current;
 
-            if (virtualMouse is null)
-                virtualMouse = (Mouse)InputSystem.AddDevice("VirtualMouse");
-            else if (!virtualMouse.added)
-                InputSystem.AddDevice(virtualMouse);
+            if (_virtualMouse is null)
+                _virtualMouse = (Mouse)InputSystem.AddDevice("VirtualMouse");
+            else if (!_virtualMouse.added)
+                InputSystem.AddDevice(_virtualMouse);
 
-            InputUser.PerformPairingWithDevice(virtualMouse, playerInput.user);
+            InputUser.PerformPairingWithDevice(_virtualMouse, playerInput.user);
 
             if (cursor is not null)
             {
                 var position = cursor.anchoredPosition;
-                InputState.Change(virtualMouse.position, position);
+                InputState.Change(_virtualMouse.position, position);
             }
 
             InputSystem.onAfterUpdate += UpdateMotion;
@@ -55,7 +55,7 @@ namespace UI
 
         private void OnDisable()
         {
-            if (virtualMouse is not null && virtualMouse.added) InputSystem.RemoveDevice(virtualMouse);
+            if (_virtualMouse is not null && _virtualMouse.added) InputSystem.RemoveDevice(_virtualMouse);
 
             InputSystem.onAfterUpdate -= UpdateMotion;
             playerInput.onControlsChanged -= OnControlsChanged;
@@ -63,42 +63,47 @@ namespace UI
 
         private void UpdateMotion()
         {
-            if (virtualMouse is null || Gamepad.current is null || playerInput.currentControlScheme != Scheme.GAMEPAD_SCHEME)
+            // Check if the virtual mouse and gamepad are available and if the current control scheme is gamepad
+            if (_virtualMouse is null || Gamepad.current is null || playerInput.currentControlScheme != Scheme.GAMEPAD_SCHEME)
                 return;
 
-            // Delta
+            // Get the delta value from the left stick of the gamepad and scale it by the cursor speed and delta time
             var deltaValue = Gamepad.current.leftStick.ReadValue();
             deltaValue *= cursorSpeed * Time.deltaTime;
 
-            var currentPosition = virtualMouse.position.ReadValue();
+            // Get the current position of the virtual mouse and calculate the new position
+            var currentPosition = _virtualMouse.position.ReadValue();
             var newPosition = currentPosition + deltaValue;
 
-            // Clamp
+            // Clamp the new position to the screen bounds
             newPosition.x = Mathf.Clamp(newPosition.x, padding, Screen.width - padding);
             newPosition.y = Mathf.Clamp(newPosition.y, padding, Screen.height - padding);
 
-            // Update
-            InputState.Change(virtualMouse.position, newPosition);
-            InputState.Change(virtualMouse.delta, deltaValue);
+            // Update the virtual mouse position and delta
+            InputState.Change(_virtualMouse.position, newPosition);
+            InputState.Change(_virtualMouse.delta, deltaValue);
 
+            // Check if the A button on the gamepad is pressed and update the virtual mouse button state accordingly
             var aButtonIsPressed = Gamepad.current.aButton.IsPressed();
-            if (previousMouseState != aButtonIsPressed)
+            if (_previousMouseState != aButtonIsPressed)
             {
-                virtualMouse.CopyState<MouseState>(out var mouseState);
+                _virtualMouse.CopyState<MouseState>(out var mouseState);
                 mouseState.WithButton(MouseButton.Left, aButtonIsPressed);
-                InputState.Change(virtualMouse, mouseState);
-                previousMouseState = aButtonIsPressed;
+                InputState.Change(_virtualMouse, mouseState);
+                _previousMouseState = aButtonIsPressed;
             }
 
+            // Anchor the cursor to the canvas
             AnchorCursor(newPosition);
         }
 
         private void AnchorCursor(Vector2 position)
         {
+            // Anchor the cursor to the canvas
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasRectTransform,
                 position,
-                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : mainCamera,
+                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : _mainCamera,
                 out var anchoredPosition
             );
             cursor.anchoredPosition = anchoredPosition;
@@ -106,34 +111,36 @@ namespace UI
 
         private void OnControlsChanged(PlayerInput input)
         {
-            if (input.currentControlScheme == Scheme.KEYBOARD_MOUSE_SCHEME && previousControlScheme != Scheme.KEYBOARD_MOUSE_SCHEME)
+            // Switch between gamepad and keyboard/mouse control schemes
+            if (input.currentControlScheme == Scheme.KEYBOARD_MOUSE_SCHEME && _previousControlScheme != Scheme.KEYBOARD_MOUSE_SCHEME)
             {
                 cursor.gameObject.SetActive(false);
                 Cursor.visible = true;
-                currentMouse.WarpCursorPosition(virtualMouse.position.ReadValue());
-                previousControlScheme = Scheme.KEYBOARD_MOUSE_SCHEME;
+                _currentMouse.WarpCursorPosition(_virtualMouse.position.ReadValue());
+                _previousControlScheme = Scheme.KEYBOARD_MOUSE_SCHEME;
             }
-            else if (playerInput.currentControlScheme == Scheme.GAMEPAD_SCHEME && previousControlScheme != Scheme.GAMEPAD_SCHEME)
+            else if (playerInput.currentControlScheme == Scheme.GAMEPAD_SCHEME && _previousControlScheme != Scheme.GAMEPAD_SCHEME)
             {
                 cursor.gameObject.SetActive(true);
                 Cursor.visible = false;
-                InputState.Change(virtualMouse.position, currentMouse.position.ReadValue());
-                AnchorCursor(currentMouse.position.ReadValue());
-                previousControlScheme = Scheme.GAMEPAD_SCHEME;
+                InputState.Change(_virtualMouse.position, _currentMouse.position.ReadValue());
+                AnchorCursor(_currentMouse.position.ReadValue());
+                _previousControlScheme = Scheme.GAMEPAD_SCHEME;
             }
         }
 
         private void Update()
         {
-            if (previousControlScheme != playerInput.currentControlScheme)
+            // Check if the control scheme has changed
+            if (_previousControlScheme != playerInput.currentControlScheme)
                 OnControlsChanged(playerInput);
-            previousControlScheme = playerInput.currentControlScheme;
+            _previousControlScheme = playerInput.currentControlScheme;
         }
     }
 
     public class Scheme
     {
         public const string GAMEPAD_SCHEME = "Gamepad";
-        public const string KEYBOARD_MOUSE_SCHEME = "KeyboardMouse";
+        public const string KEYBOARD_MOUSE_SCHEME = "Keyboard&Mouse";
     }
 }

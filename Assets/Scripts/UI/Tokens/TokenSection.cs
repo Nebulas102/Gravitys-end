@@ -21,7 +21,7 @@ namespace UI.Tokens
 
         public void Invest()
         {
-            if (!TokenManager.instance.Invest() || invested >= TokenManager.instance.maxTokens) return;
+            if (!TokenManager.instance.Invest(invested < TokenManager.instance.maxTokens)) return;
 
             tokens[invested].enabled = false;
             tokens[invested].sprite = filledTokenImage;
@@ -30,7 +30,7 @@ namespace UI.Tokens
 
         public void Refund()
         {
-            if (!TokenManager.instance.Refund() || invested <= 0) return;
+            if (!TokenManager.instance.Refund(invested > 0)) return;
 
             Debug.Log(invested);
 

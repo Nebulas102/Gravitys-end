@@ -40,18 +40,18 @@ namespace UI.Tokens
                 Destroy(gameObject);
         }
 
-        public bool Invest()
+        public bool Invest(bool canInvest)
         {
-            var canInvest = spendableTokens > 0;
+            canInvest = canInvest && spendableTokens > 0;
             if (canInvest)
                 spendableTokens--;
 
             return canInvest;
         }
 
-        public bool Refund()
+        public bool Refund(bool canRefund)
         {
-            var canRefund = spendableTokens < tokens;
+            canRefund = canRefund && spendableTokens < tokens;
             if (canRefund)
                 spendableTokens++;
 

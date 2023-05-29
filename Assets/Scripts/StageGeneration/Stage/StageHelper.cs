@@ -178,7 +178,7 @@ namespace StageGeneration.Stage
             var data = new NavMeshData();
             data = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(
                 centerCell.gameObject.transform.position,
-                new Vector3(_gridX * _offset, 30, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
+                new Vector3(_gridX * _offset, 30f, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
             NavMesh.AddNavMeshData(data);
         }
 
@@ -206,7 +206,7 @@ namespace StageGeneration.Stage
 
             // Add a NavMeshBuildSource for each mesh filter
             foreach (var filter in meshFilters)
-                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" || obj.tag == "Obstacle" && obj.activeSelf)
+                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" && obj.activeSelf)
                 {
                     var source = new NavMeshBuildSource
                     {

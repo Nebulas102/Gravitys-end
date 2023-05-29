@@ -64,7 +64,9 @@ namespace Controllers
             if (distance < minDistance)
             {
                 Retreat();
-            } else {
+            }
+            else
+            {
                 _agent.SetDestination(_target.position);
             }
 
@@ -94,7 +96,7 @@ namespace Controllers
 
         private void OnTriggerEnter(Collider other)
         {
-            //Hit on weapon or some logic needs to be implemented
+            //Hit on weapon or some logic needs to be implemented, this is bad
             if (other.gameObject.CompareTag("Item")) StartCoroutine(HitFeedback());
         }
 
@@ -103,24 +105,6 @@ namespace Controllers
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, lookRadius);
-        }
-
-        // When the player is too close to the enemy, it wont rotate anymore
-        // This function fixes it
-
-        private void FaceTarget()
-        {
-            var direction = (_target.position - transform.position).normalized;
-            var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-            // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * .5f);
-        }
-
-        private IEnumerator HitFeedback()
-        {
-            renderer.material = hitMaterial;
-            yield return new WaitForSeconds(.1f);
-            renderer.material = _originalMaterial;
         }
 
         private void Retreat()
@@ -132,9 +116,10 @@ namespace Controllers
             RaycastHit hit;
             if (Physics.Raycast(retreatDestination, -retreatDirection.normalized, out hit, minDistance, obstacleMask))
             {
+                Debug.DrawRay(retreatDestination, -retreatDirection.normalized, Color.cyan);
                 // If there's an obstacle, find an alternate point nearby that is not obstructed
                 Vector3 newDestination = FindAlternateDestination(retreatDestination, retreatDirection.normalized);
-                
+
                 if (newDestination != Vector3.zero)
                 {
                     retreatDestination = newDestination;
@@ -147,6 +132,7 @@ namespace Controllers
                 }
             }
             // Set the new retreat destination for the enemy
+            _agent.updateRotation = false;
             _agent.SetDestination(retreatDestination);
         }
 
@@ -173,6 +159,24 @@ namespace Controllers
 
             // Unable to find an alternate destination
             return Vector3.zero;
+        }
+
+        // When the player is too close to the enemy, it wont rotate anymore
+        // This function fixes it
+
+        private void FaceTarget()
+        {
+            var direction = (_target.position - transform.position).normalized;
+            var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 4f);
+        }
+
+        private IEnumerator HitFeedback()
+        {
+            renderer.material = hitMaterial;
+            yield return new WaitForSeconds(.1f);
+            renderer.material = _originalMaterial;
         }
     }
 }

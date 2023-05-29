@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core.UI;
 using Core.UI.Inventory;
+using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

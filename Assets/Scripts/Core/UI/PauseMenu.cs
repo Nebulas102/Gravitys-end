@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Core.UI.Inventory;
-
 
 namespace Core.UI
 {

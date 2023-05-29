@@ -1,4 +1,5 @@
 using Core.UI.Inventory;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

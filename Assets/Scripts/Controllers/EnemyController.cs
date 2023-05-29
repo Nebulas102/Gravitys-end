@@ -10,6 +10,7 @@ namespace Controllers
         public float lookRadius = 10f;
         public float minDistance = 2f;
         public Material hitMaterial;
+        public LayerMask obstacleMask;
 
         private NavMeshAgent _agent;
 
@@ -62,8 +63,7 @@ namespace Controllers
 
             if (distance < minDistance)
             {
-                Vector3 retreatDestination = transform.position + (transform.position - targetPosition).normalized * 4;
-                _agent.SetDestination(retreatDestination);
+                Retreat();
             } else {
                 _agent.SetDestination(_target.position);
             }
@@ -121,6 +121,58 @@ namespace Controllers
             renderer.material = hitMaterial;
             yield return new WaitForSeconds(.1f);
             renderer.material = _originalMaterial;
+        }
+
+        private void Retreat()
+        {
+            Vector3 retreatDirection = transform.position - _target.position;
+            Vector3 retreatDestination = transform.position + retreatDirection.normalized * minDistance;
+
+            // Perform a raycast to check if the retreat destination is obstructed
+            RaycastHit hit;
+            if (Physics.Raycast(retreatDestination, -retreatDirection.normalized, out hit, minDistance, obstacleMask))
+            {
+                // If there's an obstacle, find an alternate point nearby that is not obstructed
+                Vector3 newDestination = FindAlternateDestination(retreatDestination, retreatDirection.normalized);
+                
+                if (newDestination != Vector3.zero)
+                {
+                    retreatDestination = newDestination;
+                }
+                else
+                {
+                    Debug.Log("No path");
+                    // Unable to find an alternate destination, stop retreating
+                    return;
+                }
+            }
+            // Set the new retreat destination for the enemy
+            _agent.SetDestination(retreatDestination);
+        }
+
+        private Vector3 FindAlternateDestination(Vector3 originalDestination, Vector3 retreatDirection)
+        {
+            // Parameters for casting rays around the original destination
+            int numRays = 8; // Number of rays to cast
+            float angleStep = 45f; // Angle step between rays in degrees
+            float rayDistance = 1f; // Distance to cast the rays
+
+            // Cast rays in a circle around the original destination
+            for (int i = 0; i < numRays; i++)
+            {
+                float angle = i * angleStep;
+                Vector3 rayDirection = Quaternion.Euler(0f, angle, 0f) * retreatDirection;
+
+                // Check if the ray hits an obstacle
+                if (!Physics.Raycast(originalDestination, rayDirection, rayDistance, obstacleMask))
+                {
+                    // Return the first unobstructed point found as the new destination
+                    return originalDestination + rayDirection * rayDistance;
+                }
+            }
+
+            // Unable to find an alternate destination
+            return Vector3.zero;
         }
     }
 }

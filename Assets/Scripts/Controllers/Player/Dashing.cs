@@ -49,7 +49,7 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            if (OverlayBehaviour.instance.inventoryOpened) {
+            if (Inventory.Instance.inventoryOpened) {
                 return;
             }
             if (!isDashing) HandleDash();

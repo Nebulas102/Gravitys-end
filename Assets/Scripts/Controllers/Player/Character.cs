@@ -61,7 +61,7 @@ namespace Controllers.Player
 
         private void Update()
         {
-            if (OverlayBehaviour.instance.inventoryOpened || DialogueManager.Instance.dialogueActive) {
+            if (Inventory.Instance.inventoryOpened || DialogueManager.Instance.dialogueActive) {
                 movementSM.ChangeState(standing);
             }
             else

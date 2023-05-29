@@ -29,7 +29,7 @@ public class UIHandler : MonoBehaviour
     void Update()
     {
         // if the inventory is opened and it is not yet selected then select the first button
-        if (OverlayBehaviour.instance.inventoryOpened && !inventorySelected)
+        if (Inventory.Instance.inventoryOpened && !inventorySelected)
         {
             m_EventSystem.SetSelectedGameObject(inventoryMenuFirstSelected);
             inventorySelected = true;
@@ -47,7 +47,7 @@ public class UIHandler : MonoBehaviour
         if (!PauseMenu.instance.isPaused) {
             pauseMenuSelected = false;
         }
-        if (!OverlayBehaviour.instance.inventoryOpened) {
+        if (!Inventory.Instance.inventoryOpened) {
             inventorySelected = false;
         }
 

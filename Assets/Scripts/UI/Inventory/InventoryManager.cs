@@ -1,0 +1,104 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+namespace UI.Inventory
+{
+    public class InventoryManager : MonoBehaviour
+    {
+        [Header("Equipped Slots")]
+        [SerializeField]
+        private InventorySlot equippedArmorSlot;
+
+        [SerializeField]
+        private InventorySlot equippedWeaponSlot;
+
+        [Header("Inventory Slots")]
+        [SerializeField]
+        private List<InventorySlot> armorSlots;
+
+        [SerializeField]
+        private List<InventorySlot> weaponSlots;
+
+        public static InventoryManager instance { get; private set; }
+
+        private void Awake()
+        {
+            // Singleton
+            if (instance == null)
+                instance = this;
+            else
+                Destroy(gameObject);
+        }
+
+        public void PickupItem(Item item)
+        {
+            // Determine which list of slots and equipped slot corresponds to the item type
+            switch (item.type)
+            {
+                // Call the Pickup method to add the item to the armor slots and equip it
+                case ItemType.ARMOR:
+                    Pickup(ref armorSlots, ref equippedArmorSlot, item);
+                    break;
+                // Call the Pickup method to add the item to the weapon slots and equip it
+                case ItemType.WEAPON:
+                    Pickup(ref weaponSlots, ref equippedWeaponSlot, item);
+                    break;
+                // Throw an exception if the item type is not recognized
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void UseItem(InventorySlot slot)
+        {
+            // Determine which list of slots and equipped slot corresponds to the item type of the clicked slot's item
+            switch (slot.item.GetComponent<Item>().type)
+            {
+                // Call the Use method to swap the equipped slot item with the clicked slot item for armor items
+                case ItemType.ARMOR:
+                    Use(ref armorSlots, ref equippedArmorSlot, slot);
+                    break;
+                // Call the Use method to swap the equipped slot item with the clicked slot item for weapon items
+                case ItemType.WEAPON:
+                    Use(ref weaponSlots, ref equippedWeaponSlot, slot);
+                    break;
+                // Throw an exception if the item type is not recognized
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private static void Use(ref List<InventorySlot> slots, ref InventorySlot equippedSlot, InventorySlot slot)
+        {
+            // Check if the clicked slot is a equipped slot
+            if (slot.isEquippedSlot)
+            {
+                // Call the Pickup method to put the equipped item in the first empty slot and remove as equipped item
+                Pickup(ref slots, ref equippedSlot, slot.item.GetComponent<Item>());
+                equippedSlot.DropItem();
+                return;
+            }
+
+            // Swap the items between the clicked slot and the equipped slot using temporary variables
+            var index = slots.IndexOf(slot);
+            var x = slot.item.GetComponent<Item>();
+            var y = equippedSlot.IsEmpty() ? null : equippedSlot.item.GetComponent<Item>();
+
+            slot.DropItem();
+            equippedSlot.DropItem();
+
+            equippedSlot.SetItem(x);
+            if (y != null)
+                slots[index].SetItem(y);
+        }
+
+        private static void Pickup(ref List<InventorySlot> slots, ref InventorySlot equippedSlot, Item item)
+        {
+            // Find the first empty slot in the list of slots
+            var slot = !equippedSlot.item ? equippedSlot : slots.FirstOrDefault(s => s.IsEmpty());
+            slot?.SetItem(item);
+        }
+    }
+}

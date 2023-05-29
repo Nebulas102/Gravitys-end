@@ -1,5 +1,6 @@
 using System.Collections;
 using Core.UI.Inventory;
+using UI;
 using UnityEngine;
 
 namespace Controllers.Player

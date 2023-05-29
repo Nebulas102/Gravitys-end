@@ -94,6 +94,14 @@ namespace StageGeneration.Stage
             return (RoomDirections)Random.Range(0, Enum.GetValues(typeof(RoomDirections)).Length);
         }
 
+        public static RoomDirections RandomDirectionFromRoom(GameObject room)
+        {
+            var openDirections = room.GetComponent<Room>().GetDoors().Where(d => d.GetComponent<Door>().hasNeighbour != false)
+                .Select(d => d.GetComponent<Door>().GetDirection()).ToList();
+
+            return (RoomDirections)Random.Range(0, openDirections.Count);
+        }
+
         public static RoomDirections RandomDirection(List<RoomDirections> directions)
         {
             directions.Remove(RoomDirections.UNDEFINED);
@@ -136,11 +144,17 @@ namespace StageGeneration.Stage
                 var doorPos = _door.transform.position;
                 var doorRot = _door.transform.rotation;
 
-                Destroy(_door);
+                // Tells the door block to replace itself with a wall and open the door model
+                // If no door block component was found, the door is destroyed like before
+                RoomEditor.DoorBlock lDoorBlock = _door.GetComponent<RoomEditor.DoorBlock>();
+                if (lDoorBlock != null)
+                    lDoorBlock.CloseDoor();
+                else
+                    Destroy(_door);
 
-                var wall = Instantiate(room.GetComponent<Room>().GetDoorReplacement(), doorPos, doorRot);
+                //var wall = Instantiate(room.GetComponent<Room>().GetDoorReplacement(), doorPos, doorRot);
 
-                wall.transform.parent = room.transform;
+                //wall.transform.parent = room.transform;
             }
         }
 
@@ -192,7 +206,7 @@ namespace StageGeneration.Stage
 
             // Add a NavMeshBuildSource for each mesh filter
             foreach (var filter in meshFilters)
-                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" && obj.activeSelf)
+                if (obj.tag == "Floor" || obj.tag == "Wall" || obj.tag == "Door" || obj.tag == "Obstacle" && obj.activeSelf)
                 {
                     var source = new NavMeshBuildSource
                     {

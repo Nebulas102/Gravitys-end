@@ -24,6 +24,11 @@ namespace Core.Enemy
 
         private float _currentHealth;
 
+        public static int enemyKillCounter;
+
+        public delegate void EnemyKilledEventHandler(EnemyBase enemy);
+        public static event EnemyKilledEventHandler OnEnemyKilled;
+
         private void Start()
         {
             _canvas = GetComponentInChildren<Canvas>();
@@ -33,7 +38,19 @@ namespace Core.Enemy
 
         private void Update()
         {
-            if (_currentHealth <= 0) Destroy(gameObject);
+            if (Input.GetKeyDown(KeyCode.G))
+            {
+                TakeDamage(1000, 2000, 0f);
+            }
+
+            if (_currentHealth <= 0)
+            {
+                Destroy(gameObject);
+                if (OnEnemyKilled != null)
+                {
+                    OnEnemyKilled(this);
+                }
+            }
         }
 
         public int GetDamage()

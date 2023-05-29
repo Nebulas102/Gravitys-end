@@ -8,6 +8,9 @@ namespace Core.UI
         [SerializeField]
         public GameObject pauseMenu;
 
+        [SerializeField]
+        public GameObject controlsImage;
+
         private UIMenus _UIMenus;
         private bool pauseMenuToggleInput;
         private bool closeMenuInput;
@@ -45,8 +48,10 @@ namespace Core.UI
                 isPaused = pauseMenu.activeSelf;
             }
 
-            if (closeMenuInput) {
-                if (isPaused) {
+            if (closeMenuInput)
+            {
+                if (isPaused)
+                {
                     Resume();
                 }
             }
@@ -81,6 +86,11 @@ namespace Core.UI
         public void GoToMainMenu()
         {
             SceneManager.LoadScene("MainMenuScene");
+        }
+
+        public void ToggleControls()
+        {
+            controlsImage.SetActive(!controlsImage.activeSelf);
         }
     }
 }

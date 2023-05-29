@@ -33,7 +33,7 @@ namespace ScriptableObjects
         public void Die()
         {
             //Load the death scene
-            SceneManager.LoadScene("GameOverScene", LoadSceneMode.Single);
+            GameOver.Instance.PlayerGameOver();
         }
     }
 }

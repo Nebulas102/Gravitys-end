@@ -23,5 +23,10 @@ public class MeleeWeaponHitbox : MonoBehaviour
         {
             other.GetComponent<EnemyBase>().TakeDamage(startDamage, endDamage, 0);
         }
+
+        if (other.CompareTag("Boss") && allowAttack)
+        {
+            other.GetComponent<Boss>().TakeDamage(startDamage, endDamage, 0);
+        }
     }
 }

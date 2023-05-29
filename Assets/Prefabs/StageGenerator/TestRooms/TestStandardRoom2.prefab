@@ -166,12 +166,12 @@ MonoBehaviour:
   sizeX: 25
   sizeY: 4
   sizeZ: 25
-  weight: 30
   doors:
   - {fileID: 8071986999989766767}
   - {fileID: 6499041524985554381}
   - {fileID: 6356833223409406187}
   - {fileID: 8765766093873253068}
+  weight: 30
   doorReplacement: {fileID: 5390974569567074888, guid: 183b5d8fdfcad5b42b1791f532cb39a0, type: 3}
   cells:
   - {fileID: 0}
@@ -212,8 +212,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
-  spawnpointPos: {x: 0, y: 0, z: 0}
-  enemyCount: 0
+  enemySpawnPoints: []
+  minGroupSize: 0
+  maxGroupSize: 0
 --- !u!114 &7270485677924902561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,7 +623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8602448314947195136
 Transform:
   m_ObjectHideFlags: 0

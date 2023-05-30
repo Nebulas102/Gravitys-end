@@ -39,6 +39,7 @@ namespace Controllers.Player
         public void DrawWeapon()
         {
             SetWeaponHolder(weaponHolder.transform);
+            
         }
 
         public void SheathWeapon()

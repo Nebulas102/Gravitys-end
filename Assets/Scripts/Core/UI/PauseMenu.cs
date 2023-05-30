@@ -17,7 +17,7 @@ namespace Core.UI
         private bool pauseMenuToggleInput;
         private bool closeMenuInput;
 
-        // Singleton for inventory
+        // Singleton for pausemenu
         public static PauseMenu instance;
         public bool isPaused;
 

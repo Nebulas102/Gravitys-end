@@ -35,11 +35,15 @@ namespace Controllers.Player
 
         public override void LogicUpdate()
         {
-            if (sprint)
-                // character.animator.SetFloat("Velocity", input.magnitude + 0.5f, 0.5f, Time.deltaTime);
+            if (sprint) {
+                                // character.animator.SetFloat("Velocity", input.magnitude + 0.5f, 0.5f, Time.deltaTime);
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude + 0.35f, 0.2f, Time.deltaTime);
-            else
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.Walking);
+            }
+            else {
                 stateMachine.ChangeState(character.standing);
+                SoundEffectsManager.instance.StopSoundEffect(SoundEffectsManager.SoundEffect.Walking);
+            }
         }
 
         public override void PhysicsUpdate()

@@ -109,7 +109,7 @@ public class ObjectiveSystem : MonoBehaviour
 
                 objectivesCompleted++;
 
-                //TODO: Maybe play a sound effect here to let the player know an objective is completed
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
             }
 
         }

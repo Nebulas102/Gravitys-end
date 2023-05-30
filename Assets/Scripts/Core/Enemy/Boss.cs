@@ -140,6 +140,8 @@ namespace Core.Enemy
             {
                 ObjectiveSystem.HandleBossKilled();
                 Destroy(gameObject);
+
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossDies);
             }
         }
 

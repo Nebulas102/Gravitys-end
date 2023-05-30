@@ -7,7 +7,7 @@ public class BackgroundMusicManager : MonoBehaviour
     [SerializeField] private AudioClip normalBackgroundMusic;
     [SerializeField] private AudioClip bossBackgroundMusic;
     private static AudioClip _bossBackgroundMusic;
-    private static AudioSource audioSource;
+    public static AudioSource audioSource;
 
     private void Awake()
     {
@@ -28,5 +28,10 @@ public class BackgroundMusicManager : MonoBehaviour
             audioSource.clip = _bossBackgroundMusic;
             audioSource.Play();
         }
+    }
+
+    public void SetBackgroundMusicVolume(float volume)
+    {
+        audioSource.volume = volume;
     }
 }

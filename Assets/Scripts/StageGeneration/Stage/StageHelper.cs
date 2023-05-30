@@ -197,9 +197,11 @@ namespace StageGeneration.Stage
 
             // Build the NavMesh
             var data = new NavMeshData();
+
             data = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(
                 centerCell.gameObject.transform.position,
-                new Vector3(_gridX * _offset, 20, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
+                new Vector3(_gridX * _offset, 10, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
+            
             NavMesh.AddNavMeshData(data);
         }
 

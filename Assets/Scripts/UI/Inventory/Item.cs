@@ -23,12 +23,6 @@ namespace UI.Inventory
         [Tooltip("The prefab to spawn when this item is dropped")]
         private GameObject prefab;
 
-        private void Awake()
-        {
-            var inventory = FindObjectOfType<InventoryManager>();
-            inventory.PickupItem(this);
-        }
-
         public void Spawn(Vector3 position)
         {
             Instantiate(prefab, position, Quaternion.identity);

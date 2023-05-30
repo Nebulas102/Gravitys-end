@@ -1,63 +1,92 @@
-using System.Collections;
-using System.Collections.Generic;
-using Core.UI;
-using Core.UI.Inventory;
-using UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UI;
 
-public class UIHandler : MonoBehaviour
+namespace Core.UI
 {
-    EventSystem m_EventSystem;
-
-
-    [SerializeField] GameObject inventoryMenuFirstSelected;
-    [SerializeField] GameObject pauseMenuFirstSelected;
-    [SerializeField] GameObject UICursor;
-
-    private bool inventorySelected = false;
-    private bool pauseMenuSelected = false;
-
-
-    void OnEnable()
+    public class UIHandler : MonoBehaviour
     {
-        //Fetch the current EventSystem.
-        m_EventSystem = EventSystem.current;
+        EventSystem m_EventSystem;
+
+
+        [SerializeField]
+        private GameObject inventoryMenuFirstSelected;
+
+        [SerializeField]
+        private GameObject pauseMenuFirstSelected;
+
+        private UIState currentMenuState = UIState.NONE;
+
+        private void Start()
+        {
+            InventoryOverlayBehaviour.OnInventoryToggle += OnInventoryToggle;
+            PauseMenu.OnPauseToggle += OnPauseToggle;
+        }
+
+        private void OnEnable()
+        {
+            m_EventSystem = EventSystem.current;
+        }
+
+        private void OnDisable()
+        {
+            m_EventSystem.SetSelectedGameObject(null);
+            currentMenuState = UIState.NONE;
+        }
+
+        // private void Update()
+        // {
+        //     if (InventoryOverlayBehaviour.instance.inventoryOpened && currentMenuState != UIState.INVENTORY)
+        //     {
+        //         // m_EventSystem.SetSelectedGameObject(inventoryMenuFirstSelected);
+        //         currentMenuState = UIState.INVENTORY;
+        //     }
+        //     else if (PauseMenu.instance.isPaused && currentMenuState != UIState.PAUSE)
+        //     {
+        //         m_EventSystem.SetSelectedGameObject(pauseMenuFirstSelected);
+        //         currentMenuState = UIState.PAUSE;
+        //     }
+        //     else if (!InventoryOverlayBehaviour.instance.inventoryOpened && !PauseMenu.instance.isPaused)
+        //     {
+        //         currentMenuState = UIState.NONE;
+        //     }
+        // }
+
+        private void OnInventoryToggle(bool inventoryOpened)
+        {
+            if (inventoryOpened)
+            {
+                // m_EventSystem.SetSelectedGameObject(inventoryMenuFirstSelected);
+                currentMenuState = UIState.INVENTORY;
+            }
+            else
+            {
+                m_EventSystem.SetSelectedGameObject(null);
+                currentMenuState = UIState.NONE;
+            }
+        }
+
+        private void OnPauseToggle(bool paused)
+        {
+            if (paused)
+            {
+                m_EventSystem.SetSelectedGameObject(pauseMenuFirstSelected);
+                currentMenuState = UIState.PAUSE;
+            }
+            else
+            {
+                m_EventSystem.SetSelectedGameObject(null);
+                currentMenuState = UIState.NONE;
+            }
+        }
+
+        private enum UIState
+        {
+            NONE,
+            INVENTORY,
+            PAUSE
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // if the inventory is opened and it is not yet selected then select the first button
-        if (Inventory.Instance.inventoryOpened && !inventorySelected)
-        {
-            m_EventSystem.SetSelectedGameObject(inventoryMenuFirstSelected);
-            inventorySelected = true;
-            pauseMenuSelected = false;
-        }
 
-        // if the game is paused and it is not yet selected then select the first button
-        if (PauseMenu.instance.isPaused && !pauseMenuSelected)
-        {
-            m_EventSystem.SetSelectedGameObject(pauseMenuFirstSelected);
-            inventorySelected = false;
-            pauseMenuSelected = true;
-        }
-
-        if (!PauseMenu.instance.isPaused) {
-            pauseMenuSelected = false;
-        }
-        if (!Inventory.Instance.inventoryOpened) {
-            inventorySelected = false;
-        }
-
-        
-        if (inventorySelected || pauseMenuSelected) {
-            UICursor.SetActive(true);
-        } 
-        else {
-            UICursor.SetActive(false);
-        }
-
-    }
 }

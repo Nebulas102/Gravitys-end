@@ -3,15 +3,33 @@ using UnityEngine;
 
 namespace UI
 {
-    public class OverlayBehaviour : MonoBehaviour
+    public class InventoryOverlayBehaviour : MonoBehaviour
     {
+        public delegate void InventoryToggle(bool inventoryOpened);
+        public static event InventoryToggle OnInventoryToggle;
+
         [SerializeField]
         private GameObject overlay;
+
+        [SerializeField]
+        private GameObject cursor;
+
         private UIMenus _uiMenus;
+        private bool _inventoryOpened;
 
-        public bool inventoryOpened;
+        public bool inventoryOpened
+        {
+            get { return _inventoryOpened; }
+            set
+            {
+                _inventoryOpened = value;
+                OnInventoryToggle?.Invoke(value);
+                overlay.SetActive(inventoryOpened);
+                cursor.SetActive(inventoryOpened);
+            }
+        }
 
-        public static OverlayBehaviour instance;
+        public static InventoryOverlayBehaviour instance;
 
         private void Awake()
         {
@@ -34,7 +52,6 @@ namespace UI
             if (PauseMenu.instance.isPaused) return;
 
             inventoryOpened = !overlay.activeSelf;
-            overlay.SetActive(inventoryOpened);
         }
     }
 }

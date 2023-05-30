@@ -114,14 +114,12 @@ namespace UI
             // Switch between gamepad and keyboard/mouse control schemes
             if (input.currentControlScheme == Scheme.KEYBOARD_MOUSE_SCHEME && _previousControlScheme != Scheme.KEYBOARD_MOUSE_SCHEME)
             {
-                cursor.gameObject.SetActive(false);
                 Cursor.visible = true;
                 _currentMouse.WarpCursorPosition(_virtualMouse.position.ReadValue());
                 _previousControlScheme = Scheme.KEYBOARD_MOUSE_SCHEME;
             }
             else if (playerInput.currentControlScheme == Scheme.GAMEPAD_SCHEME && _previousControlScheme != Scheme.GAMEPAD_SCHEME)
             {
-                cursor.gameObject.SetActive(true);
                 Cursor.visible = false;
                 InputState.Change(_virtualMouse.position, _currentMouse.position.ReadValue());
                 AnchorCursor(_currentMouse.position.ReadValue());

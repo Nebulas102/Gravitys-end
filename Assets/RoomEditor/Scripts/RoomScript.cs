@@ -41,6 +41,7 @@ namespace RoomEditor {
 			// Creates the parent object for all objects
 			_parent = new GameObject("Room").transform;
 			_parent.SetParent(transform);
+			_parent.gameObject.tag = "Room";
 
 			// Creates the parent object for all blocks
 			_parentBlocks = new GameObject("Blocks").transform;

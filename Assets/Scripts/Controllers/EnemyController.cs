@@ -126,7 +126,6 @@ namespace Controllers
                 }
                 else
                 {
-                    Debug.Log("No path");
                     // Unable to find an alternate destination, stop retreating
                     return;
                 }

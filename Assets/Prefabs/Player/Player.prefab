@@ -122,14 +122,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289270883698796394}
-  m_LocalRotation: {x: -0.27059805, y: 0.6532815, z: 0.6532815, w: 0.27059805}
+  m_LocalRotation: {x: 0.27059805, y: 0.6532815, z: -0.6532815, w: 0.27059805}
   m_LocalPosition: {x: 0, y: 10.014, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3357355433393599820}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -90, y: 135, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 135, z: 0}
 --- !u!20 &2451819262515506027
 Camera:
   m_ObjectHideFlags: 0
@@ -599,6 +599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 1503709254792651134}
   sheathHolder: {fileID: 9153746418663765294}
+  currentWeaponInHand: {fileID: 0}
 --- !u!114 &2423374132334498903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,8 +612,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535c045600c2a6349ae848dd5a8281da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectivesHolder: {fileID: 6814322269142151893, guid: d312d53ebb9735940b5ac231f3ef7b92, type: 3}
-  currentWeaponInHand: {fileID: 0}
+  objectivesHolder: {fileID: 0}
+  textVerticalMargin: 50
+  objectiveFontSize: 24
+  objectiveHorizontalPosition: -75
 --- !u!1 &872677986746474466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,7 +1375,7 @@ GameObject:
   - component: {fileID: 349462334721817406}
   m_Layer: 6
   m_Name: Triangle
-  m_TagString: Untagged
+  m_TagString: MiniMap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

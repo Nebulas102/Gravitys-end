@@ -26,6 +26,7 @@ namespace StageGeneration.Stage
         private static int _gridX;
         private static int _gridZ;
         private static int _offset;
+        private static GameObject _keyRoom;
         private static List<Cell> _cells;
         private static List<GameObject> _rooms;
 
@@ -89,6 +90,16 @@ namespace StageGeneration.Stage
             StageHelper._rooms = _rooms;
         }
 
+        public static GameObject GetKeyRoom()
+        {
+            return _keyRoom;
+        }
+
+        public static void SetKeyRoom(GameObject _keyRoom)
+        {
+            StageHelper._keyRoom = _keyRoom;
+        }
+
         public static RoomDirections RandomDirection()
         {
             return (RoomDirections)Random.Range(0, Enum.GetValues(typeof(RoomDirections)).Length);
@@ -106,8 +117,17 @@ namespace StageGeneration.Stage
         {
             directions.Remove(RoomDirections.UNDEFINED);
 
-            if (directions != null)
-                return directions[Random.Range(0, directions.Count)];
+            if (directions != null && directions.Count > 0)
+            {
+                if (directions.Count > 1)
+                {
+                    return directions[Random.Range(0, directions.Count)];
+                }
+                else
+                {
+                    return directions[0];
+                }
+            }
             return RoomDirections.UNDEFINED;
         }
 
@@ -146,6 +166,7 @@ namespace StageGeneration.Stage
 
                 // Tells the door block to replace itself with a wall and open the door model
                 // If no door block component was found, the door is destroyed like before
+                // Test rooms before the roomeditor implementation wont work anymore
                 RoomEditor.DoorBlock lDoorBlock = _door.GetComponent<RoomEditor.DoorBlock>();
                 if (lDoorBlock != null)
                     lDoorBlock.CloseDoor();
@@ -176,6 +197,7 @@ namespace StageGeneration.Stage
 
             // Build the NavMesh
             var data = new NavMeshData();
+
             data = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(
                 centerCell.gameObject.transform.position,
                 new Vector3(_gridX * _offset, 30f, _gridZ * _offset)), Vector3.zero, Quaternion.identity);

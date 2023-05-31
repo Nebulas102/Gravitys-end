@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core.UI
+namespace UI.Main
 {
     public class ExitGame : MonoBehaviour
     {

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Core.UI
+namespace UI.Main
 {
     public class MainMenu : MonoBehaviour
     {

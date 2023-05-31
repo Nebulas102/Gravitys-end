@@ -2,7 +2,7 @@ using Core.UI.Inventory;
 using ScriptableObjects;
 using UnityEngine;
 
-public class HandlePickUp : MonoBehaviour
+public class OldHandlePickUp : MonoBehaviour
 {
         private Item item;
         private bool _canPickUp;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UI
+namespace UI.Runtime
 {
     public class BillBoard : MonoBehaviour
     {

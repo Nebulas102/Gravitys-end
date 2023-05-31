@@ -1,4 +1,4 @@
-using Core.UI;
+using UI.Runtime;
 using UnityEngine;
 
 namespace UI

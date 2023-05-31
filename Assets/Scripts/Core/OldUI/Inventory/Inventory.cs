@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ScriptableObjects;
+using UI.Runtime;
 using UnityEngine;
 
 namespace Core.UI.Inventory

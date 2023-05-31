@@ -2,7 +2,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Core.UI
+namespace UI.Runtime
 {
     public class PauseMenu : MonoBehaviour
     {

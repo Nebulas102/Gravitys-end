@@ -90,6 +90,7 @@ namespace Controllers.Player
             var dashDir = new Vector3(_movementInput.x, 0, _movementInput.y);
             //makes player move independent of camera rotation (W means north, S means south, etc.)
             dashDir = Quaternion.Euler(0, -45, 0) * dashDir;
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.Dash);
 
             while (dashTimer > 0)
             {

@@ -47,6 +47,8 @@ namespace Core.Enemy.StageBosses.Stage1
         private void Shoot()
         {
             Instantiate(bullet, transform.position, Quaternion.identity);
+
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossShoots);
         }
     }
 }

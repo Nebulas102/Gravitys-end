@@ -68,6 +68,8 @@ public class Chest : MonoBehaviour
         // Instantiate the serialized GameObject as a child of the parent GameObject
         GameObject newChild = Instantiate(openedChestGameObject, transform);
         newChild.transform.localPosition = Vector3.zero;
+
+        SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ChestOpening);
     }
 
     private void DetectNearbyPlayer()

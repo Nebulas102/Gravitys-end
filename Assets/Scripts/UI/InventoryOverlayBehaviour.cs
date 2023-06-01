@@ -45,10 +45,10 @@ namespace UI
         private void OnEnable()
         {
             _inputManager.Enable();
-            _inputManager.UI.TriggerInventory.performed += _ => TriggerToggleInventory();
+            _inputManager.UI.ToggleInventory.performed += _ => OnToggleInventory();
         }
 
-        private void TriggerToggleInventory()
+        private void OnToggleInventory()
         {
             if (PauseMenu.instance.isPaused) return;
 

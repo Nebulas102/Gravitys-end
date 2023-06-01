@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Core.Enemy;
 
 namespace Core
 {
@@ -16,6 +17,8 @@ namespace Core
         private void Start()
         {
             StartTimer();
+
+            EnemyBase.OnEnemyKilled += AddEnemyTime;
         }
 
         void Update()
@@ -44,17 +47,23 @@ namespace Core
             timerIsRunning = true;
         }
 
+        void AddEnemyTime(EnemyBase enemy)
+        {
+            time += enemy.timeOnDead;
+        }
+
         void DisplayTime(float ttd)
         {
             float minutes = Mathf.FloorToInt(ttd / 60);
             float seconds = Mathf.FloorToInt(ttd % 60);
+            float milliseconds = Mathf.FloorToInt((ttd * 1000) % 1000);
 
             if (ttd <= dangerZone)
             {
                 display.color = Color.red;
             }
-
-            display.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            
+            display.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
         }
     }
 }

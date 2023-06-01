@@ -68,10 +68,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6661759942136799478}
-  - component: {fileID: 193242413574442648}
-  - component: {fileID: 5481637881081015092}
+  - component: {fileID: -7364577773594255818}
   - component: {fileID: 4421386742522606731}
-  - component: {fileID: 829475446977031021}
+  - component: {fileID: 4184660351150783957}
   m_Layer: 0
   m_Name: FuturisticSword
   m_TagString: Untagged
@@ -98,32 +97,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &193242413574442648
-MonoBehaviour:
+--- !u!23 &-7364577773594255818
+MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6284918362569833036}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eccc7f23d4975144933ae552ba2994c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 9a3371d4a070af0439e8e21fb94d8018, type: 2}
-  isInInventory: 0
---- !u!114 &5481637881081015092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6284918362569833036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884bc24526d204949aed6ba7fc3ab8c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &4421386742522606731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,19 +154,25 @@ MonoBehaviour:
   startDamage: 5
   endDamage: 10
   hitbox: {fileID: 3135304275406725206}
---- !u!65 &829475446977031021
-BoxCollider:
+--- !u!114 &4184660351150783957
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6284918362569833036}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.041472126, y: 0.11839017, z: 1.1549642}
-  m_Center: {x: -0.020863736, y: 0.08889599, z: 0.5792732}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 883823951d110ed49bf01ba3798e08a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 890a66f6ea7cb9f48959c911f04f3d28, type: 3}
+  type: 0
+  modifier: 0
+  prefab: {fileID: 6284918362569833036}
+  radius: 2
+  meshRenderer: {fileID: 1431022065950288148}
+  IsInInventory: 0
 --- !u!1 &6561892199832965489
 GameObject:
   m_ObjectHideFlags: 0

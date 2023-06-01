@@ -34,7 +34,7 @@ namespace Core.Chest
 
             if (_chestWillSpawn)
             {
-                var chestSpawnPointKey = Random.Range(0, chestSpawnPoints.Length);
+                var chestSpawnPointKey = Random.Range(0, chestSpawnPoints.Length - 1);
 
                 _roomPos = gameObject.transform; // 0 0 0
 

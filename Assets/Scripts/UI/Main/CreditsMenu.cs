@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-namespace Core.UI
+namespace UI.Main
 {
     public class CreditsMenu : MonoBehaviour
     {

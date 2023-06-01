@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Core.UI
+namespace UI.Runtime
 {
     public class PauseMenu : MonoBehaviour
     {
+        public delegate void PauseToggle(bool inventoryOpened);
+        public static event PauseToggle OnPauseToggle;
+
         [SerializeField]
         public GameObject pauseMenu;
 
@@ -34,7 +37,7 @@ namespace Core.UI
             {
                 //This doesn't work, the game doesn't use Time.DeltaTime for enemy behaviour and such so nothing actually stops.
                 Time.timeScale = 0f;
-                Inventory.Inventory.Instance.inventoryOpened = false;
+                InventoryOverlayBehaviour.instance.inventoryOpened = false;
             }
             else
             {

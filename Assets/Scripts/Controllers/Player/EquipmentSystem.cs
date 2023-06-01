@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Core.UI.Inventory;
 using UnityEngine;
 
 namespace Controllers.Player
@@ -39,7 +36,7 @@ namespace Controllers.Player
         public void DrawWeapon()
         {
             SetWeaponHolder(weaponHolder.transform);
-            
+
         }
 
         public void SheathWeapon()

@@ -14,7 +14,7 @@ namespace UI
         [SerializeField]
         private GameObject cursor;
 
-        private UIMenus _uiMenus;
+        private InputManager _inputManager;
         private bool _inventoryOpened;
 
         public bool inventoryOpened
@@ -38,13 +38,13 @@ namespace UI
             else
                 Destroy(gameObject);
 
-            _uiMenus = new UIMenus();
+            _inputManager = new InputManager();
         }
 
         private void OnEnable()
         {
-            _uiMenus.Enable();
-            _uiMenus.Menus.ToggleInventory.performed += _ => OnToggleInventory();
+            _inputManager.Enable();
+            _inputManager.UI.ToggleInventory.performed += _ => OnToggleInventory();
         }
 
         private void OnToggleInventory()

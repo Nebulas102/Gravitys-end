@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Controllers.Player
 {
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(PlayerInputManager))]
+    [RequireComponent(typeof(InputManager))]
     public class PlayerMovementController : MonoBehaviour
     {
         // //Animation states

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 namespace Controllers.Player
 {
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(PlayerInputManager))]
+    [RequireComponent(typeof(InputManager))]
     public class Character : MonoBehaviour
     {
         [Header("Controls")]

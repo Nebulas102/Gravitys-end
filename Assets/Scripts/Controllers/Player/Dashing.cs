@@ -1,5 +1,4 @@
 using System.Collections;
-using Core.UI.Inventory;
 using UI;
 using UnityEngine;
 
@@ -125,7 +124,8 @@ namespace Controllers.Player
             return dashAvailable;
         }
 
-        public void SetDashAvailable(bool available) {
+        public void SetDashAvailable(bool available)
+        {
             dashAvailable = available;
         }
     }

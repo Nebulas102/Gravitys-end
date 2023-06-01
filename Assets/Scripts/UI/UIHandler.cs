@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UI;
 using UI.Runtime;
 
-namespace Core.UI
+namespace UI
 {
     public class UIHandler : MonoBehaviour
     {

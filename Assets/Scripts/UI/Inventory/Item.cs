@@ -21,7 +21,7 @@ namespace UI.Inventory
 
         [SerializeField]
         [Tooltip("The prefab to spawn when this item is dropped")]
-        private GameObject prefab;
+        public GameObject prefab;
 
         [SerializeField]
         [Range(0f, 2f)]
@@ -54,6 +54,13 @@ namespace UI.Inventory
         private void Update()
         {
             Pickup();
+        }
+
+        public void Spawn(Vector3 position)
+        {
+            IsInInventory = false;
+            meshRenderer.enabled = true;
+            gameObject.transform.position = position;
         }
 
         public void Spawn()

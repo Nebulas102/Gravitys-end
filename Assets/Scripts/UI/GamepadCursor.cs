@@ -7,10 +7,6 @@ namespace UI
 {
     public class GamepadCursor : MonoBehaviour
     {
-        [SerializeField]
-        [Tooltip("The player input component to listen for control scheme changes")]
-        private PlayerInput playerInput;
-
         [Header("Cursor Settings")]
         [SerializeField]
         [Tooltip("The cursor to move around the screen")]
@@ -36,12 +32,13 @@ namespace UI
 
         private Mouse _currentMouse = Mouse.current;
         private string _previousControlScheme = string.Empty;
-
+        private PlayerInput playerInput;
         private bool _previousMouseState;
         private Mouse _virtualMouse;
 
         private void OnEnable()
         {
+            playerInput = FindObjectOfType<PlayerInput>();
             _currentMouse = Mouse.current;
 
             if (_virtualMouse is null)
@@ -57,7 +54,7 @@ namespace UI
                 InputState.Change(_virtualMouse.position, position);
             }
 
-            InputSystem.onAfterUpdate     += UpdateMotion;
+            InputSystem.onAfterUpdate += UpdateMotion;
             playerInput.onControlsChanged += OnControlsChanged;
         }
 
@@ -65,7 +62,7 @@ namespace UI
         {
             if (_virtualMouse is not null && _virtualMouse.added) InputSystem.RemoveDevice(_virtualMouse);
 
-            InputSystem.onAfterUpdate     -= UpdateMotion;
+            InputSystem.onAfterUpdate -= UpdateMotion;
             playerInput.onControlsChanged -= OnControlsChanged;
         }
 

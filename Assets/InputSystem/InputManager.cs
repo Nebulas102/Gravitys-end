@@ -387,7 +387,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ToggleInventory"",
+                    ""name"": ""TriggerInventory"",
                     ""type"": ""Button"",
                     ""id"": ""fa06f646-354d-4546-a61d-ad70a962d98a"",
                     ""expectedControlType"": ""Button"",
@@ -872,8 +872,8 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleInventory"",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""TriggerInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -883,8 +883,8 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleInventory"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""TriggerInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -894,7 +894,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""TogglePauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -905,7 +905,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""TogglePauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -916,7 +916,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""TogglePauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -927,7 +927,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -1024,7 +1024,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
-        m_UI_ToggleInventory = m_UI.FindAction("ToggleInventory", throwIfNotFound: true);
+        m_UI_TriggerInventory = m_UI.FindAction("TriggerInventory", throwIfNotFound: true);
         m_UI_TogglePauseMenu = m_UI.FindAction("TogglePauseMenu", throwIfNotFound: true);
         m_UI_CloseMenu = m_UI.FindAction("CloseMenu", throwIfNotFound: true);
     }
@@ -1177,7 +1177,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightClick;
     private readonly InputAction m_UI_TrackedDevicePosition;
     private readonly InputAction m_UI_TrackedDeviceOrientation;
-    private readonly InputAction m_UI_ToggleInventory;
+    private readonly InputAction m_UI_TriggerInventory;
     private readonly InputAction m_UI_TogglePauseMenu;
     private readonly InputAction m_UI_CloseMenu;
     public struct UIActions
@@ -1194,7 +1194,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         public InputAction @RightClick => m_Wrapper.m_UI_RightClick;
         public InputAction @TrackedDevicePosition => m_Wrapper.m_UI_TrackedDevicePosition;
         public InputAction @TrackedDeviceOrientation => m_Wrapper.m_UI_TrackedDeviceOrientation;
-        public InputAction @ToggleInventory => m_Wrapper.m_UI_ToggleInventory;
+        public InputAction @TriggerInventory => m_Wrapper.m_UI_TriggerInventory;
         public InputAction @TogglePauseMenu => m_Wrapper.m_UI_TogglePauseMenu;
         public InputAction @CloseMenu => m_Wrapper.m_UI_CloseMenu;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
@@ -1236,9 +1236,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTrackedDeviceOrientation;
-                @ToggleInventory.started -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleInventory;
-                @ToggleInventory.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleInventory;
-                @ToggleInventory.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleInventory;
+                @TriggerInventory.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTriggerInventory;
+                @TriggerInventory.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTriggerInventory;
+                @TriggerInventory.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTriggerInventory;
                 @TogglePauseMenu.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTogglePauseMenu;
                 @TogglePauseMenu.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTogglePauseMenu;
                 @TogglePauseMenu.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTogglePauseMenu;
@@ -1279,9 +1279,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 @TrackedDeviceOrientation.started += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.performed += instance.OnTrackedDeviceOrientation;
                 @TrackedDeviceOrientation.canceled += instance.OnTrackedDeviceOrientation;
-                @ToggleInventory.started += instance.OnToggleInventory;
-                @ToggleInventory.performed += instance.OnToggleInventory;
-                @ToggleInventory.canceled += instance.OnToggleInventory;
+                @TriggerInventory.started += instance.OnTriggerInventory;
+                @TriggerInventory.performed += instance.OnTriggerInventory;
+                @TriggerInventory.canceled += instance.OnTriggerInventory;
                 @TogglePauseMenu.started += instance.OnTogglePauseMenu;
                 @TogglePauseMenu.performed += instance.OnTogglePauseMenu;
                 @TogglePauseMenu.canceled += instance.OnTogglePauseMenu;
@@ -1359,7 +1359,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
-        void OnToggleInventory(InputAction.CallbackContext context);
+        void OnTriggerInventory(InputAction.CallbackContext context);
         void OnTogglePauseMenu(InputAction.CallbackContext context);
         void OnCloseMenu(InputAction.CallbackContext context);
     }

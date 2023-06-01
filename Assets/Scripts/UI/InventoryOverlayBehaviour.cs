@@ -23,6 +23,7 @@ namespace UI
             set
             {
                 _inventoryOpened = value;
+
                 OnInventoryToggle?.Invoke(value);
                 overlay.SetActive(inventoryOpened);
                 cursor.SetActive(inventoryOpened);
@@ -44,10 +45,10 @@ namespace UI
         private void OnEnable()
         {
             _inputManager.Enable();
-            _inputManager.UI.ToggleInventory.performed += _ => OnToggleInventory();
+            _inputManager.UI.TriggerInventory.performed += _ => TriggerToggleInventory();
         }
 
-        private void OnToggleInventory()
+        private void TriggerToggleInventory()
         {
             if (PauseMenu.instance.isPaused) return;
 

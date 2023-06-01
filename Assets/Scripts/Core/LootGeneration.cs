@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using ScriptableObjects;
+using UI.Inventory;
 using UnityEngine;
 
 namespace Core

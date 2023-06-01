@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
     [SerializeField] GameObject openedChestGameObject;
 
-    private ChestOpening _ChestOpening;
+    private InputManager _inputManager;
     private bool chestOpeningInput;
 
     public float detectionRadius = 2f; // The radius to detect chests
@@ -17,19 +14,19 @@ public class Chest : MonoBehaviour
 
     private void Awake()
     {
-        _ChestOpening = new ChestOpening();
+        _inputManager = new InputManager();
         playerLayermask = LayerMask.GetMask("Entity");  //Layer the player is on
     }
 
     private void OnEnable()
     {
-        _ChestOpening.Enable();
-        _ChestOpening.Chest.OpenChest.performed += ctx => chestOpeningInput = true;
+        _inputManager.Enable();
+        _inputManager.Player.OpenChest.performed += ctx => chestOpeningInput = true;
     }
 
     private void OnDisable()
     {
-        _ChestOpening.Disable();
+        _inputManager.Disable();
     }
 
     // Update is called once per frame

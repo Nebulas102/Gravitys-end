@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UI;
 using UI.Runtime;
 
 namespace UI
@@ -69,6 +68,4 @@ namespace UI
             PAUSE
         }
     }
-
-
 }

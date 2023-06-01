@@ -14,7 +14,7 @@ namespace UI.Runtime
         [SerializeField]
         public GameObject controlsImage;
 
-        private UIMenus _UIMenus;
+        private InputManager _inputManager;
         private bool pauseMenuToggleInput;
         private bool closeMenuInput;
 
@@ -27,7 +27,7 @@ namespace UI.Runtime
             if (instance == null)
                 instance = this;
 
-            _UIMenus = new UIMenus();
+            _inputManager = new InputManager();
             isPaused = false;
         }
 
@@ -65,14 +65,14 @@ namespace UI.Runtime
 
         private void OnEnable()
         {
-            _UIMenus.Enable();
-            _UIMenus.Menus.TogglePauseMenu.performed += ctx => pauseMenuToggleInput = true;
-            _UIMenus.Menus.CloseMenu.performed += ctx => closeMenuInput = true;
+            _inputManager.Enable();
+            _inputManager.UI.TogglePauseMenu.performed += ctx => pauseMenuToggleInput = true;
+            _inputManager.UI.CloseMenu.performed += ctx => closeMenuInput = true;
         }
 
         private void OnDisable()
         {
-            _UIMenus.Disable();
+            _inputManager.Disable();
         }
 
         public void Resume()

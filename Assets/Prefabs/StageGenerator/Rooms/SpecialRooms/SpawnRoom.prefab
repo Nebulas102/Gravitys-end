@@ -2648,6 +2648,7 @@ GameObject:
   - component: {fileID: 7827856010266620285}
   - component: {fileID: 3796001350833307477}
   - component: {fileID: 3315038585808677987}
+  - component: {fileID: 4974801409968379037}
   m_Layer: 0
   m_Name: Holes (8)
   m_TagString: Untagged
@@ -2733,6 +2734,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4974801409968379037
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744088434679391918}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1835394589314785792
 GameObject:
   m_ObjectHideFlags: 0
@@ -3428,6 +3445,7 @@ GameObject:
   - component: {fileID: 8431653496834110558}
   - component: {fileID: 3186870927653965276}
   - component: {fileID: 4375446841320943285}
+  - component: {fileID: 5752088999725380196}
   m_Layer: 0
   m_Name: Holes (7)
   m_TagString: Untagged
@@ -3513,6 +3531,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &5752088999725380196
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148631495510304157}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2195902422961007761
 GameObject:
   m_ObjectHideFlags: 0
@@ -4401,7 +4435,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7463416167270246132}
-  - component: {fileID: 3660907542584352630}
   m_Layer: 0
   m_Name: Obstacles
   m_TagString: Untagged
@@ -4434,22 +4467,6 @@ Transform:
   m_Father: {fileID: 7131551695991933434}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &3660907542584352630
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2645540776119031861}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &2708985195795520907
 GameObject:
   m_ObjectHideFlags: 0
@@ -4877,6 +4894,7 @@ GameObject:
   - component: {fileID: 596299745167526803}
   - component: {fileID: 623330475509112651}
   - component: {fileID: 7620947782661456985}
+  - component: {fileID: 465199019688147379}
   m_Layer: 0
   m_Name: Holes (9)
   m_TagString: Untagged
@@ -4962,6 +4980,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &465199019688147379
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3077111255411484726}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &3102648779274872865
 GameObject:
   m_ObjectHideFlags: 0
@@ -5858,6 +5892,7 @@ GameObject:
   - component: {fileID: 7324754334206155862}
   - component: {fileID: 2847504902793343608}
   - component: {fileID: 22875950898218814}
+  - component: {fileID: 2238752985436546441}
   m_Layer: 0
   m_Name: Holes
   m_TagString: Untagged
@@ -5943,6 +5978,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &2238752985436546441
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3709826780098116355}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &3767191067841697648
 GameObject:
   m_ObjectHideFlags: 0
@@ -8332,6 +8383,7 @@ GameObject:
   - component: {fileID: 2529808058823851415}
   - component: {fileID: 8221184814776885738}
   - component: {fileID: 8863468624056530482}
+  - component: {fileID: 3649236447682460870}
   m_Layer: 0
   m_Name: Holes (2)
   m_TagString: Untagged
@@ -8417,6 +8469,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &3649236447682460870
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4676393219344749417}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4782003502776305853
 GameObject:
   m_ObjectHideFlags: 0
@@ -11179,6 +11247,7 @@ GameObject:
   - component: {fileID: 8067263650009567871}
   - component: {fileID: 7628429969513924854}
   - component: {fileID: 1441158947362345144}
+  - component: {fileID: 8925021794881568424}
   m_Layer: 0
   m_Name: Holes (1)
   m_TagString: Untagged
@@ -11264,6 +11333,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &8925021794881568424
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6634176435851191393}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &6658116477939719414
 GameObject:
   m_ObjectHideFlags: 0
@@ -12907,6 +12992,7 @@ GameObject:
   - component: {fileID: 8034254144161595508}
   - component: {fileID: 2531884118167490141}
   - component: {fileID: 8612059291063035183}
+  - component: {fileID: 8980769788113111792}
   m_Layer: 0
   m_Name: Holes (6)
   m_TagString: Untagged
@@ -12992,6 +13078,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &8980769788113111792
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396160098384485885}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7445852058848569099
 GameObject:
   m_ObjectHideFlags: 0
@@ -14640,6 +14742,7 @@ GameObject:
   - component: {fileID: 4839412230093829912}
   - component: {fileID: 3886775293627694837}
   - component: {fileID: 5840404797756940470}
+  - component: {fileID: 7972103868756022521}
   m_Layer: 0
   m_Name: Holes (3)
   m_TagString: Untagged
@@ -14725,6 +14828,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7972103868756022521
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8100823132998449847}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8112967945324001789
 GameObject:
   m_ObjectHideFlags: 0
@@ -15350,6 +15469,7 @@ GameObject:
   - component: {fileID: 2069873281729372482}
   - component: {fileID: 1386481904392638125}
   - component: {fileID: 7487952730853681115}
+  - component: {fileID: 4194677393482508542}
   m_Layer: 0
   m_Name: Holes (5)
   m_TagString: Untagged
@@ -15435,6 +15555,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4194677393482508542
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8586288926709352394}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8614598495813866905
 GameObject:
   m_ObjectHideFlags: 0
@@ -16749,6 +16885,7 @@ GameObject:
   - component: {fileID: 6464719139843764304}
   - component: {fileID: 5244906411542045131}
   - component: {fileID: 6317184387323216879}
+  - component: {fileID: 2198453681689417123}
   m_Layer: 0
   m_Name: Holes (4)
   m_TagString: Untagged
@@ -16834,6 +16971,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &2198453681689417123
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9159162209526523831}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &656464551674321008
 PrefabInstance:
   m_ObjectHideFlags: 0

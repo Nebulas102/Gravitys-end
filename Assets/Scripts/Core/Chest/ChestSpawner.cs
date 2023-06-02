@@ -36,11 +36,9 @@ namespace Core.Chest
             {
                 var chestSpawnPointKey = Random.Range(0, chestSpawnPoints.Length);
 
-                _roomPos = gameObject.transform; // 0 0 0
-
                 _spawnPointPos = chestSpawnPoints[chestSpawnPointKey].position;
 
-                Instantiate(chest, _roomPos.TransformPoint(_spawnPointPos), Quaternion.identity);
+                Instantiate(chest, _spawnPointPos, Quaternion.identity);
             }
         }
     }

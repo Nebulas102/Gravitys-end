@@ -9,15 +9,10 @@ public class RangedEnemyBT : BTree
 {
     private EnemyController enemyController;
 
-    protected override void Start()
+    protected override Node SetupTree()
     {
         enemyController = GetComponent<EnemyController>();
 
-        base.Start();
-    }
-
-    protected override Node SetupTree()
-    {
         Node root = new Selector(new List<Node>
         {
             // Retreat sequence

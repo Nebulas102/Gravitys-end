@@ -20,8 +20,7 @@ namespace BehaviorTree.Tasks
         }
 
         public override NodeState Evaluate()
-        {   
-            // Debug.Log(_target.position);
+        {
             var targetPosition = _target.position;
             var transformPosition = _transform.position;
             var playerDistance = Vector3.Distance(targetPosition, transformPosition);

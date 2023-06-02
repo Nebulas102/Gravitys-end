@@ -24,8 +24,12 @@ namespace Controllers
         private Renderer renderer;
         private GameObject[] enemies;
 
+        private BTree behaviorTree;
+
         private void Start()
-        {
+        {   
+            behaviorTree = GetComponent<BTree>();
+
             // See PlayerManager.cs for explanation
             target = PlayerManager.Instance.player.transform;
             agent = GetComponent<NavMeshAgent>();
@@ -36,6 +40,8 @@ namespace Controllers
 
             var o = gameObject;
             Physics.IgnoreLayerCollision(o.layer, o.layer);
+
+            behaviorTree.SetTree();
         }
 
         private void Update()

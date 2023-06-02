@@ -7,12 +7,6 @@ namespace BehaviorTree
         // The root node
         private Node _root = null;
 
-        protected virtual void Start()
-        {
-            // Build the behavior tree on start
-            _root = SetupTree();
-        }
-
         private void Update()
         {
             // If there is a root, evaluate
@@ -25,6 +19,11 @@ namespace BehaviorTree
             // If there is a root, evaluate
             if (_root != null)
                 _root.FixedEvaluate();
+        }
+
+        public virtual void SetTree()
+        {
+            _root = SetupTree();
         }
 
         protected abstract Node SetupTree();

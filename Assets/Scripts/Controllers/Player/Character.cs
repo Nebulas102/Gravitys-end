@@ -1,4 +1,3 @@
-using Core.UI.Inventory;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,7 +5,7 @@ using UnityEngine.InputSystem;
 namespace Controllers.Player
 {
     [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(PlayerInputManager))]
+    [RequireComponent(typeof(InputManager))]
     public class Character : MonoBehaviour
     {
         [Header("Controls")]
@@ -38,6 +37,7 @@ namespace Controllers.Player
         public AttackState attacking;
 
         private GameObject _player;
+        private bool _inventoryOpened;
 
 
         // Start is called before the first frame update
@@ -57,11 +57,13 @@ namespace Controllers.Player
             movementSM.Initialize(standing);
 
             _player = PlayerManager.Instance.player;
+            InventoryOverlayBehaviour.OnInventoryToggle += OnInventoryToggle;
         }
 
         private void Update()
         {
-            if (Inventory.Instance.inventoryOpened || DialogueManager.Instance.dialogueActive) {
+            if (_inventoryOpened || DialogueManager.Instance.dialogueActive)
+            {
                 movementSM.ChangeState(standing);
             }
             else
@@ -69,6 +71,11 @@ namespace Controllers.Player
                 movementSM.currentState.HandleInput();
                 movementSM.currentState.LogicUpdate();
             }
+        }
+
+        private void OnInventoryToggle(bool inventoryOpenend)
+        {
+            _inventoryOpened = inventoryOpenend;
         }
 
         private void FixedUpdate()

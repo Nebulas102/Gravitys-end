@@ -7,33 +7,38 @@ namespace UI
 {
     public class GamepadCursor : MonoBehaviour
     {
+        [Header("Cursor Settings")]
         [SerializeField]
-        private PlayerInput playerInput;
-
-        [SerializeField]
+        [Tooltip("The cursor to move around the screen")]
         private RectTransform cursor;
 
         [SerializeField]
+        [Range(0f, 5000f)]
+        [Tooltip("The speed at which the cursor moves around the screen")]
         private float cursorSpeed = 1000f;
 
+        [Header("Canvas Settings")]
         [SerializeField]
+        [Tooltip("The canvas to anchor the cursor to")]
         private RectTransform canvasRectTransform;
 
         [SerializeField]
+        [Tooltip("The canvas to anchor the cursor to")]
         private Canvas canvas;
 
         [SerializeField]
+        [Tooltip("The padding around the screen to prevent the cursor from going off screen")]
         private float padding = 25f;
 
+        private Mouse _currentMouse = Mouse.current;
+        private string _previousControlScheme = string.Empty;
+        private PlayerInput playerInput;
         private bool _previousMouseState;
         private Mouse _virtualMouse;
-        private Camera _mainCamera;
-        private Mouse _currentMouse;
-        private string _previousControlScheme = string.Empty;
 
         private void OnEnable()
         {
-            _mainCamera = Camera.main;
+            playerInput = FindObjectOfType<PlayerInput>();
             _currentMouse = Mouse.current;
 
             if (_virtualMouse is null)
@@ -64,7 +69,8 @@ namespace UI
         private void UpdateMotion()
         {
             // Check if the virtual mouse and gamepad are available and if the current control scheme is gamepad
-            if (_virtualMouse is null || Gamepad.current is null || playerInput.currentControlScheme != Scheme.GAMEPAD_SCHEME)
+            if (_virtualMouse is null || Gamepad.current is null ||
+                playerInput.currentControlScheme != Scheme.GAMEPAD_SCHEME)
                 return;
 
             // Get the delta value from the left stick of the gamepad and scale it by the cursor speed and delta time
@@ -103,7 +109,7 @@ namespace UI
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 canvasRectTransform,
                 position,
-                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : _mainCamera,
+                null,
                 out var anchoredPosition
             );
             cursor.anchoredPosition = anchoredPosition;
@@ -111,34 +117,25 @@ namespace UI
 
         private void OnControlsChanged(PlayerInput input)
         {
-            // Switch between gamepad and keyboard/mouse control schemes
-            if (input.currentControlScheme == Scheme.KEYBOARD_MOUSE_SCHEME && _previousControlScheme != Scheme.KEYBOARD_MOUSE_SCHEME)
+            switch (input.currentControlScheme)
             {
-                cursor.gameObject.SetActive(false);
-                Cursor.visible = true;
-                _currentMouse.WarpCursorPosition(_virtualMouse.position.ReadValue());
-                _previousControlScheme = Scheme.KEYBOARD_MOUSE_SCHEME;
+                // Switch between gamepad and keyboard/mouse control schemes
+                case Scheme.KEYBOARD_MOUSE_SCHEME when _previousControlScheme != Scheme.KEYBOARD_MOUSE_SCHEME:
+                    Cursor.visible = true;
+                    _currentMouse.WarpCursorPosition(_virtualMouse.position.ReadValue());
+                    _previousControlScheme = Scheme.KEYBOARD_MOUSE_SCHEME;
+                    break;
+                case Scheme.GAMEPAD_SCHEME when _previousControlScheme != Scheme.GAMEPAD_SCHEME:
+                    Cursor.visible = false;
+                    InputState.Change(_virtualMouse.position, _currentMouse.position.ReadValue());
+                    AnchorCursor(_currentMouse.position.ReadValue());
+                    _previousControlScheme = Scheme.GAMEPAD_SCHEME;
+                    break;
             }
-            else if (playerInput.currentControlScheme == Scheme.GAMEPAD_SCHEME && _previousControlScheme != Scheme.GAMEPAD_SCHEME)
-            {
-                cursor.gameObject.SetActive(true);
-                Cursor.visible = false;
-                InputState.Change(_virtualMouse.position, _currentMouse.position.ReadValue());
-                AnchorCursor(_currentMouse.position.ReadValue());
-                _previousControlScheme = Scheme.GAMEPAD_SCHEME;
-            }
-        }
-
-        private void Update()
-        {
-            // Check if the control scheme has changed
-            if (_previousControlScheme != playerInput.currentControlScheme)
-                OnControlsChanged(playerInput);
-            _previousControlScheme = playerInput.currentControlScheme;
         }
     }
 
-    public class Scheme
+    public abstract class Scheme
     {
         public const string GAMEPAD_SCHEME = "Gamepad";
         public const string KEYBOARD_MOUSE_SCHEME = "Keyboard&Mouse";

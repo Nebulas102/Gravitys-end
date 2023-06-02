@@ -21,11 +21,11 @@ namespace UI.Inventory
             ToggleItem(obj.gameObject, obj.icon);
         }
 
-        public void DropItem()
+        public void DropItem(bool spawn = false)
         {
+            if (spawn)
+                item.GetComponent<Item>().Spawn();
             ToggleItem(null, null);
-
-            // TODO: Instantiate the item on the ground
         }
 
         private void ToggleItem(GameObject obj, Sprite sprite)

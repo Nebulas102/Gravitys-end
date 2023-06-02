@@ -58,6 +58,8 @@ namespace Core.Enemy.StageBosses.Stage1
                 _bullet.transform.forward = _bullet.transform.position - transform.position;
             }
 
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossClockShot);
+
             yield return new WaitForSeconds(clockShotInterval);
         }
     }

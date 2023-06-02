@@ -105,5 +105,7 @@ public class EnemyRangeWeapon : MonoBehaviour
 
         newBullet.GetComponent<EnemyBulletBehaviour>().SetDamage(startDamage, endDamage);
         newBullet.GetComponent<EnemyBulletBehaviour>().SetDirection(bulletDirection);
+        
+        SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.EnemyShoots);
     }
 }

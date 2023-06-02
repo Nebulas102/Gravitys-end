@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Controllers.Enemy;
 using Core.Enemy.StageBosses;
 using TMPro;
+using UI;
 using UI.Enemy;
 using UnityEngine;
 using UnityEngine.UI;
@@ -79,8 +80,8 @@ namespace Core.Enemy
                 // Set the next stage as current stage
                 if (_currentHealth <= bossAbilityStages[_currentStageIndex + 1].GetHealhStageActivation())
                 {
-                     _currentBossStage = bossAbilityStages[++_currentStageIndex];
-                     _currentSequenceIndex = 0;
+                    _currentBossStage = bossAbilityStages[++_currentStageIndex];
+                    _currentSequenceIndex = 0;
                 }
             }
         }
@@ -91,7 +92,7 @@ namespace Core.Enemy
             {
                 // Loop boss stages
                 LoopBossStages();
-                
+
                 // Set the current sequence
                 _currentBossSequence = _currentBossStage.GetBossAbilitySequences()[_currentSequenceIndex];
 
@@ -105,7 +106,7 @@ namespace Core.Enemy
                 _currentBossSequence.IncrementAmountOfTimesUsed();
 
                 // Check if we've used the current sequence enough times
-                if (_currentBossSequence.GetAmountOfTimesUsed() !=_currentBossSequence.GetAmountOfTimes()) 
+                if (_currentBossSequence.GetAmountOfTimesUsed() != _currentBossSequence.GetAmountOfTimes())
                     continue;
 
                 // Reset the times used for the current sequence
@@ -140,6 +141,8 @@ namespace Core.Enemy
             {
                 ObjectiveSystem.HandleBossKilled();
                 Destroy(gameObject);
+
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossDies);
             }
         }
 

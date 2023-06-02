@@ -70,10 +70,8 @@ GameObject:
   - component: {fileID: 1833639143392482921}
   - component: {fileID: 3377064755685890508}
   - component: {fileID: 664643548996889862}
-  - component: {fileID: -7383958764956313144}
-  - component: {fileID: -7098186426149874516}
-  - component: {fileID: -421399416462816810}
   - component: {fileID: 6332417103406312445}
+  - component: {fileID: 5150955904277133247}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Item
@@ -147,45 +145,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &-7383958764956313144
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313280574250110163}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.25946653, y: 0.015479455, z: 0.032663282}
-  m_Center: {x: -0.07507186, y: -2.3283064e-10, z: 0}
---- !u!114 &-7098186426149874516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313280574250110163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eccc7f23d4975144933ae552ba2994c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 5a787e6fabda31b458a40269236f5132, type: 2}
-  isInInventory: 0
---- !u!114 &-421399416462816810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313280574250110163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884bc24526d204949aed6ba7fc3ab8c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6332417103406312445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,3 +160,22 @@ MonoBehaviour:
   startDamage: 5
   endDamage: 10
   hitbox: {fileID: 236022328780613678}
+--- !u!114 &5150955904277133247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313280574250110163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 883823951d110ed49bf01ba3798e08a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 890a66f6ea7cb9f48959c911f04f3d28, type: 3}
+  type: 0
+  modifier: 0
+  prefab: {fileID: 1313280574250110163}
+  radius: 1.5
+  meshRenderer: {fileID: 664643548996889862}
+  IsInInventory: 0

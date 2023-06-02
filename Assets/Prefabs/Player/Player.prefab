@@ -422,7 +422,6 @@ GameObject:
   - component: {fileID: 99395234236917975}
   - component: {fileID: 4482070294439889658}
   - component: {fileID: 8640217738828214446}
-  - component: {fileID: 2423374132334498903}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -460,7 +459,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 7ca75df8e1a43464a86e90e6ea590e93, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: a8ab6599c082a8840a3d75a7d81bff1b, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -488,28 +487,68 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: adee1084-34d3-40bb-8da6-b1b2442e6bda
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick]
+    m_ActionId: bff3a771-e64f-40d8-aced-660ad451e840
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e394a64a-bae9-4b0d-ad23-8a758cce07b9
-    m_ActionName: Player/Dash[/Keyboard/space,/XInputControllerWindows/buttonSouth]
+    m_ActionId: 9543bfe2-c943-4e4c-b34e-0c3725fc6d64
+    m_ActionName: Player/Dash[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e8cc9752-9c03-4af1-a98d-28f04b362544
-    m_ActionName: Player/Look[/Mouse/position,/XInputControllerWindows/rightStick]
+    m_ActionId: 9b28b0bb-d42b-4e73-8290-b76388ab3f52
+    m_ActionName: Player/Look[/Mouse/position]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 1d8186da-671a-4a67-ba55-cf52c1bc3783
-    m_ActionName: Player/Attack[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e9e0e3cf-d548-490e-a9bf-c2f9b75cdb4b
+    m_ActionId: 26308c94-e346-4e7f-8f72-44de68a5c529
     m_ActionName: Player/Loot Pickup[/Keyboard/f]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 826b5ffc-0db1-4673-99bd-e1b048d24665
-    m_ActionName: Player/DrawWeapon[/Keyboard/r,/XInputControllerWindows/dpad/up]
+    m_ActionId: e55d7b55-6ebb-4994-aab2-18b8c2967125
+    m_ActionName: Player/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d928cf6a-bdc1-4f45-b073-b336a947e046
+    m_ActionName: Player/DrawWeapon[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 69b08e82-aa75-46dd-8d0f-bcf4cb0d5749
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 24cc05b2-95b9-40b7-a94d-0b51457b7111
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e4b57e08-fd5b-4414-8a2d-f1b6c0893174
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a9a459d3-e3f6-41b6-99b9-b522873d085b
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c9d4f04f-9938-4ce0-833e-e71c37aea052
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: db15fc85-a3e2-49f5-8224-54dab10c1fc0
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c3850ada-cf16-464f-8ae7-392f134fc948
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 143b99f2-3e44-49a7-a051-14cb2faa9392
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6826cc6c-ac29-428c-8b62-506e716e4234
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 793de30e-aa47-4a0a-8fa9-34426840d79d
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -600,22 +639,6 @@ MonoBehaviour:
   weaponHolder: {fileID: 1503709254792651134}
   sheathHolder: {fileID: 9153746418663765294}
   currentWeaponInHand: {fileID: 0}
---- !u!114 &2423374132334498903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781004467383644964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 535c045600c2a6349ae848dd5a8281da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectivesHolder: {fileID: 0}
-  textVerticalMargin: 50
-  objectiveFontSize: 24
-  objectiveHorizontalPosition: -75
 --- !u!1 &872677986746474466
 GameObject:
   m_ObjectHideFlags: 0

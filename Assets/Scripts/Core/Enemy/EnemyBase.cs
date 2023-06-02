@@ -17,6 +17,9 @@ namespace Core.Enemy
         [SerializeField]
         public float health;
 
+        [Tooltip("Is in milliseconds (60f = 1 second)")]
+        public float timeOnDead = 60f;
+
         [SerializeField]
         public GameObject damageDisplay;
 
@@ -27,6 +30,7 @@ namespace Core.Enemy
         public static int enemyKillCounter;
 
         public delegate void EnemyKilledEventHandler(EnemyBase enemy);
+
         public static event EnemyKilledEventHandler OnEnemyKilled;
 
         private void Start()

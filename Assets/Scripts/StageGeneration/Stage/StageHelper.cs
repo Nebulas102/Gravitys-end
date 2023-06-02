@@ -200,8 +200,7 @@ namespace StageGeneration.Stage
 
             data = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(
                 centerCell.gameObject.transform.position,
-                new Vector3(_gridX * _offset, 10, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
-            
+                new Vector3(_gridX * _offset, 30f, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
             NavMesh.AddNavMeshData(data);
         }
 

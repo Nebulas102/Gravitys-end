@@ -1,5 +1,4 @@
 using System.Collections;
-using Core.UI.Inventory;
 using UI;
 using UnityEngine;
 
@@ -33,12 +32,14 @@ namespace Controllers.Player
         private bool _dashInput;
         private GameInput _gameInput;
         private Vector2 _movementInput;
+        private bool _inventoryOpened;
 
         // Start is called before the first frame update
         private void Start()
         {
             _controller = GetComponent<CharacterController>();
             _gameInput = FindObjectOfType<GameInput>();
+            InventoryOverlayBehaviour.OnInventoryToggle += OnInventoryToggle;
         }
 
         // Update is called once per frame
@@ -49,10 +50,15 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            if (Inventory.Instance.inventoryOpened) {
+            if (_inventoryOpened || isDashing)
                 return;
-            }
-            if (!isDashing) HandleDash();
+
+            HandleDash();
+        }
+
+        private void OnInventoryToggle(bool inventoryOpened)
+        {
+            _inventoryOpened = inventoryOpened;
         }
 
         private void HandleInput()
@@ -90,6 +96,7 @@ namespace Controllers.Player
             var dashDir = new Vector3(_movementInput.x, 0, _movementInput.y);
             //makes player move independent of camera rotation (W means north, S means south, etc.)
             dashDir = Quaternion.Euler(0, -45, 0) * dashDir;
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.Dash);
 
             while (dashTimer > 0)
             {
@@ -117,7 +124,8 @@ namespace Controllers.Player
             return dashAvailable;
         }
 
-        public void SetDashAvailable(bool available) {
+        public void SetDashAvailable(bool available)
+        {
             dashAvailable = available;
         }
     }

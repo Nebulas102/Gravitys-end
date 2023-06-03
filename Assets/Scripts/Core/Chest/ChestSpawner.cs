@@ -4,14 +4,11 @@ namespace Core.Chest
 {
     public class ChestSpawner : MonoBehaviour
     {
-        [Range(0f, 1f)]
-        public float chestSpawnChance = 0.15f;
+        [Range(0f, 1f)] public float chestSpawnChance = 0.15f;
 
-        [SerializeField]
-        public Transform[] chestSpawnPoints;
+        [SerializeField] public Transform[] chestSpawnPoints;
 
-        [SerializeField]
-        public GameObject chest;
+        [SerializeField] public GameObject chest;
 
         private bool _chestWillSpawn;
 
@@ -37,6 +34,7 @@ namespace Core.Chest
                 var chestSpawnPointKey = Random.Range(0, chestSpawnPoints.Length - 1);
 
                 _spawnPointPos = chestSpawnPoints[chestSpawnPointKey].position;
+                _spawnPointPos.y = 0.44f;
 
                 Instantiate(chest, _spawnPointPos, Quaternion.identity);
             }

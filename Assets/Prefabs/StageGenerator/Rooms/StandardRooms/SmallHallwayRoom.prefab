@@ -472,7 +472,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 1.4350001, y: 2.5, z: 2.4480002}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.744, y: 2.5, z: 2.4420002}
   m_TimeToStationary: 0.5
@@ -3173,6 +3173,7 @@ GameObject:
   - component: {fileID: 807393159049450576}
   - component: {fileID: 7027195748124784191}
   - component: {fileID: 3926769710175795508}
+  - component: {fileID: 746999425228116475}
   m_Layer: 0
   m_Name: Holes (8)
   m_TagString: Untagged
@@ -3258,6 +3259,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &746999425228116475
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2271473614022673393}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2282678142797929474
 GameObject:
   m_ObjectHideFlags: 0
@@ -4353,7 +4370,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5514028173627784914}
-  - component: {fileID: 5696017626929293225}
   m_Layer: 0
   m_Name: Obstacles
   m_TagString: Untagged
@@ -4379,22 +4395,6 @@ Transform:
   m_Father: {fileID: 4971098927006212938}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &5696017626929293225
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3460633071394340930}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &3466681729953565059
 GameObject:
   m_ObjectHideFlags: 0
@@ -5792,7 +5792,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
@@ -8077,7 +8077,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 1.4350001, y: 2.5, z: 2.4480002}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.744, y: 2.5, z: 2.4420002}
   m_TimeToStationary: 0.5
@@ -10548,6 +10548,7 @@ GameObject:
   - component: {fileID: 4407106100637408168}
   - component: {fileID: 3139289433286968466}
   - component: {fileID: 3032405711984014428}
+  - component: {fileID: 7688586859119855443}
   m_Layer: 0
   m_Name: Holes (7)
   m_TagString: Untagged
@@ -10633,6 +10634,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &7688586859119855443
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8314201667263486832}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8385741247227023555
 GameObject:
   m_ObjectHideFlags: 0
@@ -12080,6 +12097,7 @@ GameObject:
   - component: {fileID: 6221744824021291636}
   - component: {fileID: 7241316094466289659}
   - component: {fileID: 4227224339881509552}
+  - component: {fileID: 878118627053589300}
   m_Layer: 0
   m_Name: Holes (9)
   m_TagString: Untagged
@@ -12165,6 +12183,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &878118627053589300
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8860218860413909410}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8928752840651249328
 GameObject:
   m_ObjectHideFlags: 0
@@ -12718,7 +12752,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 1.4350001, y: 2.5, z: 2.4480002}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.744, y: 2.5, z: 2.4420002}
   m_TimeToStationary: 0.5

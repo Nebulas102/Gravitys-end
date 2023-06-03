@@ -721,6 +721,7 @@ GameObject:
   - component: {fileID: 535496105218957787}
   - component: {fileID: 2013959387367094969}
   - component: {fileID: 15879572829627142}
+  - component: {fileID: 9195983603865519851}
   m_Layer: 0
   m_Name: FloorHoles (4)
   m_TagString: Untagged
@@ -806,6 +807,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &9195983603865519851
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738688560651733746}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &822850938114216830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,7 +1491,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6796350700460121452}
-  - component: {fileID: 6548385623170305499}
   m_Layer: 0
   m_Name: Props
   m_TagString: Untagged
@@ -1518,22 +1534,6 @@ Transform:
   m_Father: {fileID: 3268826731329585868}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &6548385623170305499
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1448420221843837625}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &1529563191394081455
 GameObject:
   m_ObjectHideFlags: 0
@@ -2649,6 +2649,7 @@ GameObject:
   - component: {fileID: 2452408382038144744}
   - component: {fileID: 963653503152600972}
   - component: {fileID: 195014437513549713}
+  - component: {fileID: 4215390334835981630}
   m_Layer: 0
   m_Name: FloorHoles (1)
   m_TagString: Untagged
@@ -2734,6 +2735,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4215390334835981630
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2702795687692765630}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2773660371877263539
 GameObject:
   m_ObjectHideFlags: 0
@@ -2959,6 +2976,7 @@ GameObject:
   - component: {fileID: 1853729781140382770}
   - component: {fileID: 8970129281002378523}
   - component: {fileID: 8124236489594807002}
+  - component: {fileID: 6805586987285666087}
   m_Layer: 0
   m_Name: FloorHoles (5)
   m_TagString: Untagged
@@ -3044,6 +3062,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &6805586987285666087
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2856746063869093768}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2908202660738371899
 GameObject:
   m_ObjectHideFlags: 0
@@ -3305,6 +3339,7 @@ GameObject:
   - component: {fileID: 8236396769011325128}
   - component: {fileID: 2339703482702788641}
   - component: {fileID: 5229824414309604954}
+  - component: {fileID: 471615145799541787}
   m_Layer: 0
   m_Name: FloorHoles (3)
   m_TagString: Untagged
@@ -3390,6 +3425,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &471615145799541787
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2966520928017526984}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &3064875855841737200
 GameObject:
   m_ObjectHideFlags: 0
@@ -6990,7 +7041,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7880543776149888880}
-  - component: {fileID: 1436152157190397824}
   m_Layer: 0
   m_Name: Obstacles
   m_TagString: Untagged
@@ -7019,22 +7069,6 @@ Transform:
   m_Father: {fileID: 3268826731329585868}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &1436152157190397824
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7550281996067561666}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &7572690794507865254
 GameObject:
   m_ObjectHideFlags: 0
@@ -7580,6 +7614,7 @@ GameObject:
   - component: {fileID: 2589474279599268648}
   - component: {fileID: 1103582934594473881}
   - component: {fileID: 2510694799494184911}
+  - component: {fileID: 1876194933317980781}
   m_Layer: 0
   m_Name: FloorHoles
   m_TagString: Untagged
@@ -7665,6 +7700,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &1876194933317980781
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8303093580518836828}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8624275281455127296
 GameObject:
   m_ObjectHideFlags: 0
@@ -8439,6 +8490,7 @@ GameObject:
   - component: {fileID: 949955650995076930}
   - component: {fileID: 1778243638413357319}
   - component: {fileID: 2103319232827737337}
+  - component: {fileID: 4609045037603946147}
   m_Layer: 0
   m_Name: FloorHoles (2)
   m_TagString: Untagged
@@ -8524,6 +8576,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4609045037603946147
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9073591628813471974}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &9079619030854210133
 GameObject:
   m_ObjectHideFlags: 0

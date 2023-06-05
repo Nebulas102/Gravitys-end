@@ -10,15 +10,15 @@ namespace BehaviorTree.Tasks
     {
         private Transform _transform;
         private Transform _target;
-        private float _minDistance;
+        private float _retreatDistance;
         private LayerMask _obstacleMask;
         private NavMeshAgent _agent;
 
-        public TaskRetreat(Transform transform, Transform target, float minDistance, LayerMask obstacleMask, NavMeshAgent agent)
+        public TaskRetreat(Transform transform, Transform target, float retreatDistance, LayerMask obstacleMask, NavMeshAgent agent)
         {
             _transform = transform;
             _target = target;
-            _minDistance = minDistance;
+            _retreatDistance = retreatDistance;
             _obstacleMask = obstacleMask;
             _agent = agent;
         }
@@ -29,14 +29,14 @@ namespace BehaviorTree.Tasks
             var transformPosition = _transform.position;
             var playerDistance = Vector3.Distance(targetPosition, transformPosition);
 
-            if (playerDistance <= _minDistance)
+            if (playerDistance <= _retreatDistance)
             {
                 Vector3 retreatDirection = _transform.position - _target.position;
-                Vector3 retreatDestination = _transform.position + retreatDirection.normalized * _minDistance;
+                Vector3 retreatDestination = _transform.position + retreatDirection.normalized * _retreatDistance;
 
                 // Perform a raycast to check if the retreat destination is obstructed
                 RaycastHit hit;
-                if (Physics.Raycast(retreatDestination, -retreatDirection.normalized, out hit, _minDistance, _obstacleMask))
+                if (Physics.Raycast(retreatDestination, -retreatDirection.normalized, out hit, _retreatDistance, _obstacleMask))
                 {
                     // Debug.DrawRay(retreatDestination, -retreatDirection.normalized, Color.cyan);
                     // If there's an obstacle, find an alternate point nearby that is not obstructed

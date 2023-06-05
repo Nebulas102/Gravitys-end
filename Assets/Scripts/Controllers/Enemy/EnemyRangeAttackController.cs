@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class EnemyRangeAttackController : MonoBehaviour
 {
+    public float attackRange;
     public GameObject rangeWeaponObject;
     
     [HideInInspector]
@@ -29,15 +30,15 @@ public class EnemyRangeAttackController : MonoBehaviour
 
     private void Update()
     {
-        playerDistance = Vector3.Distance(player.transform.position, transform.position);
+        // playerDistance = Vector3.Distance(player.transform.position, transform.position);
 
-        if(playerDistance > enemyController.lookRadius)
-        {
-            allowShooting = false;
-        }
-        else
-        {
-            allowShooting = true;
-        }
+        // if(playerDistance > attackRange)
+        // {
+        //     allowShooting = false;
+        // }
+        // else
+        // {
+        //     allowShooting = true;
+        // }
     }
 }

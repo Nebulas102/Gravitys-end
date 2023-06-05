@@ -9,7 +9,7 @@ namespace Controllers
     public class EnemyController : MonoBehaviour
     {
         public float lookRadius = 10f;
-        public float minDistance = 2f;
+        public float retreatDistance = 2f;
         public Material hitMaterial;
         public LayerMask obstacleMask;
 
@@ -82,7 +82,7 @@ namespace Controllers
                     // Checks distance between enemies
                     var enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);
 
-                    if (!(enemyDistance < minDistance)) continue;
+                    if (!(enemyDistance < retreatDistance)) continue;
 
                     var direction = transform.position - enemy.transform.position;
                     direction.y = 0f; // don't move up/down

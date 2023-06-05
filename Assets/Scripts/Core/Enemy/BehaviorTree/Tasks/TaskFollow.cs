@@ -19,8 +19,13 @@ namespace BehaviorTree.Tasks
 
         public override NodeState Evaluate()
         {
-            _agent.SetDestination(_target.position);
-            state = NodeState.RUNNING;
+            bool destinationValid = _agent.SetDestination(_target.position);
+            
+            if (destinationValid)
+                state = NodeState.RUNNING;
+            else
+                state = NodeState.FAILURE;
+            
             return state;
         }
     }

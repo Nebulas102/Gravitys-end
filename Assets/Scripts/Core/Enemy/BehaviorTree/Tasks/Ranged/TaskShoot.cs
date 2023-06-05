@@ -14,10 +14,9 @@ namespace BehaviorTree.Tasks
             _enemyRangeAttackController = enemyRangeAttackController;
         }
 
-        public override NodeState FixedEvaluate()
+        public override NodeState Evaluate()
         {
             _enemyRangeAttackController.GetRangeWeapon().PerformShot();
-
             state = NodeState.RUNNING;
             return state;
         }

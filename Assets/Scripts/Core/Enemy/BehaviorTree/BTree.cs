@@ -15,14 +15,7 @@ namespace BehaviorTree
             if (_root != null)
                 _root.Evaluate();
         }
-
-        private void FixedUpdate()
-        {
-            // If there is a root, evaluate
-            if (_root != null)
-                _root.FixedEvaluate();
-        }
-
+        
         public virtual void SetTree()
         {
             _root = SetupTree();

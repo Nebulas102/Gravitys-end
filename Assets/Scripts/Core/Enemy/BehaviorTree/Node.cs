@@ -44,6 +44,5 @@ namespace BehaviorTree
         // Each derived-Node can implement its own evaluation function
         // and have an unique role in the behavior tree
         public virtual NodeState Evaluate() => NodeState.FAILURE; // (Update)
-        public virtual NodeState FixedEvaluate() => NodeState.FAILURE; // (FixedUpdate)
     }
 }

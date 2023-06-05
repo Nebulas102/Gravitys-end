@@ -10,6 +10,7 @@ namespace Controllers
     {
         public float lookRadius = 10f;
         public float retreatDistance = 2f;
+        public float rotationSpeed = 5f;
         public Material hitMaterial;
         public LayerMask obstacleMask;
 
@@ -111,7 +112,7 @@ namespace Controllers
             var direction = (target.position - transform.position).normalized;
             var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 4f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
 
         private IEnumerator HitFeedback()

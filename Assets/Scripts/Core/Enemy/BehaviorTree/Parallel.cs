@@ -11,71 +11,29 @@ namespace BehaviorTree
 
         public override NodeState Evaluate()
         {
-            bool allChildrenSucceeded = true;
-            bool anyChildRunning = false;
-
-            foreach (Node child in children)
+            bool anyChildIsRunning = false;
+            int nFailedChildren = 0;
+            foreach (Node node in children)
             {
-                NodeState childState = child.Evaluate();
-
-                if (childState == NodeState.FAILURE)
+                switch (node.Evaluate())
                 {
-                    allChildrenSucceeded = false;
+                    case NodeState.FAILURE:
+                        nFailedChildren++;
+                        continue;
+                    case NodeState.SUCCESS:
+                        continue;
+                    case NodeState.RUNNING:
+                        anyChildIsRunning = true;
+                        continue;
+                    default:
+                        state = NodeState.SUCCESS;
+                        return state;
                 }
-                else if (childState == NodeState.RUNNING)
-                {
-                    anyChildRunning = true;
-                }
             }
-
-            if (allChildrenSucceeded)
-            {
-                state = NodeState.SUCCESS;
-            }
-            else if (anyChildRunning)
-            {
-                state = NodeState.RUNNING;
-            }
-            else
-            {
+            if (nFailedChildren == children.Count)
                 state = NodeState.FAILURE;
-            }
-
-            return state;
-        }
-
-        public override NodeState FixedEvaluate()
-        {
-            bool allChildrenSucceeded = true;
-            bool anyChildRunning = false;
-
-            foreach (Node child in children)
-            {
-                NodeState childState = child.Evaluate();
-
-                if (childState == NodeState.FAILURE)
-                {
-                    allChildrenSucceeded = false;
-                }
-                else if (childState == NodeState.RUNNING)
-                {
-                    anyChildRunning = true;
-                }
-            }
-
-            if (allChildrenSucceeded)
-            {
-                state = NodeState.SUCCESS;
-            }
-            else if (anyChildRunning)
-            {
-                state = NodeState.RUNNING;
-            }
             else
-            {
-                state = NodeState.FAILURE;
-            }
-
+                state = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
             return state;
         }
     }

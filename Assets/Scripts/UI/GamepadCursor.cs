@@ -15,7 +15,7 @@ namespace UI
         [SerializeField]
         [Range(0f, 5000f)]
         [Tooltip("The speed at which the cursor moves around the screen")]
-        private float cursorSpeed = 1000f;
+        private float cursorSpeed = 750f;
 
         [Header("Canvas Settings")]
         [SerializeField]

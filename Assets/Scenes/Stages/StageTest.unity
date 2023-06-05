@@ -1399,8 +1399,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3783087186824774747, guid: 4df86b64be68ae34bb37a20607ca94ca, type: 3}
+      propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 1094434352}
+    - target: {fileID: 3783087186824774747, guid: 4df86b64be68ae34bb37a20607ca94ca, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 3783087186824774747, guid: 4df86b64be68ae34bb37a20607ca94ca, type: 3}
+      propertyPath: m_NotificationBehavior
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3289094227791648678, guid: 4df86b64be68ae34bb37a20607ca94ca, type: 3}
+    - {fileID: 3783087186824774747, guid: 4df86b64be68ae34bb37a20607ca94ca, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4df86b64be68ae34bb37a20607ca94ca, type: 3}
 --- !u!4 &411717630 stripped
 Transform:
@@ -6454,6 +6467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryMenuFirstSelected: {fileID: 0}
   pauseMenuFirstSelected: {fileID: 0}
+  itemPickupPrompt: {fileID: 0}
 --- !u!4 &2146664461
 Transform:
   m_ObjectHideFlags: 0

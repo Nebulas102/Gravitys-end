@@ -1,7 +1,7 @@
-using StageGeneration.Stage;
+using Core.StageGeneration.Stage;
 using UnityEngine;
 
-namespace StageGeneration.Rooms
+namespace Core.StageGeneration.Rooms
 {
     public class Door : MonoBehaviour
     {

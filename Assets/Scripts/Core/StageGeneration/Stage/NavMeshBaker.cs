@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace StageGeneration.Stage
+namespace Core.StageGeneration.Stage
 {
     public class NavMeshBaker : MonoBehaviour
     {

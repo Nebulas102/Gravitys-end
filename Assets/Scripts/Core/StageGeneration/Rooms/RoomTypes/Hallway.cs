@@ -1,4 +1,4 @@
-namespace StageGeneration.Rooms.RoomTypes
+namespace Core.StageGeneration.Rooms.RoomTypes
 {
     public class Hallway : Room
     {

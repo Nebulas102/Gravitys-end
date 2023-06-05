@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using StageGeneration.Rooms.RoomTypes;
-using StageGeneration.Rooms.Util;
-using StageGeneration.Stage;
+using Core.StageGeneration.Rooms.RoomTypes;
+using Core.StageGeneration.Rooms.Util;
+using Core.StageGeneration.Stage;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace StageGeneration.Rooms
+namespace Core.StageGeneration.Rooms
 {
     public class RoomGenerator
     {
@@ -16,7 +16,7 @@ namespace StageGeneration.Rooms
 
         private int hallwayDoorCount;
         private int currentHallwayDoorCount = 0;
-        
+
         private int startDoorsLeftCount;
         private int startDoorsRightCount;
 
@@ -30,7 +30,7 @@ namespace StageGeneration.Rooms
             var weightTotal = StageHelper.GetRooms().Sum(h => h.GetComponent<Room>().GetWeight());
 
             hallwayDoorCount = mapHallways.Count * 4;
-            startDoorsLeftCount =  hallwayDoorCount / 2 - 4;
+            startDoorsLeftCount = hallwayDoorCount / 2 - 4;
             startDoorsRightCount = hallwayDoorCount - 4;
 
             foreach (var hallway in mapHallways)
@@ -52,7 +52,7 @@ namespace StageGeneration.Rooms
         }
 
         private void SpawnKeyRoom(bool _initialSpawned, GameObject _spawnDoor)
-        {   
+        {
             _currentRoom = StageHelper.GetKeyRoom();
 
             Cell doorCell = null;
@@ -113,7 +113,7 @@ namespace StageGeneration.Rooms
             {
                 // If there is no key room spawned in a branch
                 if (!keyRoomInBranch)
-                {   
+                {
                     // Pick only a door at the end of the right or left hallway
                     if (currentHallwayDoorCount >= startDoorsLeftCount && currentHallwayDoorCount <= (startDoorsLeftCount + 4)
                         || currentHallwayDoorCount >= startDoorsRightCount && currentHallwayDoorCount <= (startDoorsRightCount + 4))
@@ -136,7 +136,7 @@ namespace StageGeneration.Rooms
                     if (placementSide == StageHelper.RoomDirections.UNDEFINED) continue;
 
                     currentSpawnDoor = _previousRoom.GetComponent<Room>()
-                        .GetDoors().SingleOrDefault(d => d.GetComponent<Door>().GetDirection() == placementSide);    
+                        .GetDoors().SingleOrDefault(d => d.GetComponent<Door>().GetDirection() == placementSide);
 
                     if (currentSpawnDoor is not null) doorCell = currentSpawnDoor.GetComponent<Door>().cell;
                 }

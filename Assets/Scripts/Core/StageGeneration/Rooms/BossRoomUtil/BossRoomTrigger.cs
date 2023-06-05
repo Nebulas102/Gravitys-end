@@ -1,8 +1,8 @@
 using Cinemachine;
-using StageGeneration.Rooms.RoomTypes;
+using Core.StageGeneration.Rooms.RoomTypes;
 using UnityEngine;
 
-namespace StageGeneration.Rooms.BossRoomUtil
+namespace Core.StageGeneration.Rooms.BossRoomUtil
 {
     public class BossRoomTrigger : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace StageGeneration
+namespace Core.StageGeneration
 {
     public class FogOfWar : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace StageGeneration.Rooms.RoomTypes
+namespace Core.StageGeneration.Rooms.RoomTypes
 {
     public class SpawnRoom : Room
     {

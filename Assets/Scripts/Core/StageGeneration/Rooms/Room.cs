@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using StageGeneration.Rooms.RoomTypes;
-using StageGeneration.Stage;
+using Core.StageGeneration.Rooms.RoomTypes;
+using Core.StageGeneration.Stage;
 using UnityEngine;
 
-namespace StageGeneration.Rooms
+namespace Core.StageGeneration.Rooms
 {
     public abstract class Room : MonoBehaviour
     {
@@ -154,13 +154,13 @@ namespace StageGeneration.Rooms
 
             //Loop through cells based on start position and length of room
             for (var i = startPosX; i <= endPosX; i++)
-            for (var j = startPosZ; j <= endPosZ; j++)
-            {
-                var cell = StageHelper.GetCells()
-                    .SingleOrDefault(c => c.x == i && c.z == j && c.isOccupied == false);
+                for (var j = startPosZ; j <= endPosZ; j++)
+                {
+                    var cell = StageHelper.GetCells()
+                        .SingleOrDefault(c => c.x == i && c.z == j && c.isOccupied == false);
 
-                if (cell is null) canPlace = false;
-            }
+                    if (cell is null) canPlace = false;
+                }
 
             return canPlace;
         }
@@ -192,22 +192,22 @@ namespace StageGeneration.Rooms
 
             //Loop through cells based on start position and length of room
             for (var i = startPosX; i <= endPosX; i++)
-            for (var j = startPosZ; j <= endPosZ; j++)
-            {
-                var cell = StageHelper.GetCells()
-                    .SingleOrDefault(c => c.x == i && c.z == j && c.isOccupied == false);
-
-                if (cell is null)
-                    Debug.Log("No cell x" + i + " z" + j);
-                else
+                for (var j = startPosZ; j <= endPosZ; j++)
                 {
-                    cell.gameObject.GetComponent<MeshRenderer>().material.color =
-                        room.GetComponent<StandardRoom>() ? Color.cyan : Color.red;
-                    cell.isOccupied = true;
+                    var cell = StageHelper.GetCells()
+                        .SingleOrDefault(c => c.x == i && c.z == j && c.isOccupied == false);
 
-                    roomCells.Add(cell);
+                    if (cell is null)
+                        Debug.Log("No cell x" + i + " z" + j);
+                    else
+                    {
+                        cell.gameObject.GetComponent<MeshRenderer>().material.color =
+                            room.GetComponent<StandardRoom>() ? Color.cyan : Color.red;
+                        cell.isOccupied = true;
+
+                        roomCells.Add(cell);
+                    }
                 }
-            }
 
             cells = roomCells;
         }

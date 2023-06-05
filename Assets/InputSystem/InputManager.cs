@@ -793,7 +793,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""82b19d33-8430-47ab-8cdc-4f24a697545b"",
                     ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Click"",
@@ -872,7 +872,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""ToggleInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -883,7 +883,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""ToggleInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -894,7 +894,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""TogglePauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -905,7 +905,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/p"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""TogglePauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -916,7 +916,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""TogglePauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -927,7 +927,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""CloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

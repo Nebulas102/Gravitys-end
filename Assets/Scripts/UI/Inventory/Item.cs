@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace UI.Inventory
@@ -32,18 +33,32 @@ namespace UI.Inventory
         [Tooltip("The mesh renderer of the item")]
         private MeshRenderer meshRenderer;
 
+        [SerializeField]
+        private float verticalMotionSpeed = 4f; // Adjust the speed as desired
+
+        [SerializeField]
+        private float verticalMotionAmplitude = 0.5f; // Adjust the vertical motion amplitude as desired
+
         [HideInInspector]
         public bool IsInInventory;
+
+        public delegate void ItemPickupEventHandler(bool canPickup);
+        public static event ItemPickupEventHandler OnItemPickup;
 
         private GameObject _player;
         private GameInput _gameInput;
         private bool _inventoryOpened;
+        private Vector3 originalPosition;
+        private bool isPlayerNearby;
+        private bool isShowingPrompt;
 
         private void Awake()
         {
             _player = GameObject.FindGameObjectWithTag("Player");
             _gameInput = FindObjectOfType<GameInput>();
             InventoryOverlayBehaviour.OnInventoryToggle += ToggleInventory;
+            
+            originalPosition = transform.position;
         }
 
         public void ToggleInventory(bool inventoryOpened)
@@ -54,6 +69,11 @@ namespace UI.Inventory
         private void Update()
         {
             Pickup();
+        }
+
+        private void FixedUpdate()
+        {
+            ShowPrompt();
         }
 
         public void Spawn(Vector3 position)
@@ -90,6 +110,47 @@ namespace UI.Inventory
             InventoryManager.instance.PickupItem(this);
             meshRenderer.enabled = false;
             IsInInventory = true;
+        }
+
+        public void ShowPrompt()
+        {
+            // Check if a player is nearby the item
+            if (IsPlayerNearby())
+            {
+                if (!isPlayerNearby)
+                {
+                    isPlayerNearby = true;
+
+                    // Start showing prompt, store current position as original position
+                    originalPosition = transform.position;
+                    isShowingPrompt = true;
+                    OnItemPickup?.Invoke(true);
+                }
+
+                // Calculate the vertical offset based on a smooth oscillation using Mathf.Sin
+                float verticalOffset = Mathf.Sin(Time.time * verticalMotionSpeed) * verticalMotionAmplitude;
+
+                // Set the target position with the vertical offset applied
+                Vector3 targetPosition = originalPosition + Vector3.up * verticalOffset;
+
+                // Clamp the target position to stay at or above y = 0
+                targetPosition.y = Mathf.Max(targetPosition.y, 0f);
+
+                // Smoothly move the item towards the target position using Lerp
+                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * verticalMotionSpeed);
+            }
+            else
+            {
+                if (isPlayerNearby)
+                {
+                    isPlayerNearby = false;
+
+                    // Stop showing prompt, reset item position
+                    transform.position = originalPosition;
+                    isShowingPrompt = false;
+                    OnItemPickup?.Invoke(false);
+                }
+            }
         }
     }
 

@@ -23,6 +23,7 @@ namespace UI
             set
             {
                 _inventoryOpened = value;
+
                 OnInventoryToggle?.Invoke(value);
                 overlay.SetActive(inventoryOpened);
                 cursor.SetActive(inventoryOpened);

@@ -32,8 +32,6 @@ namespace UI.Tokens
         {
             if (!TokenManager.instance.Refund(invested > 0)) return;
 
-            Debug.Log(invested);
-
             tokens[--invested].enabled = false;
             tokens[invested].sprite = emptyTokenImage;
             tokens[invested].enabled = true;

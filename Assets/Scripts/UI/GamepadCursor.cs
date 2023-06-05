@@ -32,13 +32,13 @@ namespace UI
 
         private Mouse _currentMouse = Mouse.current;
         private string _previousControlScheme = string.Empty;
-        private PlayerInput playerInput;
+        private PlayerInput _playerInput;
         private bool _previousMouseState;
         private Mouse _virtualMouse;
 
         private void OnEnable()
         {
-            playerInput = FindObjectOfType<PlayerInput>();
+            _playerInput = FindObjectOfType<PlayerInput>();
             _currentMouse = Mouse.current;
 
             if (_virtualMouse is null)
@@ -46,7 +46,7 @@ namespace UI
             else if (!_virtualMouse.added)
                 InputSystem.AddDevice(_virtualMouse);
 
-            InputUser.PerformPairingWithDevice(_virtualMouse, playerInput.user);
+            InputUser.PerformPairingWithDevice(_virtualMouse, _playerInput.user);
 
             if (cursor is not null)
             {
@@ -55,7 +55,7 @@ namespace UI
             }
 
             InputSystem.onAfterUpdate += UpdateMotion;
-            playerInput.onControlsChanged += OnControlsChanged;
+            _playerInput.controlsChangedEvent.AddListener(OnControlsChanged);
         }
 
         private void OnDisable()
@@ -63,19 +63,18 @@ namespace UI
             if (_virtualMouse is not null && _virtualMouse.added) InputSystem.RemoveDevice(_virtualMouse);
 
             InputSystem.onAfterUpdate -= UpdateMotion;
-            playerInput.onControlsChanged -= OnControlsChanged;
+            _playerInput.controlsChangedEvent.RemoveListener(OnControlsChanged);
         }
 
         private void UpdateMotion()
         {
             // Check if the virtual mouse and gamepad are available and if the current control scheme is gamepad
             if (_virtualMouse is null || Gamepad.current is null ||
-                playerInput.currentControlScheme != Scheme.GAMEPAD_SCHEME)
+                _playerInput.currentControlScheme != Scheme.GAMEPAD_SCHEME)
                 return;
 
             // Get the delta value from the left stick of the gamepad and scale it by the cursor speed and delta time
-            var deltaValue = Gamepad.current.leftStick.ReadValue();
-            deltaValue *= cursorSpeed * Time.deltaTime;
+            var deltaValue = Gamepad.current.leftStick.ReadValue() * cursorSpeed * Time.deltaTime;
 
             // Get the current position of the virtual mouse and calculate the new position
             var currentPosition = _virtualMouse.position.ReadValue();
@@ -88,16 +87,6 @@ namespace UI
             // Update the virtual mouse position and delta
             InputState.Change(_virtualMouse.position, newPosition);
             InputState.Change(_virtualMouse.delta, deltaValue);
-
-            // Check if the A button on the gamepad is pressed and update the virtual mouse button state accordingly
-            var aButtonIsPressed = Gamepad.current.aButton.IsPressed();
-            if (_previousMouseState != aButtonIsPressed)
-            {
-                _virtualMouse.CopyState<MouseState>(out var mouseState);
-                mouseState.WithButton(MouseButton.Left, aButtonIsPressed);
-                InputState.Change(_virtualMouse, mouseState);
-                _previousMouseState = aButtonIsPressed;
-            }
 
             // Anchor the cursor to the canvas
             AnchorCursor(newPosition);
@@ -115,8 +104,9 @@ namespace UI
             cursor.anchoredPosition = anchoredPosition;
         }
 
-        private void OnControlsChanged(PlayerInput input)
+        public void OnControlsChanged(PlayerInput input)
         {
+            Debug.Log("Controls changed");
             switch (input.currentControlScheme)
             {
                 // Switch between gamepad and keyboard/mouse control schemes
@@ -132,6 +122,8 @@ namespace UI
                     _previousControlScheme = Scheme.GAMEPAD_SCHEME;
                     break;
             }
+
+            cursor.gameObject.SetActive(!Cursor.visible);
         }
     }
 

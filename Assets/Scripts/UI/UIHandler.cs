@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UI.Runtime;
+using UI.Inventory;
 
 namespace UI
 {
@@ -14,12 +15,16 @@ namespace UI
         [SerializeField]
         private GameObject pauseMenuFirstSelected;
 
+        [SerializeField]
+        private GameObject itemPickupPrompt;
+
         private UIState currentMenuState = UIState.NONE;
 
         private void Start()
         {
             InventoryOverlayBehaviour.OnInventoryToggle += OnInventoryToggle;
             PauseMenu.OnPauseToggle += OnPauseToggle;
+            Item.OnItemPickup += OnShowPickupPrompt;
         }
 
         private void OnEnable()
@@ -31,6 +36,11 @@ namespace UI
         {
             m_EventSystem.SetSelectedGameObject(null);
             currentMenuState = UIState.NONE;
+        }
+
+        private void OnDestroy()
+        {
+            Item.OnItemPickup -= OnShowPickupPrompt;
         }
 
         private void OnInventoryToggle(bool inventoryOpened)
@@ -59,6 +69,11 @@ namespace UI
                 m_EventSystem.SetSelectedGameObject(null);
                 currentMenuState = UIState.NONE;
             }
+        }
+
+        private void OnShowPickupPrompt(bool show)
+        {
+            itemPickupPrompt.SetActive(!itemPickupPrompt.activeSelf);
         }
 
         private enum UIState

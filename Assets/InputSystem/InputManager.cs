@@ -73,15 +73,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DrawWeapon"",
-                    ""type"": ""Button"",
-                    ""id"": ""d928cf6a-bdc1-4f45-b073-b336a947e046"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""OpenChest"",
                     ""type"": ""Button"",
                     ""id"": ""f1c518f4-04b8-4627-879f-0a39bee849cc"",
@@ -248,28 +239,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c702e3f9-043c-4fe2-aad7-b0eed2d5b43f"",
-                    ""path"": ""<Keyboard>/r"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DrawWeapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""73368742-bed8-489c-8e7e-32fbb53d0d7c"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""DrawWeapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""aca46a08-694a-49b0-bc72-baa4a845b9ff"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
@@ -282,7 +251,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f7f86594-f014-40b1-8c03-2537ae9f0338"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -793,7 +762,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""82b19d33-8430-47ab-8cdc-4f24a697545b"",
                     ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Click"",
@@ -1010,7 +979,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_LootPickup = m_Player.FindAction("Loot Pickup", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_DrawWeapon = m_Player.FindAction("DrawWeapon", throwIfNotFound: true);
         m_Player_OpenChest = m_Player.FindAction("OpenChest", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1091,7 +1059,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_LootPickup;
     private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_DrawWeapon;
     private readonly InputAction m_Player_OpenChest;
     public struct PlayerActions
     {
@@ -1102,7 +1069,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @LootPickup => m_Wrapper.m_Player_LootPickup;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
-        public InputAction @DrawWeapon => m_Wrapper.m_Player_DrawWeapon;
         public InputAction @OpenChest => m_Wrapper.m_Player_OpenChest;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1128,9 +1094,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
                 @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
-                @DrawWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawWeapon;
-                @DrawWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawWeapon;
-                @DrawWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawWeapon;
                 @OpenChest.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenChest;
                 @OpenChest.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenChest;
                 @OpenChest.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnOpenChest;
@@ -1153,9 +1116,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 @Attack.started += instance.OnAttack;
                 @Attack.performed += instance.OnAttack;
                 @Attack.canceled += instance.OnAttack;
-                @DrawWeapon.started += instance.OnDrawWeapon;
-                @DrawWeapon.performed += instance.OnDrawWeapon;
-                @DrawWeapon.canceled += instance.OnDrawWeapon;
                 @OpenChest.started += instance.OnOpenChest;
                 @OpenChest.performed += instance.OnOpenChest;
                 @OpenChest.canceled += instance.OnOpenChest;
@@ -1344,7 +1304,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnLootPickup(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
-        void OnDrawWeapon(InputAction.CallbackContext context);
         void OnOpenChest(InputAction.CallbackContext context);
     }
     public interface IUIActions

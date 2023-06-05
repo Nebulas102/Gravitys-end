@@ -6,7 +6,6 @@ namespace Controllers.Player
 {
     public class CombatState : State
     {
-        bool sheathWeapon;
         float playerSpeed;
         bool attack;
 
@@ -20,7 +19,7 @@ namespace Controllers.Player
         {
             base.Enter();
 
-            sheathWeapon = false;
+
             attack = false;
             input = Vector2.zero;
 
@@ -31,11 +30,6 @@ namespace Controllers.Player
         public override void HandleInput()
         {
             base.HandleInput();
-
-            if (drawWeaponAction.triggered)
-            {
-                sheathWeapon = true;
-            }
 
             if (attackAction.triggered)
             {
@@ -57,14 +51,6 @@ namespace Controllers.Player
             base.LogicUpdate();
 
             PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude, 0.2f, Time.deltaTime);
-
-            if (sheathWeapon)
-            {
-                PlayerAnimator.Instance._animator.SetTrigger("sheathWeapon");
-                EquipmentSystem.Instance.Invoke("SheathWeapon", 1f);
-                
-                stateMachine.ChangeState(character.standing);
-            }
 
             if (attack)
             {

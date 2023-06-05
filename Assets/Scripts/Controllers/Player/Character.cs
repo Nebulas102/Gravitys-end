@@ -18,7 +18,7 @@ namespace Controllers.Player
         public PlayerInput playerInput;
 
         [HideInInspector]
-        public Camera camera;
+        public Camera _camera;
 
         [HideInInspector]
         public Vector3 lookAtPosition;
@@ -46,7 +46,7 @@ namespace Controllers.Player
             controller = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
             playerInput = GetComponent<PlayerInput>();
-            camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+            _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
 
             movementSM = new StateMachine();
             standing = new StandingState(this, movementSM);
@@ -80,21 +80,21 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            //Look at mouse
-            Vector2 mousePosition = playerInput.actions["Look"].ReadValue<Vector2>();
+            // //Look at mouse
+            // Vector2 mousePosition = playerInput.actions["Look"].ReadValue<Vector2>();
 
-            Ray ray = camera.ScreenPointToRay(mousePosition);
-            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-            float rayDistance;
+            // Ray ray = _camera.ScreenPointToRay(mousePosition);
+            // Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+            // float rayDistance;
 
-            if (groundPlane.Raycast(ray, out rayDistance))
-            {
-                Vector3 pointToLook = ray.GetPoint(rayDistance);
+            // if (groundPlane.Raycast(ray, out rayDistance))
+            // {
+            //     Vector3 pointToLook = ray.GetPoint(rayDistance);
 
-                lookAtPosition = new Vector3(pointToLook.x, transform.position.y, pointToLook.z);
+            //     lookAtPosition = new Vector3(pointToLook.x, transform.position.y, pointToLook.z);
 
-                _player.transform.LookAt(lookAtPosition);
-            }
+            //     _player.transform.LookAt(lookAtPosition);
+            // }
 
             movementSM.currentState.PhysicsUpdate();
         }

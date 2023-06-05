@@ -74,8 +74,7 @@ namespace UI
                 return;
 
             // Get the delta value from the left stick of the gamepad and scale it by the cursor speed and delta time
-            var deltaValue = Gamepad.current.leftStick.ReadValue();
-            deltaValue *= cursorSpeed * Time.deltaTime;
+            var deltaValue = Gamepad.current.leftStick.ReadValue() * cursorSpeed * Time.deltaTime;
 
             // Get the current position of the virtual mouse and calculate the new position
             var currentPosition = _virtualMouse.position.ReadValue();
@@ -88,16 +87,6 @@ namespace UI
             // Update the virtual mouse position and delta
             InputState.Change(_virtualMouse.position, newPosition);
             InputState.Change(_virtualMouse.delta, deltaValue);
-
-            // Check if the A button on the gamepad is pressed and update the virtual mouse button state accordingly
-            var aButtonIsPressed = Gamepad.current.aButton.IsPressed();
-            if (_previousMouseState != aButtonIsPressed)
-            {
-                _virtualMouse.CopyState<MouseState>(out var mouseState);
-                mouseState.WithButton(MouseButton.Left, aButtonIsPressed);
-                InputState.Change(_virtualMouse, mouseState);
-                _previousMouseState = aButtonIsPressed;
-            }
 
             // Anchor the cursor to the canvas
             AnchorCursor(newPosition);

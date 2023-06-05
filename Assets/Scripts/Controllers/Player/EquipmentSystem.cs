@@ -6,12 +6,7 @@ namespace Controllers.Player
     {
         public static EquipmentSystem Instance;
 
-
-        [SerializeField] GameObject weaponHolder;
-        [SerializeField] GameObject sheathHolder;
-
         public GameObject currentWeaponInHand;
-        // GameObject currentWeaponInSheath;
 
         private void Awake()
         {
@@ -31,17 +26,6 @@ namespace Controllers.Player
             currentWeaponInHand.name = "CurrentWeaponInHand";
 
             currentWeaponInHand.SetActive(false);
-        }
-
-        public void DrawWeapon()
-        {
-            SetWeaponHolder(weaponHolder.transform);
-
-        }
-
-        public void SheathWeapon()
-        {
-            SetWeaponHolder(sheathHolder.transform);
         }
 
         private void SetWeaponHolder(Transform holder)

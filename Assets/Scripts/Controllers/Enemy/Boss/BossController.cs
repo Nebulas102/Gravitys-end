@@ -1,6 +1,6 @@
 using System.Collections;
 using Core.Enemy;
-using StageGeneration.Rooms.RoomTypes;
+using Core.StageGeneration.Rooms.RoomTypes;
 using UnityEngine;
 using UnityEngine.AI;
 

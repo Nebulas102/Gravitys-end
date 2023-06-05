@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Core;
 using Core.Chest;
-using StageGeneration.Rooms;
-using StageGeneration.Rooms.RoomTypes;
-using StageGeneration.Rooms.Util;
+using Core.StageGeneration.Rooms;
+using Core.StageGeneration.Rooms.RoomTypes;
+using Core.StageGeneration.Rooms.Util;
 using UnityEngine;
 
-namespace StageGeneration.Stage
+namespace Core.StageGeneration.Stage
 {
     public class StageGenerator : MonoBehaviour
     {
@@ -75,8 +74,8 @@ namespace StageGeneration.Stage
 
             //Loop through the X and Z to create the grid
             for (var i = 0; i < gridX; i++)
-            for (var j = 0; j < gridZ; j++)
-                SpawnCell(i, j);
+                for (var j = 0; j < gridZ; j++)
+                    SpawnCell(i, j);
 
             StageHelper.SetGridX(gridX);
             StageHelper.SetGridZ(gridZ);
@@ -98,7 +97,7 @@ namespace StageGeneration.Stage
             var _spawnRoomObject = SpawnRoom();
             var hallway = _spawnRoomObject.GetComponent<SpawnRoom>().bossRoomHallway;
             var _spawnRoom = _spawnRoomObject.GetComponent<Room>();
-            
+
             float posX = _spawnRoom.transform.position.x;
             var posZ = Mathf.RoundToInt((_spawnRoom.transform.position.z + _spawnRoom.sizeZ / 2) + (hallway.GetComponent<Room>().sizeZ / 2));
 
@@ -120,10 +119,10 @@ namespace StageGeneration.Stage
             var _spawnRoom = initialRoom;
 
             //Counts for each side and not total
-            var hallwayXlengthLeft = (Mathf.RoundToInt(gridX / 2)) - (int)(spawnRoom.GetComponent<Room>().sizeX / offset) - 
+            var hallwayXlengthLeft = (Mathf.RoundToInt(gridX / 2)) - (int)(spawnRoom.GetComponent<Room>().sizeX / offset) -
                                 ((int)(hallwayEndLeft.GetComponent<Room>().sizeX / offset));
 
-            var hallwayXlengthRight = (Mathf.RoundToInt(gridX / 2)) - (int)(spawnRoom.GetComponent<Room>().sizeX / offset) - 
+            var hallwayXlengthRight = (Mathf.RoundToInt(gridX / 2)) - (int)(spawnRoom.GetComponent<Room>().sizeX / offset) -
                                 ((int)(hallwayEndRight.GetComponent<Room>().sizeX / offset));
 
             Room latestHallway = null;
@@ -248,7 +247,7 @@ namespace StageGeneration.Stage
             room.name = "Spawn Room";
 
             room.GetComponent<Room>().GetDoors().ForEach(d => d.SetActive(false));
-            
+
             //currently open for testing, needs later a condition when the door may open
             room.GetComponent<SpawnRoom>().bossDoor.SetActive(false);
 
@@ -303,25 +302,25 @@ namespace StageGeneration.Stage
 
             //Loop through cells based on start position and length of room
             for (var i = startPosX; i <= endPosX; i++)
-            for (var j = startPosZ; j <= endPosZ; j++)
-            {
-                var cell = cells.SingleOrDefault(c => c.x == i && c.z == j && !c.isOccupied);
-
-                if (cell is null)
-                    Debug.Log("No cell x" + i + " z" + j);
-                else
+                for (var j = startPosZ; j <= endPosZ; j++)
                 {
-                    if (roomScript.GetComponent<StandardRoom>())
-                        cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
-                    else if (roomScript.GetComponent<SpawnRoom>())
-                        cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.yellow;
-                    else
-                        cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
-                    cell.isOccupied = true;
+                    var cell = cells.SingleOrDefault(c => c.x == i && c.z == j && !c.isOccupied);
 
-                    roomCells.Add(cell);
+                    if (cell is null)
+                        Debug.Log("No cell x" + i + " z" + j);
+                    else
+                    {
+                        if (roomScript.GetComponent<StandardRoom>())
+                            cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
+                        else if (roomScript.GetComponent<SpawnRoom>())
+                            cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.yellow;
+                        else
+                            cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+                        cell.isOccupied = true;
+
+                        roomCells.Add(cell);
+                    }
                 }
-            }
 
             return roomCells;
         }

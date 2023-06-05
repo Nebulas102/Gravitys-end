@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using StageGeneration.Rooms;
+using Core.StageGeneration.Rooms;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-namespace StageGeneration.Stage
+namespace Core.StageGeneration.Stage
 {
     public class StageHelper : MonoBehaviour
     {

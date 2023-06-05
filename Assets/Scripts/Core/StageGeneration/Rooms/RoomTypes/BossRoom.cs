@@ -1,7 +1,7 @@
 using Core.Enemy;
 using UnityEngine;
 
-namespace StageGeneration.Rooms.RoomTypes
+namespace Core.StageGeneration.Rooms.RoomTypes
 {
     public class BossRoom : Room
     {

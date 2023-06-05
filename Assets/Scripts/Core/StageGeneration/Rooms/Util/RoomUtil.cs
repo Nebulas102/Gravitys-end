@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace StageGeneration.Rooms.Util
+namespace Core.StageGeneration.Rooms.Util
 {
     public static class RoomUtil
     {

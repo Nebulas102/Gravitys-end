@@ -26,7 +26,7 @@ public class MeleeEnemyBT : BTree
                 new Parallel(new List<Node>
                 {
                     // Is player in attack range
-                    new CheckPlayerInAttackRange(),
+                    // new CheckPlayerInAttackRange(),
                     // perform melee attack at player
                     new TaskMeleeAttack()
                 })

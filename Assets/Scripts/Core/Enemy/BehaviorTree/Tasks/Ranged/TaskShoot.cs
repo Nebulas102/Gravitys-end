@@ -7,20 +7,19 @@ namespace BehaviorTree.Tasks
 {
     public class TaskShoot : Node
     {   
-        private Transform _target;
+        private EnemyRangeAttackController _enemyRangeAttackController;
 
-        public override NodeState Evaluate()
+        public TaskShoot(EnemyRangeAttackController enemyRangeAttackController)
         {
-            playerDistance = Vector3.Distance(player.transform.position, transform.position);
+            _enemyRangeAttackController = enemyRangeAttackController;
+        }
 
-            if (playerDistance > enemyController.lookRadius)
-            {
-                allowShooting = false;
-            }
-            else
-            {
-                allowShooting = true;
-            }
+        public override NodeState FixedEvaluate()
+        {
+            _enemyRangeAttackController.GetRangeWeapon().PerformShot();
+
+            state = NodeState.RUNNING;
+            return state;
         }
     }
 }

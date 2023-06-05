@@ -43,5 +43,40 @@ namespace BehaviorTree
 
             return state;
         }
+
+        public override NodeState FixedEvaluate()
+        {
+            bool allChildrenSucceeded = true;
+            bool anyChildRunning = false;
+
+            foreach (Node child in children)
+            {
+                NodeState childState = child.Evaluate();
+
+                if (childState == NodeState.FAILURE)
+                {
+                    allChildrenSucceeded = false;
+                }
+                else if (childState == NodeState.RUNNING)
+                {
+                    anyChildRunning = true;
+                }
+            }
+
+            if (allChildrenSucceeded)
+            {
+                state = NodeState.SUCCESS;
+            }
+            else if (anyChildRunning)
+            {
+                state = NodeState.RUNNING;
+            }
+            else
+            {
+                state = NodeState.FAILURE;
+            }
+
+            return state;
+        }
     }
 }

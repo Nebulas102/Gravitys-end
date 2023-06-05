@@ -28,5 +28,27 @@ namespace BehaviorTree
             state = NodeState.FAILURE;
             return state;
         }
+
+        public override NodeState FixedEvaluate()
+        {
+            foreach (Node node in children)
+            {
+                switch (node.Evaluate())
+                {
+                    case NodeState.FAILURE:
+                        continue;
+                    case NodeState.SUCCESS:
+                        state = NodeState.SUCCESS;
+                        return state;
+                    case NodeState.RUNNING:
+                        state = NodeState.RUNNING;
+                        return state;
+                    default:
+                        continue;
+                }
+            }
+            state = NodeState.FAILURE;
+            return state;
+        }
     }
 }

@@ -82,16 +82,13 @@ public class EnemyRangeWeapon : MonoBehaviour
         timeSinceLastShot += Time.deltaTime;
     }
 
-    private void FixedUpdate()
+    public void PerformShot()
     {
-        if (gameObject.transform.root.GetComponent<EnemyRangeAttackController>().allowShooting)
+        if (Physics.Raycast(bulletOutput.transform.position, transform.TransformDirection(Vector3.back), out hit, maxDistance))
         {
-            if (Physics.Raycast(bulletOutput.transform.position, transform.TransformDirection(Vector3.back), out hit, maxDistance))
+            if (hit.transform.CompareTag("Player"))
             {
-                if (hit.transform.CompareTag("Player"))
-                {
-                    Shoot();
-                }
+                Shoot();
             }
         }
     }

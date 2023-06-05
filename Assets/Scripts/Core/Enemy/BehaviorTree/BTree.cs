@@ -6,6 +6,8 @@ namespace BehaviorTree
     {
         // The root node
         private Node _root = null;
+        // Previous node state
+        protected NodeState previousState;
 
         private void Update()
         {

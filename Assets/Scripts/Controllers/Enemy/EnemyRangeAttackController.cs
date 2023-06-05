@@ -11,8 +11,6 @@ public class EnemyRangeAttackController : MonoBehaviour
     public GameObject rangeWeaponObject;
     
     [HideInInspector]
-    public bool allowShooting;
-    [HideInInspector]
     public float playerDistance;
 
     private EnemyBase enemyBase;
@@ -28,17 +26,8 @@ public class EnemyRangeAttackController : MonoBehaviour
         rangeWeapon = rangeWeaponObject.GetComponent<EnemyRangeWeapon>();
     }
 
-    private void Update()
+    public EnemyRangeWeapon GetRangeWeapon()
     {
-        // playerDistance = Vector3.Distance(player.transform.position, transform.position);
-
-        // if(playerDistance > attackRange)
-        // {
-        //     allowShooting = false;
-        // }
-        // else
-        // {
-        //     allowShooting = true;
-        // }
+        return rangeWeapon;
     }
 }

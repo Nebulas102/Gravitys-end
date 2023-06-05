@@ -37,11 +37,9 @@ namespace Controllers.Player
         {
             if (sprint) {
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude + 0.15f, 0.1f, Time.deltaTime);
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.Walking);
             }
             else {
                 stateMachine.ChangeState(character.standing);
-                SoundEffectsManager.instance.StopSoundEffect(SoundEffectsManager.SoundEffect.Walking);
             }
         }
 

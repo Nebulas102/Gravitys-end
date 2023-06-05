@@ -61,7 +61,6 @@ public class SoundEffectsManager : MonoBehaviour
         soundEffects.Add(SoundEffect.PunchingAir, punchingAir);
         soundEffects.Add(SoundEffect.ChestOpening, chestOpening);
         soundEffects.Add(SoundEffect.GunPickup, gunPickup);
-        soundEffects.Add(SoundEffect.Walking, walkingSound);
         soundEffects.Add(SoundEffect.BossShoots, bossShoots);
         soundEffects.Add(SoundEffect.BossDies, bossDies);
         soundEffects.Add(SoundEffect.Dash, dashingSound);
@@ -73,17 +72,7 @@ public class SoundEffectsManager : MonoBehaviour
         if (soundEffects.ContainsKey(soundEffectType))
         {
             AudioClip soundEffect = soundEffects[soundEffectType];
-
-            if (soundEffectType == SoundEffect.Walking && !isWalkingPlaying)
-            {
-                soundEffectSource.PlayOneShot(soundEffect);
-                isWalkingPlaying = true;
-                StartCoroutine(WaitForWalkingSoundToEnd(soundEffect.length));
-            }
-            else if (soundEffectType != SoundEffect.Walking)
-            {
-                soundEffectSource.PlayOneShot(soundEffect);
-            }
+            soundEffectSource.PlayOneShot(soundEffect);
         }
         else
         {
@@ -93,26 +82,12 @@ public class SoundEffectsManager : MonoBehaviour
 
     public void StopSoundEffect(SoundEffect soundEffectType)
     {
-        if (soundEffectType == SoundEffect.Walking)
-        {
-            if (isWalkingPlaying)
-            {
-                soundEffectSource.Stop();
-                isWalkingPlaying = false;
-            }
-        }
-        // Add more cases to handle other sound effect types if needed
+            soundEffectSource.Stop();
     }
 
     public void SetSoundEffectsVolume(float volume)
     {
         soundEffectSource.volume = volume;
-    }
-
-    private System.Collections.IEnumerator WaitForWalkingSoundToEnd(float clipLength)
-    {
-        yield return new WaitForSeconds(clipLength);
-        isWalkingPlaying = false;
     }
 
     public enum SoundEffect
@@ -126,7 +101,6 @@ public class SoundEffectsManager : MonoBehaviour
         PunchingAir,
         ChestOpening,
         GunPickup,
-        Walking,
         BossShoots,
         BossClockShot,
         BossDies,

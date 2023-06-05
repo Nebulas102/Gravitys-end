@@ -42,7 +42,7 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
                 gameObject.SetActive(false);
 
                 // Play the boss music
-                BackgroundMusicManager.SwitchToBossBackgroundMusic();
+                // BackgroundMusicManager.SwitchToBossBackgroundMusic();
             }
         }
 

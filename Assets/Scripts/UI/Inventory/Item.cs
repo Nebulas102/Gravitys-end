@@ -81,13 +81,18 @@ namespace UI.Inventory
             IsInInventory = false;
             meshRenderer.enabled = true;
             gameObject.transform.position = position;
+            OnItemPickup?.Invoke(false);
+            isShowingPrompt = false;
         }
 
         public void Spawn()
         {
+            // this.gameObject.SetActive(true);
             IsInInventory = false;
             meshRenderer.enabled = true;
             gameObject.transform.position = _player.transform.position;
+            OnItemPickup?.Invoke(false);
+            isShowingPrompt = false;
         }
 
         public float GetModifier()
@@ -98,6 +103,7 @@ namespace UI.Inventory
         public bool IsPlayerNearby()
         {
             if (_player is null) return false;
+            if (this.meshRenderer.enabled == false) return false;
 
             var distance = Vector3.Distance(transform.position, _player.transform.position);
             return distance <= radius;
@@ -110,8 +116,8 @@ namespace UI.Inventory
             InventoryManager.instance.PickupItem(this);
             meshRenderer.enabled = false;
             IsInInventory = true;
-            this.gameObject.SetActive(false);
             OnItemPickup?.Invoke(false);
+            isShowingPrompt = false;
         }
 
         public void ShowPrompt()
@@ -125,8 +131,8 @@ namespace UI.Inventory
 
                     // Start showing prompt, store current position as original position
                     originalPosition = transform.position;
-                    isShowingPrompt = true;
                     OnItemPickup?.Invoke(true);
+                    isShowingPrompt = true;
                 }
 
                 // Calculate the vertical offset based on a smooth oscillation using Mathf.Sin
@@ -148,9 +154,9 @@ namespace UI.Inventory
                     isPlayerNearby = false;
 
                     // Stop showing prompt, reset item position
-                    transform.position = originalPosition;
-                    isShowingPrompt = false;
+                    // transform.position = originalPosition;
                     OnItemPickup?.Invoke(false);
+                    isShowingPrompt = false;
                 }
             }
         }

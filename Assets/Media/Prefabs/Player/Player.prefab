@@ -227,7 +227,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3357355433393599820}
-  - component: {fileID: 5879345192023916831}
   - component: {fileID: 2818501734216326601}
   - component: {fileID: 6961144122747922320}
   - component: {fileID: 99395234236917975}
@@ -259,125 +258,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5879345192023916831
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781004467383644964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: a8ab6599c082a8840a3d75a7d81bff1b, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Assets.Scripts.Controllers.PlayerMovement.PlayerMovementController,
-          Assembly-CSharp
-        m_MethodName: OnDeviceChange
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: bff3a771-e64f-40d8-aced-660ad451e840
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9543bfe2-c943-4e4c-b34e-0c3725fc6d64
-    m_ActionName: Player/Dash[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9b28b0bb-d42b-4e73-8290-b76388ab3f52
-    m_ActionName: Player/Look[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 26308c94-e346-4e7f-8f72-44de68a5c529
-    m_ActionName: Player/Loot Pickup[/Keyboard/f]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e55d7b55-6ebb-4994-aab2-18b8c2967125
-    m_ActionName: Player/Attack[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 69b08e82-aa75-46dd-8d0f-bcf4cb0d5749
-    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 24cc05b2-95b9-40b7-a94d-0b51457b7111
-    m_ActionName: UI/Submit[/Keyboard/enter]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e4b57e08-fd5b-4414-8a2d-f1b6c0893174
-    m_ActionName: UI/Cancel[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a9a459d3-e3f6-41b6-99b9-b522873d085b
-    m_ActionName: UI/Point[/Mouse/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c9d4f04f-9938-4ce0-833e-e71c37aea052
-    m_ActionName: UI/Click[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: db15fc85-a3e2-49f5-8224-54dab10c1fc0
-    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c3850ada-cf16-464f-8ae7-392f134fc948
-    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 143b99f2-3e44-49a7-a051-14cb2faa9392
-    m_ActionName: UI/RightClick[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 6826cc6c-ac29-428c-8b62-506e716e4234
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 793de30e-aa47-4a0a-8fa9-34426840d79d
-    m_ActionName: UI/TrackedDeviceOrientation
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f1c518f4-04b8-4627-879f-0a39bee849cc
-    m_ActionName: Player/OpenChest[/Keyboard/q]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: fa06f646-354d-4546-a61d-ad70a962d98a
-    m_ActionName: UI/ToggleInventory[/Keyboard/e]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 773d7ce2-c690-4c70-84c5-ea732d44842f
-    m_ActionName: UI/TogglePauseMenu[/Keyboard/p,/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 55d1ecc8-4125-4b32-8974-a7bf08e2d50f
-    m_ActionName: UI/CloseMenu
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!143 &2818501734216326601
 CharacterController:
   m_ObjectHideFlags: 0
@@ -410,7 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 6
   controller: {fileID: 2818501734216326601}
-  playerInput: {fileID: 5879345192023916831}
+  playerInput: {fileID: 0}
   _camera: {fileID: 0}
   lookAtPosition: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}

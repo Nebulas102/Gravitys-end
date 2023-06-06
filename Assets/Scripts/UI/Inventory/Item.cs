@@ -39,6 +39,13 @@ namespace UI.Inventory
         [SerializeField]
         private float verticalMotionAmplitude = 0.5f; // Adjust the vertical motion amplitude as desired
 
+        [SerializeField]
+        private float rotationSpeed = 2f; // Adjust the rotation speed as desired
+
+        [SerializeField]
+        private float rotationAmplitude = 65f; // Adjust the rotation amplitude as desired
+
+
         [HideInInspector]
         public bool IsInInventory;
 
@@ -81,13 +88,18 @@ namespace UI.Inventory
             IsInInventory = false;
             meshRenderer.enabled = true;
             gameObject.transform.position = position;
+            isPlayerNearby = true;
+            OnItemPickup?.Invoke(false);
         }
 
         public void Spawn()
         {
+            // this.gameObject.SetActive(true);
             IsInInventory = false;
             meshRenderer.enabled = true;
             gameObject.transform.position = _player.transform.position;
+            isPlayerNearby = true;
+            OnItemPickup?.Invoke(false);
         }
 
         public float GetModifier()
@@ -98,6 +110,7 @@ namespace UI.Inventory
         public bool IsPlayerNearby()
         {
             if (_player is null) return false;
+            if (this.meshRenderer.enabled == false) return false;
 
             var distance = Vector3.Distance(transform.position, _player.transform.position);
             return distance <= radius;
@@ -110,7 +123,7 @@ namespace UI.Inventory
             InventoryManager.instance.PickupItem(this);
             meshRenderer.enabled = false;
             IsInInventory = true;
-            this.gameObject.SetActive(false);
+            isPlayerNearby = false;
             OnItemPickup?.Invoke(false);
         }
 
@@ -125,8 +138,8 @@ namespace UI.Inventory
 
                     // Start showing prompt, store current position as original position
                     originalPosition = transform.position;
-                    isShowingPrompt = true;
                     OnItemPickup?.Invoke(true);
+                    isShowingPrompt = true;
                 }
 
                 // Calculate the vertical offset based on a smooth oscillation using Mathf.Sin
@@ -140,6 +153,15 @@ namespace UI.Inventory
 
                 // Smoothly move the item towards the target position using Lerp
                 transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * verticalMotionSpeed);
+
+                // Calculate the rotation angle based on a smooth rotation using Mathf.Sin
+                float rotationAngle = Mathf.Sin(Time.time * rotationSpeed) * rotationAmplitude;
+
+                // Create a quaternion representing the rotation around the Y-axis
+                Quaternion targetRotation = Quaternion.Euler(0f, rotationAngle, 0f);
+
+                // Smoothly rotate the item towards the target rotation using Slerp
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
             }
             else
             {
@@ -148,9 +170,9 @@ namespace UI.Inventory
                     isPlayerNearby = false;
 
                     // Stop showing prompt, reset item position
-                    transform.position = originalPosition;
-                    isShowingPrompt = false;
+                    // transform.position = originalPosition;
                     OnItemPickup?.Invoke(false);
+                    isShowingPrompt = false;
                 }
             }
         }

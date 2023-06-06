@@ -14,6 +14,7 @@ namespace Controllers.Player
         public InputAction moveAction;
         public InputAction lookAction;
         public InputAction attackAction;
+        public InputAction pickupAction;
 
 
 
@@ -25,11 +26,13 @@ namespace Controllers.Player
             moveAction = character.playerInput.actions["Move"];
             lookAction = character.playerInput.actions["Look"];
             attackAction = character.playerInput.actions["Attack"];
+            pickupAction = character.playerInput.actions["Loot Pickup"];
             
         }
 
         public virtual void Enter()
         {
+            // Debug.Log("enter state: " + this.ToString());
         }
 
         public virtual void HandleInput()

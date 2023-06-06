@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class EnemyMeleeAttackController : MonoBehaviour
 {
-    [SerializeField]
-    private float attackCooldown;
+    public float attackCooldown = 1f;
+    public float attackRange = 1f;
 
     private EnemyBase _enemyBase;
 
@@ -15,6 +15,7 @@ public class EnemyMeleeAttackController : MonoBehaviour
 
     private float _nextAttackTime;
     private GameObject _player;
+    private EnemyMeleeWeapon _enemyMeleeWeapon;
 
     private void Start()
     {
@@ -24,16 +25,15 @@ public class EnemyMeleeAttackController : MonoBehaviour
         _player = PlayerManager.Instance.player;
     }
 
-    public void Attack()
+    public void PerformMeleeAttack()
     {
+        // return if its still on cooldown
         if (!(Time.time > _nextAttackTime)) return;
 
-        PerformAttack();
-        _nextAttackTime = Time.time + attackCooldown;
-    }
+        _enemyMeleeWeapon.AllowHitbox();
+        _enemyMeleeWeapon.MeleeAttack();
+        _enemyMeleeWeapon.DisAllowHitbox();
 
-    private void PerformAttack()
-    {
-        //Do animation for attack
+        _nextAttackTime = Time.time + attackCooldown;
     }
 }

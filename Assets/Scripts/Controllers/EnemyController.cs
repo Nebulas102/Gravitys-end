@@ -68,14 +68,14 @@ namespace Controllers
             // Face the player
             FaceTarget();
 
-            if (distance <= agent.stoppingDistance)
-            {
-                // If melee enemy
-                if (gameObject.GetComponent<EnemyMeleeAttackController>() != null)
-                {
-                    gameObject.GetComponent<EnemyMeleeAttackController>().Attack();
-                }
-            }
+            // if (distance <= agent.stoppingDistance)
+            // {
+            //     // If melee enemy
+            //     if (gameObject.GetComponent<EnemyMeleeAttackController>() != null)
+            //     {
+            //         gameObject.GetComponent<EnemyMeleeAttackController>().Attack();
+            //     }
+            // }
 
             foreach (var enemy in enemies)
                 if (enemy != gameObject) // don't compare to itself

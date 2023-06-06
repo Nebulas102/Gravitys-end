@@ -8,29 +8,29 @@ using UnityEngine;
 public class MeleeEnemyBT : BTree
 {
     private EnemyController enemyController;
+    private EnemyMeleeAttackController enemyMeleeAttackController;
 
     protected override Node SetupTree()
     {
         enemyController = GetComponent<EnemyController>();
+        enemyMeleeAttackController = GetComponent<EnemyMeleeAttackController>();
 
         Node root = new Selector(new List<Node>
         {
+            // Attack player sequence
+            new Sequence(new List<Node>
+            {
+                new CheckPlayerInAttackRange(enemyMeleeAttackController.attackRange, enemyController.target, enemyController.transform),
+                new TaskMeleeAttack(enemyMeleeAttackController)
+            }),
             // Follow player sequence
             new Sequence(new List<Node>
             {
                 // Is Player in range
                 new CheckPlayerInRange(enemyController.transform, enemyController.target, enemyController.lookRadius),
                 // Follow the player
-                new TaskFollow(enemyController.target, enemyController.agent),
-                // While in attack range, attack
-                new Parallel(new List<Node>
-                {
-                    // Is player in attack range
-                    // new CheckPlayerInAttackRange(),
-                    // perform melee attack at player
-                    new TaskMeleeAttack()
-                })
-            }),
+                new TaskFollow(enemyController.target, enemyController.agent)
+            })
         });
 
         return root;

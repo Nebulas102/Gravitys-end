@@ -6,9 +6,18 @@ namespace BehaviorTree.Tasks
 {
     public class TaskMeleeAttack : Node
     {
+        private EnemyMeleeAttackController _enemyMeleeAttackController;
+
+        public TaskMeleeAttack(EnemyMeleeAttackController enemyMeleeAttackController)
+        {
+            _enemyMeleeAttackController = enemyMeleeAttackController;
+        }
+
         public override NodeState Evaluate()
         {
-            return base.Evaluate();
+            _enemyMeleeAttackController.PerformMeleeAttack();
+            state = NodeState.RUNNING;
+            return state;
         }
     }
 }

@@ -17,7 +17,7 @@ public class RangedEnemyBT : BTree
 
         Node root = new Selector(new List<Node>
         {
-            // Retreat sequence
+            // Retreat parallel
             new Parallel(new List<Node>
             {
                 // While retreating from the player also shoot
@@ -36,7 +36,7 @@ public class RangedEnemyBT : BTree
                     new TaskShoot(enemyRangeAttackController)
                 })
             }),
-            // Follow player sequence
+            // Follow player parrallel
             new Parallel(new List<Node>
             {
                 // While following the player shoot also
@@ -55,16 +55,6 @@ public class RangedEnemyBT : BTree
                     new TaskShoot(enemyRangeAttackController)
                 })
             }),
-            // Attack player sequence
-            // new Sequence(new List<Node>
-            // {
-            //     // Is Player in range
-            //     new CheckPlayerInRange(enemyController.transform, enemyController.target, enemyController.lookRadius),
-            //     // Is player in attack range
-            //     new CheckPlayerInAttackRange(enemyRangeAttackController.attackRange, enemyController.target, enemyController.transform),
-            //     // Shoot at player
-            //     new TaskShoot(enemyRangeAttackController)
-            // })
         });
 
         return root;

@@ -1990,7 +1990,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1124457979270596017}
   m_LocalRotation: {x: 0.31598538, y: -0.3596048, z: 0.13088542, w: 0.8681629}
-  m_LocalPosition: {x: 6.61354, y: 7.2316103, z: -5.981648}
+  m_LocalPosition: {x: 6.61354, y: 7.1916103, z: -5.981648}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2020,7 +2020,7 @@ MonoBehaviour:
   m_Follow: {fileID: 2849516267097304380}
   m_Lens:
     FieldOfView: 60.000004
-    OrthographicSize: 6.3
+    OrthographicSize: 6.8
     NearClipPlane: -10
     FarClipPlane: 5000
     Dutch: 0
@@ -5721,7 +5721,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3700901901126135123}
   m_LocalRotation: {x: 0.31598538, y: -0.3596048, z: 0.13088542, w: 0.8681629}
-  m_LocalPosition: {x: 6.61354, y: 7.2316103, z: -5.981648}
+  m_LocalPosition: {x: 6.61354, y: 7.1916103, z: -5.981648}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5755,7 +5755,7 @@ Camera:
   far clip plane: 5000
   field of view: 60.000004
   orthographic: 1
-  orthographic size: 6.3
+  orthographic size: 6.8
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -16899,7 +16899,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3357355433393599820, guid: 4ff2625869bd9e444ad22904ce8da413, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: 3357355433393599820, guid: 4ff2625869bd9e444ad22904ce8da413, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16937,6 +16937,10 @@ PrefabInstance:
       propertyPath: startHealth
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 4889987813417104584, guid: 4ff2625869bd9e444ad22904ce8da413, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b9c1fab3f8814e54286adb8967a820af, type: 2}
     - target: {fileID: 6471943198707085301, guid: 4ff2625869bd9e444ad22904ce8da413, type: 3}
       propertyPath: m_Controller
       value: 

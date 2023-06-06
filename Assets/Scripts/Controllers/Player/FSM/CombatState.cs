@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Controllers.Player
 {
     public class CombatState : State
     {
-        float playerSpeed;
-        bool attack;
+        private bool pickup;
+        private float playerSpeed;
+        private bool attack;
 
         public CombatState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
@@ -18,28 +17,19 @@ namespace Controllers.Player
         public override void Enter()
         {
             base.Enter();
-
-
             attack = false;
             input = Vector2.zero;
 
             velocity = character.playerVelocity;
             playerSpeed = character.playerSpeed;
+            // PlayerAnimator.Instance._animator.SetBool("combatting", true);
         }
 
         public override void HandleInput()
         {
             base.HandleInput();
 
-            if (attackAction.triggered)
-            {
-                attack = true;
-
-                if (EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>())
-                {
-                    EquipmentSystem.Instance.currentWeaponInHand.GetComponent<MeleeWeapon>().AllowHitbox();
-                }
-            }
+            if (attackAction.triggered) attack = true;
 
             input = moveAction.ReadValue<Vector2>();
             velocity = new Vector3(input.x, 0, input.y);
@@ -49,9 +39,8 @@ namespace Controllers.Player
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-
-            PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude, 0.2f, Time.deltaTime);
-
+            PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude + 0.15f, 0.1f, Time.deltaTime);
+            
             if (attack)
             {
                 PlayerAnimator.Instance._animator.SetTrigger("attack");

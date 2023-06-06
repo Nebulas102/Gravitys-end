@@ -12,7 +12,7 @@ namespace UI.Inventory
         private InventorySlot equippedArmorSlot;
 
         [SerializeField]
-        private InventorySlot equippedWeaponSlot;
+        public InventorySlot equippedWeaponSlot;
 
         [Header("Inventory Slots")]
         [SerializeField]

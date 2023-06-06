@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Controllers.Player;
+using UI.Inventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,7 +27,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (playerManager != null)
         {
-            if (playerManager.player.GetComponent<Character>().movementSM.currentState == playerManager.player.GetComponent<Character>().attacking)
+            if (playerManager.player.GetComponent<Character>().movementSM.currentState == playerManager.player.GetComponent<Character>().combatting)
             {
                 attackAction = playerManager.player.GetComponent<Character>().movementSM.currentState.attackAction;
             }
@@ -40,9 +41,23 @@ public class PlayerShoot : MonoBehaviour
             playerManager = PlayerManager.Instance;
         }
 
-        if (attackAction != null && attackAction.triggered)
+        //if weaponslot is NOT empty AND the equipped weapon is a ranged weapon THEN u can shoot
+        if (InventoryManager.instance.equippedWeaponSlot.IsEmpty())
         {
-            shootInput?.Invoke();
+            return;
+        }
+        else if (!InventoryManager.instance.equippedWeaponSlot.item.CompareTag("Ranged"))
+        {
+            return;
+        }
+        else
+        {
+            attackAction = null;
+
+            if (attackAction != null && attackAction.triggered)
+            {
+                shootInput?.Invoke();
+            }
         }
 
         if (weapon.currentAmmo <= 0)

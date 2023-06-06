@@ -45,7 +45,7 @@ namespace Controllers.Player
         {
             controller = GetComponent<CharacterController>();
             animator = GetComponent<Animator>();
-            playerInput = GetComponent<PlayerInput>();
+            playerInput = FindObjectOfType<PlayerInput>();
             _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
 
             movementSM = new StateMachine();

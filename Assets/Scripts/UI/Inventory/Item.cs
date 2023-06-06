@@ -40,10 +40,7 @@ namespace UI.Inventory
         private float verticalMotionAmplitude = 0.5f; // Adjust the vertical motion amplitude as desired
 
         [SerializeField]
-        private float rotationSpeed = 2f; // Adjust the rotation speed as desired
-
-        [SerializeField]
-        private float rotationAmplitude = 65f; // Adjust the rotation amplitude as desired
+        private float rotationSpeedItem = 150f; // Adjust the rotation speed as desired
 
 
         [HideInInspector]
@@ -141,7 +138,6 @@ namespace UI.Inventory
                     OnItemPickup?.Invoke(true);
                     isShowingPrompt = true;
                 }
-
                 // Calculate the vertical offset based on a smooth oscillation using Mathf.Sin
                 float verticalOffset = Mathf.Sin(Time.time * verticalMotionSpeed) * verticalMotionAmplitude;
 
@@ -154,14 +150,14 @@ namespace UI.Inventory
                 // Smoothly move the item towards the target position using Lerp
                 transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * verticalMotionSpeed);
 
-                // Calculate the rotation angle based on a smooth rotation using Mathf.Sin
-                float rotationAngle = Mathf.Sin(Time.time * rotationSpeed) * rotationAmplitude;
+                // Calculate the rotation angle for a full 360-degree circle on the Y-axis
+                float rotationAngle = (Time.time * rotationSpeedItem) % 360f;
 
                 // Create a quaternion representing the rotation around the Y-axis
                 Quaternion targetRotation = Quaternion.Euler(0f, rotationAngle, 0f);
 
-                // Smoothly rotate the item towards the target rotation using Slerp
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                // Apply the target rotation to the item
+                transform.rotation = targetRotation;
             }
             else
             {

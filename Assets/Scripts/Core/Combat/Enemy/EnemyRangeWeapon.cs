@@ -27,12 +27,12 @@ public class EnemyRangeWeapon : MonoBehaviour
     private Transform bulletOutput;
 
     private float timeSinceLastShot;
-    private bool isEquipped;
     private RaycastHit hit;
 
     private PlayerManager playerManager;
 
-    private void Start() {
+    private void Start()
+    {
         playerManager = PlayerManager.Instance;
     }
 
@@ -44,7 +44,7 @@ public class EnemyRangeWeapon : MonoBehaviour
             StartCoroutine(Reload());
     }
 
-    private IEnumerator Reload() 
+    private IEnumerator Reload()
     {
         reloading = true;
 
@@ -57,11 +57,11 @@ public class EnemyRangeWeapon : MonoBehaviour
 
     private bool CanShoot() => !reloading && timeSinceLastShot > 1f / (fireRate / 60f);
 
-    private void Shoot() 
+    private void Shoot()
     {
-        if (currentAmmo > 0) 
+        if (currentAmmo > 0)
         {
-            if (CanShoot()) 
+            if (CanShoot())
             {
                 currentAmmo--;
                 timeSinceLastShot = 0;
@@ -77,17 +77,16 @@ public class EnemyRangeWeapon : MonoBehaviour
         }
     }
 
-    private void Update() 
+    private void Update()
     {
         timeSinceLastShot += Time.deltaTime;
     }
 
-    //optimize
-    private void FixedUpdate()
+    public void PerformShot()
     {
         if (Physics.Raycast(bulletOutput.transform.position, transform.TransformDirection(Vector3.back), out hit, maxDistance))
         {
-            if(hit.transform.CompareTag("Player") && gameObject.transform.root.GetComponent<EnemyRangeAttackController>().allowShooting)
+            if (hit.transform.CompareTag("Player"))
             {
                 Shoot();
             }
@@ -105,7 +104,7 @@ public class EnemyRangeWeapon : MonoBehaviour
 
         newBullet.GetComponent<EnemyBulletBehaviour>().SetDamage(startDamage, endDamage);
         newBullet.GetComponent<EnemyBulletBehaviour>().SetDirection(bulletDirection);
-        
+
         SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.EnemyShoots);
     }
 }

@@ -110,6 +110,8 @@ namespace UI.Inventory
             InventoryManager.instance.PickupItem(this);
             meshRenderer.enabled = false;
             IsInInventory = true;
+            this.gameObject.SetActive(false);
+            OnItemPickup?.Invoke(false);
         }
 
         public void ShowPrompt()

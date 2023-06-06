@@ -21,6 +21,11 @@ public class EnemyMeleeWeapon : MonoBehaviour
         hitbox.GetComponent<EnemyMeleeWeaponHitbox>().SetDamageHitbox(startDamage, endDamage);
     }
 
+    public void MeleeAttack()
+    {
+        // perform animation
+    }
+
     public void AllowHitbox()
     {
         hitbox.GetComponent<EnemyMeleeWeaponHitbox>().allowAttack = true;

@@ -160,6 +160,7 @@ GameObject:
   - component: {fileID: 2419642620470704997}
   - component: {fileID: 4276069674895537648}
   - component: {fileID: 3752245634156842909}
+  - component: {fileID: -7216175424955467324}
   m_Layer: 3
   m_Name: RangedEnemy
   m_TagString: Enemy
@@ -252,6 +253,7 @@ MonoBehaviour:
   startDamage: 5
   endDamage: 8
   health: 100
+  timeOnDead: 60
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}
 --- !u!114 &4276069674895537648
 MonoBehaviour:
@@ -266,11 +268,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 10
-  minDistance: 7
+  retreatDistance: 4
+  rotationSpeed: 8
   hitMaterial: {fileID: 2100000, guid: 03a535ea21aad5f4d96fe054fad5306a, type: 2}
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1
+  agent: {fileID: 0}
+  target: {fileID: 0}
 --- !u!114 &3752245634156842909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,9 +288,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8de64787a816442aaa0299cb37d208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackRange: 8
   rangeWeaponObject: {fileID: 4821872692209805439}
-  allowShooting: 0
   playerDistance: 0
+--- !u!114 &-7216175424955467324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276069674895537649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303d5033705abd441917d4ccde7aa6bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8965887876064758874
 GameObject:
   m_ObjectHideFlags: 0

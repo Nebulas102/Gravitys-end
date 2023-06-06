@@ -6,6 +6,7 @@ namespace Controllers.Player
     {
         private float playerSpeed;
         private bool sprint;
+        private bool pickup;
 
         public StandingState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
@@ -28,6 +29,8 @@ namespace Controllers.Player
             base.HandleInput();
 
             if (moveAction.triggered) sprint = true;
+            if (pickupAction.triggered) pickup = true;
+
 
             input = moveAction.ReadValue<Vector2>();
             velocity = new Vector3(input.x, 0, input.y);
@@ -36,10 +39,10 @@ namespace Controllers.Player
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            // PlayerAnimator.Instance.PlayIdle();
             PlayerAnimator.Instance._animator.SetFloat("Velocity", 0, 0.1f, Time.deltaTime);
 
             if (sprint) stateMachine.ChangeState(character.sprinting);
+            if (pickup) PlayerAnimator.Instance._animator.SetTrigger("pickup");
 
         }
 

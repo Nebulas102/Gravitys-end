@@ -17,7 +17,10 @@ namespace Core.Chest
 
         private Vector3 _spawnPointPos;
 
-
+        private void Awake()
+        {
+            Debug.Log(possibleLoot.Count);
+        }
         private void DetermineChestSpawn()
         {
             var randValue = Random.value;

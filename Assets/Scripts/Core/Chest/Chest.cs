@@ -9,7 +9,7 @@ namespace Core.Chest
 
         [SerializeField] private float detectionRadius = 2f; // The radius to detect chests
 
-        private List<GameObject> lootObjects;
+        public List<GameObject> lootObjects;
 
         private InputManager _inputManager;
 
@@ -22,6 +22,7 @@ namespace Core.Chest
         {
             _inputManager = new InputManager();
             _player = PlayerManager.Instance.player;
+            lootObjects = new();
         }
 
         // Update is called once per frame

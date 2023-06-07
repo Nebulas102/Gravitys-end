@@ -7,6 +7,9 @@ namespace UI
 {
     public class UIHandler : MonoBehaviour
     {
+        public delegate void PauseGameToggle(bool gamePaused);
+        public static event PauseGameToggle OnPauseGameToggle;
+
         EventSystem m_EventSystem;
 
         [SerializeField]
@@ -55,13 +58,14 @@ namespace UI
                 m_EventSystem.SetSelectedGameObject(null);
                 currentMenuState = UIState.NONE;
             }
+            OnPauseGameToggle.Invoke(inventoryOpened);
         }
 
         private void OnPauseToggle(bool paused)
         {
             if (paused)
             {
-                m_EventSystem.SetSelectedGameObject(pauseMenuFirstSelected);
+                // m_EventSystem.SetSelectedGameObject(pauseMenuFirstSelected);
                 currentMenuState = UIState.PAUSE;
             }
             else
@@ -69,6 +73,7 @@ namespace UI
                 m_EventSystem.SetSelectedGameObject(null);
                 currentMenuState = UIState.NONE;
             }
+            OnPauseGameToggle.Invoke(paused);
         }
 
         private void OnShowPickupPrompt(bool show)

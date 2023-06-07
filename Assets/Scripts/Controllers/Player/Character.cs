@@ -37,7 +37,7 @@ namespace Controllers.Player
         public AttackState attacking;
 
         private GameObject _player;
-        private bool _inventoryOpened;
+        private bool _gamePaused;
 
 
         // Start is called before the first frame update
@@ -57,12 +57,12 @@ namespace Controllers.Player
             movementSM.Initialize(standing);
 
             _player = PlayerManager.Instance.player;
-            InventoryOverlayBehaviour.OnInventoryToggle += OnInventoryToggle;
+            UIHandler.OnPauseGameToggle += OnPauseGameToggle;
         }
 
         private void Update()
         {
-            if (_inventoryOpened || DialogueManager.Instance.dialogueActive)
+            if (_gamePaused || DialogueManager.Instance.dialogueActive)
             {
                 movementSM.ChangeState(standing);
             }
@@ -73,9 +73,9 @@ namespace Controllers.Player
             }
         }
 
-        private void OnInventoryToggle(bool inventoryOpenend)
+        private void OnPauseGameToggle(bool gamePaused)
         {
-            _inventoryOpened = inventoryOpenend;
+            _gamePaused = gamePaused;
         }
 
         private void FixedUpdate()

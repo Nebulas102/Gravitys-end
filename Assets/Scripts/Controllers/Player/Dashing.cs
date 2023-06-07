@@ -32,14 +32,14 @@ namespace Controllers.Player
         private bool _dashInput;
         private GameInput _gameInput;
         private Vector2 _movementInput;
-        private bool _inventoryOpened;
+        private bool _gamePaused;
 
         // Start is called before the first frame update
         private void Start()
         {
             _controller = GetComponent<CharacterController>();
             _gameInput = FindObjectOfType<GameInput>();
-            InventoryOverlayBehaviour.OnInventoryToggle += OnInventoryToggle;
+            UIHandler.OnPauseGameToggle += OnPauseGameToggle;
         }
 
         // Update is called once per frame
@@ -50,15 +50,15 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            if (_inventoryOpened || isDashing)
+            if (_gamePaused || isDashing)
                 return;
 
             HandleDash();
         }
 
-        private void OnInventoryToggle(bool inventoryOpened)
+        private void OnPauseGameToggle(bool gamePaused)
         {
-            _inventoryOpened = inventoryOpened;
+            _gamePaused = gamePaused;
         }
 
         private void HandleInput()

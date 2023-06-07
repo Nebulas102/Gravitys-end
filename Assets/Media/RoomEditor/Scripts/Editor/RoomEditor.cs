@@ -61,7 +61,7 @@ namespace RoomEditor {
 	        if (GUILayout.Button("Set Location"))
 	            _room.SaveLocation = _newSaveLocation;
 
-	        _builder.LoadData(Application.dataPath + "/RoomEditor/RoomData/" + _room.SaveLocation);
+	        _builder.LoadData(Application.dataPath + "/Media/RoomEditor/RoomData/" + _room.SaveLocation);
 
 	        // Displays input menu for basic room data
 	        DisplayRoomMenu();
@@ -95,7 +95,7 @@ namespace RoomEditor {
 	        else
 	            GUILayout.Label("Assets are missing or non-compliant. Cannot build room.");
 
-	        _builder.SaveData(Application.dataPath + "/RoomEditor/RoomData/" + _room.SaveLocation);
+	        _builder.SaveData(Application.dataPath + "/Media/RoomEditor/RoomData/" + _room.SaveLocation);
 	    }
 
 	    //

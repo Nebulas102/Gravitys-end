@@ -50,7 +50,7 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            if (_gamePaused || isDashing)
+            if (_gamePaused || isDashing || DialogueManager.Instance.dialogueActive)
                 return;
 
             HandleDash();

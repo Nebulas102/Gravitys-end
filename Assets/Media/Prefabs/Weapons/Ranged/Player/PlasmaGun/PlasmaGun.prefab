@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5850582189651804746}
   m_Layer: 0
   m_Name: PlasmaGun
-  m_TagString: Item
+  m_TagString: Ranged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,6 +141,8 @@ MonoBehaviour:
   prefab: {fileID: 4487968532897041239}
   radius: 1.5
   meshRenderer: {fileID: 2582769392279952430}
+  verticalMotionSpeed: 4
+  verticalMotionAmplitude: 0.5
   IsInInventory: 0
 --- !u!1 &5814282401347080551
 GameObject:

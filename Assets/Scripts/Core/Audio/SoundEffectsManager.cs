@@ -6,9 +6,6 @@ public class SoundEffectsManager : MonoBehaviour
 {
     public static SoundEffectsManager instance;
 
-    private bool isWalkingPlaying = false;  // Flag to track if the walking sound effect is currently playing
-
-
     // The audiosource where the soundeffects will be playing from
     public AudioSource soundEffectSource;
 

@@ -1,3 +1,4 @@
+using UI.Inventory;
 using UnityEngine;
 
 namespace Controllers.Player
@@ -35,10 +36,12 @@ namespace Controllers.Player
 
         public override void LogicUpdate()
         {
-            if (sprint) {
+            if (sprint)
+            {
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude + 0.15f, 0.1f, Time.deltaTime);
             }
-            else {
+            else
+            {
                 stateMachine.ChangeState(character.standing);
             }
         }

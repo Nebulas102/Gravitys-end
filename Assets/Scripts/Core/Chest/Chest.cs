@@ -8,6 +8,7 @@ namespace Core.Chest
         [SerializeField] private GameObject openedChestGameObject;
 
         [SerializeField] private float detectionRadius = 2f; // The radius to detect chests
+        [SerializeField] private float itemSpawnDistanceFromChest = 1f;
 
         public List<GameObject> lootObjects;
 
@@ -95,41 +96,9 @@ namespace Core.Chest
 
         private Vector3 GetRandomSpawnPosition()
         {
-            var offset = 1.0f; // Distance from the chest where items should spawn
-            Vector3 randomOffset = Random.insideUnitCircle.normalized * offset;
-            var spawnPosition = transform.position + randomOffset;
-
-            // Apply margin to the spawn position
-            var direction = (spawnPosition - transform.position).normalized;
-            spawnPosition += direction * offset;
-
-            // Get the size of the chest collider
-            var chestCollider = GetComponent<Collider>();
-            var chestSize = chestCollider.bounds.size;
-
-            // Calculate the minimum distance from the chest where loot should spawn
-            var minDistance = Mathf.Max(chestSize.x, chestSize.z) / 2.0f;
-
-            // Set y-level to 0
-            spawnPosition.y = 0.0f;
-
-            // Check if the spawn position is inside or too close to the chest bounds
-            while (IsPositionInsideChestBounds(spawnPosition, chestCollider) ||
-                   Vector3.Distance(spawnPosition, transform.position) < minDistance)
-            {
-                randomOffset = Random.insideUnitCircle.normalized * offset;
-                spawnPosition = transform.position + randomOffset;
-                spawnPosition += direction * offset;
-                spawnPosition.y = 0.0f;
-            }
+            Vector3 spawnPosition = transform.localPosition + transform.forward * itemSpawnDistanceFromChest;
 
             return spawnPosition;
-        }
-
-        private bool IsPositionInsideChestBounds(Vector3 position, Collider chestCollider)
-        {
-            var closestPoint = chestCollider.ClosestPoint(position);
-            return closestPoint == position;
         }
     }
 }

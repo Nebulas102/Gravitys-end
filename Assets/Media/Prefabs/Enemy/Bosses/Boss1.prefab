@@ -450,18 +450,17 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   bossNameBar: {fileID: 0}
   bossAbilityStages:
-  - bossAbilitySequences:
+  - healthStageActivation: 100
+    bossAbilitySequences:
     - bossAbility: {fileID: 4825858785491114148}
       amountOfTimes: 3
-    healthStageActivation: 100
-  - bossAbilitySequences:
+  - healthStageActivation: 70
+    bossAbilitySequences:
     - bossAbility: {fileID: 4825858785491114148}
       amountOfTimes: 2
     - bossAbility: {fileID: 5287812697702844115}
       amountOfTimes: 2
-    healthStageActivation: 70
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}
-  _currentHealth: 0
 --- !u!114 &8828537752519385422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -506,7 +505,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6575595425671537587}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.60971165, y: 1.6412765, z: 0.9999999}

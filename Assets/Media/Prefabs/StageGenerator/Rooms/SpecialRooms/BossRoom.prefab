@@ -20228,6 +20228,7 @@ GameObject:
   - component: {fileID: 7599071928111898349}
   - component: {fileID: 6757982240314823858}
   - component: {fileID: 1438606522731210343}
+  - component: {fileID: 3274343627884054733}
   m_Layer: 0
   m_Name: EnterBossFight
   m_TagString: Untagged
@@ -20277,6 +20278,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teleportDestination: {fileID: 3621438146237007024}
   bossFightCanvas: {fileID: 5830258983420654085}
+--- !u!114 &3274343627884054733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4694342971376565034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4d6156d86c414148ac6c27792ac688c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    name: Boss
+    sentences:
+    - You will pay for the men you've killed.
+    - I will not let you destroy my home.
 --- !u!1 &4708742049650913957
 GameObject:
   m_ObjectHideFlags: 0

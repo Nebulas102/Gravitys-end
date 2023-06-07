@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core.Chest
@@ -10,9 +11,9 @@ namespace Core.Chest
 
         [SerializeField] public GameObject chest;
 
-        private bool _chestWillSpawn;
+        [SerializeField] List<GameObject> possibleLoot;
 
-        private Transform _roomPos;
+        private bool _chestWillSpawn;
 
         private Vector3 _spawnPointPos;
 
@@ -36,7 +37,8 @@ namespace Core.Chest
                 _spawnPointPos = chestSpawnPoints[chestSpawnPointKey].position;
                 _spawnPointPos.y = 0.44f;
 
-                Instantiate(chest, _spawnPointPos, Quaternion.identity);
+                GameObject spawnedChest = Instantiate(chest, _spawnPointPos, Quaternion.identity);
+                spawnedChest.GetComponent<Chest>().SetLootObjects(possibleLoot);
             }
         }
     }

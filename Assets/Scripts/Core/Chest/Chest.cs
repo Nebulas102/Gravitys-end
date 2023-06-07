@@ -7,9 +7,9 @@ namespace Core.Chest
     {
         [SerializeField] private GameObject openedChestGameObject;
 
-        [SerializeField] private List<GameObject> lootObjects;
-
         [SerializeField] private float detectionRadius = 2f; // The radius to detect chests
+
+        private List<GameObject> lootObjects;
 
         private InputManager _inputManager;
 
@@ -40,6 +40,11 @@ namespace Core.Chest
         private void OnDisable()
         {
             _inputManager.Disable();
+        }
+
+        public void SetLootObjects(List<GameObject> _lootObjects)
+        {
+            lootObjects = _lootObjects;
         }
 
         private void OpenChest()

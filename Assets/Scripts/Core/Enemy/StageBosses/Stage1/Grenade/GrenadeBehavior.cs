@@ -22,6 +22,8 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private Vector3 _targetPosition;
         private Quaternion _targetRotation;
+        
+        private GameObject _decal;
 
         private void Start()
         {
@@ -31,6 +33,8 @@ namespace Core.Enemy.StageBosses.Stage1
             _startRotation = transform.rotation;
             _targetPosition = _player.transform.position;
             _throwStartTime = Time.time;
+
+            PlaceDecal();
 
             StartCoroutine(ThrowGrenade());
         }
@@ -49,6 +53,9 @@ namespace Core.Enemy.StageBosses.Stage1
 
                 yield return null;
             }
+
+            Destroy(gameObject);
+            Destroy(_decal);
         }
 
         private Vector3 CalculateThrowPosition(float normalizedTime)
@@ -61,6 +68,18 @@ namespace Core.Enemy.StageBosses.Stage1
         private Quaternion CalculateThrowRotation(float normalizedTime)
         {
             return Quaternion.Slerp(_startRotation, _targetRotation, normalizedTime);
+        }
+
+        private void PlaceDecal()
+        {
+            Vector3 decalPos = new Vector3(_targetPosition.x, 0, _targetPosition.z);
+
+            _decal.transform.position = decalPos;
+        }
+
+        public void SetDecal(GameObject decal)
+        {
+            _decal = decal;
         }
     }
 }

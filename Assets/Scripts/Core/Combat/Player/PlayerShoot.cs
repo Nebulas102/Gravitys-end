@@ -27,7 +27,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (playerManager != null)
         {
-            if (playerManager.player.GetComponent<Character>().movementSM.currentState == playerManager.player.GetComponent<Character>().combatting)
+            if (playerManager.player.GetComponent<Character>().movementSM.currentState == playerManager.player.GetComponent<Character>().attacking)
             {
                 attackAction = playerManager.player.GetComponent<Character>().movementSM.currentState.attackAction;
             }

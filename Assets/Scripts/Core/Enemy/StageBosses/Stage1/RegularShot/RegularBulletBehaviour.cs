@@ -25,7 +25,7 @@ namespace Core.Enemy.StageBosses.Stage1
             _startPosition = transform.position;
             _targetPosition = _player.transform.position;
 
-            transform.LookAt(new Vector3(_targetPosition.x, _startPosition.y, _targetPosition.z), transform.forward);
+            transform.LookAt(new Vector3(_targetPosition.x, _startPosition.y, _targetPosition.z), Vector3.forward);
         }
 
         private void Update()

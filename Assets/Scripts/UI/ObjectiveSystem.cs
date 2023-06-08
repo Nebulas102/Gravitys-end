@@ -8,6 +8,14 @@ namespace UI
 {
     public class ObjectiveSystem : MonoBehaviour
     {
+        // Singleton instance
+        private static ObjectiveSystem instance;
+
+        public static ObjectiveSystem Instance
+        {
+            get { return instance; }
+        }
+
         public List<Objective> objectives = new List<Objective>();
 
         [SerializeField] GameObject objectivesHolder;
@@ -21,6 +29,19 @@ namespace UI
         private int objectivesCompleted = 0;
         private bool keycardCollected = false;
         private bool bossKilled = false;
+
+        void Awake() {
+            // Check if an instance already exists
+            if (instance != null && instance != this)
+            {
+                // Destroy this instance if another one already exists
+                Destroy(gameObject);
+                return;
+            }
+
+            // Set the instance to this instance
+            instance = this;
+        }
 
         // Start is called before the first frame update
         void Start()

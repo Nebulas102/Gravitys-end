@@ -39,4 +39,10 @@ public class GameInput : MonoBehaviour
         var pickup = _inputManager.Player.LootPickup.triggered;
         return pickup;
     }
+
+    public bool GetNextSentence()
+    {
+        var nextSentence = _inputManager.UI.DisplayNextSentence.triggered;
+        return nextSentence;
+    }
 }

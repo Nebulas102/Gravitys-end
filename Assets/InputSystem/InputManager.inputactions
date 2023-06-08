@@ -359,6 +359,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DisplayNextSentence",
+                    "type": "Button",
+                    "id": "fb03cd2f-4b57-4c79-b7cb-5dee21de52bb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -865,6 +874,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "CloseMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d93f4b0e-1962-4d2d-b745-87d4484a7cfa",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DisplayNextSentence",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e3f5953c-47c4-4903-966f-ed1680242850",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DisplayNextSentence",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

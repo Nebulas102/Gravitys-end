@@ -96,7 +96,7 @@ namespace UI.Inventory
 
         public float GetModifier()
         {
-            return 1 + (modifier / 100);
+            return modifier / 100;
         }
 
         public bool IsPlayerNearby()

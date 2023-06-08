@@ -44,7 +44,7 @@ namespace UI.Tokens
 
         public float GetModifier()
         {
-            return 1 + ((modifier * invested) / 100);
+            return (modifier * invested) / 100;
         }
     }
 }

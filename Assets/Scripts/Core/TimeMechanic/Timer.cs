@@ -53,7 +53,7 @@ namespace Core
 
         private void AddEnemyTime(EnemyBase enemy)
         {
-            time += enemy.timeOnDead * TokenManager.instance.timeSection.GetModifier();
+            time += enemy.timeOnDead * (TokenManager.instance.timeSection.GetModifier() + 1);
         }
 
         private void DisplayTime(float ttd)

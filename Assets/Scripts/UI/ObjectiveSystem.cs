@@ -24,6 +24,8 @@ namespace UI
         [SerializeField] int objectiveFontSize = 24;
         [SerializeField] int objectiveHorizontalPosition = -75;
 
+        [SerializeField] TMP_FontAsset font;
+
         private int enemiesKilledCount;
 
         private int objectivesCompleted = 0;
@@ -84,6 +86,8 @@ namespace UI
 
                 // Set the text of the TextMeshPro component
                 textMeshProComponent.text = objective.name;
+
+                textMeshProComponent.font = font;
 
                 // Set the font size of the text
                 textMeshProComponent.fontSize = objectiveFontSize;

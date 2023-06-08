@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UI.Runtime;
 using UI.Inventory;
-using UnityEngine.InputSystem;
 
 namespace UI
 {
@@ -20,10 +19,7 @@ namespace UI
         private GameObject pauseMenuFirstSelected;
 
         [SerializeField]
-        private GameObject itemPickupPromptKeyboard;
-
-        [SerializeField]
-        private GameObject itemPickupPromptGamepad;
+        private GameObject itemPickupPrompt;
 
         private UIState currentMenuState = UIState.NONE;
 
@@ -82,24 +78,7 @@ namespace UI
 
         private void OnShowPickupPrompt(bool show)
         {
-            bool isGamepadUsed = Gamepad.current != null && Gamepad.current.leftStick.ReadValue().magnitude > 0.1f;
-
-            if (isGamepadUsed)
-            {
-                // Gamepad is being used, use the gamepad prompt
-                if (itemPickupPromptKeyboard.activeSelf) 
-                    itemPickupPromptKeyboard.SetActive(false);
-
-                itemPickupPromptGamepad.SetActive(show);
-            }
-            else
-            {
-                // Keyboard is being used, use the keyboard prompt
-                if (itemPickupPromptGamepad.activeSelf) 
-                    itemPickupPromptGamepad.SetActive(false);
-
-                itemPickupPromptKeyboard.SetActive(show);
-            }
+            itemPickupPrompt.SetActive(!itemPickupPrompt.activeSelf);
         }
 
         private enum UIState

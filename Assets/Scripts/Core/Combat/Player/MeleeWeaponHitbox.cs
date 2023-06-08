@@ -18,7 +18,7 @@ public class MeleeWeaponHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        float damageMod = TokenManager.instance.damageSection.GetModifier() + 1;
+        float damageMod = TokenManager.instance.damageSection.GetModifier();
         int baseDamage = (int)Mathf.Round(startDamage * damageMod);
         int maxDamage = (int)Mathf.Round(endDamage * damageMod);
 

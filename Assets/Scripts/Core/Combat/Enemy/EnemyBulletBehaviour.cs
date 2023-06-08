@@ -11,12 +11,11 @@ public class EnemyBulletBehaviour : MonoBehaviour
 
     private int startDamage;
     private int endDamage;
-    [SerializeField]
     private Vector3 direction;
 
     private void Update()
     {
-        transform.Translate(direction * bulletSpeed * Time.deltaTime, Space.World);
+        transform.root.Translate(direction * bulletSpeed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)

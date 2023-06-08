@@ -65,7 +65,7 @@ namespace Core.Enemy
         public void TakeDamage(int takeStartDamage, int takeEndDamage, float modifier)
         {
             var damage = Random.Range(takeStartDamage, takeEndDamage);
-            damage -= Mathf.RoundToInt(modifier / 100) * damage;
+            damage -= Mathf.RoundToInt(modifier) * damage;
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
             if (damageDisplay != null)

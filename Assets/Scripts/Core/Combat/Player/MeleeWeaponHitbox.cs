@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Core.Enemy;
+using UI.Tokens;
 using UnityEngine;
 
 public class MeleeWeaponHitbox : MonoBehaviour
@@ -17,16 +16,20 @@ public class MeleeWeaponHitbox : MonoBehaviour
         endDamage = _endDamage;
     }
 
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
+        float damageMod = TokenManager.instance.damageSection.GetModifier();
+        int baseDamage = (int)Mathf.Round(startDamage * damageMod);
+        int maxDamage = (int)Mathf.Round(endDamage * damageMod);
+
         if (other.CompareTag("Enemy") && allowAttack)
         {
-            other.GetComponent<EnemyBase>().TakeDamage(startDamage, endDamage, 0);
+            other.GetComponent<EnemyBase>().TakeDamage(baseDamage, maxDamage, 0);
         }
 
         if (other.CompareTag("Boss") && allowAttack)
         {
-            other.GetComponent<Boss>().TakeDamage(startDamage, endDamage, 0);
+            other.GetComponent<Boss>().TakeDamage(baseDamage, maxDamage, 0);
         }
     }
 }

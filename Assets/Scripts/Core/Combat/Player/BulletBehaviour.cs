@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Controllers.Player;
 using Core.Enemy;
+using UI.Tokens;
 using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
@@ -29,7 +27,8 @@ public class BulletBehaviour : MonoBehaviour
         {
             if (other.gameObject.GetComponent<EnemyBase>())
             {
-                other.gameObject.GetComponent<EnemyBase>().TakeDamage(startDamage, endDamage, 0);
+                float damageMod = TokenManager.instance.damageSection.GetModifier();
+                other.gameObject.GetComponent<EnemyBase>().TakeDamage((int)Mathf.Round(startDamage * damageMod), (int)Mathf.Round(endDamage * damageMod), 0);
             }
 
             Destroy(gameObject);

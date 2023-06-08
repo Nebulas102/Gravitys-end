@@ -27,7 +27,7 @@ public class BulletBehaviour : MonoBehaviour
         {
             if (other.gameObject.GetComponent<EnemyBase>())
             {
-                float damageMod = TokenManager.instance.damageSection.GetModifier() + 1;
+                float damageMod = TokenManager.instance.damageSection.GetModifier();
                 other.gameObject.GetComponent<EnemyBase>().TakeDamage((int)Mathf.Round(startDamage * damageMod), (int)Mathf.Round(endDamage * damageMod), 0);
             }
 

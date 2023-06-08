@@ -13,9 +13,10 @@ namespace ScriptableObjects
 
         public void TakeDamage(int startDamage, int endDamage, float modifier)
         {
-            float damage = Random.Range(startDamage, endDamage);
+            var damage = Random.Range(startDamage, endDamage);
             // Subtract the armor value
-            damage -= damage * modifier;
+            damage -= Mathf.RoundToInt(modifier) * damage;
+            damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
             if (damageCounter is not null)
             {
@@ -23,7 +24,7 @@ namespace ScriptableObjects
             }
 
             // Damage character
-            health -= Mathf.Round(damage);
+            health -= damage;
 
             if (health <= 0)
                 Die();

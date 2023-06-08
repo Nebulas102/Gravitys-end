@@ -50,7 +50,7 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            if (_gamePaused || isDashing)
+            if (_gamePaused || isDashing || DialogueManager.Instance.dialogueActive)
                 return;
 
             HandleDash();
@@ -63,7 +63,18 @@ namespace Controllers.Player
 
         private void HandleInput()
         {
+            if (PlayerManager.Instance.player.GetComponent<Character>().movementSM.currentState == PlayerManager.Instance.player.GetComponent<Character>().standing)
+            {
+                return;
+            }
+
+            if (PlayerManager.Instance.player.GetComponent<Character>().movementSM.currentState == PlayerManager.Instance.player.GetComponent<Character>().attacking)
+            {
+                return;
+            }
+
             _movementInput = _gameInput.GetMovement();
+
             _dashInput = _gameInput.GetDash();
         }
 

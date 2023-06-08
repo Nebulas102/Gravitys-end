@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Controllers.Player;
-using Core.Enemy;
+using UI.Tokens;
 using UnityEngine;
 
 public class EnemyMeleeWeaponHitbox : MonoBehaviour
@@ -18,11 +16,11 @@ public class EnemyMeleeWeaponHitbox : MonoBehaviour
         endDamage = _endDamage;
     }
 
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && allowAttack)
         {
-            other.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(startDamage, endDamage, 0);
+            other.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(startDamage, endDamage, TokenManager.instance.healthSection.GetModifier());
         }
     }
 }

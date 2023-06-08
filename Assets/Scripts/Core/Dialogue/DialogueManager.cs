@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -20,11 +21,28 @@ public class DialogueManager : MonoBehaviour
     public bool dialogueActive;
     private bool textIsTyping;
     private string currentSentence;
+    private InputManager _inputManager;
 
-    void Start()
+    private void Start()
     {
-        if (Instance == null) Instance = this;
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+
+        _inputManager = new InputManager();
+
         sentences = new Queue<string>();
+    }
+
+    private void Update()
+    {
+        if (dialogueActive)
+        {
+            _inputManager.UI.Enable();
+            if (_inputManager.UI.DisplayNextSentence.triggered)
+                OnDisplayNextSentence();
+        }
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -41,12 +59,12 @@ public class DialogueManager : MonoBehaviour
             sentences.Enqueue(senctence);
         }
 
-        DisplayNextSentence();
+        OnDisplayNextSentence();
     }
 
-    public void DisplayNextSentence()
+    public void OnDisplayNextSentence()
     {
-        if(textIsTyping)
+        if (textIsTyping)
         {
             StopAllCoroutines();
             dialogueText.text = currentSentence;
@@ -65,7 +83,7 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeSenctence());
     }
 
-    IEnumerator TypeSenctence ()
+    public IEnumerator TypeSenctence()
     {
         textIsTyping = true;
         dialogueText.text = "";
@@ -77,7 +95,7 @@ public class DialogueManager : MonoBehaviour
         textIsTyping = false;
     }
 
-    void EndDialogue()
+    public void EndDialogue()
     {
         dialogueActive = false;
         animator.SetBool("IsOpen", false);

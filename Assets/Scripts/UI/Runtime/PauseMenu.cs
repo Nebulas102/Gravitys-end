@@ -47,7 +47,7 @@ namespace UI.Runtime
         {
             _inputManager.Enable();
             _inputManager.UI.TogglePauseMenu.performed += _ => TogglePause(!isPaused);
-            _inputManager.UI.CloseMenu.performed += _ => TogglePause();
+            _inputManager.UI.CloseMenu.performed += _ => CloseMenu();
         }
 
         private void OnDisable()
@@ -69,6 +69,12 @@ namespace UI.Runtime
         {
             isPaused = force;
             Time.timeScale = force ? 0f : 1f;
+        }
+
+        private void CloseMenu()
+        {
+            if (isPaused && pauseMenu.activeSelf)
+                TogglePause();
         }
     }
 }

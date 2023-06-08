@@ -61,7 +61,7 @@ namespace UI.Inventory
             _player = GameObject.FindGameObjectWithTag("Player");
             _gameInput = FindObjectOfType<GameInput>();
             InventoryOverlayBehaviour.OnInventoryToggle += ToggleInventory;
-            
+
             originalPosition = transform.position;
         }
 
@@ -83,7 +83,7 @@ namespace UI.Inventory
         public void Spawn(Vector3 position)
         {
             IsInInventory = false;
-            meshRenderer.enabled = true;
+            RenderItem(true);
             gameObject.transform.position = position;
             isPlayerNearby = true;
             OnItemPickup?.Invoke(false);
@@ -91,12 +91,7 @@ namespace UI.Inventory
 
         public void Spawn()
         {
-            // this.gameObject.SetActive(true);
-            IsInInventory = false;
-            meshRenderer.enabled = true;
-            gameObject.transform.position = _player.transform.position;
-            isPlayerNearby = true;
-            OnItemPickup?.Invoke(false);
+            Spawn(_player.transform.position);
         }
 
         public float GetModifier()
@@ -106,8 +101,7 @@ namespace UI.Inventory
 
         public bool IsPlayerNearby()
         {
-            if (_player is null) return false;
-            if (this.meshRenderer.enabled == false) return false;
+            if (meshRenderer.enabled == false || _player is null || IsInInventory) return false;
 
             var distance = Vector3.Distance(transform.position, _player.transform.position);
             return distance <= radius;
@@ -122,6 +116,11 @@ namespace UI.Inventory
             IsInInventory = true;
             isPlayerNearby = false;
             OnItemPickup?.Invoke(false);
+        }
+
+        public void RenderItem(bool render)
+        {
+            meshRenderer.enabled = render;
         }
 
         public void ShowPrompt()

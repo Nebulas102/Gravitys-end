@@ -6,7 +6,11 @@ namespace Controllers.Player
     {
         public static EquipmentSystem Instance;
 
+        [SerializeField]
         public GameObject currentWeaponInHand;
+
+        [SerializeField]
+        private Transform weaponHolder;
 
         private void Awake()
         {
@@ -23,19 +27,26 @@ namespace Controllers.Player
             currentWeaponInHand = weapon;
 
             //Debug purposes
-            currentWeaponInHand.name = "CurrentWeaponInHand";
+            if (weapon is not null)
+                currentWeaponInHand.name = "CurrentWeaponInHand";
 
-            currentWeaponInHand.SetActive(false);
+            SetWeaponHolder();
         }
 
-        private void SetWeaponHolder(Transform holder)
+        private void SetWeaponHolder()
         {
-            if (currentWeaponInHand != null)
-            {
-                currentWeaponInHand.SetActive(true);
-                currentWeaponInHand.transform.SetParent(holder);
-                currentWeaponInHand.transform.SetLocalPositionAndRotation(Vector3.zero, currentWeaponInHand.transform.rotation);
-            }
+            if (currentWeaponInHand is null) return;
+
+            currentWeaponInHand.transform.SetParent(weaponHolder);
+            currentWeaponInHand.transform.SetLocalPositionAndRotation(Vector3.zero, currentWeaponInHand.transform.rotation);
+        }
+
+        public void DetachWeapon()
+        {
+            if (currentWeaponInHand is null) return;
+
+            currentWeaponInHand.transform.SetParent(null);
+            currentWeaponInHand = null;
         }
 
 

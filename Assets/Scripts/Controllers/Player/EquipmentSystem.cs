@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Controllers.Player
@@ -7,10 +8,15 @@ namespace Controllers.Player
         public static EquipmentSystem Instance;
 
         [SerializeField]
-        public GameObject currentWeaponInHand;
+        public GameObject _equippedWeapon;
 
         [SerializeField]
         private Transform weaponHolder;
+
+        [SerializeField]
+        private Transform gunHolder;
+
+        private Quaternion oldRotation;
 
         private void Awake()
         {
@@ -24,29 +30,47 @@ namespace Controllers.Player
 
         public void SetCurrentWeapon(GameObject weapon)
         {
-            currentWeaponInHand = weapon;
+            _equippedWeapon = weapon;
 
-            //Debug purposes
-            if (weapon is not null)
-                currentWeaponInHand.name = "CurrentWeaponInHand";
+            if (_equippedWeapon.CompareTag("Melee")){
+                SetWeaponHolder();
+            }
+            else if (_equippedWeapon.CompareTag("Gun")){
+                SetGunHolder();
+            }
+        }
 
-            SetWeaponHolder();
+        private void SetGunHolder()
+        {
+            // if (_equippedWeapon is null) return;
+
+            // _equippedWeapon.transform.SetParent(gunHolder);
+            // // _equippedWeapon.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            // _equippedWeapon.transform.localPosition = Vector3.zero;
+            // _equippedWeapon.transform.localRotation = Quaternion.identity;
         }
 
         private void SetWeaponHolder()
         {
-            if (currentWeaponInHand is null) return;
+            if (_equippedWeapon is null) return;
+            
+            oldRotation = _equippedWeapon.transform.rotation;
+            
+            _equippedWeapon.transform.SetParent(weaponHolder);
 
-            currentWeaponInHand.transform.SetParent(weaponHolder);
-            currentWeaponInHand.transform.SetLocalPositionAndRotation(Vector3.zero, currentWeaponInHand.transform.rotation);
+            _equippedWeapon.transform.localPosition = Vector3.zero;
+            _equippedWeapon.transform.localRotation = Quaternion.identity;
         }
 
         public void DetachWeapon()
         {
-            if (currentWeaponInHand is null) return;
+            if (_equippedWeapon is null) return;
 
-            currentWeaponInHand.transform.SetParent(null);
-            currentWeaponInHand = null;
+            _equippedWeapon.transform.rotation = oldRotation;
+            
+            _equippedWeapon.transform.SetParent(null);
+
+            _equippedWeapon = null;
         }
 
 

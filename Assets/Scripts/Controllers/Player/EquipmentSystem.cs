@@ -11,10 +11,10 @@ namespace Controllers.Player
         public GameObject _equippedWeapon;
 
         [SerializeField]
-        private Transform weaponHolder;
+        private Transform meleeHolder;
 
         [SerializeField]
-        private Transform gunHolder;
+        private Transform rangedHolder;
 
         private Quaternion oldRotation;
 
@@ -32,31 +32,43 @@ namespace Controllers.Player
         {
             _equippedWeapon = weapon;
 
-            if (_equippedWeapon.CompareTag("Melee")){
-                SetWeaponHolder();
+            if (_equippedWeapon is null)
+            {
+                PlayerAnimator.Instance._animator.SetTrigger("unequip");
             }
-            else if (_equippedWeapon.CompareTag("Gun")){
-                SetGunHolder();
+            
+            if (_equippedWeapon.CompareTag("Melee"))
+            {
+                PlayerAnimator.Instance._animator.SetTrigger("meleeEquip");
+                SetMeleeHolder();
             }
+
+            if (_equippedWeapon.CompareTag("Ranged"))
+            {
+                PlayerAnimator.Instance._animator.SetTrigger("rangedEquip");
+                SetRangedHolder();
+            }
+
+            return;
         }
 
-        private void SetGunHolder()
-        {
-            // if (_equippedWeapon is null) return;
-
-            // _equippedWeapon.transform.SetParent(gunHolder);
-            // // _equippedWeapon.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-            // _equippedWeapon.transform.localPosition = Vector3.zero;
-            // _equippedWeapon.transform.localRotation = Quaternion.identity;
-        }
-
-        private void SetWeaponHolder()
+        private void SetRangedHolder()
         {
             if (_equippedWeapon is null) return;
-            
+
+            _equippedWeapon.transform.SetParent(rangedHolder);
+            // _equippedWeapon.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            _equippedWeapon.transform.localPosition = Vector3.zero;
+            _equippedWeapon.transform.localRotation = Quaternion.identity;
+        }
+
+        private void SetMeleeHolder()
+        {
+            if (_equippedWeapon is null) return;
+
             oldRotation = _equippedWeapon.transform.rotation;
-            
-            _equippedWeapon.transform.SetParent(weaponHolder);
+
+            _equippedWeapon.transform.SetParent(meleeHolder);
 
             _equippedWeapon.transform.localPosition = Vector3.zero;
             _equippedWeapon.transform.localRotation = Quaternion.identity;
@@ -67,10 +79,14 @@ namespace Controllers.Player
             if (_equippedWeapon is null) return;
 
             _equippedWeapon.transform.rotation = oldRotation;
-            
+
+            PlayerAnimator.Instance._animator.SetTrigger("unequip");
+
+
             _equippedWeapon.transform.SetParent(null);
 
             _equippedWeapon = null;
+
         }
 
 

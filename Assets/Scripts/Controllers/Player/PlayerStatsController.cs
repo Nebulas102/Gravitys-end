@@ -8,7 +8,7 @@ namespace Controllers.Player
         private ScriptableObjects.Player playerObject;
 
         [SerializeField]
-        private float startHealth;
+        public float startHealth;
 
         [SerializeField]
         private float startDamage;

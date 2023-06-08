@@ -8,11 +8,14 @@ namespace Core.Player
     {
         [SerializeField]
         private GameObject player;
+
         private Slider _slider;
+        private PlayerStatsController _playerStatsController;
 
         private void Awake()
         {
             _slider = GetComponent<Slider>();
+            _playerStatsController = player.GetComponent<PlayerStatsController>();
             _slider.maxValue = player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.health;
         }
 
@@ -29,13 +32,14 @@ namespace Core.Player
         {
             if (player is null)
             {
+                if (_playerStatsController is null)
+                    _playerStatsController = player.GetComponent<PlayerStatsController>();
                 player = PlayerManager.Instance.player;
 
-                _slider.maxValue = player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.health;
-                _slider.value = _slider.maxValue;
+                _slider.maxValue = _playerStatsController.startHealth;
             }
-            else
-                _slider.value = player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.health;
+
+            _slider.value = _playerStatsController.GetPlayerObject().entity.health;
         }
     }
 }

@@ -212,6 +212,37 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00061217695, y: 0.96925527, z: 0.056070045}
     m_Extent: {x: 0.093844816, y: 0.19718343, z: 0.22931702}
   m_DirtyAABB: 0
+--- !u!1 &284655180398501787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 10141040792560435}
+  m_Layer: 3
+  m_Name: RangedHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &10141040792560435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284655180398501787}
+  m_LocalRotation: {x: -0.66489434, y: 0.19642462, z: 0.6957721, w: 0.18770744}
+  m_LocalPosition: {x: 0.021, y: 0.09, z: 0.061}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1229429299344027052}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: -31.53, y: -87.4, z: 180}
 --- !u!1 &289270883698796394
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +807,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _equippedWeapon: {fileID: 0}
-  weaponHolder: {fileID: 1229429299344027052}
+  meleeHolder: {fileID: 8780195094296620671}
+  rangedHolder: {fileID: 10141040792560435}
 --- !u!114 &-7713033719699328089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1435,6 +1467,7 @@ Transform:
   - {fileID: 4205598887306019215}
   - {fileID: 9043354020570089114}
   - {fileID: 8780195094296620671}
+  - {fileID: 10141040792560435}
   m_Father: {fileID: 3110084415100823500}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2322,7 +2355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8780195094296620671}
   m_Layer: 3
-  m_Name: CurrentWeaponInHand
+  m_Name: MeleeHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,3 +1,4 @@
+using Controllers.Player;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,16 +17,26 @@ namespace UI.Inventory
 
         public GameObject item { get; private set; }
 
-        public void SetItem(Item obj)
+        public void SetItem(Item obj, bool weapon = false)
         {
             ToggleItem(obj.gameObject, obj.icon);
+            if (weapon && isEquippedSlot)
+            {
+                EquipmentSystem.Instance.SetCurrentWeapon(obj.gameObject);
+                obj.RenderItem(true);
+            }
         }
 
         public void DropItem(bool spawn = false)
         {
+            if (item is null)
+                return;
+
+            item.GetComponent<Item>().RenderItem(false);
             if (spawn)
                 item.GetComponent<Item>().Spawn();
             ToggleItem(null, null);
+            EquipmentSystem.Instance.SetCurrentWeapon(null);
         }
 
         private void ToggleItem(GameObject obj, Sprite sprite)

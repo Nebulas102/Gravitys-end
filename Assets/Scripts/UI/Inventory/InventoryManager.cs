@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Controllers.Player;
 using UnityEngine;
 
 namespace UI.Inventory
@@ -89,7 +90,7 @@ namespace UI.Inventory
             slot.DropItem();
             equippedSlot.DropItem();
 
-            equippedSlot.SetItem(x);
+            equippedSlot.SetItem(x, x.type == ItemType.WEAPON);
             if (y != null)
                 slots[index].SetItem(y);
         }
@@ -97,8 +98,10 @@ namespace UI.Inventory
         private static void Pickup(ref List<InventorySlot> slots, ref InventorySlot equippedSlot, Item item)
         {
             // Find the first empty slot in the list of slots
-            var slot = !equippedSlot.item ? equippedSlot : slots.FirstOrDefault(s => s.IsEmpty());
-            slot?.SetItem(item);
+            var slot = equippedSlot.IsEmpty() ? equippedSlot : slots.FirstOrDefault(s => s.IsEmpty());
+            if (slot is null) return;
+
+            slot.SetItem(item, item.type == ItemType.WEAPON);
         }
     }
 }

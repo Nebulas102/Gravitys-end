@@ -17,6 +17,11 @@ namespace UI.Tokens
         [SerializeField]
         private List<Image> tokens;
 
+        [SerializeField]
+        [Range(0f, 100f)]
+        [Tooltip("The amount of damage, armor or time increase each invested token gives in percentage")]
+        private float modifier = 10f;
+
         private int invested;
 
         public void Invest()
@@ -35,6 +40,11 @@ namespace UI.Tokens
             tokens[--invested].enabled = false;
             tokens[invested].sprite = emptyTokenImage;
             tokens[invested].enabled = true;
+        }
+
+        public float GetModifier()
+        {
+            return 1 + ((modifier * invested) / 100);
         }
     }
 }

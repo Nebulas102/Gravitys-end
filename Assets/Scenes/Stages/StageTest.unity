@@ -3880,6 +3880,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1453812605}
     m_Modifications:
+    - target: {fileID: 3098082173479862750, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
+      propertyPath: modifier
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3098082173875396253, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
+      propertyPath: modifier
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3098082175251409049, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
+      propertyPath: modifier
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4438780625280744725, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -4940,7 +4952,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -869.5995
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4438780625280744727, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
 --- !u!224 &1588182245 stripped
 RectTransform:
@@ -4952,6 +4965,50 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4438780627212275423, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
   m_PrefabInstance: {fileID: 1588182244}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1588182247 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4438780626935684299, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
+  m_PrefabInstance: {fileID: 1588182244}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1588182248 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3098082173875396253, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
+  m_PrefabInstance: {fileID: 1588182244}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfad13740348804dac10ecad0cd8286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1588182249 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3098082175251409049, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
+  m_PrefabInstance: {fileID: 1588182244}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfad13740348804dac10ecad0cd8286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1588182250 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3098082173479862750, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
+  m_PrefabInstance: {fileID: 1588182244}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdfad13740348804dac10ecad0cd8286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1617139758
 GameObject:
   m_ObjectHideFlags: 0
@@ -6173,6 +6230,7 @@ GameObject:
   - component: {fileID: 2146664467}
   - component: {fileID: 2146664469}
   - component: {fileID: 2146664470}
+  - component: {fileID: 2146664471}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6268,6 +6326,7 @@ MonoBehaviour:
   time: 1200
   dangerZone: 120
   display: {fileID: 1060488585}
+  timeSection: {fileID: 0}
 --- !u!114 &2146664464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6376,6 +6435,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canCursorMove: 0
   cursor: {fileID: 1861463405}
+--- !u!114 &2146664471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146664456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13cf37adcdaa3bc44a8a62f4696a226a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tokens: 5
+  maxTokens: 5
+  spendableText: {fileID: 1588182247}
+  timeSection: {fileID: 1588182248}
+  healthSection: {fileID: 1588182250}
+  damageSection: {fileID: 1588182249}
 --- !u!1001 &6447278849656849155
 PrefabInstance:
   m_ObjectHideFlags: 0

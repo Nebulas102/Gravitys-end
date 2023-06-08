@@ -1851,13 +1851,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -278
       objectReference: {fileID: 0}
+    - target: {fileID: 6285529702712683145, guid: 4a22256b156019143b2ec73bc3e6caa9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6285529702712683147, guid: 4a22256b156019143b2ec73bc3e6caa9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6285529702712683147, guid: 4a22256b156019143b2ec73bc3e6caa9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2146664462}
     - target: {fileID: 6285529702712683147, guid: 4a22256b156019143b2ec73bc3e6caa9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DisplayNextSentence
+      value: OnDisplayNextSentence
       objectReference: {fileID: 0}
     - target: {fileID: 7646250928712657345, guid: 4a22256b156019143b2ec73bc3e6caa9, type: 3}
       propertyPath: m_Pivot.x

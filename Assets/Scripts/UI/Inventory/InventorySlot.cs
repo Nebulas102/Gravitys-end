@@ -20,6 +20,7 @@ namespace UI.Inventory
         public void SetItem(Item obj, bool weapon = false)
         {
             ToggleItem(obj.gameObject, obj.icon);
+            obj.RenderItem(false);
             if (weapon && isEquippedSlot)
             {
                 EquipmentSystem.Instance.SetCurrentWeapon(obj.gameObject);
@@ -36,7 +37,7 @@ namespace UI.Inventory
             if (spawn)
                 item.GetComponent<Item>().Spawn();
             ToggleItem(null, null);
-            EquipmentSystem.Instance.SetCurrentWeapon(null);
+            EquipmentSystem.Instance.DetachWeapon();
         }
 
         private void ToggleItem(GameObject obj, Sprite sprite)

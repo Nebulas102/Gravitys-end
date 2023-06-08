@@ -35,14 +35,18 @@ namespace Controllers.Player
 
         private void SetWeaponHolder()
         {
-            if (currentWeaponInHand != null)
-            {
-                currentWeaponInHand.SetActive(true);
-                currentWeaponInHand.transform.SetParent(weaponHolder);
-                currentWeaponInHand.transform.SetLocalPositionAndRotation(Vector3.zero, currentWeaponInHand.transform.rotation);
-                return;
-            }
-            weaponHolder.DetachChildren();
+            if (currentWeaponInHand is null) return;
+
+            currentWeaponInHand.transform.SetParent(weaponHolder);
+            currentWeaponInHand.transform.SetLocalPositionAndRotation(Vector3.zero, currentWeaponInHand.transform.rotation);
+        }
+
+        public void DetachWeapon()
+        {
+            if (currentWeaponInHand is null) return;
+
+            currentWeaponInHand.transform.SetParent(null);
+            currentWeaponInHand = null;
         }
 
 

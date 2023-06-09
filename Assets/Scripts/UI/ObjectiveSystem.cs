@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core.Enemy;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
@@ -32,6 +33,9 @@ namespace UI
         private bool keycardCollected = false;
         private bool bossKilled = false;
 
+        private CanvasScaler canvasScaler;
+        private float screenRatio;
+
         void Awake() {
             // Check if an instance already exists
             if (instance != null && instance != this)
@@ -43,6 +47,9 @@ namespace UI
 
             // Set the instance to this instance
             instance = this;
+
+                        // Get the Canvas Scaler component
+            canvasScaler = GetComponentInParent<CanvasScaler>();
         }
 
         // Start is called before the first frame update
@@ -73,46 +80,7 @@ namespace UI
             objective3.color = Color.white;
             objectives.Add(objective3);
 
-
-            GameObject previousChild = null;
-            // Loop on the ui element of the screen to add all these objectives onto the screen
-            foreach (Objective objective in objectives)
-            {
-                // Create a new child object
-                GameObject childObject = new GameObject(objective.name);
-
-                // Add a TextMeshProUGUI component to the child object
-                TextMeshProUGUI textMeshProComponent = childObject.AddComponent<TextMeshProUGUI>();
-
-                // Set the text of the TextMeshPro component
-                textMeshProComponent.text = objective.name;
-
-                textMeshProComponent.font = font;
-
-                // Set the font size of the text
-                textMeshProComponent.fontSize = objectiveFontSize;
-
-                textMeshProComponent.color = objective.color;
-
-                // Set the parent of the child object to the parent object
-                childObject.transform.SetParent(objectivesHolder.transform);
-
-                // Set the position and size of the child object
-                if (previousChild == null)
-                {
-                    childObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(objectiveHorizontalPosition, 0);
-                }
-                else
-                {
-                    Vector2 previousPosition = previousChild.GetComponent<RectTransform>().anchoredPosition;
-                    Vector2 previousSize = previousChild.GetComponent<TextMeshProUGUI>().preferredHeight * Vector2.up;
-                    childObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(previousPosition.x, previousPosition.y - previousSize.y - textVerticalMargin);
-                }
-                childObject.GetComponent<RectTransform>().sizeDelta = new Vector2(objectivesHolder.GetComponent<RectTransform>().sizeDelta.x, 50f);
-
-                // Set the current child object as the previous child object for the next iteration
-                previousChild = childObject;
-            }
+            UpdateObjectiveUI();
         }
 
 
@@ -126,7 +94,10 @@ namespace UI
                 objective.completed = true;
                 objective.color = Color.green;
 
-                // Find the UI element of the completed objective
+                objectivesCompleted++;
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
+
+                                // // Find the UI element of the completed objective
                 Transform objectiveUI = objectivesHolder.transform.Find(objective.name);
                 if (objectiveUI != null)
                 {
@@ -138,24 +109,15 @@ namespace UI
 
                     SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
                 }
-
             }
             else
             {
                 Debug.LogWarning("Objective not found: " + objectiveName);
             }
+
+            // UpdateObjectiveUI();
         }
 
-        void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Key"))
-            {
-                // Mark the "Collect the Key" objective as completed
-                FindObjectOfType<ObjectiveSystem>().CompleteObjective("Find the bossroom key");
-                Destroy(other.gameObject);
-                keycardCollected = true;
-            }
-        }
 
         void OnDestroy()
         {
@@ -191,6 +153,65 @@ namespace UI
         public bool getBossKilled()
         {
             return bossKilled;
+        }
+
+        public void setKeycardCollected(bool keyCardCollected)
+        {
+            keycardCollected = keyCardCollected;
+        }
+
+        private void UpdateObjectiveUI()
+        {
+            // Clear existing objectives
+            foreach (Transform child in objectivesHolder.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            for (int i = 0; i < objectives.Count; i++)
+            {
+                Objective objective = objectives[i];
+
+                // Create a new child object
+                GameObject childObject = new GameObject(objective.name);
+                childObject.transform.SetParent(objectivesHolder.transform);
+
+                RectTransform childRectTransform = childObject.AddComponent<RectTransform>();
+                childRectTransform.pivot = new Vector2(0, 1);
+                childRectTransform.anchorMin = new Vector2(0, 1);
+                childRectTransform.anchorMax = new Vector2(0, 1);
+
+                TextMeshProUGUI textMeshProComponent = childObject.AddComponent<TextMeshProUGUI>();
+                textMeshProComponent.font = font;
+                textMeshProComponent.color = objective.color;
+                textMeshProComponent.text = objective.name;
+
+                // Calculate the scaled size of the text based on the screen size
+                float scaledFontSize = objectiveFontSize * GetScreenRatio();
+                textMeshProComponent.fontSize = scaledFontSize;
+
+                // Set the position of the child object
+                childRectTransform.anchoredPosition = new Vector2(objectiveHorizontalPosition, -i * textVerticalMargin * GetScreenRatio());
+
+                // Set the size of the child object
+                Vector2 textSize = textMeshProComponent.GetPreferredValues();
+                childRectTransform.sizeDelta = new Vector2(textSize.x, textSize.y);
+            }
+        }
+
+        private float GetScreenRatio()
+        {
+            if (canvasScaler != null)
+            {
+                if (canvasScaler.uiScaleMode == CanvasScaler.ScaleMode.ScaleWithScreenSize)
+                {
+                    float referenceHeight = canvasScaler.referenceResolution.y;
+                    float currentHeight = Screen.height;
+                    return currentHeight / referenceHeight;
+                }
+            }
+
+            return 1f;
         }
 
         public enum ObjectiveType

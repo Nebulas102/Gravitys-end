@@ -108,17 +108,19 @@ namespace UI.Inventory
         {
             if (!_gameInput.GetPickUp() || !IsPlayerNearby() || IsInInventory || _inventoryOpened) return;
 
-            InventoryManager.instance.PickupItem(this);
-            meshRenderer.enabled = false;
-            IsInInventory = true;
-            isPlayerNearby = false;
-            OnItemPickup?.Invoke(false);
 
-            if (this.tag == "Melee" || this.tag == "Ranged") { 
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.GunPickup);
-            }
-            if (this.tag == "Armor") {
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ArmorPickup);
+            if (InventoryManager.instance.PickupItem(this))
+            {
+                meshRenderer.enabled = false;
+                IsInInventory = true;
+                isPlayerNearby = false;
+                OnItemPickup?.Invoke(false);
+                if (type == ItemType.WEAPON) { 
+                    SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.GunPickup);
+                }
+                else if (type == ItemType.ARMOR) {
+                    SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ArmorPickup);
+                }
             }
         }
 

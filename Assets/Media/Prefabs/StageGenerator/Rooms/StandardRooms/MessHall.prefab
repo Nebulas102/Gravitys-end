@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 6120716442738250977}
   - component: {fileID: 3528694800110645115}
   - component: {fileID: 5533079216048758303}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 307844320275371693}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 1718375926711144892}
   - component: {fileID: 6465961653381101225}
   - component: {fileID: 5275297136959789280}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -395,7 +395,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 343772861956371662}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1684,7 +1684,7 @@ GameObject:
   - component: {fileID: 2290627129394970738}
   - component: {fileID: 6785126652749911129}
   - component: {fileID: 369822740729948500}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1721,7 +1721,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339475311225801166}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3231,7 +3231,7 @@ GameObject:
   - component: {fileID: 7406640591641166280}
   - component: {fileID: 7283876332880906851}
   - component: {fileID: 5349379740474381446}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -3268,7 +3268,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2149629302945329070}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3685,7 +3685,7 @@ GameObject:
   - component: {fileID: 7199555822579136825}
   - component: {fileID: 3615599945976465515}
   - component: {fileID: 3581462065342196411}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DoorBlock(Clone)
   m_TagString: Door
   m_Icon: {fileID: 0}
@@ -3722,7 +3722,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2211523775872003812}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3896,7 +3896,7 @@ GameObject:
   - component: {fileID: 5540805286884852366}
   - component: {fileID: 6778780937584154516}
   - component: {fileID: 703628378493619532}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FogPrefab(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4139,7 +4139,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94474810cf6c37f4487f291bffd548ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
+  enemy:
+  - {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
+  - {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
   enemySpawnPoints:
   - {fileID: 7699024184296978265}
   - {fileID: 3019367449866652634}
@@ -6921,7 +6923,7 @@ GameObject:
   - component: {fileID: 8870819740609892768}
   - component: {fileID: 1841553252632711045}
   - component: {fileID: 199459515655114998}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DoorBlock(Clone)
   m_TagString: Door
   m_Icon: {fileID: 0}
@@ -6958,7 +6960,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3515854070988968642}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -7049,7 +7051,7 @@ GameObject:
   - component: {fileID: 2721046008369034486}
   - component: {fileID: 6716990733633998127}
   - component: {fileID: 5791950218991622647}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -7086,7 +7088,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3543240863112829091}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -9060,7 +9062,7 @@ GameObject:
   - component: {fileID: 1707132979985110353}
   - component: {fileID: 6943729605416637305}
   - component: {fileID: 8339268741056085191}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -9097,7 +9099,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4482027404285366672}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -9157,7 +9159,7 @@ GameObject:
   - component: {fileID: 2783041727656989696}
   - component: {fileID: 3003285952798485124}
   - component: {fileID: 3168228628268514252}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -9194,7 +9196,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4498967074955497926}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -12226,7 +12228,7 @@ GameObject:
   - component: {fileID: 7236501264650619973}
   - component: {fileID: 5411658740151251966}
   - component: {fileID: 4109248465557311668}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -12263,7 +12265,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5895011799098825923}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -12489,7 +12491,7 @@ GameObject:
   - component: {fileID: 1121573544824214444}
   - component: {fileID: 167399293283165521}
   - component: {fileID: 4168304841370405839}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloorBlock(Clone)
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -12526,7 +12528,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5920172255485347233}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -12588,7 +12590,7 @@ GameObject:
   - component: {fileID: 4742988233773473718}
   - component: {fileID: 7147588753499161809}
   - component: {fileID: 6822989463657403851}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DoorBlock(Clone)
   m_TagString: Door
   m_Icon: {fileID: 0}
@@ -12625,7 +12627,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6218982261634622738}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -13156,7 +13158,7 @@ GameObject:
   - component: {fileID: 3613458890788721107}
   - component: {fileID: 7642926681755185198}
   - component: {fileID: 2939095183967281532}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DoorBlock(Clone)
   m_TagString: Door
   m_Icon: {fileID: 0}
@@ -13193,7 +13195,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6417290561181370613}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

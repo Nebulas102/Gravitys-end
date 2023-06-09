@@ -28,6 +28,7 @@ namespace UI
             InventoryOverlayBehaviour.OnInventoryToggle += OnInventoryToggle;
             PauseMenu.OnPauseToggle += OnPauseToggle;
             Item.OnItemPickup += OnShowPickupPrompt;
+            MapUIManager.OnMapToggled += OnMapToggle;
         }
 
         private void OnEnable()
@@ -76,6 +77,19 @@ namespace UI
             OnPauseGameToggle.Invoke(paused);
         }
 
+        private void OnMapToggle(bool mapActive)
+        {
+            if(mapActive)
+            {
+                currentMenuState = UIState.MAP;
+            }
+            else
+            {
+                currentMenuState = UIState.NONE;
+            }
+            OnPauseGameToggle.Invoke(mapActive);
+        }
+
         private void OnShowPickupPrompt(bool show)
         {
             itemPickupPrompt.SetActive(!itemPickupPrompt.activeSelf);
@@ -85,7 +99,8 @@ namespace UI
         {
             NONE,
             INVENTORY,
-            PAUSE
+            PAUSE,
+            MAP
         }
     }
 }

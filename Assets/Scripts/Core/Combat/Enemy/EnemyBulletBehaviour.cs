@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Controllers.Player;
-using Core.Enemy;
+using UI.Tokens;
 using UnityEngine;
 
 public class EnemyBulletBehaviour : MonoBehaviour
@@ -11,20 +9,18 @@ public class EnemyBulletBehaviour : MonoBehaviour
 
     private int startDamage;
     private int endDamage;
-    [SerializeField]
     private Vector3 direction;
 
     private void Update()
     {
-        transform.Translate(direction * bulletSpeed * Time.deltaTime, Space.World);
+        transform.root.Translate(direction * bulletSpeed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(startDamage, endDamage, 0);
-
+            other.gameObject.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(startDamage, endDamage, TokenManager.instance.healthSection.GetModifier());
             Destroy(gameObject);
         }
 

@@ -26,9 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3135304275406725206}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 0, z: -0.6}
+  m_LocalPosition: {x: 0.02, y: -0.115, z: -0.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6661759942136799478}
   m_RootOrder: 1
@@ -87,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 6284918362569833036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6042762540979295665}
@@ -164,14 +164,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883823951d110ed49bf01ba3798e08a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 890a66f6ea7cb9f48959c911f04f3d28, type: 3}
+  icon: {fileID: 21300000, guid: 54a7699191718b3409248c2541287014, type: 3}
   type: 0
   modifier: 0
   prefab: {fileID: 6284918362569833036}
   radius: 2
   meshRenderer: {fileID: 1431022065950288148}
   verticalMotionSpeed: 4
-  verticalMotionAmplitude: 0.5
+  verticalMotionAmplitude: 0.8
   rotationSpeedItem: 150
   IsInInventory: 0
 --- !u!1 &8105077594952481621
@@ -200,7 +200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8105077594952481621}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 0, z: -0.6}
+  m_LocalPosition: {x: 0.02, y: -0.115, z: -0.14}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 1
   m_Children: []

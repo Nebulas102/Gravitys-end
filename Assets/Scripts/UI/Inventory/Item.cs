@@ -37,10 +37,7 @@ namespace UI.Inventory
         private float verticalMotionSpeed = 4f; // Adjust the speed as desired
 
         [SerializeField]
-        private float verticalMotionAmplitude = 0.5f; // Adjust the vertical motion amplitude as desired
-
-        [SerializeField]
-        private float rotationSpeedItem = 150f; // Adjust the rotation speed as desired
+        private float verticalMotionAmplitude = 1f; // Adjust the vertical motion amplitude as desired
 
 
         [HideInInspector]
@@ -61,7 +58,7 @@ namespace UI.Inventory
             _player = GameObject.FindGameObjectWithTag("Player");
             _gameInput = FindObjectOfType<GameInput>();
             InventoryOverlayBehaviour.OnInventoryToggle += ToggleInventory;
-            
+
             originalPosition = transform.position;
         }
 
@@ -83,7 +80,7 @@ namespace UI.Inventory
         public void Spawn(Vector3 position)
         {
             IsInInventory = false;
-            meshRenderer.enabled = true;
+            RenderItem(true);
             gameObject.transform.position = position;
             isPlayerNearby = true;
             OnItemPickup?.Invoke(false);
@@ -91,12 +88,7 @@ namespace UI.Inventory
 
         public void Spawn()
         {
-            // this.gameObject.SetActive(true);
-            IsInInventory = false;
-            meshRenderer.enabled = true;
-            gameObject.transform.position = _player.transform.position;
-            isPlayerNearby = true;
-            OnItemPickup?.Invoke(false);
+            Spawn(_player.transform.position);
         }
 
         public float GetModifier()
@@ -106,8 +98,7 @@ namespace UI.Inventory
 
         public bool IsPlayerNearby()
         {
-            if (_player is null) return false;
-            if (this.meshRenderer.enabled == false) return false;
+            if (meshRenderer.enabled == false || _player is null || IsInInventory) return false;
 
             var distance = Vector3.Distance(transform.position, _player.transform.position);
             return distance <= radius;
@@ -122,6 +113,11 @@ namespace UI.Inventory
             IsInInventory = true;
             isPlayerNearby = false;
             OnItemPickup?.Invoke(false);
+        }
+
+        public void RenderItem(bool render)
+        {
+            meshRenderer.enabled = render;
         }
 
         public void ShowPrompt()
@@ -145,19 +141,10 @@ namespace UI.Inventory
                 Vector3 targetPosition = originalPosition + Vector3.up * verticalOffset;
 
                 // Clamp the target position to stay at or above y = 0
-                targetPosition.y = Mathf.Max(targetPosition.y, 0f);
+                targetPosition.y = Mathf.Max(targetPosition.y, 0.3f);
 
                 // Smoothly move the item towards the target position using Lerp
                 transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * verticalMotionSpeed);
-
-                // Calculate the rotation angle for a full 360-degree circle on the Y-axis
-                float rotationAngle = (Time.time * rotationSpeedItem) % 360f;
-
-                // Create a quaternion representing the rotation around the Y-axis
-                Quaternion targetRotation = Quaternion.Euler(0f, rotationAngle, 0f);
-
-                // Apply the target rotation to the item
-                transform.rotation = targetRotation;
             }
             else
             {

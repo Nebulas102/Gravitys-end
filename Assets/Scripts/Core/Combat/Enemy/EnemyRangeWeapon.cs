@@ -96,14 +96,17 @@ public class EnemyRangeWeapon : MonoBehaviour
     private void OnGunShot()
     {
         Vector3 bulletOutputWorldPos = bulletOutput.TransformPoint(Vector3.zero);
-        Vector3 bulletDirection = (hit.transform.position - bulletOutputWorldPos).normalized;
+        Vector3 bulletDirection = (hit.transform.position - bulletOutputWorldPos);
 
         bulletDirection.y = 0f;
 
-        GameObject newBullet = Instantiate(bullet, bulletOutputWorldPos, Quaternion.LookRotation(bulletDirection, Vector3.down));
+        GameObject newBullet = Instantiate(bullet, bulletOutputWorldPos, Quaternion.identity);
 
-        newBullet.GetComponent<EnemyBulletBehaviour>().SetDamage(startDamage, endDamage);
-        newBullet.GetComponent<EnemyBulletBehaviour>().SetDirection(bulletDirection);
+        newBullet.transform.LookAt(hit.transform.position);
+        newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.rotation.w);
+
+        newBullet.GetComponentInChildren<EnemyBulletBehaviour>().SetDamage(startDamage, endDamage);
+        newBullet.GetComponentInChildren<EnemyBulletBehaviour>().SetDirection(bulletDirection);
 
         SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.EnemyShoots);
     }

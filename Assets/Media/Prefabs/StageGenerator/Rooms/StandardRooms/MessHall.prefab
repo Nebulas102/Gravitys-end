@@ -750,7 +750,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 797664294323608242}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: -11}
+  m_LocalPosition: {x: 10, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4157,10 +4157,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc0d22d4ed96124c820f91091ad20a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestSpawnChance: 0.15
+  chestSpawnChance: 0.5
   chestSpawnPoints:
   - {fileID: 4429591738106164682}
-  chest: {fileID: 3273778572118770245, guid: 3950b9ceba787b1429a8f50f2b315ea4, type: 3}
+  chest: {fileID: 3273778572118770245, guid: 759439ab11a7031409a5aa051d74c7ae, type: 3}
+  possibleLoot:
+  - {fileID: 7039120194793019379, guid: 1f0e5f5492ec75b469944a09176567f2, type: 3}
+  - {fileID: 4487968532897041239, guid: e4f9ed0b699410647ac8c30f9ebe14c9, type: 3}
+  - {fileID: 750474869211693055, guid: dccc01cefb6ad3c45a0f27df4e0823a3, type: 3}
 --- !u!114 &3815944585182235028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14435,7 +14439,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7352770904250474052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.92, y: 0, z: -12.48}
+  m_LocalPosition: {x: -10.737, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

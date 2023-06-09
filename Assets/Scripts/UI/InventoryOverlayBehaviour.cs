@@ -11,9 +11,6 @@ namespace UI
         [SerializeField]
         private GameObject overlay;
 
-        [SerializeField]
-        private GameObject cursor;
-
         private InputManager _inputManager;
         private bool _inventoryOpened;
 
@@ -23,10 +20,8 @@ namespace UI
             set
             {
                 _inventoryOpened = value;
-
                 OnInventoryToggle?.Invoke(value);
                 overlay.SetActive(inventoryOpened);
-                cursor.SetActive(inventoryOpened);
             }
         }
 
@@ -53,6 +48,7 @@ namespace UI
             if (PauseMenu.instance.isPaused) return;
 
             inventoryOpened = !overlay.activeSelf;
+            Time.timeScale = inventoryOpened ? 0f : 1f;
         }
     }
 }

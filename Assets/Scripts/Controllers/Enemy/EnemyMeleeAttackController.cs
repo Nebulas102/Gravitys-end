@@ -15,6 +15,7 @@ public class EnemyMeleeAttackController : MonoBehaviour
 
     private float _nextAttackTime;
     private GameObject _player;
+    [SerializeField]
     private EnemyMeleeWeapon _enemyMeleeWeapon;
 
     private void Start()

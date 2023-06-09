@@ -117,9 +117,11 @@ namespace UI.Inventory
                 OnItemPickup?.Invoke(false);
                 if (type == ItemType.WEAPON) { 
                     SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.GunPickup);
+                    return;
                 }
-                else if (type == ItemType.ARMOR) {
+                if (type == ItemType.ARMOR) {
                     SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ArmorPickup);
+                    return;
                 }
             }
         }

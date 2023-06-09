@@ -132,6 +132,7 @@ namespace Core.Enemy
                 damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
 
             _currentHealth -= damage;
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossYells);
 
             healthBar.value = _currentHealth;
 

@@ -113,6 +113,10 @@ namespace UI.Inventory
             IsInInventory = true;
             isPlayerNearby = false;
             OnItemPickup?.Invoke(false);
+            
+            if (this.tag == "Melee" || this.tag == "Ranged") { 
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.GunPickup);
+            }
         }
 
         public void RenderItem(bool render)

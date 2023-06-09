@@ -9,7 +9,7 @@ namespace Core.Enemy.StageBosses.Stage1
         private float bulletSpeed = 5f;
 
         [SerializeField]
-        private float bulletDamage = 10f;
+        private int bulletDamage = 10;
 
         private GameObject _boss;
         private GameObject _player;
@@ -35,9 +35,7 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                var playerEntity = _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity;
-
-                // playerEntity.TakeDamage(bulletDamage, 0.2f);
+                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(bulletDamage, bulletDamage, 0);
 
                 Destroy(gameObject);
             }

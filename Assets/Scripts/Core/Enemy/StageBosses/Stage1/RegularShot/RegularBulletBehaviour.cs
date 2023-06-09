@@ -25,7 +25,7 @@ namespace Core.Enemy.StageBosses.Stage1
             _startPosition = transform.position;
             _targetPosition = _player.transform.position;
 
-            transform.LookAt(new Vector3(_targetPosition.x, _startPosition.y, _targetPosition.z), transform.forward);
+            transform.LookAt(new Vector3(_targetPosition.x, _startPosition.y, _targetPosition.z), Vector3.forward);
         }
 
         private void Update()
@@ -33,11 +33,11 @@ namespace Core.Enemy.StageBosses.Stage1
             transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                other.gameObject.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(bulletDamage, bulletDamage, 0);
+                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(bulletDamage, bulletDamage, 0);
 
                 Destroy(gameObject);
             }

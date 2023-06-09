@@ -108,11 +108,13 @@ namespace UI.Inventory
         {
             if (!_gameInput.GetPickUp() || !IsPlayerNearby() || IsInInventory || _inventoryOpened) return;
 
-            InventoryManager.instance.PickupItem(this);
-            meshRenderer.enabled = false;
-            IsInInventory = true;
-            isPlayerNearby = false;
-            OnItemPickup?.Invoke(false);
+            if (InventoryManager.instance.PickupItem(this))
+            {
+                meshRenderer.enabled = false;
+                IsInInventory = true;
+                isPlayerNearby = false;
+                OnItemPickup?.Invoke(false);
+            }
         }
 
         public void RenderItem(bool render)

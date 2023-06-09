@@ -33,23 +33,25 @@ namespace UI.Inventory
                 Destroy(gameObject);
         }
 
-        public void PickupItem(Item item)
+        public bool PickupItem(Item item)
         {
+            bool result;
             // Determine which list of slots and equipped slot corresponds to the item type
             switch (item.type)
             {
                 // Call the Pickup method to add the item to the armor slots and equip it
                 case ItemType.ARMOR:
-                    Pickup(ref armorSlots, ref equippedArmorSlot, item);
+                    result = Pickup(ref armorSlots, ref equippedArmorSlot, item);
                     break;
                 // Call the Pickup method to add the item to the weapon slots and equip it
                 case ItemType.WEAPON:
-                    Pickup(ref weaponSlots, ref equippedWeaponSlot, item);
+                    result = Pickup(ref weaponSlots, ref equippedWeaponSlot, item);
                     break;
                 // Throw an exception if the item type is not recognized
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            return result;
         }
 
         public void UseItem(InventorySlot slot)
@@ -95,13 +97,14 @@ namespace UI.Inventory
                 slots[index].SetItem(y);
         }
 
-        private static void Pickup(ref List<InventorySlot> slots, ref InventorySlot equippedSlot, Item item)
+        private static bool Pickup(ref List<InventorySlot> slots, ref InventorySlot equippedSlot, Item item)
         {
             // Find the first empty slot in the list of slots
             var slot = equippedSlot.IsEmpty() ? equippedSlot : slots.FirstOrDefault(s => s.IsEmpty());
-            if (slot is null) return;
+            if (slot is null) return false;
 
             slot.SetItem(item, item.type == ItemType.WEAPON);
+            return true;
         }
     }
 }

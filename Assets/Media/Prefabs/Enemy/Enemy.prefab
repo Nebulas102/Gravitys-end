@@ -209,8 +209,9 @@ GameObject:
   - component: {fileID: 8018587079560276357}
   - component: {fileID: 4276069674895537651}
   - component: {fileID: 4276069674895537648}
-  - component: {fileID: -3826132810974882305}
   - component: {fileID: 2419642620470704997}
+  - component: {fileID: 4157109929983363822}
+  - component: {fileID: -3299138033405528037}
   m_Layer: 3
   m_Name: Enemy
   m_TagString: Enemy
@@ -299,24 +300,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookRadius: 5
-  minDistance: 2
+  retreatDistance: 2
+  rotationSpeed: 5
   hitMaterial: {fileID: 2100000, guid: 03a535ea21aad5f4d96fe054fad5306a, type: 2}
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1
---- !u!114 &-3826132810974882305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4276069674895537649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21acf2d32c663a84e861b4636358aa0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackCooldown: 2
+  agent: {fileID: 0}
+  target: {fileID: 0}
 --- !u!114 &2419642620470704997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,4 +324,31 @@ MonoBehaviour:
   startDamage: 5
   endDamage: 8
   health: 100
+  timeOnDead: 60
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}
+--- !u!114 &4157109929983363822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276069674895537649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e80dd5b10f087488992e4c52a68cba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3299138033405528037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276069674895537649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09e7e4d309f407246bcaf3571139fe46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCooldown: 1
+  attackRange: 1

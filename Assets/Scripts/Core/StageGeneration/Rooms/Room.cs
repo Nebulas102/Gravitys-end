@@ -37,20 +37,52 @@ namespace Core.StageGeneration.Rooms
             return doorReplacement;
         }
 
-        public GameObject PlaceRoom(int posX, int posZ, StageHelper.RoomDirections direction, GameObject spawnDoor)
+        public GameObject PlaceRoom()
         {
-            var room = Instantiate(gameObject, new Vector3(posX, 0, posZ), Quaternion.identity);
+            return Instantiate(gameObject, new Vector3(0, 20, 0), Quaternion.identity);
+        }
+
+        public GameObject SetRoomData(int posX, int posZ, Quaternion rotation,StageHelper.RoomDirections direction, GameObject spawnDoor)
+        {
+            gameObject.transform.position = new Vector3(posX, 0, posZ);
+            gameObject.transform.rotation = rotation;
 
             spawnDoor.SetActive(false);
 
-            room.GetComponent<Room>().doors
+            gameObject.GetComponent<Room>().doors
                 .SingleOrDefault(d =>
                     d.GetComponent<Door>().GetDirection() == StageHelper.GetOppositeDirection(direction))
                 ?.SetActive(false);
 
-            GameObject.FindWithTag("StageGenerator").GetComponent<StageGenerator>().AddRoomToMap(room);
+            GameObject.FindWithTag("StageGenerator").GetComponent<StageGenerator>().AddRoomToMap(gameObject);
 
-            return room;
+            return gameObject;
+        }
+
+        public Quaternion RotateRoom(StageHelper.RoomDirections placementDirection)
+        {
+            Door door = doors[0].GetComponent<Door>();
+            Debug.Log("Door direction: " + door.direction);
+
+            var rotation = NewRotationData(door, placementDirection);
+
+            return rotation;
+        }
+
+        public Quaternion NewRotationData(Door door, StageHelper.RoomDirections placementDirection)
+        {
+
+            var rotation = new Quaternion(0, 0, 0, 0);
+
+            var storedSizeX = sizeX;
+            var storedSizeZ = sizeZ;
+
+            if (door.direction == placementDirection)
+            {
+                door.direction = StageHelper.GetOppositeDirection(placementDirection);
+                rotation.y = 180;
+            }
+            return rotation;
         }
 
         public Dictionary<string, float> PlacementPos(StageHelper.RoomDirections roomDirection, Cell doorCell)

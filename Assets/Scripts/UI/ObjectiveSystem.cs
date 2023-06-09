@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Core.Enemy;
 using TMPro;
@@ -10,12 +9,7 @@ namespace UI
     public class ObjectiveSystem : MonoBehaviour
     {
         // Singleton instance
-        private static ObjectiveSystem instance;
-
-        public static ObjectiveSystem Instance
-        {
-            get { return instance; }
-        }
+        public static ObjectiveSystem instance { get; private set; }
 
         public List<Objective> objectives = new List<Objective>();
 
@@ -28,7 +22,6 @@ namespace UI
         [SerializeField] TMP_FontAsset font;
 
         private int enemiesKilledCount;
-
         private int objectivesCompleted = 0;
         private bool keycardCollected = false;
         private bool bossKilled = false;
@@ -36,49 +29,26 @@ namespace UI
         private CanvasScaler canvasScaler;
         private float screenRatio;
 
-        void Awake() {
-            // Check if an instance already exists
-            if (instance != null && instance != this)
-            {
-                // Destroy this instance if another one already exists
+        private void Awake()
+        {
+            if (instance is null)
+                instance = this;
+            else
                 Destroy(gameObject);
-                return;
-            }
 
-            // Set the instance to this instance
-            instance = this;
-
-                        // Get the Canvas Scaler component
+            // Get the Canvas Scaler component
             canvasScaler = GetComponentInParent<CanvasScaler>();
         }
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             EnemyBase.OnEnemyKilled += HandleEnemyKilled;
 
             objectivesHolder = GameObject.Find("ObjectivesHolder");
-
-            Objective objective1 = new Objective();
-            objective1.name = "Find the bossroom key";
-            objective1.type = ObjectiveType.CollectItem;
-            objective1.completed = false;
-            objective1.color = Color.white;
-            objectives.Add(objective1);
-
-            Objective objective2 = new Objective();
-            objective2.name = "Kill 50 enemies";
-            objective2.type = ObjectiveType.DefeatEnemy;
-            objective2.completed = false;
-            objective2.color = Color.white;
-            objectives.Add(objective2);
-
-            Objective objective3 = new Objective();
-            objective3.name = "Defeat the Boss";
-            objective3.type = ObjectiveType.DefeatEnemy;
-            objective3.completed = false;
-            objective3.color = Color.white;
-            objectives.Add(objective3);
+            objectives.Add(new Objective("find_br_key", "Find the bossroom key", ObjectiveType.COLLECT_ITEM, Color.white));
+            objectives.Add(new Objective("kill_50", "Kill 50 enemies", ObjectiveType.DEFEAT_ENEMY, Color.white));
+            objectives.Add(new Objective("kill_boss", "Defeat the Boss", ObjectiveType.DEFEAT_ENEMY, Color.white));
 
             UpdateObjectiveUI();
         }
@@ -86,7 +56,7 @@ namespace UI
 
         public void CompleteObjective(string objectiveName)
         {
-            Objective objective = objectives.Find(o => o.name == objectiveName);
+            Objective objective = objectives.Find(o => o.id == objectiveName);
 
             // Check if the object is not null
             if (!ReferenceEquals(objective, null))
@@ -97,7 +67,7 @@ namespace UI
                 objectivesCompleted++;
                 SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
 
-                                // // Find the UI element of the completed objective
+                // // Find the UI element of the completed objective
                 Transform objectiveUI = objectivesHolder.transform.Find(objective.name);
                 if (objectiveUI != null)
                 {
@@ -119,43 +89,48 @@ namespace UI
         }
 
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             EnemyBase.OnEnemyKilled -= HandleEnemyKilled;
         }
 
-        void HandleEnemyKilled(EnemyBase enemy)
+        public void HandleKeycardCollected()
+        {
+            CompleteObjective("find_br_key");
+        }
+
+        public void HandleEnemyKilled(EnemyBase enemy)
         {
             enemiesKilledCount++;
             if (enemiesKilledCount == 50)
             {
                 // Mark the "Collect the Key" objective as completed
-                FindObjectOfType<ObjectiveSystem>().CompleteObjective("Kill 50 enemies");
+                CompleteObjective("kill_50");
             }
         }
 
-        public static void HandleBossKilled()
+        public void HandleBossKilled()
         {
             // Mark the "Collect the Key" objective as completed
-            FindObjectOfType<ObjectiveSystem>().CompleteObjective("Defeat the Boss");
+            CompleteObjective("kill_boss");
         }
 
-        public int getCompletedObjectives()
+        public int GetCompletedObjectives()
         {
             return objectivesCompleted;
         }
 
-        public bool getKeycardCollected()
+        public bool GetKeycardCollected()
         {
             return keycardCollected;
         }
 
-        public bool getBossKilled()
+        public bool GetBossKilled()
         {
             return bossKilled;
         }
 
-        public void setKeycardCollected(bool keyCardCollected)
+        public void SetKeycardCollected(bool keyCardCollected)
         {
             keycardCollected = keyCardCollected;
         }
@@ -201,33 +176,38 @@ namespace UI
 
         private float GetScreenRatio()
         {
-            if (canvasScaler != null)
-            {
-                if (canvasScaler.uiScaleMode == CanvasScaler.ScaleMode.ScaleWithScreenSize)
-                {
-                    float referenceHeight = canvasScaler.referenceResolution.y;
-                    float currentHeight = Screen.height;
-                    return currentHeight / referenceHeight;
-                }
-            }
+            if (canvasScaler is null || canvasScaler.uiScaleMode != CanvasScaler.ScaleMode.ScaleWithScreenSize)
+                return 1f;
 
-            return 1f;
+            float referenceHeight = canvasScaler.referenceResolution.y;
+            float currentHeight = Screen.height;
+            return currentHeight / referenceHeight;
         }
 
         public enum ObjectiveType
         {
-            None,
-            CollectItem,
-            ReachLocation,
-            DefeatEnemy
+            NONE,
+            COLLECT_ITEM,
+            REACH_LOCATION,
+            DEFEAT_ENEMY
         }
 
-        public struct Objective
+        public class Objective
         {
+            public string id;
             public string name;
             public ObjectiveType type;
             public bool completed;
             public Color color;
+
+            public Objective(string index, string n, ObjectiveType t, Color c)
+            {
+                id = index;
+                name = n;
+                type = t;
+                completed = false;
+                color = c;
+            }
         }
     }
 }

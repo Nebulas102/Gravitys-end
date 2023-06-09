@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -17,6 +18,12 @@ namespace UI.Tokens
 
         [SerializeField]
         public TokenSection timeSection, healthSection, damageSection;
+
+        [SerializeField]
+        [Range(0f, 4f)]
+        private float cooldownLength;
+
+        private float nextTransactionTime = -Mathf.Infinity;
 
         public int spendableTokens
         {
@@ -45,18 +52,24 @@ namespace UI.Tokens
 
         public bool Invest(bool canInvest)
         {
-            canInvest = canInvest && spendableTokens > 0;
+            canInvest = canInvest && spendableTokens > 0 && Time.unscaledTime > nextTransactionTime;
             if (canInvest)
+            {
                 spendableTokens--;
+                nextTransactionTime = Time.unscaledTime + cooldownLength;
+            }
 
             return canInvest;
         }
 
         public bool Refund(bool canRefund)
         {
-            canRefund = canRefund && spendableTokens < tokens;
+            canRefund = canRefund && spendableTokens < tokens && Time.unscaledTime > nextTransactionTime;
             if (canRefund)
+            {
                 spendableTokens++;
+                nextTransactionTime = Time.unscaledTime + cooldownLength;
+            }
 
             return canRefund;
         }

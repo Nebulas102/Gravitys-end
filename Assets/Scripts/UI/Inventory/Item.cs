@@ -108,11 +108,22 @@ namespace UI.Inventory
         {
             if (!_gameInput.GetPickUp() || !IsPlayerNearby() || IsInInventory || _inventoryOpened) return;
 
-            InventoryManager.instance.PickupItem(this);
-            meshRenderer.enabled = false;
-            IsInInventory = true;
-            isPlayerNearby = false;
-            OnItemPickup?.Invoke(false);
+
+            if (InventoryManager.instance.PickupItem(this))
+            {
+                meshRenderer.enabled = false;
+                IsInInventory = true;
+                isPlayerNearby = false;
+                OnItemPickup?.Invoke(false);
+                if (type == ItemType.WEAPON) { 
+                    SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.GunPickup);
+                    return;
+                }
+                if (type == ItemType.ARMOR) {
+                    SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ArmorPickup);
+                    return;
+                }
+            }
         }
 
         public void RenderItem(bool render)

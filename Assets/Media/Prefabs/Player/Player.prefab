@@ -165,7 +165,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.08627451, g: 0.10980392, b: 0.10980392, a: 1}
+  m_BackGroundColor: {r: 0.050980397, g: 0.050980397, b: 0.050980397, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -186,7 +186,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 64
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 37e371ba29f92c54c80fed5a27d5a834, type: 2}
   m_TargetDisplay: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
@@ -385,7 +385,6 @@ GameObject:
   - component: {fileID: 99395234236917975}
   - component: {fileID: 4482070294439889658}
   - component: {fileID: 8640217738828214446}
-  - component: {fileID: -7713033719699328089}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -497,23 +496,6 @@ MonoBehaviour:
   _equippedWeapon: {fileID: 0}
   meleeHolder: {fileID: 3548747859634882540}
   rangedHolder: {fileID: 5555021967279903013}
---- !u!114 &-7713033719699328089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 781004467383644964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50aa083b15a3b2b40b7d1d2d95d75719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectivesHolder: {fileID: 6447278849975649200, guid: f1bf2decb3df9714c8341a7c9230225e, type: 3}
-  textVerticalMargin: 75
-  objectiveFontSize: 20
-  objectiveHorizontalPosition: -125
-  font: {fileID: 11400000, guid: 77a7a7b5219ae634e94115a21ffbd7d6, type: 2}
 --- !u!1 &791864568975826494
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,6 +22,7 @@ namespace Controllers.Player
 
             velocity = character.playerVelocity;
             playerSpeed = character.playerSpeed;
+            PlayerAnimator.Instance._animator.SetFloat("Velocity", 0, 0.1f, Time.deltaTime);
         }
 
         public override void HandleInput()
@@ -30,7 +31,6 @@ namespace Controllers.Player
 
             if (moveAction.triggered) sprint = true;
             if (pickupAction.triggered) pickup = true;
-
 
             input = moveAction.ReadValue<Vector2>();
             velocity = new Vector3(input.x, 0, input.y);

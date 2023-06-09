@@ -15,6 +15,9 @@ namespace UI.Tokens
         [SerializeField]
         private TextMeshProUGUI spendableText;
 
+        [SerializeField]
+        public TokenSection timeSection, healthSection, damageSection;
+
         public int spendableTokens
         {
             get { return _spendableTokens; }

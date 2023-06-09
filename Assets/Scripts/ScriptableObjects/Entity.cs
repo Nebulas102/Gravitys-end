@@ -15,7 +15,7 @@ namespace ScriptableObjects
         {
             var damage = Random.Range(startDamage, endDamage);
             // Subtract the armor value
-            damage -= Mathf.RoundToInt(modifier / 100) * damage;
+            damage -= Mathf.RoundToInt(modifier) * damage;
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
             if (damageCounter is not null)

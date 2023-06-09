@@ -5,7 +5,7 @@ namespace UI.Runtime
 {
     public class PauseMenu : MonoBehaviour
     {
-        public delegate void PauseToggle(bool inventoryOpened);
+        public delegate void PauseToggle(bool paused);
         public static event PauseToggle OnPauseToggle;
 
         [SerializeField]
@@ -15,75 +15,44 @@ namespace UI.Runtime
         public GameObject controlsImage;
 
         private InputManager _inputManager;
-        private bool pauseMenuToggleInput;
-        private bool closeMenuInput;
+        private bool _isPaused;
 
         // Singleton for pausemenu
         public static PauseMenu instance;
-        public bool isPaused;
+        public bool isPaused
+        {
+            get => _isPaused;
+            set
+            {
+                _isPaused = value;
+                if (value)
+                    InventoryOverlayBehaviour.instance.inventoryOpened = false;
+
+                pauseMenu.SetActive(value);
+                OnPauseToggle?.Invoke(value);
+            }
+        }
 
         private void Awake()
         {
             if (instance == null)
                 instance = this;
+            else
+                Destroy(gameObject);
 
             _inputManager = new InputManager();
-            isPaused = false;
-        }
-
-        private void Update()
-        {
-            if (pauseMenu.activeSelf)
-            {
-                //This doesn't work, the game doesn't use Time.DeltaTime for enemy behaviour and such so nothing actually stops.
-                Time.timeScale = 0f;
-                InventoryOverlayBehaviour.instance.inventoryOpened = false;
-            }
-            else
-            {
-                Time.timeScale = 1f;
-            }
-
-            // Toggle pause menu
-            if (pauseMenuToggleInput)
-            {
-                pauseMenu.SetActive(!pauseMenu.activeSelf);
-                isPaused = pauseMenu.activeSelf;
-            }
-
-            if (closeMenuInput)
-            {
-                if (isPaused)
-                {
-                    Resume();
-                }
-            }
-
-            pauseMenuToggleInput = false;
-            closeMenuInput = false;
         }
 
         private void OnEnable()
         {
             _inputManager.Enable();
-            _inputManager.UI.TogglePauseMenu.performed += ctx => pauseMenuToggleInput = true;
-            _inputManager.UI.CloseMenu.performed += ctx => closeMenuInput = true;
+            _inputManager.UI.TogglePauseMenu.performed += _ => TogglePause(!isPaused);
+            _inputManager.UI.CloseMenu.performed += _ => CloseMenu();
         }
 
         private void OnDisable()
         {
             _inputManager.Disable();
-        }
-
-        public void Resume()
-        {
-            // This removes the pause menu overlay to continue the game
-            pauseMenu.SetActive(false);
-
-            // Unpause the game
-            // 1f for now, depends in which scene we are and what the timescale is in that particular scene
-            Time.timeScale = 1f;
-            isPaused = false;
         }
 
         public void GoToMainMenu()
@@ -94,6 +63,18 @@ namespace UI.Runtime
         public void ToggleControls()
         {
             controlsImage.SetActive(!controlsImage.activeSelf);
+        }
+
+        public void TogglePause(bool force = false)
+        {
+            isPaused = force;
+            Time.timeScale = force ? 0f : 1f;
+        }
+
+        private void CloseMenu()
+        {
+            if (isPaused && pauseMenu.activeSelf)
+                TogglePause();
         }
     }
 }

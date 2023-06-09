@@ -8,6 +8,14 @@ namespace UI
 {
     public class ObjectiveSystem : MonoBehaviour
     {
+        // Singleton instance
+        private static ObjectiveSystem instance;
+
+        public static ObjectiveSystem Instance
+        {
+            get { return instance; }
+        }
+
         public List<Objective> objectives = new List<Objective>();
 
         [SerializeField] GameObject objectivesHolder;
@@ -16,11 +24,26 @@ namespace UI
         [SerializeField] int objectiveFontSize = 24;
         [SerializeField] int objectiveHorizontalPosition = -75;
 
+        [SerializeField] TMP_FontAsset font;
+
         private int enemiesKilledCount;
 
         private int objectivesCompleted = 0;
         private bool keycardCollected = false;
         private bool bossKilled = false;
+
+        void Awake() {
+            // Check if an instance already exists
+            if (instance != null && instance != this)
+            {
+                // Destroy this instance if another one already exists
+                Destroy(gameObject);
+                return;
+            }
+
+            // Set the instance to this instance
+            instance = this;
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -63,6 +86,8 @@ namespace UI
 
                 // Set the text of the TextMeshPro component
                 textMeshProComponent.text = objective.name;
+
+                textMeshProComponent.font = font;
 
                 // Set the font size of the text
                 textMeshProComponent.fontSize = objectiveFontSize;

@@ -1,5 +1,6 @@
 using Cinemachine;
 using Core.StageGeneration.Rooms.RoomTypes;
+using UI;
 using UnityEngine;
 
 namespace Core.StageGeneration.Rooms.BossRoomUtil
@@ -8,6 +9,9 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
     {
         [SerializeField]
         private GameObject teleportDestination;
+
+        [SerializeField]
+        private GameObject teleportDestinationNoKeycard;
 
         [SerializeField]
         private Canvas bossFightCanvas;
@@ -28,6 +32,12 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
         private void OnTriggerEnter(Collider other)
         {
             var _bossRoom = bossRoom.GetComponent<BossRoom>();
+
+            //IF geen key objective return hierzo
+            if (!ObjectiveSystem.Instance.getKeycardCollected()) {
+                TeleportPlayerNoKeycard();
+                return;
+            }
 
             if (other.tag == "Player")
             {
@@ -52,7 +62,12 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
             player.transform.position = teleportDestination.transform.position;
 
             topDownCamera = GameObject.Find("Cinemachine Camera").GetComponent<CinemachineVirtualCamera>();
-            topDownCamera.m_Lens.OrthographicSize = 7.5f;
+            topDownCamera.m_Lens.OrthographicSize = 10f;
+        }
+
+        private void TeleportPlayerNoKeycard()
+        {
+            player.transform.position = teleportDestinationNoKeycard.transform.position;
         }
     }
 }

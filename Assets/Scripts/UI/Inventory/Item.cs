@@ -37,7 +37,8 @@ namespace UI.Inventory
         private float verticalMotionSpeed = 4f; // Adjust the speed as desired
 
         [SerializeField]
-        private float verticalMotionAmplitude = 0.5f; // Adjust the vertical motion amplitude as desired
+        private float verticalMotionAmplitude = 1f; // Adjust the vertical motion amplitude as desired
+
 
         [HideInInspector]
         public bool IsInInventory;
@@ -57,7 +58,7 @@ namespace UI.Inventory
             _player = GameObject.FindGameObjectWithTag("Player");
             _gameInput = FindObjectOfType<GameInput>();
             InventoryOverlayBehaviour.OnInventoryToggle += ToggleInventory;
-            
+
             originalPosition = transform.position;
         }
 
@@ -79,15 +80,15 @@ namespace UI.Inventory
         public void Spawn(Vector3 position)
         {
             IsInInventory = false;
-            meshRenderer.enabled = true;
+            RenderItem(true);
             gameObject.transform.position = position;
+            isPlayerNearby = true;
+            OnItemPickup?.Invoke(false);
         }
 
         public void Spawn()
         {
-            IsInInventory = false;
-            meshRenderer.enabled = true;
-            gameObject.transform.position = _player.transform.position;
+            Spawn(_player.transform.position);
         }
 
         public float GetModifier()
@@ -97,7 +98,7 @@ namespace UI.Inventory
 
         public bool IsPlayerNearby()
         {
-            if (_player is null) return false;
+            if (meshRenderer.enabled == false || _player is null || IsInInventory) return false;
 
             var distance = Vector3.Distance(transform.position, _player.transform.position);
             return distance <= radius;
@@ -110,8 +111,13 @@ namespace UI.Inventory
             InventoryManager.instance.PickupItem(this);
             meshRenderer.enabled = false;
             IsInInventory = true;
-            this.gameObject.SetActive(false);
+            isPlayerNearby = false;
             OnItemPickup?.Invoke(false);
+        }
+
+        public void RenderItem(bool render)
+        {
+            meshRenderer.enabled = render;
         }
 
         public void ShowPrompt()
@@ -125,10 +131,9 @@ namespace UI.Inventory
 
                     // Start showing prompt, store current position as original position
                     originalPosition = transform.position;
-                    isShowingPrompt = true;
                     OnItemPickup?.Invoke(true);
+                    isShowingPrompt = true;
                 }
-
                 // Calculate the vertical offset based on a smooth oscillation using Mathf.Sin
                 float verticalOffset = Mathf.Sin(Time.time * verticalMotionSpeed) * verticalMotionAmplitude;
 
@@ -136,7 +141,7 @@ namespace UI.Inventory
                 Vector3 targetPosition = originalPosition + Vector3.up * verticalOffset;
 
                 // Clamp the target position to stay at or above y = 0
-                targetPosition.y = Mathf.Max(targetPosition.y, 0f);
+                targetPosition.y = Mathf.Max(targetPosition.y, 0.3f);
 
                 // Smoothly move the item towards the target position using Lerp
                 transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * verticalMotionSpeed);
@@ -148,9 +153,9 @@ namespace UI.Inventory
                     isPlayerNearby = false;
 
                     // Stop showing prompt, reset item position
-                    transform.position = originalPosition;
-                    isShowingPrompt = false;
+                    // transform.position = originalPosition;
                     OnItemPickup?.Invoke(false);
+                    isShowingPrompt = false;
                 }
             }
         }

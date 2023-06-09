@@ -29,22 +29,19 @@ namespace Core.Enemy.StageBosses.Stage1
             _startPosition = transform.position;
             _targetPosition = _player.transform.position;
 
-            transform.LookAt(new Vector3(_targetPosition.x, _startPosition.y, _targetPosition.z), transform.forward);
+            transform.LookAt(_player.transform.position);
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            // Calculate the direction towards the target
-            Vector3 direction = _player.transform.position - transform.position;
-
             // Calculate the rotation towards the target
-            Quaternion rotation = Quaternion.LookRotation(direction);
+            Quaternion rotation = Quaternion.LookRotation(_player.transform.position);
 
             // Smoothly rotate towards the target
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
 
             // Move the bullet forward in its local space
-            transform.Translate(Vector3.forward * bulletSpeed * Time.fixedDeltaTime);
+            transform.Translate(_player.transform.position * bulletSpeed * Time.fixedDeltaTime);
         }
 
         private void OnCollisionEnter(Collision other)

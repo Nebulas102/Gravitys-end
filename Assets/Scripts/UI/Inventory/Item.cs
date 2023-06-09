@@ -39,9 +39,6 @@ namespace UI.Inventory
         [SerializeField]
         private float verticalMotionAmplitude = 1f; // Adjust the vertical motion amplitude as desired
 
-        [SerializeField]
-        private float rotationSpeedItem = 150f; // Adjust the rotation speed as desired
-
 
         [HideInInspector]
         public bool IsInInventory;
@@ -148,15 +145,6 @@ namespace UI.Inventory
 
                 // Smoothly move the item towards the target position using Lerp
                 transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * verticalMotionSpeed);
-
-                // // Calculate the rotation angle for a full 360-degree circle on the Y-axis
-                // float rotationAngle = (Time.time * rotationSpeedItem) % 360f;
-
-                // // Create a quaternion representing the rotation around the Y-axis
-                // Quaternion targetRotation = Quaternion.Euler(0f, rotationAngle, 0f);
-
-                // // Apply the target rotation to the item
-                // transform.rotation = targetRotation;
             }
             else
             {

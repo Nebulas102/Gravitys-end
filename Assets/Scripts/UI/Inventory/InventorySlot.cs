@@ -36,9 +36,8 @@ namespace UI.Inventory
             item.GetComponent<Item>().RenderItem(false);
             if (spawn)
                 item.GetComponent<Item>().Spawn();
-            else
-                EquipmentSystem.Instance.DetachWeapon();
             ToggleItem(null, null);
+            EquipmentSystem.Instance.DetachWeapon();
         }
 
         private void ToggleItem(GameObject obj, Sprite sprite)

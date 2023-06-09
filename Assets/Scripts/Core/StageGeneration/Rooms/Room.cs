@@ -62,7 +62,6 @@ namespace Core.StageGeneration.Rooms
         public Quaternion RotateRoom(StageHelper.RoomDirections placementDirection)
         {
             Door door = doors[0].GetComponent<Door>();
-            Debug.Log("Door direction: " + door.direction);
 
             var rotation = NewRotationData(door, placementDirection);
 

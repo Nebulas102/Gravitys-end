@@ -37,7 +37,7 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                other.gameObject.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(bulletDamage, bulletDamage, 0);
+                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(bulletDamage, bulletDamage, 0);
 
                 Destroy(gameObject);
             }

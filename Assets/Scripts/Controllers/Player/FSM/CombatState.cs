@@ -22,7 +22,6 @@ namespace Controllers.Player
 
             velocity = character.playerVelocity;
             playerSpeed = character.playerSpeed;
-            // PlayerAnimator.Instance._animator.SetBool("combatting", true);
         }
 
         public override void HandleInput()
@@ -67,6 +66,8 @@ namespace Controllers.Player
         {
             base.Exit();
 
+            PlayerAnimator.Instance._animator.SetBool("combatting", false);
+            
             character.playerVelocity = new Vector3(input.x, 0, input.y);
 
             if (velocity.sqrMagnitude > 0) character.transform.rotation = Quaternion.LookRotation(velocity);

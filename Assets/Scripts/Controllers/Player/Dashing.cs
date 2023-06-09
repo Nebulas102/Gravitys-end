@@ -63,7 +63,18 @@ namespace Controllers.Player
 
         private void HandleInput()
         {
+            if (PlayerManager.Instance.player.GetComponent<Character>().movementSM.currentState == PlayerManager.Instance.player.GetComponent<Character>().standing)
+            {
+                return;
+            }
+
+            if (PlayerManager.Instance.player.GetComponent<Character>().movementSM.currentState == PlayerManager.Instance.player.GetComponent<Character>().attacking)
+            {
+                return;
+            }
+
             _movementInput = _gameInput.GetMovement();
+
             _dashInput = _gameInput.GetDash();
         }
 

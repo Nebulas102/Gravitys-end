@@ -18,6 +18,7 @@ namespace Core
         public TextMeshProUGUI display;
 
         private bool timerIsRunning;
+        private bool isPlayingClockSound;
 
         private void Start()
         {
@@ -62,9 +63,12 @@ namespace Core
             float seconds = Mathf.FloorToInt(ttd % 60);
             float milliseconds = Mathf.FloorToInt((ttd * 1000) % 1000);
 
-            if (ttd <= dangerZone)
+            if (ttd <= dangerZone && !isPlayingClockSound)
             {
                 display.color = Color.red;
+                                        // Play clock ticking sound effect
+                        isPlayingClockSound = true;
+                        SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ClockTicking);
             }
 
             display.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);

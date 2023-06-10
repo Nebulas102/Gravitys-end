@@ -5,17 +5,15 @@ using UnityEngine;
 public class DoorModel : MonoBehaviour
 {
 	public GameObject ClosedModel;
-	public GameObject OpenModel;
 
+	[SerializeField]
 	private GameObject _currentModelObject;
 
-	public void Start()
-	{
+	public void Start() {
 		_currentModelObject = transform.Find("DoorOpen").gameObject;
 	}
 
-	public void Close()
-	{
+	public void Close() {
 		// Gets the current model if unknown
 		if (_currentModelObject == null)
 			_currentModelObject = transform.Find("DoorOpen").gameObject;
@@ -25,24 +23,5 @@ public class DoorModel : MonoBehaviour
 
 		// Creates the closed model
 		_currentModelObject = Instantiate(ClosedModel, this.transform);
-	}
-
-	public void Open()
-	{
-		// Gets the current model if unknown
-		if (_currentModelObject == null)
-		{
-			_currentModelObject = transform.Find("DoorOpen").gameObject;
-			if (_currentModelObject == null)
-			{
-				_currentModelObject = transform.Find("DoorClosed").gameObject;
-			}
-		}
-
-		// Destroys the old model
-		Destroy(_currentModelObject);
-
-		// Creates the closed model
-		_currentModelObject = Instantiate(OpenModel, this.transform);
 	}
 }

@@ -7,7 +7,6 @@ namespace Controllers.Player
         private bool pickup;
         private float playerSpeed;
         private bool attack;
-        private bool sprint;
 
         public CombatState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
@@ -34,34 +33,18 @@ namespace Controllers.Player
             input = moveAction.ReadValue<Vector2>();
             velocity = new Vector3(input.x, 0, input.y);
 
-            //if there is no input, sprint is false
-            sprint = moveAction.ReadValue<Vector2>() != Vector2.zero ? true : false;
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-
-            if (EquipmentSystem.Instance._equippedWeapon == null)
-            {
-                stateMachine.ChangeState(character.standing);
-            }
-
-            if (sprint)
-            {
-                PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude + 0.15f, 0.1f, Time.deltaTime);
-            }
-            else
-            {
-                PlayerAnimator.Instance._animator.SetFloat("Velocity", 0, 0.1f, Time.deltaTime);
-            }
-
+            PlayerAnimator.Instance._animator.SetFloat("Velocity", input.magnitude + 0.15f, 0.1f, Time.deltaTime);
+            
             if (attack)
             {
-                Debug.Log("Attacking");
+                PlayerAnimator.Instance._animator.SetTrigger("attack");
                 stateMachine.ChangeState(character.attacking);
             }
-
         }
 
         public override void PhysicsUpdate()
@@ -69,6 +52,7 @@ namespace Controllers.Player
             base.PhysicsUpdate();
 
             velocity = Quaternion.Euler(0, -45, 0) * velocity;
+
             character.controller.Move(velocity * Time.deltaTime * playerSpeed);
 
             if (velocity.sqrMagnitude > 0)
@@ -82,6 +66,8 @@ namespace Controllers.Player
         {
             base.Exit();
 
+            PlayerAnimator.Instance._animator.SetBool("combatting", false);
+            
             character.playerVelocity = new Vector3(input.x, 0, input.y);
 
             if (velocity.sqrMagnitude > 0) character.transform.rotation = Quaternion.LookRotation(velocity);

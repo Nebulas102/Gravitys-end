@@ -32,7 +32,7 @@ namespace Controllers.Player
 
         public virtual void Enter()
         {
-            Debug.Log("enter state: " + this.ToString());
+            // Debug.Log("enter state: " + this.ToString());
         }
 
         public virtual void HandleInput()

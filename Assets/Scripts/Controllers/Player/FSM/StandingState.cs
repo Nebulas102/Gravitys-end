@@ -41,10 +41,6 @@ namespace Controllers.Player
             base.LogicUpdate();
             PlayerAnimator.Instance._animator.SetFloat("Velocity", 0, 0.1f, Time.deltaTime);
 
-            if (EquipmentSystem.Instance._equippedWeapon != null){
-                stateMachine.ChangeState(character.combatting);
-            }
-
             if (sprint) stateMachine.ChangeState(character.sprinting);
             if (pickup) PlayerAnimator.Instance._animator.SetTrigger("pickup");
 

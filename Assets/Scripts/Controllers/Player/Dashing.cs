@@ -63,20 +63,21 @@ namespace Controllers.Player
 
         private void HandleInput()
         {
-            if (PlayerManager.Instance.player.GetComponent<Character>().movementSM.currentState == PlayerManager.Instance.player.GetComponent<Character>().standing)
-            {
-                return;
-            }
-
-            if (PlayerManager.Instance.player.GetComponent<Character>().movementSM.currentState == PlayerManager.Instance.player.GetComponent<Character>().attacking)
+            Character character = PlayerManager.Instance.player.GetComponent<Character>();
+            if (character.movementSM.currentState == character.standing || character.movementSM.currentState == character.attacking)
             {
                 return;
             }
 
             _movementInput = _gameInput.GetMovement();
+            if (_movementInput == Vector2.zero)
+            {
+                return;
+            }
 
             _dashInput = _gameInput.GetDash();
         }
+
 
 
         //////////////////////////////////////////////
@@ -111,17 +112,22 @@ namespace Controllers.Player
 
             while (dashTimer > 0)
             {
-                // move player
+                // Move player
                 _controller.Move(dashDir * (dashSpeed * Time.deltaTime));
-                // decrease dash timer
+
+                // Decrease dash timer
                 dashTimer -= Time.deltaTime;
+
                 yield return null;
             }
 
-            // enable user input after the dash
+            // Enable user input after the dash
             isDashing = false;
 
+            // Wait for dash cooldown
             yield return new WaitForSeconds(dashCooldown);
+
+            // Re-enable dash availability
             dashAvailable = true;
         }
 

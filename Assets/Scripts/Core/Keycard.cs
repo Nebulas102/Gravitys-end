@@ -8,9 +8,8 @@ public class Keycard : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-        {   
-            ObjectiveSystem.Instance.CompleteObjective("Find the bossroom key");
-            ObjectiveSystem.Instance.setKeycardCollected(true);
+        {
+            ObjectiveSystem.instance.HandleKeycardCollected();
             Destroy(gameObject);
         }
     }

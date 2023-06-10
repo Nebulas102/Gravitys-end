@@ -11,9 +11,6 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
         private GameObject teleportDestination;
 
         [SerializeField]
-        private GameObject teleportDestinationNoKeycard;
-
-        [SerializeField]
         private Canvas bossFightCanvas;
 
         private GameObject bossRoom;
@@ -32,13 +29,6 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
         private void OnTriggerEnter(Collider other)
         {
             var _bossRoom = bossRoom.GetComponent<BossRoom>();
-
-            //IF geen key objective return hierzo
-            if (!ObjectiveSystem.instance.IsObjectiveCompleted(ObjectiveTask.COLLECT_KEY))
-            {
-                TeleportPlayerNoKeycard();
-                return;
-            }
 
             if (other.tag == "Player")
             {
@@ -64,11 +54,6 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
 
             topDownCamera = GameObject.Find("Cinemachine Camera").GetComponent<CinemachineVirtualCamera>();
             topDownCamera.m_Lens.OrthographicSize = 10f;
-        }
-
-        private void TeleportPlayerNoKeycard()
-        {
-            player.transform.position = teleportDestinationNoKeycard.transform.position;
         }
     }
 }

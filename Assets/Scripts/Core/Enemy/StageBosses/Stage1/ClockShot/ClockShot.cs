@@ -8,6 +8,12 @@ namespace Core.Enemy.StageBosses.Stage1
         [Header("Bullet")]
         [SerializeField]
         private GameObject bullet;
+        [SerializeField]
+        private float bulletSpeed;
+        [SerializeField]
+        private int minDamage;
+        [SerializeField]
+        private int maxDamage;
 
         [SerializeField]
         private float radius = 3f;
@@ -15,9 +21,6 @@ namespace Core.Enemy.StageBosses.Stage1
         [Header("Clockshot")]
         [SerializeField]
         private float clockShotInterval;
-
-        [SerializeField]
-        private Transform bossRoom;
 
         private int _amountOfBullets;
 
@@ -31,6 +34,11 @@ namespace Core.Enemy.StageBosses.Stage1
             _player = PlayerManager.Instance.player;
 
             _amountOfBullets = 360 / 30;
+
+            ClockBulletBehaviour clockBulletBehaviour = bullet.GetComponentInChildren<ClockBulletBehaviour>();
+
+            clockBulletBehaviour.SetDamage(minDamage, maxDamage);
+            clockBulletBehaviour.SetSpeed(bulletSpeed);
         }
 
         public override IEnumerator UseBossAbility()
@@ -40,8 +48,6 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private IEnumerator Shoot()
         {
-            var spawnPos = bossRoom.TransformPoint(_boss.transform.localPosition);
-
             var angleIncrement = 360f / _amountOfBullets;
 
             for (var i = 0; i < _amountOfBullets; i++)

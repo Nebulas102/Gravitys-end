@@ -8,6 +8,12 @@ namespace Core.Enemy.StageBosses.Stage1
         [Header("Bullet")]
         [SerializeField]
         private GameObject bullet;
+        [SerializeField]
+        private float bulletSpeed;
+        [SerializeField]
+        private int minDamage;
+        [SerializeField]
+        private int maxDamage;
 
         [SerializeField]
         private float bulletInterval;
@@ -26,6 +32,11 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             _boss = BossManager.Instance.boss;
             _player = PlayerManager.Instance.player;
+
+            RegularBulletBehaviour regularBulletBehaviour = bullet.GetComponentInChildren<RegularBulletBehaviour>();
+
+            regularBulletBehaviour.SetDamage(minDamage, maxDamage);
+            regularBulletBehaviour.SetSpeed(bulletSpeed);
         }
 
         public override IEnumerator UseBossAbility()
@@ -46,7 +57,19 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private void Shoot()
         {
-            Instantiate(bullet, transform.position, Quaternion.identity);
+            GameObject newBullet = Instantiate(bullet, transform.position, Quaternion.identity);
+            
+            Vector3 bulletOutputWorldPos = newBullet.transform.TransformPoint(Vector3.zero);
+            RegularBulletBehaviour newRegularBulletBehaviour = newBullet.GetComponentInChildren<RegularBulletBehaviour>();
+
+            Vector3 bulletDirection = (_player.transform.position - bulletOutputWorldPos);
+
+            bulletDirection.y = 0f;
+
+            newRegularBulletBehaviour.SetDirection(bulletDirection);
+
+            newBullet.transform.LookAt(_player.transform.position);
+            newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.root.rotation.w);
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossShoots);
         }

@@ -8,7 +8,14 @@ namespace Core.Enemy.StageBosses.Stage1
         [Header("Bullet")]
         [SerializeField]
         private GameObject bullet;
-
+        [SerializeField]
+        private float bulletSpeed;
+        [SerializeField]
+        private float bulletRotationSpeed;
+        [SerializeField]
+        private int minDamage;
+        [SerializeField]
+        private int maxDamage;
         [SerializeField]
         private float bulletInterval;
 
@@ -26,6 +33,12 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             _boss = BossManager.Instance.boss;
             _player = PlayerManager.Instance.player;
+
+            HomingBulletBehavior homingBulletBehavior = bullet.GetComponentInChildren<HomingBulletBehavior>();
+
+            homingBulletBehavior.SetDamage(minDamage, maxDamage);
+            homingBulletBehavior.SetSpeed(bulletSpeed);
+            homingBulletBehavior.SetRotationSpeed(bulletRotationSpeed);
         }
 
         public override IEnumerator UseBossAbility()

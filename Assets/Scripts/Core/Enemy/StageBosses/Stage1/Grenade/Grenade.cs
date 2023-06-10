@@ -12,6 +12,14 @@ namespace Core.Enemy.StageBosses.Stage1
         [SerializeField]
         private GameObject grenade;
         [SerializeField]
+        private float throwDuration;
+        [SerializeField]
+        private float curveHeight;
+        [SerializeField]
+        private int minDamage;
+        [SerializeField]
+        private int maxDamage;
+        [SerializeField]
         private float grenadeInterval;
 
         [Header("Decal")]
@@ -27,6 +35,12 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             _boss = BossManager.Instance.boss;
             _player = PlayerManager.Instance.player;
+
+            GrenadeBehavior grenadeBehavior = grenade.GetComponentInChildren<GrenadeBehavior>();
+
+            grenadeBehavior.SetDamage(minDamage, maxDamage);
+            grenadeBehavior.SetThrowDuration(throwDuration);
+            grenadeBehavior.SetCurveHeight(curveHeight);
         }
 
         public override IEnumerator UseBossAbility()

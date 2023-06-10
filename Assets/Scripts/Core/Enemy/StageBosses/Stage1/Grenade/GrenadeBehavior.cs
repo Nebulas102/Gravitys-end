@@ -6,12 +6,10 @@ namespace Core.Enemy.StageBosses.Stage1
 {
     public class GrenadeBehavior : MonoBehaviour
     {
-        [SerializeField]
-        private float throwDuration = 2f;
-        [SerializeField]
-        private float curveHeight = 5f;
-        [SerializeField]
-        private int grenadeDamage = 20;
+        private float _throwDuration;
+        private float _curveHeight;
+        private int _minDamage;
+        private int _maxDamage;
 
         private float _throwStartTime = 0f;
 
@@ -29,6 +27,7 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             _boss = BossManager.Instance.boss;
             _player = PlayerManager.Instance.player;
+
             _startPosition = transform.position;
             _startRotation = transform.rotation;
             _targetPosition = _player.transform.position;
@@ -41,15 +40,15 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private IEnumerator ThrowGrenade()
         {
-            while (Time.time - _throwStartTime < throwDuration)
+            while (Time.time - _throwStartTime < _throwDuration)
             {
-                float normalizedTime = (Time.time - _throwStartTime) / throwDuration;
+                float normalizedTime = (Time.time - _throwStartTime) / _throwDuration;
 
                 Vector3 currentPos = CalculateThrowPosition(normalizedTime);
-                transform.position = currentPos;
+                transform.root.position = currentPos;
 
                 Quaternion currentRot = CalculateThrowRotation(normalizedTime);
-                transform.rotation = currentRot;
+                transform.root.rotation = currentRot;
 
                 yield return null;
             }
@@ -61,7 +60,7 @@ namespace Core.Enemy.StageBosses.Stage1
         private Vector3 CalculateThrowPosition(float normalizedTime)
         {
             Vector3 currentPos = Vector3.Lerp(_startPosition, _targetPosition, normalizedTime);
-            currentPos.y += Mathf.Sin(normalizedTime * Mathf.PI) * curveHeight;
+            currentPos.y += Mathf.Sin(normalizedTime * Mathf.PI) * _curveHeight;
             return currentPos;
         }
 
@@ -80,6 +79,22 @@ namespace Core.Enemy.StageBosses.Stage1
         public void SetDecal(GameObject decal)
         {
             _decal = decal;
+        }
+
+        public void SetDamage(int minDamage, int maxDamage)
+        {
+            _minDamage = minDamage;
+            _maxDamage = maxDamage;
+        }
+
+        public void SetThrowDuration(float throwDuration)
+        {
+            _throwDuration = throwDuration;
+        }
+
+        public void SetCurveHeight(float curveHeight)
+        {
+            _curveHeight = curveHeight;
         }
     }
 }

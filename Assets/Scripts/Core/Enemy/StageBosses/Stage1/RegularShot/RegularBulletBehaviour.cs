@@ -5,17 +5,16 @@ namespace Core.Enemy.StageBosses.Stage1
 {
     public class RegularBulletBehaviour : MonoBehaviour
     {
-        [SerializeField]
-        private float bulletSpeed = 5f;
-
-        [SerializeField]
-        private int bulletDamage = 10;
+        private int _minDamage;
+        private int _maxDamage;
+        private float _speed;
 
         private GameObject _boss;
         private GameObject _player;
-        private Vector3 _startPosition;
 
+        private Vector3 _startPosition;
         private Vector3 _targetPosition;
+        private Vector3 _direction;
 
         private void Start()
         {
@@ -24,25 +23,39 @@ namespace Core.Enemy.StageBosses.Stage1
 
             _startPosition = transform.position;
             _targetPosition = _player.transform.position;
-
-            transform.LookAt(new Vector3(_targetPosition.x, _startPosition.y, _targetPosition.z), Vector3.forward);
         }
 
         private void Update()
         {
-            transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
+            transform.root.Translate(_direction * _speed * Time.deltaTime, Space.World);
         }
 
         private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(bulletDamage, bulletDamage, 0);
+                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(_minDamage, _maxDamage, 0);
 
                 Destroy(gameObject);
             }
 
             if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) Destroy(gameObject);
+        }
+
+        public void SetDamage(int minDamage, int maxDamage)
+        {
+            _minDamage = minDamage;
+            _maxDamage = maxDamage;
+        }
+
+        public void SetSpeed(float speed)
+        {
+            _speed = speed;
+        }
+
+        public void SetDirection(Vector3 direction)
+        {
+            _direction = direction;
         }
     }
 }

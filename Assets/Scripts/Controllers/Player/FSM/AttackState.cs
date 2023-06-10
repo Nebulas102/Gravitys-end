@@ -6,75 +6,64 @@ namespace Controllers.Player
 {
     public class AttackState : State
     {
-        float timePassed;
-        float clipLength;
-        float clipSpeed;
-        bool attack;
+        private float timePassed;
+        private bool attackTriggered;
+        private Animator animator;
+        private const float ComboDelay = 0.6f;
 
-        private Animator animator = PlayerAnimator.Instance._animator;
-        private float _comboDelay = 0.5f;
-        private int _numClicks = 0;
-        private float _lastClickTime = 0;
-
-
-        public AttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+        public AttackState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
-            character = _character;
-            stateMachine = _stateMachine;
+            animator = PlayerAnimator.Instance._animator; 
         }
 
         public override void Enter()
         {
             base.Enter();
-            attack = false;
-            timePassed = 0;
+            attackTriggered = false;
+            timePassed = 0f;
             animator.SetTrigger("attack");
-            animator.SetFloat("Velocity", 0f);
         }
 
         public override void HandleInput()
         {
             base.HandleInput();
 
-            if (Time.time - _lastClickTime < _comboDelay)
-            {
-                _numClicks = 0;
-            }
+            // Handle input for attack action
             if (attackAction.triggered)
             {
-                _lastClickTime = Time.time;
-                _numClicks++;
-
-                if(_numClicks == 1){
-                    animator.SetTrigger("attack");
-                }
-                _numClicks = Mathf.Clamp(_numClicks, 0, 3);
+                attackTriggered = true;
             }
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            // timePassed += Time.deltaTime;
-            // clipLength = animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
-            // clipSpeed = animator.GetCurrentAnimatorStateInfo(1).speed;
-            
-            // if (timePassed >= clipLength / clipSpeed && attack)
-            // {
-            //     stateMachine.ChangeState(character.attacking);
-            // }
 
-            // if (timePassed >= clipLength / clipSpeed)
-            // {
-            //     stateMachine.ChangeState(character.combatting);
-            //     animator.SetTrigger("move");
-            // }
+            timePassed += Time.deltaTime;
+
+            // Calculate combo length based on the clip length and speed
+            float clipLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+            float clipSpeed = animator.GetCurrentAnimatorStateInfo(0).speed;
+            float comboLength = clipLength / clipSpeed;
+
+            // Check if attack triggered during combo delay
+            if (timePassed < ComboDelay && attackTriggered)
+            {
+                timePassed = 0f;
+                stateMachine.ChangeState(character.attacking);
+            }
+
+            // Check if combo length has passed
+            if (timePassed >= comboLength)
+            {
+                animator.SetTrigger("move");
+                stateMachine.ChangeState(character.combatting);
+            }
         }
 
         public override void Exit()
         {
             base.Exit();
         }
-
     }
 }

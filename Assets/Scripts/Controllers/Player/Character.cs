@@ -81,7 +81,7 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            // //Look at mouse
+            // //Look at mouse mike
             // Vector2 mousePosition = playerInput.actions["Look"].ReadValue<Vector2>();
 
             // Ray ray = _camera.ScreenPointToRay(mousePosition);

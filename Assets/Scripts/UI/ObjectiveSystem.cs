@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Core.Enemy;
 using TMPro;
@@ -10,224 +9,155 @@ namespace UI
     public class ObjectiveSystem : MonoBehaviour
     {
         // Singleton instance
-        private static ObjectiveSystem instance;
+        public static ObjectiveSystem instance { get; private set; }
 
-        public static ObjectiveSystem Instance
-        {
-            get { return instance; }
-        }
+        [SerializeField]
+        private GameObject header;
 
-        public List<Objective> objectives = new List<Objective>();
+        [SerializeField]
+        private GameObject objectivesHolder;
 
-        [SerializeField] GameObject objectivesHolder;
-
-        [SerializeField] int textVerticalMargin = 50;
-        [SerializeField] int objectiveFontSize = 24;
-        [SerializeField] int objectiveHorizontalPosition = -75;
-
-        [SerializeField] TMP_FontAsset font;
+        [SerializeField]
+        private GameObject objectivePrefab;
 
         private int enemiesKilledCount;
-
-        private int objectivesCompleted = 0;
-        private bool keycardCollected = false;
-        private bool bossKilled = false;
-
         private CanvasScaler canvasScaler;
         private float screenRatio;
+        private List<Objective> objectives = new List<Objective>();
 
-        void Awake() {
-            // Check if an instance already exists
-            if (instance != null && instance != this)
-            {
-                // Destroy this instance if another one already exists
+        private void Awake()
+        {
+            if (instance is null)
+                instance = this;
+            else
                 Destroy(gameObject);
-                return;
-            }
 
-            // Set the instance to this instance
-            instance = this;
-
-                        // Get the Canvas Scaler component
+            // Get the Canvas Scaler component
             canvasScaler = GetComponentInParent<CanvasScaler>();
         }
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             EnemyBase.OnEnemyKilled += HandleEnemyKilled;
 
             objectivesHolder = GameObject.Find("ObjectivesHolder");
-
-            Objective objective1 = new Objective();
-            objective1.name = "Find the bossroom key";
-            objective1.type = ObjectiveType.CollectItem;
-            objective1.completed = false;
-            objective1.color = Color.white;
-            objectives.Add(objective1);
-
-            Objective objective2 = new Objective();
-            objective2.name = "Kill 50 enemies";
-            objective2.type = ObjectiveType.DefeatEnemy;
-            objective2.completed = false;
-            objective2.color = Color.white;
-            objectives.Add(objective2);
-
-            Objective objective3 = new Objective();
-            objective3.name = "Defeat the Boss";
-            objective3.type = ObjectiveType.DefeatEnemy;
-            objective3.completed = false;
-            objective3.color = Color.white;
-            objectives.Add(objective3);
+            objectives.Add(new Objective(ObjectiveTask.COLLECT_KEY, "Find the bossroom key"));
+            objectives.Add(new Objective(ObjectiveTask.KILL_50, "Kill 50 enemies"));
+            objectives.Add(new Objective(ObjectiveTask.KILL_BOSS, "Defeat the Boss"));
 
             UpdateObjectiveUI();
         }
 
 
-        public void CompleteObjective(string objectiveName)
+        private void CompleteObjective(ObjectiveTask task)
         {
-            Objective objective = objectives.Find(o => o.name == objectiveName);
-
-            // Check if the object is not null
-            if (!ReferenceEquals(objective, null))
+            Objective objective = objectives.Find(o => o.task == task);
+            Transform objectiveUI = objectivesHolder.transform.Find(objective.task.ToString());
+            if (objective is null || objectiveUI is null)
             {
-                objective.completed = true;
-                objective.color = Color.green;
-
-                objectivesCompleted++;
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
-
-                                // // Find the UI element of the completed objective
-                Transform objectiveUI = objectivesHolder.transform.Find(objective.name);
-                if (objectiveUI != null)
-                {
-                    // Get the TextMeshProUGUI component of the UI element and set its color
-                    TextMeshProUGUI objectiveText = objectiveUI.GetComponent<TextMeshProUGUI>();
-                    objectiveText.color = objective.color;
-
-                    objectivesCompleted++;
-
-                    SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Objective not found: " + objectiveName);
+                Debug.LogWarning("Objective not found: " + task.ToString());
+                return;
             }
 
-            // UpdateObjectiveUI();
+            objective.completed = true;
+            objective.color = Color.green;
+
+            // Get the TextMeshProUGUI component of the UI element and set its color
+            TextMeshProUGUI objectiveText = objectiveUI.GetComponent<TextMeshProUGUI>();
+            objectiveText.color = objective.color;
+
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
         }
 
+        public bool IsObjectiveCompleted(ObjectiveTask task)
+        {
+            Objective objective = objectives.Find(o => o.task == task);
+            return objective.completed;
+        }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             EnemyBase.OnEnemyKilled -= HandleEnemyKilled;
+            objectives.Clear();
         }
 
-        void HandleEnemyKilled(EnemyBase enemy)
+        public void HandleKeycardCollected()
+        {
+            CompleteObjective(ObjectiveTask.COLLECT_KEY);
+        }
+
+        public void HandleEnemyKilled(EnemyBase enemy)
         {
             enemiesKilledCount++;
             if (enemiesKilledCount == 50)
             {
-                // Mark the "Collect the Key" objective as completed
-                FindObjectOfType<ObjectiveSystem>().CompleteObjective("Kill 50 enemies");
+                CompleteObjective(ObjectiveTask.KILL_50);
             }
         }
 
-        public static void HandleBossKilled()
+        public void HandleBossKilled()
         {
-            // Mark the "Collect the Key" objective as completed
-            FindObjectOfType<ObjectiveSystem>().CompleteObjective("Defeat the Boss");
-        }
-
-        public int getCompletedObjectives()
-        {
-            return objectivesCompleted;
-        }
-
-        public bool getKeycardCollected()
-        {
-            return keycardCollected;
-        }
-
-        public bool getBossKilled()
-        {
-            return bossKilled;
-        }
-
-        public void setKeycardCollected(bool keyCardCollected)
-        {
-            keycardCollected = keyCardCollected;
+            CompleteObjective(ObjectiveTask.KILL_BOSS);
         }
 
         private void UpdateObjectiveUI()
         {
             // Clear existing objectives
-            foreach (Transform child in objectivesHolder.transform)
-            {
-                Destroy(child.gameObject);
-            }
+            objectivesHolder.transform.DetachChildren();
 
             for (int i = 0; i < objectives.Count; i++)
             {
                 Objective objective = objectives[i];
 
                 // Create a new child object
-                GameObject childObject = new GameObject(objective.name);
-                childObject.transform.SetParent(objectivesHolder.transform);
+                GameObject childObject = Instantiate(objectivePrefab, objectivesHolder.transform);
+                childObject.name = objective.task.ToString();
 
-                RectTransform childRectTransform = childObject.AddComponent<RectTransform>();
-                childRectTransform.pivot = new Vector2(0, 1);
-                childRectTransform.anchorMin = new Vector2(0, 1);
-                childRectTransform.anchorMax = new Vector2(0, 1);
-
-                TextMeshProUGUI textMeshProComponent = childObject.AddComponent<TextMeshProUGUI>();
-                textMeshProComponent.font = font;
+                TextMeshProUGUI textMeshProComponent = childObject.GetComponent<TextMeshProUGUI>();
                 textMeshProComponent.color = objective.color;
                 textMeshProComponent.text = objective.name;
 
                 // Calculate the scaled size of the text based on the screen size
-                float scaledFontSize = objectiveFontSize * GetScreenRatio();
-                textMeshProComponent.fontSize = scaledFontSize;
-
-                // Set the position of the child object
-                childRectTransform.anchoredPosition = new Vector2(objectiveHorizontalPosition, -i * textVerticalMargin * GetScreenRatio());
-
-                // Set the size of the child object
-                Vector2 textSize = textMeshProComponent.GetPreferredValues();
-                childRectTransform.sizeDelta = new Vector2(textSize.x, textSize.y);
+                textMeshProComponent.fontSize = textMeshProComponent.fontSize * GetScreenRatio();
             }
+
+            // Calculate the scaled size of the header based on the screen size
+            TextMeshProUGUI headerText = header.GetComponent<TextMeshProUGUI>();
+            headerText.fontSize = headerText.fontSize * GetScreenRatio();
         }
 
         private float GetScreenRatio()
         {
-            if (canvasScaler != null)
-            {
-                if (canvasScaler.uiScaleMode == CanvasScaler.ScaleMode.ScaleWithScreenSize)
-                {
-                    float referenceHeight = canvasScaler.referenceResolution.y;
-                    float currentHeight = Screen.height;
-                    return currentHeight / referenceHeight;
-                }
-            }
+            if (canvasScaler is null || canvasScaler.uiScaleMode != CanvasScaler.ScaleMode.ScaleWithScreenSize)
+                return 1f;
 
-            return 1f;
+            float referenceHeight = canvasScaler.referenceResolution.y;
+            float currentHeight = Screen.height;
+            return currentHeight / referenceHeight;
         }
+    }
 
-        public enum ObjectiveType
-        {
-            None,
-            CollectItem,
-            ReachLocation,
-            DefeatEnemy
-        }
+    public enum ObjectiveTask
+    {
+        COLLECT_KEY,
+        KILL_50,
+        KILL_BOSS,
+    }
 
-        public struct Objective
+    public class Objective
+    {
+        public ObjectiveTask task;
+        public string name;
+        public bool completed;
+        public Color color;
+
+        public Objective(ObjectiveTask index, string n)
         {
-            public string name;
-            public ObjectiveType type;
-            public bool completed;
-            public Color color;
+            task = index;
+            name = n;
+            completed = false;
+            color = Color.white;
         }
     }
 }

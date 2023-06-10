@@ -10,7 +10,6 @@ public class Keycard : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             ObjectiveSystem.instance.HandleKeycardCollected();
-            ObjectiveSystem.instance.SetKeycardCollected(true);
             Destroy(gameObject);
         }
     }

@@ -11,23 +11,19 @@ namespace UI
         // Singleton instance
         public static ObjectiveSystem instance { get; private set; }
 
-        public List<Objective> objectives = new List<Objective>();
+        [SerializeField]
+        private GameObject header;
 
-        [SerializeField] GameObject objectivesHolder;
+        [SerializeField]
+        private GameObject objectivesHolder;
 
-        [SerializeField] int textVerticalMargin = 50;
-        [SerializeField] int objectiveFontSize = 24;
-        [SerializeField] int objectiveHorizontalPosition = -75;
-
-        [SerializeField] TMP_FontAsset font;
+        [SerializeField]
+        private GameObject objectivePrefab;
 
         private int enemiesKilledCount;
-        private int objectivesCompleted = 0;
-        private bool keycardCollected = false;
-        private bool bossKilled = false;
-
         private CanvasScaler canvasScaler;
         private float screenRatio;
+        private List<Objective> objectives = new List<Objective>();
 
         private void Awake()
         {
@@ -46,57 +42,49 @@ namespace UI
             EnemyBase.OnEnemyKilled += HandleEnemyKilled;
 
             objectivesHolder = GameObject.Find("ObjectivesHolder");
-            objectives.Add(new Objective("find_br_key", "Find the bossroom key", ObjectiveType.COLLECT_ITEM, Color.white));
-            objectives.Add(new Objective("kill_50", "Kill 50 enemies", ObjectiveType.DEFEAT_ENEMY, Color.white));
-            objectives.Add(new Objective("kill_boss", "Defeat the Boss", ObjectiveType.DEFEAT_ENEMY, Color.white));
+            objectives.Add(new Objective(ObjectiveTask.COLLECT_KEY, "Find the bossroom key"));
+            objectives.Add(new Objective(ObjectiveTask.KILL_50, "Kill 50 enemies"));
+            objectives.Add(new Objective(ObjectiveTask.KILL_BOSS, "Defeat the Boss"));
 
             UpdateObjectiveUI();
         }
 
 
-        public void CompleteObjective(string objectiveName)
+        private void CompleteObjective(ObjectiveTask task)
         {
-            Objective objective = objectives.Find(o => o.id == objectiveName);
-
-            // Check if the object is not null
-            if (!ReferenceEquals(objective, null))
+            Objective objective = objectives.Find(o => o.task == task);
+            Transform objectiveUI = objectivesHolder.transform.Find(objective.task.ToString());
+            if (objective is null || objectiveUI is null)
             {
-                objective.completed = true;
-                objective.color = Color.green;
-
-                objectivesCompleted++;
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
-
-                // // Find the UI element of the completed objective
-                Transform objectiveUI = objectivesHolder.transform.Find(objective.name);
-                if (objectiveUI != null)
-                {
-                    // Get the TextMeshProUGUI component of the UI element and set its color
-                    TextMeshProUGUI objectiveText = objectiveUI.GetComponent<TextMeshProUGUI>();
-                    objectiveText.color = objective.color;
-
-                    objectivesCompleted++;
-
-                    SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
-                }
-            }
-            else
-            {
-                Debug.LogWarning("Objective not found: " + objectiveName);
+                Debug.LogWarning("Objective not found: " + task.ToString());
+                return;
             }
 
-            // UpdateObjectiveUI();
+            objective.completed = true;
+            objective.color = Color.green;
+
+            // Get the TextMeshProUGUI component of the UI element and set its color
+            TextMeshProUGUI objectiveText = objectiveUI.GetComponent<TextMeshProUGUI>();
+            objectiveText.color = objective.color;
+
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
         }
 
+        public bool IsObjectiveCompleted(ObjectiveTask task)
+        {
+            Objective objective = objectives.Find(o => o.task == task);
+            return objective.completed;
+        }
 
         private void OnDestroy()
         {
             EnemyBase.OnEnemyKilled -= HandleEnemyKilled;
+            objectives.Clear();
         }
 
         public void HandleKeycardCollected()
         {
-            CompleteObjective("find_br_key");
+            CompleteObjective(ObjectiveTask.COLLECT_KEY);
         }
 
         public void HandleEnemyKilled(EnemyBase enemy)
@@ -104,74 +92,39 @@ namespace UI
             enemiesKilledCount++;
             if (enemiesKilledCount == 50)
             {
-                // Mark the "Collect the Key" objective as completed
-                CompleteObjective("kill_50");
+                CompleteObjective(ObjectiveTask.KILL_50);
             }
         }
 
         public void HandleBossKilled()
         {
-            // Mark the "Collect the Key" objective as completed
-            CompleteObjective("kill_boss");
-        }
-
-        public int GetCompletedObjectives()
-        {
-            return objectivesCompleted;
-        }
-
-        public bool GetKeycardCollected()
-        {
-            return keycardCollected;
-        }
-
-        public bool GetBossKilled()
-        {
-            return bossKilled;
-        }
-
-        public void SetKeycardCollected(bool keyCardCollected)
-        {
-            keycardCollected = keyCardCollected;
+            CompleteObjective(ObjectiveTask.KILL_BOSS);
         }
 
         private void UpdateObjectiveUI()
         {
             // Clear existing objectives
-            foreach (Transform child in objectivesHolder.transform)
-            {
-                Destroy(child.gameObject);
-            }
+            objectivesHolder.transform.DetachChildren();
 
             for (int i = 0; i < objectives.Count; i++)
             {
                 Objective objective = objectives[i];
 
                 // Create a new child object
-                GameObject childObject = new GameObject(objective.name);
-                childObject.transform.SetParent(objectivesHolder.transform);
+                GameObject childObject = Instantiate(objectivePrefab, objectivesHolder.transform);
+                childObject.name = objective.task.ToString();
 
-                RectTransform childRectTransform = childObject.AddComponent<RectTransform>();
-                childRectTransform.pivot = new Vector2(0, 1);
-                childRectTransform.anchorMin = new Vector2(0, 1);
-                childRectTransform.anchorMax = new Vector2(0, 1);
-
-                TextMeshProUGUI textMeshProComponent = childObject.AddComponent<TextMeshProUGUI>();
-                textMeshProComponent.font = font;
+                TextMeshProUGUI textMeshProComponent = childObject.GetComponent<TextMeshProUGUI>();
                 textMeshProComponent.color = objective.color;
                 textMeshProComponent.text = objective.name;
 
                 // Calculate the scaled size of the text based on the screen size
-                float scaledFontSize = objectiveFontSize * GetScreenRatio();
-                textMeshProComponent.fontSize = scaledFontSize;
-
-                // Set the position of the child object
-                childRectTransform.anchoredPosition = new Vector2(objectiveHorizontalPosition, -i * textVerticalMargin * GetScreenRatio());
-
-                // Set the size of the child object
-                Vector2 textSize = textMeshProComponent.GetPreferredValues();
-                childRectTransform.sizeDelta = new Vector2(textSize.x, textSize.y);
+                textMeshProComponent.fontSize = textMeshProComponent.fontSize * GetScreenRatio();
             }
+
+            // Calculate the scaled size of the header based on the screen size
+            TextMeshProUGUI headerText = header.GetComponent<TextMeshProUGUI>();
+            headerText.fontSize = headerText.fontSize * GetScreenRatio();
         }
 
         private float GetScreenRatio()
@@ -183,31 +136,28 @@ namespace UI
             float currentHeight = Screen.height;
             return currentHeight / referenceHeight;
         }
+    }
 
-        public enum ObjectiveType
+    public enum ObjectiveTask
+    {
+        COLLECT_KEY,
+        KILL_50,
+        KILL_BOSS,
+    }
+
+    public class Objective
+    {
+        public ObjectiveTask task;
+        public string name;
+        public bool completed;
+        public Color color;
+
+        public Objective(ObjectiveTask index, string n)
         {
-            NONE,
-            COLLECT_ITEM,
-            REACH_LOCATION,
-            DEFEAT_ENEMY
-        }
-
-        public class Objective
-        {
-            public string id;
-            public string name;
-            public ObjectiveType type;
-            public bool completed;
-            public Color color;
-
-            public Objective(string index, string n, ObjectiveType t, Color c)
-            {
-                id = index;
-                name = n;
-                type = t;
-                completed = false;
-                color = c;
-            }
+            task = index;
+            name = n;
+            completed = false;
+            color = Color.white;
         }
     }
 }

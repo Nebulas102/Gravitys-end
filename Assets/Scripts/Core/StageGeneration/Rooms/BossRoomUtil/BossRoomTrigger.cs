@@ -34,7 +34,7 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
             var _bossRoom = bossRoom.GetComponent<BossRoom>();
 
             //IF geen key objective return hierzo
-            if (!ObjectiveSystem.instance.GetKeycardCollected())
+            if (!ObjectiveSystem.instance.IsObjectiveCompleted(ObjectiveTask.COLLECT_KEY))
             {
                 TeleportPlayerNoKeycard();
                 return;

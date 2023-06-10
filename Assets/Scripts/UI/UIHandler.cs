@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UI.Runtime;
 using UI.Inventory;
 
@@ -10,8 +9,6 @@ namespace UI
         public delegate void PauseGameToggle(bool gamePaused);
         public static event PauseGameToggle OnPauseGameToggle;
 
-        EventSystem m_EventSystem;
-
         [SerializeField]
         private GameObject inventoryMenuFirstSelected;
 
@@ -21,24 +18,13 @@ namespace UI
         [SerializeField]
         private GameObject itemPickupPrompt;
 
-        private UIState currentMenuState = UIState.NONE;
-
         private void Start()
         {
-            InventoryOverlayBehaviour.OnInventoryToggle += OnInventoryToggle;
-            PauseMenu.OnPauseToggle += OnPauseToggle;
+            InventoryOverlayBehaviour.OnInventoryToggle += (bool active) => PauseGame(active);
+            PauseMenu.OnPauseToggle += (bool active) => PauseGame(active);
+            MapUIManager.OnMapToggled += (bool active) => PauseGame(active);
+
             Item.OnItemPickup += OnShowPickupPrompt;
-        }
-
-        private void OnEnable()
-        {
-            m_EventSystem = EventSystem.current;
-        }
-
-        private void OnDisable()
-        {
-            m_EventSystem.SetSelectedGameObject(null);
-            currentMenuState = UIState.NONE;
         }
 
         private void OnDestroy()
@@ -46,46 +32,14 @@ namespace UI
             Item.OnItemPickup -= OnShowPickupPrompt;
         }
 
-        private void OnInventoryToggle(bool inventoryOpened)
+        private void PauseGame(bool condition)
         {
-            if (inventoryOpened)
-            {
-                // m_EventSystem.SetSelectedGameObject(inventoryMenuFirstSelected);
-                currentMenuState = UIState.INVENTORY;
-            }
-            else
-            {
-                m_EventSystem.SetSelectedGameObject(null);
-                currentMenuState = UIState.NONE;
-            }
-            OnPauseGameToggle.Invoke(inventoryOpened);
-        }
-
-        private void OnPauseToggle(bool paused)
-        {
-            if (paused)
-            {
-                // m_EventSystem.SetSelectedGameObject(pauseMenuFirstSelected);
-                currentMenuState = UIState.PAUSE;
-            }
-            else
-            {
-                m_EventSystem.SetSelectedGameObject(null);
-                currentMenuState = UIState.NONE;
-            }
-            OnPauseGameToggle.Invoke(paused);
+            OnPauseGameToggle.Invoke(condition);
         }
 
         private void OnShowPickupPrompt(bool show)
         {
             itemPickupPrompt.SetActive(!itemPickupPrompt.activeSelf);
-        }
-
-        private enum UIState
-        {
-            NONE,
-            INVENTORY,
-            PAUSE
         }
     }
 }

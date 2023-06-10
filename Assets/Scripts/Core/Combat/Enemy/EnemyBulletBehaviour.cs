@@ -10,17 +10,22 @@ public class EnemyBulletBehaviour : MonoBehaviour
     private int startDamage;
     private int endDamage;
     private Vector3 direction;
+    
+    private GameObject player;
 
     private void Update()
     {
         transform.root.Translate(direction * bulletSpeed * Time.deltaTime, Space.World);
+
+        player = PlayerManager.Instance.player;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(startDamage, endDamage, TokenManager.instance.healthSection.GetModifier());
+            player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(startDamage, endDamage, 0);
+
             Destroy(gameObject);
         }
 

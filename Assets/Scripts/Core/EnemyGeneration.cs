@@ -9,7 +9,7 @@ namespace Core
 {
     public class EnemyGeneration : MonoBehaviour
     {
-        public GameObject enemy;
+        public GameObject[] enemy;
         [SerializeField]
         private Transform[] enemySpawnPoints;
         private Vector3 spawnPosition;
@@ -35,11 +35,12 @@ namespace Core
                 int randomIndex = Random.Range(0, spawnPointCount);
                 groupSize = Random.Range(minGroupSize, maxGroupSize + 1);
                 spawnPosition = availableSpawnPoints[randomIndex].position;
+                GameObject enemyType = enemy[Random.Range(0, enemy.Length)];
 
                 for (int _ = 0; _ < groupSize; _++)
                 {
                     spawnPosition.x += Random.Range(-1f, 1f);
-                    Instantiate(enemy, spawnPosition, Quaternion.identity);
+                    Instantiate(enemyType, spawnPosition, Quaternion.identity);
                     yield return new WaitForSeconds(0.1f);
                 }
 

@@ -27,6 +27,11 @@ public class SoundEffectsManager : MonoBehaviour
     [SerializeField] private AudioClip bossDies;
     [SerializeField] private AudioClip dashingSound;
     [SerializeField] private AudioClip bossClockShot;
+    [SerializeField] private AudioClip bossYells;
+    [SerializeField] private AudioClip playerTakesDamage;
+    [SerializeField] private AudioClip armorPickup;
+    [SerializeField] private AudioClip clockTicking;
+
 
     private void Awake()
     {
@@ -62,6 +67,10 @@ public class SoundEffectsManager : MonoBehaviour
         soundEffects.Add(SoundEffect.BossDies, bossDies);
         soundEffects.Add(SoundEffect.Dash, dashingSound);
         soundEffects.Add(SoundEffect.BossClockShot, bossClockShot);
+        soundEffects.Add(SoundEffect.BossYells, bossYells);
+        soundEffects.Add(SoundEffect.PlayerTakeDamage, playerTakesDamage);
+        soundEffects.Add(SoundEffect.ArmorPickup, armorPickup);
+        soundEffects.Add(SoundEffect.ClockTicking, clockTicking);
     }
 
     public void PlaySoundEffect(SoundEffect soundEffectType)
@@ -101,6 +110,10 @@ public class SoundEffectsManager : MonoBehaviour
         BossShoots,
         BossClockShot,
         BossDies,
-        Dash
+        Dash,
+        BossYells,
+        PlayerTakeDamage,
+        ArmorPickup,
+        ClockTicking
     }
 }

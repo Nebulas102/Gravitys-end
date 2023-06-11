@@ -8,7 +8,14 @@ namespace Core.Enemy.StageBosses.Stage1
         [Header("Bullet")]
         [SerializeField]
         private GameObject bullet;
-
+        [SerializeField]
+        private float bulletSpeed;
+        [SerializeField]
+        private float bulletRotationSpeed;
+        [SerializeField]
+        private int minDamage;
+        [SerializeField]
+        private int maxDamage;
         [SerializeField]
         private float bulletInterval;
 
@@ -46,7 +53,12 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private void Shoot()
         {
-            Instantiate(bullet, transform.position, Quaternion.identity);
+            GameObject newBullet = Instantiate(bullet, transform.position, Quaternion.identity);
+            HomingBulletBehavior newHomingBulletBehavior = newBullet.GetComponentInChildren<HomingBulletBehavior>();
+
+            newHomingBulletBehavior.SetDamage(minDamage, maxDamage);
+            newHomingBulletBehavior.SetSpeed(bulletSpeed);
+            newHomingBulletBehavior.SetRotationSpeed(bulletRotationSpeed);
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossShoots);
         }

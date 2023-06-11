@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BackgroundMusicManager : MonoBehaviour
 {
     [SerializeField] private AudioClip normalBackgroundMusic;
     [SerializeField] private AudioClip bossBackgroundMusic;
+    [SerializeField] private Slider backgroundMusicSlider;
     private static AudioClip _bossBackgroundMusic;
     public static AudioSource audioSource;
 
@@ -18,6 +20,7 @@ public class BackgroundMusicManager : MonoBehaviour
             audioSource.Play();
         }
         _bossBackgroundMusic = bossBackgroundMusic;
+        SetBackgroundMusicVolume(PlayerPrefs.GetFloat("BackgroundMusicVolume"));
     }
 
     public static void SwitchToBossBackgroundMusic()
@@ -33,5 +36,8 @@ public class BackgroundMusicManager : MonoBehaviour
     public void SetBackgroundMusicVolume(float volume)
     {
         audioSource.volume = volume;
+        backgroundMusicSlider.value = volume;
+        PlayerPrefs.SetFloat("BackgroundMusicVolume", volume);
+        PlayerPrefs.Save();
     }
 }

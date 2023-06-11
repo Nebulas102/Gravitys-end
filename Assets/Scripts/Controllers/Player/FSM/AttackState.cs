@@ -19,7 +19,7 @@ namespace Controllers.Player
 
         public Camera _camera;
         private PlayerInput playerInput;
-
+        private bool moveTriggered;
 
 
         public AttackState(Character character, StateMachine stateMachine) : base(character, stateMachine)
@@ -52,8 +52,15 @@ namespace Controllers.Player
                 }
 
             }
+            if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Melee"))
+            {
+                animator.SetTrigger("attack");
+            }
 
-            animator.SetTrigger("attack");
+            if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged"))
+            {
+                animator.SetTrigger("shoot");
+            }
         }
 
         public override void HandleInput()
@@ -70,26 +77,37 @@ namespace Controllers.Player
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-
-            timePassed += Time.deltaTime;
-
-            // Calculate combo length based on the clip length and speed
-            float clipLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-            float clipSpeed = animator.GetCurrentAnimatorStateInfo(0).speed;
-            float comboLength = clipLength / clipSpeed;
-
-            // Check if attack triggered during combo delay
-            if (timePassed < ComboDelay && attackTriggered)
+            if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Melee"))
             {
-                timePassed = 0f;
-                stateMachine.ChangeState(character.attacking);
+                timePassed += Time.deltaTime;
+
+                // Calculate combo length based on the clip length and speed
+                float clipLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+                float clipSpeed = animator.GetCurrentAnimatorStateInfo(0).speed;
+                float comboLength = clipLength / clipSpeed;
+
+                // Check if attack triggered during combo delay
+                if (timePassed < ComboDelay && attackTriggered)
+                {
+                    timePassed = 0f;
+                    stateMachine.ChangeState(character.attacking);
+                }
+
+                // Check if combo length has passed
+                if (timePassed >= comboLength)
+                {
+                    animator.SetTrigger("move");
+                    stateMachine.ChangeState(character.combatting);
+                }
             }
 
-            // Check if combo length has passed
-            if (timePassed >= comboLength)
+            if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged"))
             {
-                animator.SetTrigger("move");
-                stateMachine.ChangeState(character.combatting);
+                if (attackTriggered)
+                {
+                    animator.SetTrigger("shoot");
+
+                }
             }
         }
 

@@ -8,26 +8,19 @@ using UnityEngine;
 public class MeleeWeapon : MonoBehaviour
 {
     [SerializeField]
-    private int startDamage = 5;
+    private int minDamage = 5;
     [SerializeField]
-    private int endDamage = 10;
-    [SerializeField]
-    private GameObject hitbox;
+    private int maxDamage = 10;
 
     private bool isEquipped = false;
 
-    private void Start()
+    public int GetMinDamage()
     {
-        hitbox.GetComponent<MeleeWeaponHitbox>().SetDamageHitbox(startDamage, endDamage);
+        return minDamage;
     }
 
-    public void AllowHitbox()
+    public int GetMaxDamage()
     {
-        hitbox.GetComponent<MeleeWeaponHitbox>().allowAttack = true;
-    }
-
-    public void DisAllowHitbox()
-    {
-        hitbox.GetComponent<MeleeWeaponHitbox>().allowAttack = false;
+        return maxDamage;
     }
 }

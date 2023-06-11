@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class PlayerHitboxAnimation : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject meleeHitbox;
+
     private EquipmentSystem equipmentSystem;
 
     private void Start()
@@ -16,17 +19,26 @@ public class PlayerHitboxAnimation : MonoBehaviour
     {
         if (equipmentSystem._equippedWeapon.GetComponent<MeleeWeapon>() != null)
         {
-            Debug.Log("allow hit");
-            equipmentSystem._equippedWeapon.GetComponent<MeleeWeapon>().AllowHitbox();
+            MeleeWeapon meleeWeapon = equipmentSystem._equippedWeapon.GetComponent<MeleeWeapon>();
+            meleeHitbox.SetActive(true);
+            MeleeWeaponHitbox meleeWeaponHitbox = meleeHitbox.GetComponent<MeleeWeaponHitbox>();
+
+            meleeWeaponHitbox.allowAttack = true;
+            meleeWeaponHitbox.SetDamageHitbox(meleeWeapon.GetMinDamage(), meleeWeapon.GetMaxDamage());
         }
     }
 
     public void DisableHitbox()
     {
         if (equipmentSystem._equippedWeapon.GetComponent<MeleeWeapon>() != null)
-        {  
-            Debug.Log("disallow hit");
-            equipmentSystem._equippedWeapon.GetComponent<MeleeWeapon>().DisAllowHitbox();
+        {
+            MeleeWeapon meleeWeapon = equipmentSystem._equippedWeapon.GetComponent<MeleeWeapon>();
+            MeleeWeaponHitbox meleeWeaponHitbox = meleeHitbox.GetComponent<MeleeWeaponHitbox>();
+
+            meleeWeaponHitbox.allowAttack = false;
+            meleeWeaponHitbox.SetDamageHitbox(0, 0);
+
+            meleeHitbox.SetActive(false);
         }
     }
 }

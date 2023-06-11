@@ -4,32 +4,32 @@ using UnityEngine;
 
 public class MeleeWeaponHitbox : MonoBehaviour
 {
-    private int startDamage;
-    private int endDamage;
+    private int minDamage;
+    private int maxDamage;
 
     [HideInInspector]
-    public bool allowAttack;
+    public bool allowAttack = false;
 
-    public void SetDamageHitbox(int _startDamage, int _endDamage)
+    public void SetDamageHitbox(int _minDamage, int _maxDamage)
     {
-        startDamage = _startDamage;
-        endDamage = _endDamage;
+        minDamage = _minDamage;
+        maxDamage = _maxDamage;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         float damageMod = TokenManager.instance.damageSection.GetModifier();
-        int baseDamage = (int)Mathf.Round(startDamage * damageMod);
-        int maxDamage = (int)Mathf.Round(endDamage * damageMod);
+        int baseDamage = (int)Mathf.Round(minDamage * damageMod);
+        int maxBaseDamage = (int)Mathf.Round(maxDamage * damageMod);
 
         if (other.CompareTag("Enemy") && allowAttack)
         {
-            other.GetComponent<EnemyBase>().TakeDamage(baseDamage, maxDamage, 0);
+            other.GetComponent<EnemyBase>().TakeDamage(baseDamage, maxBaseDamage, 0);
         }
 
         if (other.CompareTag("Boss") && allowAttack)
         {
-            other.GetComponent<Boss>().TakeDamage(baseDamage, maxDamage, 0);
+            other.GetComponent<Boss>().TakeDamage(baseDamage, maxBaseDamage, 0);
         }
     }
 }

@@ -6,7 +6,6 @@ namespace Controllers.Player
     {
         private float playerSpeed;
         private bool sprint;
-        private bool pickup;
 
         public StandingState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
         {
@@ -30,7 +29,6 @@ namespace Controllers.Player
             base.HandleInput();
 
             if (moveAction.triggered) sprint = true;
-            if (pickupAction.triggered) pickup = true;
 
             input = moveAction.ReadValue<Vector2>();
             velocity = new Vector3(input.x, 0, input.y);
@@ -40,9 +38,17 @@ namespace Controllers.Player
         {
             base.LogicUpdate();
             PlayerAnimator.Instance._animator.SetFloat("Velocity", 0, 0.1f, Time.deltaTime);
+            if (PlayerAnimator.Instance._animator.GetFloat("Velocity") < 0.001)
+            {
+                PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);
+            }
+
+            if (EquipmentSystem.Instance._equippedWeapon != null)
+            {
+                stateMachine.ChangeState(character.combatting);
+            }
 
             if (sprint) stateMachine.ChangeState(character.sprinting);
-            if (pickup) PlayerAnimator.Instance._animator.SetTrigger("pickup");
 
         }
 

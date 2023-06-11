@@ -117,9 +117,12 @@ namespace UI
                 TextMeshProUGUI textMeshProComponent = childObject.GetComponent<TextMeshProUGUI>();
                 textMeshProComponent.color = objective.color;
                 textMeshProComponent.text = objective.name;
+                textMeshProComponent.outlineColor = Color.black;
+                textMeshProComponent.fontStyle = FontStyles.Bold;
+                textMeshProComponent.outlineWidth = 0.3f;
 
                 // Calculate the scaled size of the text based on the screen size
-                textMeshProComponent.fontSize = textMeshProComponent.fontSize * GetScreenRatio();
+                textMeshProComponent.fontSize = textMeshProComponent.fontSize * GetScreenRatio() + 3;
             }
 
             // Calculate the scaled size of the header based on the screen size

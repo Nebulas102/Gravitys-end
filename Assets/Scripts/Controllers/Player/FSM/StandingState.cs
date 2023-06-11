@@ -38,8 +38,13 @@ namespace Controllers.Player
         {
             base.LogicUpdate();
             PlayerAnimator.Instance._animator.SetFloat("Velocity", 0, 0.1f, Time.deltaTime);
+            if (PlayerAnimator.Instance._animator.GetFloat("Velocity") < 0.001)
+            {
+                PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);
+            }
 
-            if (EquipmentSystem.Instance._equippedWeapon != null){
+            if (EquipmentSystem.Instance._equippedWeapon != null)
+            {
                 stateMachine.ChangeState(character.combatting);
             }
 

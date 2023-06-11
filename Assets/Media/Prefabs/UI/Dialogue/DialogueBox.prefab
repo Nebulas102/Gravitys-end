@@ -26,8 +26,8 @@ RectTransform:
   m_GameObject: {fileID: 591903385616033117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.90000004, y: 0.90000004, z: 0.90000004}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 954299773131954227}
   - {fileID: 6285529702514913575}
@@ -169,7 +169,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15.6, y: -270.4}
+  m_AnchoredPosition: {x: -15.6, y: -278}
   m_SizeDelta: {x: 820, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6285529701654994805
@@ -202,8 +202,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Dialogue text '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b2d52d30bcb5e6240a6f4c895fddd725, type: 2}
-  m_sharedMaterial: {fileID: -6020674002576617650, guid: b2d52d30bcb5e6240a6f4c895fddd725, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 77a7a7b5219ae634e94115a21ffbd7d6, type: 2}
+  m_sharedMaterial: {fileID: 8863700512517764337, guid: 77a7a7b5219ae634e94115a21ffbd7d6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -227,8 +227,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 43
-  m_fontSizeBase: 43
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -663,7 +663,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DialogueManager, Assembly-CSharp
-        m_MethodName: DisplayNextSentence
+        m_MethodName: OnDisplayNextSentence
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

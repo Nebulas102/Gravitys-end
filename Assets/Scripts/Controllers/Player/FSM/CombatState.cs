@@ -22,6 +22,7 @@ namespace Controllers.Player
 
             velocity = character.playerVelocity;
             playerSpeed = character.playerSpeed;
+            PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);
         }
 
         public override void HandleInput()
@@ -53,6 +54,10 @@ namespace Controllers.Player
             else
             {
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", 0, 0.1f, Time.deltaTime);
+                if (PlayerAnimator.Instance._animator.GetFloat("Velocity") < 0.001)
+                {
+                    PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);
+                }
             }
 
             if (attack)

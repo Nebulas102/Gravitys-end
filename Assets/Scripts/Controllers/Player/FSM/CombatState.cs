@@ -4,7 +4,6 @@ namespace Controllers.Player
 {
     public class CombatState : State
     {
-        private bool pickup;
         private float playerSpeed;
         private bool attack;
         private bool sprint;
@@ -58,7 +57,6 @@ namespace Controllers.Player
 
             if (attack)
             {
-                Debug.Log("Attacking");
                 stateMachine.ChangeState(character.attacking);
             }
 

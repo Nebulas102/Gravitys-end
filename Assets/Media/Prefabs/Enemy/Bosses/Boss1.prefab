@@ -356,7 +356,13 @@ MonoBehaviour:
   bossAbilityStages:
   - healthStageActivation: 100
     bossAbilitySequences:
+    - bossAbility: {fileID: 6588389978399913415}
+      amountOfTimes: 2
     - bossAbility: {fileID: 3039630364116265136}
+      amountOfTimes: 2
+    - bossAbility: {fileID: 5868248664225388700}
+      amountOfTimes: 2
+    - bossAbility: {fileID: 1232051141004310871}
       amountOfTimes: 2
   - healthStageActivation: 70
     bossAbilitySequences:
@@ -560,6 +566,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8e884ed03e4cff4aa4f90acf0cedbdb, type: 3}
+--- !u!114 &1232051141004310871 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3313712564282753253, guid: c8e884ed03e4cff4aa4f90acf0cedbdb, type: 3}
+  m_PrefabInstance: {fileID: 4388111294331337138}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24bd7ca75195d6f468d2dfef5be63df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6408621872723264652 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7208658105574866238, guid: c8e884ed03e4cff4aa4f90acf0cedbdb, type: 3}
@@ -627,6 +644,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4827718413638255140, guid: 5c65c3ae5e9fa5c4185a72fca28b7665, type: 3}
   m_PrefabInstance: {fileID: 6177143174359097247}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5868248664225388700 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -8878376157486545149, guid: 5c65c3ae5e9fa5c4185a72fca28b7665, type: 3}
+  m_PrefabInstance: {fileID: 6177143174359097247}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0544c4feabd23104a9988d14c53ee64c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &9160620398709838075
 PrefabInstance:
   m_ObjectHideFlags: 0

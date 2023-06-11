@@ -176,7 +176,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 375389814344035239}
-  - {fileID: 1980112649140255421}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -234,9 +233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 531c92e5892dda74cbd1b63d4c03b8aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDamage: 5
-  endDamage: 10
-  hitbox: {fileID: 8190143621254733875}
+  minDamage: 5
+  maxDamage: 10
 --- !u!114 &7577631314327467621
 MonoBehaviour:
   m_ObjectHideFlags: 0

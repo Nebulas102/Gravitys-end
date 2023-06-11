@@ -35,12 +35,6 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             _boss = BossManager.Instance.boss;
             _player = PlayerManager.Instance.player;
-
-            GrenadeBehavior grenadeBehavior = grenade.GetComponentInChildren<GrenadeBehavior>();
-
-            grenadeBehavior.SetDamage(minDamage, maxDamage);
-            grenadeBehavior.SetThrowDuration(throwDuration);
-            grenadeBehavior.SetCurveHeight(curveHeight);
         }
 
         public override IEnumerator UseBossAbility()
@@ -53,10 +47,15 @@ namespace Core.Enemy.StageBosses.Stage1
         private void ThrowGrenade()
         {
             GameObject newGrenade = Instantiate(grenade, transform.position, Quaternion.identity);
+            GrenadeBehavior newGrenadeBehavior = newGrenade.GetComponentInChildren<GrenadeBehavior>();
 
             GameObject newDecal = Instantiate(decal);
             newDecal.GetComponent<Decal>().SetRadius(decalRadius);
-            newGrenade.GetComponent<GrenadeBehavior>().SetDecal(newDecal);
+
+            newGrenadeBehavior.SetDecal(newDecal);
+            newGrenadeBehavior.SetDamage(minDamage, maxDamage);
+            newGrenadeBehavior.SetThrowDuration(throwDuration);
+            newGrenadeBehavior.SetCurveHeight(curveHeight);
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossShoots);
         }

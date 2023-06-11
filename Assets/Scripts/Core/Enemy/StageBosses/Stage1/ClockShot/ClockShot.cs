@@ -34,11 +34,6 @@ namespace Core.Enemy.StageBosses.Stage1
             _player = PlayerManager.Instance.player;
 
             _amountOfBullets = 360 / 30;
-
-            ClockBulletBehaviour clockBulletBehaviour = bullet.GetComponentInChildren<ClockBulletBehaviour>();
-
-            clockBulletBehaviour.SetDamage(minDamage, maxDamage);
-            clockBulletBehaviour.SetSpeed(bulletSpeed);
         }
 
         public override IEnumerator UseBossAbility()
@@ -59,9 +54,13 @@ namespace Core.Enemy.StageBosses.Stage1
 
                 var bulletPosition = transform.position + new Vector3(x, 0, z);
 
-                var _bullet = Instantiate(bullet, bulletPosition, Quaternion.identity);
+                var newBullet = Instantiate(bullet, bulletPosition, Quaternion.identity);
+                ClockBulletBehaviour newClockBulletBehaviour = newBullet.GetComponentInChildren<ClockBulletBehaviour>();
 
-                _bullet.transform.forward = _bullet.transform.position - transform.position;
+                newClockBulletBehaviour.SetDamage(minDamage, maxDamage);
+                newClockBulletBehaviour.SetSpeed(bulletSpeed);
+
+                newBullet.transform.forward = newBullet.transform.position - transform.position;
             }
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossClockShot);

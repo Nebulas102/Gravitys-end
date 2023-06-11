@@ -16,6 +16,7 @@ namespace Core.Enemy.StageBosses.Stage1
         private GameObject _boss;
         private GameObject _player;
         private Vector3 _startPosition;
+        private Vector3 _targetPosition;
 
         private void Start()
         {
@@ -29,17 +30,18 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private void Update()
         {
-            Vector3 targetPosition = _player.transform.position;
-            targetPosition.y = transform.root.position.y; // Preserve current Y position
+            _targetPosition = _player.transform.position;
+            // Preserve starting y position
+            _targetPosition.y = transform.root.position.y;
 
             // Calculate the rotation towards the target
-            Quaternion rotation = Quaternion.LookRotation(targetPosition - transform.root.position);
+            Quaternion rotation = Quaternion.LookRotation(_targetPosition - transform.root.position);
 
             // Smoothly rotate towards the target with curve modifier
             transform.root.rotation = Quaternion.Slerp(transform.root.rotation, rotation, _rotationSpeed * Time.deltaTime);
 
             // Move forward in the direction of the current rotation
-            transform.root.Translate(Vector3.forward * _speed * Time.deltaTime, Space.World);
+            transform.root.Translate(transform.root.forward * _speed * Time.deltaTime, Space.World);
         }
 
         private void OnCollisionEnter(Collision other)
@@ -58,16 +60,19 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             _minDamage = minDamage;
             _maxDamage = maxDamage;
+            Debug.Log(_minDamage + " " + _maxDamage);
         }
 
         public void SetSpeed(float speed)
         {
             _speed = speed;
+            Debug.Log(_speed);
         }
 
         public void SetRotationSpeed(float rotationSpeed)
         {
             _rotationSpeed = rotationSpeed;
+            Debug.Log(_rotationSpeed);
         }
     }
 }

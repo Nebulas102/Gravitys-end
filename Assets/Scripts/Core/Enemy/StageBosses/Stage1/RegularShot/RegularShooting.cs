@@ -32,11 +32,6 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             _boss = BossManager.Instance.boss;
             _player = PlayerManager.Instance.player;
-
-            RegularBulletBehaviour regularBulletBehaviour = bullet.GetComponentInChildren<RegularBulletBehaviour>();
-
-            regularBulletBehaviour.SetDamage(minDamage, maxDamage);
-            regularBulletBehaviour.SetSpeed(bulletSpeed);
         }
 
         public override IEnumerator UseBossAbility()
@@ -62,11 +57,13 @@ namespace Core.Enemy.StageBosses.Stage1
             Vector3 bulletOutputWorldPos = newBullet.transform.TransformPoint(Vector3.zero);
             RegularBulletBehaviour newRegularBulletBehaviour = newBullet.GetComponentInChildren<RegularBulletBehaviour>();
 
-            Vector3 bulletDirection = (_player.transform.position - bulletOutputWorldPos);
+            Vector3 bulletDirection = (_player.transform.position - bulletOutputWorldPos).normalized;
 
             bulletDirection.y = 0f;
 
             newRegularBulletBehaviour.SetDirection(bulletDirection);
+            newRegularBulletBehaviour.SetDamage(minDamage, maxDamage);
+            newRegularBulletBehaviour.SetSpeed(bulletSpeed);
 
             newBullet.transform.LookAt(_player.transform.position);
             newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.root.rotation.w);

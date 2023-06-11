@@ -33,12 +33,6 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             _boss = BossManager.Instance.boss;
             _player = PlayerManager.Instance.player;
-
-            HomingBulletBehavior homingBulletBehavior = bullet.GetComponentInChildren<HomingBulletBehavior>();
-
-            homingBulletBehavior.SetDamage(minDamage, maxDamage);
-            homingBulletBehavior.SetSpeed(bulletSpeed);
-            homingBulletBehavior.SetRotationSpeed(bulletRotationSpeed);
         }
 
         public override IEnumerator UseBossAbility()
@@ -59,7 +53,12 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private void Shoot()
         {
-            Instantiate(bullet, transform.position, Quaternion.identity);
+            GameObject newBullet = Instantiate(bullet, transform.position, Quaternion.identity);
+            HomingBulletBehavior newHomingBulletBehavior = newBullet.GetComponentInChildren<HomingBulletBehavior>();
+
+            newHomingBulletBehavior.SetDamage(minDamage, maxDamage);
+            newHomingBulletBehavior.SetSpeed(bulletSpeed);
+            newHomingBulletBehavior.SetRotationSpeed(bulletRotationSpeed);
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossShoots);
         }

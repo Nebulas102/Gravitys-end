@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Controllers.Player;
 using UnityEngine;
 
 namespace Core.Enemy.StageBosses.Stage1
@@ -23,6 +24,8 @@ namespace Core.Enemy.StageBosses.Stage1
         
         private GameObject _decal;
 
+        private bool playerIndecal = false;
+
         private void Start()
         {
             _boss = BossManager.Instance.boss;
@@ -36,6 +39,16 @@ namespace Core.Enemy.StageBosses.Stage1
             PlaceDecal();
 
             StartCoroutine(ThrowGrenade());
+        }
+
+        private void OnEnable()
+        {
+            Decal.OnPlayerDetected += UpdatePlayerIndecal;
+        }
+
+        private void OnDisable()
+        {
+            Decal.OnPlayerDetected -= UpdatePlayerIndecal;
         }
 
         private IEnumerator ThrowGrenade()
@@ -53,7 +66,12 @@ namespace Core.Enemy.StageBosses.Stage1
                 yield return null;
             }
 
-            Destroy(gameObject);
+            if (playerIndecal)
+            {
+                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(_minDamage, _maxDamage, 0);
+            }
+
+            Destroy(transform.root.gameObject);
             Destroy(_decal);
         }
 
@@ -71,9 +89,14 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private void PlaceDecal()
         {
-            Vector3 decalPos = new Vector3(_targetPosition.x, 0, _targetPosition.z);
+            Vector3 decalPos = new Vector3(_targetPosition.x, 0.3f, _targetPosition.z);
 
             _decal.transform.position = decalPos;
+        }
+
+        private void UpdatePlayerIndecal(bool playerEntered)
+        {
+            playerIndecal = playerEntered;
         }
 
         public void SetDecal(GameObject decal)

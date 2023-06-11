@@ -60,19 +60,16 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             _minDamage = minDamage;
             _maxDamage = maxDamage;
-            Debug.Log(_minDamage + " " + _maxDamage);
         }
 
         public void SetSpeed(float speed)
         {
             _speed = speed;
-            Debug.Log(_speed);
         }
 
         public void SetRotationSpeed(float rotationSpeed)
         {
             _rotationSpeed = rotationSpeed;
-            Debug.Log(_rotationSpeed);
         }
     }
 }

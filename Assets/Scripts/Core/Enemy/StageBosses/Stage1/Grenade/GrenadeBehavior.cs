@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Controllers.Player;
 using UnityEngine;
 
 namespace Core.Enemy.StageBosses.Stage1
 {
     public class GrenadeBehavior : MonoBehaviour
     {
-        [SerializeField]
-        private float throwDuration = 2f;
-        [SerializeField]
-        private float curveHeight = 5f;
-        [SerializeField]
-        private int grenadeDamage = 20;
+        private float _throwDuration;
+        private float _curveHeight;
+        private int _minDamage;
+        private int _maxDamage;
 
         private float _throwStartTime = 0f;
 
@@ -25,10 +24,13 @@ namespace Core.Enemy.StageBosses.Stage1
         
         private GameObject _decal;
 
+        private bool playerIndecal = false;
+
         private void Start()
         {
             _boss = BossManager.Instance.boss;
             _player = PlayerManager.Instance.player;
+
             _startPosition = transform.position;
             _startRotation = transform.rotation;
             _targetPosition = _player.transform.position;
@@ -39,29 +41,44 @@ namespace Core.Enemy.StageBosses.Stage1
             StartCoroutine(ThrowGrenade());
         }
 
+        private void OnEnable()
+        {
+            Decal.OnPlayerDetected += UpdatePlayerIndecal;
+        }
+
+        private void OnDisable()
+        {
+            Decal.OnPlayerDetected -= UpdatePlayerIndecal;
+        }
+
         private IEnumerator ThrowGrenade()
         {
-            while (Time.time - _throwStartTime < throwDuration)
+            while (Time.time - _throwStartTime < _throwDuration)
             {
-                float normalizedTime = (Time.time - _throwStartTime) / throwDuration;
+                float normalizedTime = (Time.time - _throwStartTime) / _throwDuration;
 
                 Vector3 currentPos = CalculateThrowPosition(normalizedTime);
-                transform.position = currentPos;
+                transform.root.position = currentPos;
 
                 Quaternion currentRot = CalculateThrowRotation(normalizedTime);
-                transform.rotation = currentRot;
+                transform.root.rotation = currentRot;
 
                 yield return null;
             }
 
-            Destroy(gameObject);
+            if (playerIndecal)
+            {
+                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(_minDamage, _maxDamage, 0);
+            }
+
+            Destroy(transform.root.gameObject);
             Destroy(_decal);
         }
 
         private Vector3 CalculateThrowPosition(float normalizedTime)
         {
             Vector3 currentPos = Vector3.Lerp(_startPosition, _targetPosition, normalizedTime);
-            currentPos.y += Mathf.Sin(normalizedTime * Mathf.PI) * curveHeight;
+            currentPos.y += Mathf.Sin(normalizedTime * Mathf.PI) * _curveHeight;
             return currentPos;
         }
 
@@ -72,14 +89,35 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private void PlaceDecal()
         {
-            Vector3 decalPos = new Vector3(_targetPosition.x, 0, _targetPosition.z);
+            Vector3 decalPos = new Vector3(_targetPosition.x, 0.3f, _targetPosition.z);
 
             _decal.transform.position = decalPos;
+        }
+
+        private void UpdatePlayerIndecal(bool playerEntered)
+        {
+            playerIndecal = playerEntered;
         }
 
         public void SetDecal(GameObject decal)
         {
             _decal = decal;
+        }
+
+        public void SetDamage(int minDamage, int maxDamage)
+        {
+            _minDamage = minDamage;
+            _maxDamage = maxDamage;
+        }
+
+        public void SetThrowDuration(float throwDuration)
+        {
+            _throwDuration = throwDuration;
+        }
+
+        public void SetCurveHeight(float curveHeight)
+        {
+            _curveHeight = curveHeight;
         }
     }
 }

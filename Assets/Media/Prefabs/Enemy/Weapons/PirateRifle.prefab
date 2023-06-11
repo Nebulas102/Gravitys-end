@@ -46,8 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff893999b57cd284d8a5e0565c601904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startDamage: 5
-  endDamage: 8
   maxDistance: 25
   currentAmmo: 0
   magSize: 0
@@ -55,6 +53,9 @@ MonoBehaviour:
   reloadTime: 0.5
   reloading: 0
   bullet: {fileID: 1563543445386549699, guid: b7894c3397e2c0a44b8023bc07391049, type: 3}
+  minDamage: 5
+  maxDamage: 10
+  bulletSpeed: 3
   bulletOutput: {fileID: 5114647794687169468}
 --- !u!1 &9120346735725038923
 GameObject:

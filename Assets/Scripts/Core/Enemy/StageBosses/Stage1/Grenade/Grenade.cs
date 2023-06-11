@@ -12,6 +12,14 @@ namespace Core.Enemy.StageBosses.Stage1
         [SerializeField]
         private GameObject grenade;
         [SerializeField]
+        private float throwDuration;
+        [SerializeField]
+        private float curveHeight;
+        [SerializeField]
+        private int minDamage;
+        [SerializeField]
+        private int maxDamage;
+        [SerializeField]
         private float grenadeInterval;
 
         [Header("Decal")]
@@ -39,10 +47,15 @@ namespace Core.Enemy.StageBosses.Stage1
         private void ThrowGrenade()
         {
             GameObject newGrenade = Instantiate(grenade, transform.position, Quaternion.identity);
+            GrenadeBehavior newGrenadeBehavior = newGrenade.GetComponentInChildren<GrenadeBehavior>();
 
             GameObject newDecal = Instantiate(decal);
             newDecal.GetComponent<Decal>().SetRadius(decalRadius);
-            newGrenade.GetComponent<GrenadeBehavior>().SetDecal(newDecal);
+
+            newGrenadeBehavior.SetDecal(newDecal);
+            newGrenadeBehavior.SetDamage(minDamage, maxDamage);
+            newGrenadeBehavior.SetThrowDuration(throwDuration);
+            newGrenadeBehavior.SetCurveHeight(curveHeight);
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossShoots);
         }

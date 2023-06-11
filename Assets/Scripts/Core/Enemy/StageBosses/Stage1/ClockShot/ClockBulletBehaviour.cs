@@ -5,11 +5,9 @@ namespace Core.Enemy.StageBosses.Stage1
 {
     public class ClockBulletBehaviour : MonoBehaviour
     {
-        [SerializeField]
-        private float bulletSpeed = 5f;
-
-        [SerializeField]
-        private int bulletDamage = 10;
+        private int _minDamage;
+        private int _maxDamage;
+        private float _speed;
 
         private GameObject _boss;
         private GameObject _player;
@@ -28,19 +26,30 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private void Update()
         {
-            transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
+            transform.root.Translate(Vector3.forward * _speed * Time.deltaTime);
         }
 
         private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(bulletDamage, bulletDamage, 0);
+                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(_minDamage, _maxDamage, 0);
 
                 Destroy(gameObject);
             }
 
             if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) Destroy(gameObject);
+        }
+
+        public void SetDamage(int minDamage, int maxDamage)
+        {
+            _minDamage = minDamage;
+            _maxDamage = maxDamage;
+        }
+
+        public void SetSpeed(float speed)
+        {
+            _speed = speed;
         }
     }
 }

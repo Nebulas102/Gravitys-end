@@ -8,6 +8,12 @@ namespace Core.Enemy.StageBosses.Stage1
         [Header("Bullet")]
         [SerializeField]
         private GameObject bullet;
+        [SerializeField]
+        private float bulletSpeed;
+        [SerializeField]
+        private int minDamage;
+        [SerializeField]
+        private int maxDamage;
 
         [SerializeField]
         private float radius = 3f;
@@ -15,9 +21,6 @@ namespace Core.Enemy.StageBosses.Stage1
         [Header("Clockshot")]
         [SerializeField]
         private float clockShotInterval;
-
-        [SerializeField]
-        private Transform bossRoom;
 
         private int _amountOfBullets;
 
@@ -40,8 +43,6 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private IEnumerator Shoot()
         {
-            var spawnPos = bossRoom.TransformPoint(_boss.transform.localPosition);
-
             var angleIncrement = 360f / _amountOfBullets;
 
             for (var i = 0; i < _amountOfBullets; i++)
@@ -53,9 +54,13 @@ namespace Core.Enemy.StageBosses.Stage1
 
                 var bulletPosition = transform.position + new Vector3(x, 0, z);
 
-                var _bullet = Instantiate(bullet, bulletPosition, Quaternion.identity);
+                var newBullet = Instantiate(bullet, bulletPosition, Quaternion.identity);
+                ClockBulletBehaviour newClockBulletBehaviour = newBullet.GetComponentInChildren<ClockBulletBehaviour>();
 
-                _bullet.transform.forward = _bullet.transform.position - transform.position;
+                newClockBulletBehaviour.SetDamage(minDamage, maxDamage);
+                newClockBulletBehaviour.SetSpeed(bulletSpeed);
+
+                newBullet.transform.forward = newBullet.transform.position - transform.position;
             }
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossClockShot);

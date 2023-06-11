@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundEffectsManager : MonoBehaviour
 {
     public static SoundEffectsManager instance;
 
     // The audiosource where the soundeffects will be playing from
-    public AudioSource soundEffectSource;
+    private AudioSource soundEffectSource;
+
+    [SerializeField] private Slider soundEffectsSlider;
 
     // Sound effects 
     private Dictionary<SoundEffect, AudioClip> soundEffects;
 
     [SerializeField] private AudioClip objectiveCompleted;
-
     [SerializeField] private AudioClip enemyShoots;
     [SerializeField] private AudioClip playerGunShotLow;
     [SerializeField] private AudioClip playerGunShotMid;
@@ -43,12 +45,12 @@ public class SoundEffectsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        soundEffectSource = GetComponent<AudioSource>();
+        SetSoundEffectsVolume(PlayerPrefs.GetFloat("SoundEffectsVolume"));
     }
 
     private void Start()
     {
-        soundEffectSource = GetComponent<AudioSource>();
-
         // Initialize the soundEffects dictionary and assign the AudioClips
         soundEffects = new Dictionary<SoundEffect, AudioClip>();
 
@@ -93,6 +95,9 @@ public class SoundEffectsManager : MonoBehaviour
     public void SetSoundEffectsVolume(float volume)
     {
         soundEffectSource.volume = volume;
+        soundEffectsSlider.value = volume;
+        PlayerPrefs.SetFloat("SoundEffectsVolume", volume);
+        PlayerPrefs.Save();
     }
 
     public enum SoundEffect

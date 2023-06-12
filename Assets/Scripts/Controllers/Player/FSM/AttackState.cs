@@ -52,14 +52,14 @@ namespace Controllers.Player
                 }
 
             }
-            if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Melee"))
+            if (IsMelee())
             {
                 animator.SetTrigger("attack");
             }
 
-            if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged"))
+            if (IsRanged())
             {
-                animator.SetTrigger("shoot");
+                // animator.SetTrigger("shoot");
             }
         }
 
@@ -77,7 +77,7 @@ namespace Controllers.Player
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Melee"))
+            if (IsMelee())
             {
                 timePassed += Time.deltaTime;
 
@@ -101,12 +101,16 @@ namespace Controllers.Player
                 }
             }
 
-            if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged"))
+            if (IsRanged())
             {
                 if (attackTriggered)
                 {
-                    animator.SetTrigger("shoot");
-
+                    stateMachine.ChangeState(character.attacking);
+                }
+                else
+                {
+                    animator.SetTrigger("move");
+                    stateMachine.ChangeState(character.combatting);
                 }
             }
         }
@@ -114,6 +118,16 @@ namespace Controllers.Player
         public override void Exit()
         {
             base.Exit();
+        }
+
+        private bool IsMelee()
+        {
+            return EquipmentSystem.Instance._equippedWeapon != null && EquipmentSystem.Instance._equippedWeapon.CompareTag("Melee");
+        }
+
+        private bool IsRanged()
+        {
+            return EquipmentSystem.Instance._equippedWeapon != null && EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged");
         }
     }
 }

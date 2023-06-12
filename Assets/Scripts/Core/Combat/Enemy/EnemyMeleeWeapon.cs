@@ -11,14 +11,14 @@ public class EnemyMeleeWeapon : MonoBehaviour
     private int startDamage = 5;
     [SerializeField]
     private int endDamage = 10;
-    [SerializeField]
-    private GameObject hitbox;
+    // [SerializeField]
+    // private GameObject hitbox;
 
     private bool isEquipped = false;
 
     private void Start()
     {
-        hitbox.GetComponent<EnemyMeleeWeaponHitbox>().SetDamageHitbox(startDamage, endDamage);
+        // hitbox.GetComponent<EnemyMeleeWeaponHitbox>().SetDamageHitbox(startDamage, endDamage);
     }
 
     public void MeleeAttack()
@@ -26,13 +26,13 @@ public class EnemyMeleeWeapon : MonoBehaviour
         // perform animation
     }
 
-    public void AllowHitbox()
-    {
-        hitbox.GetComponent<EnemyMeleeWeaponHitbox>().allowAttack = true;
-    }
+    // public void AllowHitbox()
+    // {
+    //     hitbox.GetComponent<EnemyMeleeWeaponHitbox>().allowAttack = true;
+    // }
 
-    public void DisAllowHitbox()
-    {
-        hitbox.GetComponent<EnemyMeleeWeaponHitbox>().allowAttack = false;
-    }
+    // public void DisAllowHitbox()
+    // {
+    //     hitbox.GetComponent<EnemyMeleeWeaponHitbox>().allowAttack = false;
+    // }
 }

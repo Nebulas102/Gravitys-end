@@ -48,7 +48,7 @@ namespace UI.Inventory
 
         private GameObject _player;
         private GameInput _gameInput;
-        private bool _inventoryOpened;
+        private bool _gamePaused;
         private Vector3 originalPosition;
         private bool isPlayerNearby;
         private bool isShowingPrompt;
@@ -57,14 +57,14 @@ namespace UI.Inventory
         {
             _player = GameObject.FindGameObjectWithTag("Player");
             _gameInput = FindObjectOfType<GameInput>();
-            InventoryOverlayBehaviour.OnInventoryToggle += ToggleInventory;
+            UIHandler.OnPauseGameToggle += PauseGame;
 
             originalPosition = transform.position;
         }
 
-        public void ToggleInventory(bool inventoryOpened)
+        public void PauseGame(bool paused)
         {
-            _inventoryOpened = inventoryOpened;
+            _gamePaused = paused;
         }
 
         private void Update()
@@ -106,7 +106,7 @@ namespace UI.Inventory
 
         private void Pickup()
         {
-            if (!_gameInput.GetPickUp() || !IsPlayerNearby() || IsInInventory || _inventoryOpened) return;
+            if (!_gameInput.GetPickUp() || !IsPlayerNearby() || IsInInventory || _gamePaused) return;
 
 
             if (InventoryManager.instance.PickupItem(this))
@@ -115,14 +115,13 @@ namespace UI.Inventory
                 IsInInventory = true;
                 isPlayerNearby = false;
                 OnItemPickup?.Invoke(false);
-                if (type == ItemType.WEAPON) { 
+                if (type == ItemType.WEAPON)
+                {
                     SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.GunPickup);
                     return;
                 }
-                if (type == ItemType.ARMOR) {
-                    SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ArmorPickup);
-                    return;
-                }
+
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ArmorPickup);
             }
         }
 

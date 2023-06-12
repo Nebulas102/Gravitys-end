@@ -8,10 +8,10 @@ namespace Core.Enemy.StageBosses
     public class BossAbilityStage
     {
         [SerializeField]
-        private List<BossAbilitySequence> bossAbilitySequences;
+        private int healthStageActivation;
 
         [SerializeField]
-        private int healthStageActivation;
+        private List<BossAbilitySequence> bossAbilitySequences;
 
         public List<BossAbilitySequence> GetBossAbilitySequences()
         {

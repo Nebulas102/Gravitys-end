@@ -140,7 +140,7 @@ namespace Core.Enemy
 
             if (_currentHealth <= 0)
             {
-                ObjectiveSystem.HandleBossKilled();
+                ObjectiveSystem.instance.HandleBossKilled();
                 Destroy(gameObject);
 
                 SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossDies);

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UI;
 using UI.Runtime;
 using UnityEngine;
@@ -10,7 +8,7 @@ public class MapUIManager : MonoBehaviour
     private GameObject Map;
 
     public static MapUIManager instance { get; private set; }
-    
+
     private InputManager _inputManager;
 
     public bool mapIsActive
@@ -19,11 +17,10 @@ public class MapUIManager : MonoBehaviour
         set
         {
             _mapIsActive = value;
-            OnMapToggled?.Invoke(value);
-            Map.SetActive(value);
-
             if (value)
                 InventoryOverlayBehaviour.instance.inventoryOpened = false;
+            OnMapToggled?.Invoke(mapIsActive);
+            Map.SetActive(value);
         }
     }
 
@@ -49,12 +46,13 @@ public class MapUIManager : MonoBehaviour
         if (_inputManager.UI.ToggleMap.triggered && !(DialogueManager.Instance.dialogueActive || PauseMenu.instance.isPaused))
         {
             ToggleMap();
-        } 
+        }
     }
 
     private void ToggleMap()
     {
         mapIsActive = !mapIsActive;
+
         Time.timeScale = mapIsActive ? 0f : 1f;
     }
 }

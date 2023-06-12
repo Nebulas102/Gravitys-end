@@ -8,8 +8,6 @@ using UnityEngine;
 public class EnemyRangeWeapon : MonoBehaviour
 {
     [Header("Shooting")]
-    public int startDamage;
-    public int endDamage;
     public float maxDistance;
 
     [Header("Reloading")]
@@ -22,6 +20,9 @@ public class EnemyRangeWeapon : MonoBehaviour
 
     [Header("Bullet")]
     public GameObject bullet;
+    public int minDamage;
+    public int maxDamage;
+    public float bulletSpeed;
 
     [SerializeField]
     private Transform bulletOutput;
@@ -105,8 +106,11 @@ public class EnemyRangeWeapon : MonoBehaviour
         newBullet.transform.LookAt(hit.transform.position);
         newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.rotation.w);
 
-        newBullet.GetComponentInChildren<EnemyBulletBehaviour>().SetDamage(startDamage, endDamage);
-        newBullet.GetComponentInChildren<EnemyBulletBehaviour>().SetDirection(bulletDirection);
+        EnemyBulletBehaviour enemyBulletBehaviour = newBullet.GetComponentInChildren<EnemyBulletBehaviour>();
+
+        enemyBulletBehaviour.SetDamage(minDamage, maxDamage);
+        enemyBulletBehaviour.SetSpeed(bulletSpeed);
+        enemyBulletBehaviour.SetDirection(bulletDirection);
 
         SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.EnemyShoots);
     }

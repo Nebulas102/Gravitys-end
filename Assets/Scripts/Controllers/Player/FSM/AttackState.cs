@@ -1,74 +1,118 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Controllers.Player
 {
     public class AttackState : State
     {
-        float timePassed;
-        float clipLength;
-        float clipSpeed;
-        bool attack;
-
-        private Animator animator = PlayerAnimator.Instance._animator;
-        private float _comboDelay = 0.5f;
-        private int _numClicks = 0;
-        private float _lastClickTime = 0;
+        private float timePassed;
+        private bool attackTriggered;
+        private Animator animator;
+        private const float ComboDelay = 0.6f;
 
 
-        public AttackState(Character _character, StateMachine _stateMachine) : base(_character, _stateMachine)
+        private Character _player = PlayerManager.Instance.player.GetComponent<Character>();
+        private Vector2 mousePos;
+        private Vector3 lookAtPosition;
+
+        public Camera _camera;
+        private PlayerInput playerInput;
+        private bool moveTriggered;
+
+
+        public AttackState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
-            character = _character;
-            stateMachine = _stateMachine;
+            animator = PlayerAnimator.Instance._animator;
         }
 
         public override void Enter()
         {
             base.Enter();
-            attack = false;
-            timePassed = 0;
-            animator.SetTrigger("attack");
-            animator.SetFloat("Velocity", 0f);
+            attackTriggered = false;
+            timePassed = 0f;
+
+            //todo need to check if keyboard or gamepad
+            if (_player.playerInput.currentControlScheme != "Gamepad")
+            {
+                _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+                mousePos = lookAction.ReadValue<Vector2>();
+                Ray ray = _camera.ScreenPointToRay(mousePos);
+                Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+                float rayDistance;
+
+                if (groundPlane.Raycast(ray, out rayDistance))
+                {
+                    Vector3 pointToLook = ray.GetPoint(rayDistance);
+
+                    lookAtPosition = new Vector3(pointToLook.x, _player.transform.position.y, pointToLook.z);
+
+                    _player.transform.LookAt(lookAtPosition);
+                }
+
+            }
+            if (IsMelee())
+            {
+                animator.SetTrigger("attack");
+            }
+
+            if (IsRanged())
+            {
+                // animator.SetTrigger("shoot");
+            }
         }
 
         public override void HandleInput()
         {
             base.HandleInput();
 
-            if (Time.time - _lastClickTime < _comboDelay)
-            {
-                _numClicks = 0;
-            }
+            // Handle input for attack action
             if (attackAction.triggered)
             {
-                _lastClickTime = Time.time;
-                _numClicks++;
-
-                if(_numClicks == 1){
-                    animator.SetTrigger("attack");
-                }
-                _numClicks = Mathf.Clamp(_numClicks, 0, 3);
+                attackTriggered = true;
             }
         }
 
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            // timePassed += Time.deltaTime;
-            // clipLength = animator.GetCurrentAnimatorClipInfo(1)[0].clip.length;
-            // clipSpeed = animator.GetCurrentAnimatorStateInfo(1).speed;
-            
-            // if (timePassed >= clipLength / clipSpeed && attack)
-            // {
-            //     stateMachine.ChangeState(character.attacking);
-            // }
+            if (IsMelee())
+            {
+                timePassed += Time.deltaTime;
 
-            // if (timePassed >= clipLength / clipSpeed)
-            // {
-            //     stateMachine.ChangeState(character.combatting);
-            //     animator.SetTrigger("move");
-            // }
+                // Calculate combo length based on the clip length and speed
+                float clipLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+                float clipSpeed = animator.GetCurrentAnimatorStateInfo(0).speed;
+                float comboLength = clipLength / clipSpeed;
+
+                // Check if attack triggered during combo delay
+                if (timePassed < ComboDelay && attackTriggered)
+                {
+                    timePassed = 0f;
+                    stateMachine.ChangeState(character.attacking);
+                }
+
+                // Check if combo length has passed
+                if (timePassed >= comboLength)
+                {
+                    animator.SetTrigger("move");
+                    stateMachine.ChangeState(character.combatting);
+                }
+            }
+
+            if (IsRanged())
+            {
+                if (attackTriggered)
+                {
+                    stateMachine.ChangeState(character.attacking);
+                }
+                else
+                {
+                    animator.SetTrigger("move");
+                    stateMachine.ChangeState(character.combatting);
+                }
+            }
         }
 
         public override void Exit()
@@ -76,5 +120,14 @@ namespace Controllers.Player
             base.Exit();
         }
 
+        private bool IsMelee()
+        {
+            return EquipmentSystem.Instance._equippedWeapon != null && EquipmentSystem.Instance._equippedWeapon.CompareTag("Melee");
+        }
+
+        private bool IsRanged()
+        {
+            return EquipmentSystem.Instance._equippedWeapon != null && EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged");
+        }
     }
 }

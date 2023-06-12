@@ -4,37 +4,48 @@ using UnityEngine;
 
 public class EnemyBulletBehaviour : MonoBehaviour
 {
-    [SerializeField]
-    private float bulletSpeed = 5f;
+    private int _minDamage;
+    private int _maxDamage;
+    private float _speed;
+    private Vector3 _direction;
+    
+    private GameObject player;
 
-    private int startDamage;
-    private int endDamage;
-    private Vector3 direction;
+    private void Start()
+    {
+        player = PlayerManager.Instance.player;    
+    }
 
     private void Update()
     {
-        transform.root.Translate(direction * bulletSpeed * Time.deltaTime, Space.World);
+        transform.root.Translate(_direction * _speed * Time.deltaTime, Space.World);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(startDamage, endDamage, TokenManager.instance.healthSection.GetModifier());
+            player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(_minDamage, _maxDamage, 0);
+
             Destroy(gameObject);
         }
 
         if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) Destroy(gameObject);
     }
 
-    public void SetDamage(int _startDamage, int _endDamage)
+    public void SetDamage(int minDamage, int maxDamage)
     {
-        startDamage = _startDamage;
-        endDamage = _endDamage;
+        _minDamage = minDamage;
+        _maxDamage = maxDamage;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
     }
 
     public void SetDirection(Vector3 direction)
     {
-        this.direction = direction.normalized;
+        _direction = direction.normalized;
     }
 }

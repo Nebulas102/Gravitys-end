@@ -92,6 +92,11 @@ namespace Core.StageGeneration.Stage
             StartCoroutine(BossRoomGenerator());
         }
 
+        public Vector2Int GetXZ()
+        {
+            return new Vector2Int(gridX, gridZ);
+        }
+
         private IEnumerator BossRoomGenerator()
         {
             var _spawnRoomObject = SpawnRoom();

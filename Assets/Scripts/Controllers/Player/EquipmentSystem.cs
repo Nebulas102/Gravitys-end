@@ -36,7 +36,7 @@ namespace Controllers.Player
             {
                 PlayerAnimator.Instance._animator.SetTrigger("unequip");
             }
-            
+
             if (_equippedWeapon.CompareTag("Melee"))
             {
                 PlayerAnimator.Instance._animator.SetTrigger("meleeEquip");
@@ -76,17 +76,12 @@ namespace Controllers.Player
 
         public void DetachWeapon()
         {
-            if (_equippedWeapon is null) return;
+            if (_equippedWeapon == null) return;
 
             _equippedWeapon.transform.rotation = oldRotation;
-
             PlayerAnimator.Instance._animator.SetTrigger("unequip");
-
-
             _equippedWeapon.transform.SetParent(null);
-
             _equippedWeapon = null;
-
         }
 
 

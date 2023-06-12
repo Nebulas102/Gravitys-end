@@ -20,10 +20,10 @@ namespace UI
             set
             {
                 _inventoryOpened = value;
-                OnInventoryToggle?.Invoke(value);
-                overlay.SetActive(inventoryOpened);
                 if (value)
                     MapUIManager.instance.mapIsActive = false;
+                OnInventoryToggle?.Invoke(value);
+                overlay.SetActive(inventoryOpened);
             }
         }
 

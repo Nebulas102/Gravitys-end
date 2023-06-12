@@ -41,11 +41,11 @@ namespace UI.Inventory
             {
                 // Call the Pickup method to add the item to the armor slots and equip it
                 case ItemType.ARMOR:
-                    result = Pickup(ref armorSlots, ref equippedArmorSlot, item);
+                    result = Pickup(ref armorSlots, item);
                     break;
                 // Call the Pickup method to add the item to the weapon slots and equip it
                 case ItemType.WEAPON:
-                    result = Pickup(ref weaponSlots, ref equippedWeaponSlot, item);
+                    result = Pickup(ref weaponSlots, item);
                     break;
                 // Throw an exception if the item type is not recognized
                 default:
@@ -95,6 +95,16 @@ namespace UI.Inventory
             equippedSlot.SetItem(x, x.type == ItemType.WEAPON);
             if (y != null)
                 slots[index].SetItem(y);
+        }
+
+        private static bool Pickup(ref List<InventorySlot> slots, Item item)
+        {
+            // Find the first empty slot in the list of slots
+            var slot = slots.FirstOrDefault(s => s.IsEmpty());
+            if (slot is null) return false;
+
+            slot.SetItem(item, item.type == ItemType.WEAPON);
+            return true;
         }
 
         private static bool Pickup(ref List<InventorySlot> slots, ref InventorySlot equippedSlot, Item item)

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1030,7 +1030,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3086377716883520387, guid: 42ba273410d75cb42a9e880d7fbe6780, type: 3}
   m_PrefabInstance: {fileID: 488815895}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488815898}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c5c16c4479a2f648a05a5f26e3d4886, type: 3}
@@ -1212,7 +1212,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000014305}
+  m_AnchoredPosition: {x: 0, y: 0.000015258789}
   m_SizeDelta: {x: -20.0958, y: -19.1598}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &605598790
@@ -1579,10 +1579,13 @@ MonoBehaviour:
   debugMode: 0
   hallways:
   - {fileID: 3539307900891926368, guid: d46e19aa43b2a11478ccf217ad0e148e, type: 3}
+  hallwayEndLeft: {fileID: 0}
+  hallwayEndRight: {fileID: 0}
   minWeightRoomsBranch: 2
   maxWeightRoomsBranch: 5
   spawnRoom: {fileID: 2915231218470790405, guid: 23400e724cc0ec54698c140f25ddef05, type: 3}
   bossRoom: {fileID: 5154548415723241550, guid: 60de7db663c44c144b6ec03426926d08, type: 3}
+  keyRoom: {fileID: 0}
   rooms:
   - {fileID: 2915231218470790405, guid: 0a4e4c0fd8138cf499552e493b8a6591, type: 3}
   - {fileID: 2915231218470790405, guid: e3477174c9e6e144e8c6242a8c3d6d6e, type: 3}
@@ -3276,6 +3279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59817db9c1fa3644e9e8296e59e8537c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!1001 &1587340416
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3806,7 +3810,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3086377716883520387, guid: 42ba273410d75cb42a9e880d7fbe6780, type: 3}
   m_PrefabInstance: {fileID: 1625217936}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1625217937}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c5c16c4479a2f648a05a5f26e3d4886, type: 3}
@@ -4523,7 +4527,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -4776,7 +4781,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1488214249}
-  isPaused: 0
+  controlsImage: {fileID: 0}
 --- !u!114 &2146664459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4806,6 +4811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryMenuFirstSelected: {fileID: 2086204956}
   pauseMenuFirstSelected: {fileID: 1952458535}
+  itemPickupPrompt: {fileID: 0}
 --- !u!4 &2146664461
 Transform:
   m_ObjectHideFlags: 0

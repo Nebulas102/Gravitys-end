@@ -15,7 +15,7 @@ namespace Core.Chest
 
         private bool _chestWillSpawn;
 
-        private Vector3 _spawnPointPos;
+        private Transform _spawnPointPos;
 
         private void DetermineChestSpawn()
         {
@@ -33,9 +33,9 @@ namespace Core.Chest
             {
                 var chestSpawnPointKey = Random.Range(0, chestSpawnPoints.Length - 1);
 
-                _spawnPointPos = chestSpawnPoints[chestSpawnPointKey].position;
+                _spawnPointPos = chestSpawnPoints[chestSpawnPointKey];
 
-                GameObject spawnedChest = Instantiate(chest, _spawnPointPos, Quaternion.identity);
+                GameObject spawnedChest = Instantiate(chest, _spawnPointPos);
                 spawnedChest.GetComponent<Chest>().SetLootObjects(possibleLoot);
             }
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -830,7 +830,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3086377716883520387, guid: 42ba273410d75cb42a9e880d7fbe6780, type: 3}
   m_PrefabInstance: {fileID: 356069913}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 381704733}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c5c16c4479a2f648a05a5f26e3d4886, type: 3}
@@ -2499,7 +2499,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.2
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &1182593677
@@ -2861,7 +2861,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3086377716883520387, guid: 42ba273410d75cb42a9e880d7fbe6780, type: 3}
   m_PrefabInstance: {fileID: 1197227940}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259255340}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c5c16c4479a2f648a05a5f26e3d4886, type: 3}
@@ -3692,9 +3692,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94474810cf6c37f4487f291bffd548ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 0}
-  spawnpointPos: {x: 0, y: 0, z: 0}
-  enemyCount: 0
+  enemy:
+  - {fileID: 0}
+  enemySpawnPoints: []
+  minGroupSize: 0
+  maxGroupSize: 0
 --- !u!114 &1532275444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3723,7 +3725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1061856022}
-  isPaused: 0
+  controlsImage: {fileID: 0}
 --- !u!114 &1532275446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3750,6 +3752,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryMenuFirstSelected: {fileID: 1806287357}
   pauseMenuFirstSelected: {fileID: 1065862383}
+  itemPickupPrompt: {fileID: 0}
 --- !u!1 &1543028789
 GameObject:
   m_ObjectHideFlags: 0
@@ -5897,6 +5900,8 @@ MonoBehaviour:
   playerSpeed: 6
   controller: {fileID: 7616576467311660735}
   playerInput: {fileID: 2249960162859405929}
+  _camera: {fileID: 0}
+  lookAtPosition: {x: 0, y: 0, z: 0}
   animator: {fileID: 0}
   playerVelocity: {x: 0, y: 0, z: 0}
 --- !u!4 &3349433198605330130
@@ -6117,8 +6122,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 290bd1dbfdee63748bd1dfbd5219b473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponHolder: {fileID: 6516963799329501704}
-  sheathHolder: {fileID: 3577674820404012632}
+  _equippedWeapon: {fileID: 0}
+  meleeHolder: {fileID: 0}
+  rangedHolder: {fileID: 0}
 --- !u!1 &4237325587328218295
 GameObject:
   m_ObjectHideFlags: 0

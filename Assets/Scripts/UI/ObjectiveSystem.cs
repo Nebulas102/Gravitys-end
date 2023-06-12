@@ -68,6 +68,7 @@ namespace UI
             objectiveText.color = objective.color;
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
+            GameStats.Instance.objectivesCompleted++;
         }
 
         public bool IsObjectiveCompleted(ObjectiveTask task)

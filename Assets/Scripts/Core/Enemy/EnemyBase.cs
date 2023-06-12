@@ -50,6 +50,7 @@ namespace Core.Enemy
             if (_currentHealth <= 0)
             {
                 Destroy(gameObject);
+                GameStats.Instance.enemiesKilled++;
                 if (OnEnemyKilled != null)
                 {
                     OnEnemyKilled(this);

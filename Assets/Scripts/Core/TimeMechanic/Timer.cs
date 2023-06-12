@@ -16,9 +16,24 @@ namespace Core
 
         [SerializeField]
         public TextMeshProUGUI display;
+        
+        public static Timer Instance;
+        public float startingTime { get; set; }
 
         private bool timerIsRunning;
         private bool isPlayingClockSound;
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {
@@ -50,6 +65,7 @@ namespace Core
         {
             // Starts the timer
             timerIsRunning = true;
+            startingTime = time;
         }
 
         private void AddEnemyTime(EnemyBase enemy)
@@ -66,9 +82,9 @@ namespace Core
             if (ttd <= dangerZone && !isPlayingClockSound)
             {
                 display.color = Color.red;
-                                        // Play clock ticking sound effect
-                        isPlayingClockSound = true;
-                        SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ClockTicking);
+                // Play clock ticking sound effect
+                isPlayingClockSound = true;
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ClockTicking);
             }
 
             display.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);

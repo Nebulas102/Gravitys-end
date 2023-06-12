@@ -78,7 +78,7 @@ namespace Controllers
             // }
 
             foreach (var enemy in enemies)
-                if (enemy != gameObject) // don't compare to itself
+                if (enemy != gameObject && enemy != null) // don't compare to itself
                 {
                     // Checks distance between enemies
                     var enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);

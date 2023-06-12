@@ -9,7 +9,9 @@ public class DialogueManager : MonoBehaviour
     // Singleton for DialogueManager
     public static DialogueManager Instance;
 
-    public TextMeshProUGUI nameText;
+    //Make sure the the name of the character portrait is the same as the character name
+    public TextMeshProUGUI characterNameText;
+    public List<GameObject> characterPortraits;
     public TextMeshProUGUI dialogueText;
 
     public float textSpeed;
@@ -18,7 +20,9 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<string> sentences;
 
+    [HideInInspector]
     public bool dialogueActive;
+
     private bool textIsTyping;
     private string currentSentence;
     private InputManager _inputManager;
@@ -50,7 +54,16 @@ public class DialogueManager : MonoBehaviour
         dialogueActive = true;
         animator.SetBool("IsOpen", true);
 
-        nameText.text = dialogue.name;
+        characterNameText.text = dialogue.name;
+
+        foreach (GameObject character in characterPortraits)
+        {
+            if (character.name == dialogue.name)
+            {
+                character.SetActive(true);
+            }
+            else character.SetActive(false);
+        }
 
         sentences.Clear();
 
@@ -87,11 +100,13 @@ public class DialogueManager : MonoBehaviour
     {
         textIsTyping = true;
         dialogueText.text = "";
+
         foreach (char letter in currentSentence.ToCharArray())
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(textSpeed);
         }
+
         textIsTyping = false;
     }
 

@@ -10,6 +10,7 @@ public class MapUIManager : MonoBehaviour
     public static MapUIManager instance { get; private set; }
 
     private InputManager _inputManager;
+    private GameObject mapCamera;
 
     public bool mapIsActive
     {
@@ -21,6 +22,7 @@ public class MapUIManager : MonoBehaviour
                 InventoryOverlayBehaviour.instance.inventoryOpened = false;
             OnMapToggled?.Invoke(mapIsActive);
             Map.SetActive(value);
+            mapCamera.SetActive(value);
         }
     }
 
@@ -47,6 +49,7 @@ public class MapUIManager : MonoBehaviour
         {
             ToggleMap();
         }
+        if(mapCamera == null) GetMapCamera();
     }
 
     private void ToggleMap()
@@ -54,5 +57,17 @@ public class MapUIManager : MonoBehaviour
         mapIsActive = !mapIsActive;
 
         Time.timeScale = mapIsActive ? 0f : 1f;
+    }
+
+    private void GetMapCamera()
+    {
+        foreach (Camera cam in Camera.allCameras)
+        {
+            if (cam.name == "MapCamera")
+            {
+                mapCamera = cam.gameObject;
+                mapCamera.SetActive(false);
+            }
+        }
     }
 }

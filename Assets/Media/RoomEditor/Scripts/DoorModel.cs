@@ -10,13 +10,13 @@ public class DoorModel : MonoBehaviour
 	private GameObject _currentModelObject;
 
 	public void Start() {
-		_currentModelObject = transform.Find("DoorOpen").gameObject;
+		_currentModelObject = transform.Find("Door Open").gameObject;
 	}
 
 	public void Close() {
 		// Gets the current model if unknown
 		if (_currentModelObject == null)
-			_currentModelObject = transform.Find("DoorOpen").gameObject;
+			_currentModelObject = transform.Find("Door Open").gameObject;
 
 		// Destroys the open model
 		Destroy(_currentModelObject);

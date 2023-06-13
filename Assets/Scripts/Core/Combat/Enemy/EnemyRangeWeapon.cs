@@ -86,13 +86,11 @@ public class EnemyRangeWeapon : MonoBehaviour
 
     public void PerformShot()
     {   
-        Vector3 bulletOutputWorldPos = transform.root.TransformPoint(bulletOutput.position);
+        Vector3 bulletOutputWorldPos = enemy.TransformPoint(bulletOutput.position);
 
-        Debug.Log(transform.root.name);
-
-        if (Physics.Raycast(bulletOutputWorldPos, bulletOutput.TransformDirection(Vector3.back), out hit, maxDistance))
+        if (Physics.Raycast(bulletOutputWorldPos, Vector3.back, out hit, maxDistance))
         {   
-            Debug.DrawRay(bulletOutputWorldPos, bulletOutput.TransformDirection(Vector3.back), Color.red);
+            Debug.DrawRay(bulletOutputWorldPos, Vector3.back, Color.red);
             if (hit.transform.CompareTag("Player"))
             {
                 Shoot();

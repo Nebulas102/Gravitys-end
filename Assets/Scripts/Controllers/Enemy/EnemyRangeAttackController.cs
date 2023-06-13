@@ -24,6 +24,8 @@ public class EnemyRangeAttackController : MonoBehaviour
         enemyController = gameObject.GetComponent<EnemyController>();
         player = PlayerManager.Instance.player;
         rangeWeapon = rangeWeaponObject.GetComponent<EnemyRangeWeapon>();
+
+        rangeWeapon.SetEnemy(transform);
     }
 
     public EnemyRangeWeapon GetRangeWeapon()

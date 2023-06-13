@@ -31,6 +31,7 @@ public class EnemyRangeWeapon : MonoBehaviour
     private RaycastHit hit;
 
     private PlayerManager playerManager;
+    private Transform enemy;
 
     private void Start()
     {
@@ -84,9 +85,14 @@ public class EnemyRangeWeapon : MonoBehaviour
     }
 
     public void PerformShot()
-    {
-        if (Physics.Raycast(bulletOutput.transform.position, transform.TransformDirection(Vector3.back), out hit, maxDistance))
-        {
+    {   
+        Vector3 bulletOutputWorldPos = transform.root.TransformPoint(bulletOutput.position);
+
+        Debug.Log(transform.root.name);
+
+        if (Physics.Raycast(bulletOutputWorldPos, bulletOutput.TransformDirection(Vector3.back), out hit, maxDistance))
+        {   
+            Debug.DrawRay(bulletOutputWorldPos, bulletOutput.TransformDirection(Vector3.back), Color.red);
             if (hit.transform.CompareTag("Player"))
             {
                 Shoot();
@@ -113,5 +119,10 @@ public class EnemyRangeWeapon : MonoBehaviour
         enemyBulletBehaviour.SetDirection(bulletDirection);
 
         SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.EnemyShoots);
+    }
+
+    public void SetEnemy(Transform _enemy)
+    {
+        enemy = _enemy;
     }
 }

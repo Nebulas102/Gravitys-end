@@ -7,9 +7,6 @@ using UnityEngine;
 
 public class EnemyRangeWeapon : MonoBehaviour
 {
-    [Header("Shooting")]
-    public float maxDistance;
-
     [Header("Reloading")]
     public int currentAmmo;
     public int magSize;
@@ -23,6 +20,9 @@ public class EnemyRangeWeapon : MonoBehaviour
     public int minDamage;
     public int maxDamage;
     public float bulletSpeed;
+
+    [SerializeField]
+    private LayerMask ignoreLayer;
 
     [SerializeField]
     private Transform bulletOutput;
@@ -86,11 +86,12 @@ public class EnemyRangeWeapon : MonoBehaviour
 
     public void PerformShot()
     {   
-        Vector3 bulletOutputWorldPos = enemy.TransformPoint(bulletOutput.position);
+        Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
+        Vector3 bulletDirection = enemy.transform.forward;
 
-        if (Physics.Raycast(bulletOutputWorldPos, Vector3.back, out hit, maxDistance))
+        if (Physics.Raycast(bulletOutputWorldPos, bulletDirection, out hit, Mathf.Infinity, ~ignoreLayer))
         {   
-            Debug.DrawRay(bulletOutputWorldPos, Vector3.back, Color.red);
+            Debug.DrawRay(bulletOutputWorldPos, bulletDirection * Mathf.Infinity, Color.green);
             if (hit.transform.CompareTag("Player"))
             {
                 Shoot();
@@ -100,7 +101,7 @@ public class EnemyRangeWeapon : MonoBehaviour
 
     private void OnGunShot()
     {
-        Vector3 bulletOutputWorldPos = bulletOutput.TransformPoint(Vector3.zero);
+        Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
         Vector3 bulletDirection = (hit.transform.position - bulletOutputWorldPos);
 
         bulletDirection.y = 0f;

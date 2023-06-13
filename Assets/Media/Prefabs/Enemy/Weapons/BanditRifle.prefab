@@ -133,16 +133,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff893999b57cd284d8a5e0565c601904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 25
-  currentAmmo: 0
-  magSize: 0
+  currentAmmo: 5
+  magSize: 10
   fireRate: 100
   reloadTime: 0.5
   reloading: 0
-  bullet: {fileID: 1563543445386549699, guid: b7894c3397e2c0a44b8023bc07391049, type: 3}
+  bullet: {fileID: 1563543445386549699, guid: efc051595d82d1548a79ede3e336f243, type: 3}
   minDamage: 5
   maxDamage: 10
   bulletSpeed: 3
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 256
   bulletOutput: {fileID: 8217188023003102412}
 --- !u!1 &7376266294702615032
 GameObject:
@@ -168,7 +170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7376266294702615032}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.003, y: 0.1651, z: -0.3531}
+  m_LocalPosition: {x: 0.003, y: 0.1651, z: -0.366}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

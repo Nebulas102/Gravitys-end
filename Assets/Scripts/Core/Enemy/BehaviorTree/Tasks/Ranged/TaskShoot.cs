@@ -18,7 +18,7 @@ namespace BehaviorTree.Tasks
 
         public override NodeState Evaluate()
         {
-            _enemyRangeAttackController.GetRangeWeapon().PerformShot();
+            _enemyRangeAttackController.EnemyShoot();
             state = NodeState.RUNNING;
             return state;
         }

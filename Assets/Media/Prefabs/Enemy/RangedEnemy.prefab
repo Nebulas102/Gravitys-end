@@ -1152,8 +1152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8de64787a816442aaa0299cb37d208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 8
-  rangeWeaponObject: {fileID: 5290742319282659293, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}
+  attackRange: 9
+  rangeWeaponObject: {fileID: 7251947205400505461}
   playerDistance: 0
 --- !u!114 &-7216175424955467324
 MonoBehaviour:
@@ -2692,16 +2692,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 4276069674895537660}
     m_Modifications:
     - target: {fileID: 2137116675508004709, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}
-      propertyPath: bullet
-      value: 
-      objectReference: {fileID: 1563543445386549699, guid: efc051595d82d1548a79ede3e336f243, type: 3}
-    - target: {fileID: 2137116675508004709, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}
-      propertyPath: magSize
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2137116675508004709, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}
-      propertyPath: currentAmmo
-      value: 5
+      propertyPath: raycastLayer.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 4766970831601943911, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}
       propertyPath: m_RootOrder
@@ -2773,6 +2765,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}
+--- !u!1 &7251947205400505461 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5290742319282659293, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}
+  m_PrefabInstance: {fileID: 3299002811579151272}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8065884410940552911 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4766970831601943911, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}

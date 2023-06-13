@@ -28,8 +28,8 @@ public class EnemyRangeAttackController : MonoBehaviour
         rangeWeapon.SetEnemy(transform);
     }
 
-    public EnemyRangeWeapon GetRangeWeapon()
+    public void EnemyShoot()
     {
-        return rangeWeapon;
+        rangeWeapon.PerformShot();
     }
 }

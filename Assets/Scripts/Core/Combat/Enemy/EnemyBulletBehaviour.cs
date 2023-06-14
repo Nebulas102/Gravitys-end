@@ -23,6 +23,8 @@ public class EnemyBulletBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        Debug.Log(other.gameObject.name);
+
         if (other.gameObject.CompareTag("Player"))
         {
             player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(_minDamage, _maxDamage, 0);
@@ -30,7 +32,7 @@ public class EnemyBulletBehaviour : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) Destroy(gameObject);
+        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door") || other.gameObject.CompareTag("Enemy")) Destroy(gameObject);
     }
 
     public void SetDamage(int minDamage, int maxDamage)

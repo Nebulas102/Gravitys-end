@@ -1,5 +1,6 @@
 using UI.Runtime;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace UI
 {
@@ -11,8 +12,12 @@ namespace UI
         [SerializeField]
         private GameObject overlay;
 
+        [SerializeField]
+        private GameObject entryButton;
+
         private InputManager _inputManager;
         private bool _inventoryOpened;
+        private EventSystem _eventSystem;
 
         public bool inventoryOpened
         {
@@ -24,6 +29,7 @@ namespace UI
                     MapUIManager.instance.mapIsActive = false;
                 OnInventoryToggle?.Invoke(value);
                 overlay.SetActive(inventoryOpened);
+                _eventSystem.SetSelectedGameObject(value ? entryButton : null);
             }
         }
 
@@ -37,6 +43,7 @@ namespace UI
                 Destroy(gameObject);
 
             _inputManager = new InputManager();
+            _eventSystem = EventSystem.current;
         }
 
         private void OnEnable()

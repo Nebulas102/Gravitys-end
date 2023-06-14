@@ -53,7 +53,7 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
             player.transform.position = teleportDestination.transform.position;
 
             topDownCamera = GameObject.Find("Cinemachine Camera").GetComponent<CinemachineVirtualCamera>();
-            topDownCamera.m_Lens.OrthographicSize = 10f;
+            topDownCamera.m_Lens.OrthographicSize = 9f;
         }
     }
 }

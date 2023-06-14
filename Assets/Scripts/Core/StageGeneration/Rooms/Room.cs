@@ -68,7 +68,7 @@ namespace Core.StageGeneration.Rooms
             return rotation;
         }
 
- public Quaternion NewRotationData(Door door, StageHelper.RoomDirections placementDirection)
+        public Quaternion NewRotationData(Door door, StageHelper.RoomDirections placementDirection)
         {
 
             var rotation = new Quaternion(0, 0, 0, 0);

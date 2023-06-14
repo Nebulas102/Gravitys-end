@@ -94,7 +94,7 @@ namespace Core.StageGeneration.Rooms
                     currentSpawnDoor = _previousRoom.GetComponent<Room>()
                         .GetDoors().SingleOrDefault(d => d.GetComponent<Door>().GetDirection() == placementSide);
 
-                    if (_currentRoom.GetComponent<Room>().GetDoors().Count == 1)
+                    if (_currentRoom.GetComponent<Room>().GetDoors().Count < 4)
                     {
                         roomRotation = _currentRoom.GetComponent<Room>().RotateRoom(placementSide);
                     }
@@ -110,7 +110,7 @@ namespace Core.StageGeneration.Rooms
                     // Set doorcell of the hallway door
                     doorCell = currentSpawnDoor.GetComponent<Door>().cell;
 
-                    if (_currentRoom.GetComponent<Room>().GetDoors().Count == 1)
+                    if (_currentRoom.GetComponent<Room>().GetDoors().Count < 4)
                     {   
                         roomRotation = _currentRoom.GetComponent<Room>().RotateRoom(placementSide);
                     }
@@ -160,7 +160,7 @@ namespace Core.StageGeneration.Rooms
                                 .GetDoors().SingleOrDefault(d => d.GetComponent<Door>().GetDirection() == placementSide);
                 }
 
-                if (_currentRoom.GetComponent<Room>().GetDoors().Count == 1)
+                if (_currentRoom.GetComponent<Room>().GetDoors().Count < 4)
                 {
                     roomRotation = _currentRoom.GetComponent<Room>().RotateRoom(placementSide);
                 }
@@ -172,7 +172,7 @@ namespace Core.StageGeneration.Rooms
                 placementSide = currentSpawnDoor.GetComponent<Door>().GetDirection();
                 doorCell = currentSpawnDoor.GetComponent<Door>().cell;
 
-                if (_currentRoom.GetComponent<Room>().GetDoors().Count == 1)
+                if (_currentRoom.GetComponent<Room>().GetDoors().Count < 4)
                 {
                     roomRotation = _currentRoom.GetComponent<Room>().RotateRoom(placementSide);
                 }

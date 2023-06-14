@@ -88,7 +88,11 @@ namespace Core.StageGeneration.Rooms
                     placementSide = DeterminePlacementSide(_previousRoom);
 
                     // If the placementside is undefined, skip this iteration
-                    if (placementSide == StageHelper.RoomDirections.UNDEFINED) continue;
+                    if (placementSide == StageHelper.RoomDirections.UNDEFINED)
+                    {
+                        _currentRoom.GetComponent<Room>().SelfRemove();
+                        continue;
+                    }
 
                     // Set currentSpawnDoor the door of the previous room with direction of placementside
                     currentSpawnDoor = _previousRoom.GetComponent<Room>()
@@ -113,6 +117,7 @@ namespace Core.StageGeneration.Rooms
                     if (_currentRoom.GetComponent<Room>().GetDoors().Count < 4)
                     {   
                         roomRotation = _currentRoom.GetComponent<Room>().RotateRoom(placementSide);
+                        Debug.Log(roomRotation.y);
                     }
 
                     // Set the initial position of the room where it should recide
@@ -123,7 +128,11 @@ namespace Core.StageGeneration.Rooms
                         .CanPlace((int)initialPos["x"], (int)initialPos["z"]);
 
                     // If not can be placed, go the next iteration
-                    if (!canPlace) continue;
+                    if (!canPlace)
+                    {
+                        _currentRoom.GetComponent<Room>().SelfRemove();
+                        continue;
+                    }
                 }
 
                 var pos = _currentRoom.GetComponent<Room>().PlacementPos(placementSide, doorCell);
@@ -132,6 +141,8 @@ namespace Core.StageGeneration.Rooms
                 _currentRoom.GetComponent<Room>().SetDoorCells();
 
                 _previousRoom = _currentRoom.GetComponent<Room>().SetRoomData((int)pos["x"], (int)pos["z"], roomRotation, placementSide, currentSpawnDoor);
+
+                Debug.Log("previousroom: " + _previousRoom.transform.rotation);
 
                 initialSpawned = true;
             }

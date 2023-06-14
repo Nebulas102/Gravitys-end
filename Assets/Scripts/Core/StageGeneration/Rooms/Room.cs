@@ -42,10 +42,12 @@ namespace Core.StageGeneration.Rooms
             return Instantiate(gameObject, new Vector3(0, 20, 0), Quaternion.identity);
         }
 
-        public GameObject SetRoomData(int posX, int posZ, Quaternion rotation,StageHelper.RoomDirections direction, GameObject spawnDoor)
+        // rotate all doors when rotating the room
+        // 
+        public GameObject SetRoomData(int posX, int posZ, Quaternion rotation, StageHelper.RoomDirections direction, GameObject spawnDoor)
         {
             gameObject.transform.position = new Vector3(posX, 0, posZ);
-            gameObject.transform.rotation = rotation;
+            gameObject.transform.Rotate(new Vector3(0, rotation.y, 0));
 
             spawnDoor.SetActive(false);
 
@@ -175,6 +177,12 @@ namespace Core.StageGeneration.Rooms
                         break;
                 }
             }
+
+            Debug.Log(gameObject.name);
+            Debug.Log(door.direction);
+            Debug.Log(placementDirection);
+            Debug.Log("rotation: " + rotation.y);
+            Debug.Log("============================");
 
             return rotation;
         }
@@ -336,6 +344,11 @@ namespace Core.StageGeneration.Rooms
                 }
 
             cells = roomCells;
+        }
+
+        public void SelfRemove()
+        {
+            Destroy(gameObject);
         }
     }
 }

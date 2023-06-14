@@ -29,12 +29,10 @@ public class EnemyMeleeAttackController : MonoBehaviour
     public void PerformMeleeAttack()
     {
         // return if its still on cooldown
-        // if (!(Time.time > _nextAttackTime)) return;
+        if (!(Time.time > _nextAttackTime)) return;
 
-        // _enemyMeleeWeapon.AllowHitbox();
-        // _enemyMeleeWeapon.MeleeAttack();
-        // _enemyMeleeWeapon.DisAllowHitbox();
+        _enemyMeleeWeapon.MeleeAttack();
 
-        // _nextAttackTime = Time.time + attackCooldown;
+        _nextAttackTime = Time.time + attackCooldown;
     }
 }

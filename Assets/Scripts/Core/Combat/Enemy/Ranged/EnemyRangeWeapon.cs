@@ -91,7 +91,6 @@ public class EnemyRangeWeapon : MonoBehaviour
 
         if (Physics.Raycast(bulletOutputWorldPos, bulletDirection, out hit, Mathf.Infinity, ~ignoreLayer))
         {   
-            Debug.DrawRay(bulletOutputWorldPos, bulletDirection * Mathf.Infinity, Color.green);
             if (hit.transform.CompareTag("Player"))
             {
                 Shoot();
@@ -112,7 +111,8 @@ public class EnemyRangeWeapon : MonoBehaviour
         newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.rotation.w);
 
         EnemyBulletBehaviour enemyBulletBehaviour = newBullet.GetComponentInChildren<EnemyBulletBehaviour>();
-
+        
+        // Set enemy bullet data
         enemyBulletBehaviour.SetDamage(minDamage, maxDamage);
         enemyBulletBehaviour.SetSpeed(bulletSpeed);
         enemyBulletBehaviour.SetDirection(bulletDirection);

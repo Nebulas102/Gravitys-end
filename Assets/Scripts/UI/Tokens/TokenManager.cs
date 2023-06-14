@@ -19,12 +19,6 @@ namespace UI.Tokens
         [SerializeField]
         public TokenSection timeSection, healthSection, damageSection;
 
-        [SerializeField]
-        [Range(0f, 4f)]
-        private float cooldownLength;
-
-        private float nextTransactionTime = -Mathf.Infinity;
-
         public int spendableTokens
         {
             get { return _spendableTokens; }
@@ -52,24 +46,18 @@ namespace UI.Tokens
 
         public bool Invest(bool canInvest)
         {
-            canInvest = canInvest && spendableTokens > 0 && Time.unscaledTime > nextTransactionTime;
+            canInvest = canInvest && spendableTokens > 0;
             if (canInvest)
-            {
                 spendableTokens--;
-                nextTransactionTime = Time.unscaledTime + cooldownLength;
-            }
 
             return canInvest;
         }
 
         public bool Refund(bool canRefund)
         {
-            canRefund = canRefund && spendableTokens < tokens && Time.unscaledTime > nextTransactionTime;
+            canRefund = canRefund && spendableTokens < tokens;
             if (canRefund)
-            {
                 spendableTokens++;
-                nextTransactionTime = Time.unscaledTime + cooldownLength;
-            }
 
             return canRefund;
         }

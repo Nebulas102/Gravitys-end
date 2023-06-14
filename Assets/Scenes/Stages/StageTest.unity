@@ -3887,7 +3887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2713234630200743637, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3098082173479862750, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
       propertyPath: modifier
@@ -4960,6 +4960,10 @@ PrefabInstance:
     - target: {fileID: 7060834414540523236, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -527.6999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7771877462272203855, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4438780625280744727, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
@@ -6198,6 +6202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1488214249}
   controlsImage: {fileID: 19892678}
+  entryButton: {fileID: 1952458535}
 --- !u!114 &2146664460
 MonoBehaviour:
   m_ObjectHideFlags: 0

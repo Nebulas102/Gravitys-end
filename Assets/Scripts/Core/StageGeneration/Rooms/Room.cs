@@ -68,7 +68,7 @@ namespace Core.StageGeneration.Rooms
             return rotation;
         }
 
-        public Quaternion NewRotationData(Door door, StageHelper.RoomDirections placementDirection)
+ public Quaternion NewRotationData(Door door, StageHelper.RoomDirections placementDirection)
         {
 
             var rotation = new Quaternion(0, 0, 0, 0);
@@ -81,6 +81,101 @@ namespace Core.StageGeneration.Rooms
                 door.direction = StageHelper.GetOppositeDirection(placementDirection);
                 rotation.y = 180;
             }
+            else
+            {
+                switch (placementDirection)
+                {
+                    case StageHelper.RoomDirections.TOP:
+                        if (door.direction == StageHelper.RoomDirections.RIGHT)
+                        {
+                            rotation.y = 90;
+
+                            door.roomPosXOffset = (int)(sizeZ / 5) - 1;
+                            door.roomPosZOffset = (int)(sizeZ / 2) / 5;
+
+                            sizeX = storedSizeZ;
+                            sizeZ = storedSizeX;
+                        }
+                        else if (door.direction == StageHelper.RoomDirections.LEFT)
+                        {
+                            rotation.y = 270;
+
+                            door.roomPosXOffset = 0;
+                            door.roomPosZOffset = (int)(sizeZ / 2) / 5;
+
+                            sizeX = storedSizeZ;
+                            sizeZ = storedSizeX;
+                        }
+                        break;
+                    case StageHelper.RoomDirections.RIGHT:
+                        if (door.direction == StageHelper.RoomDirections.TOP)
+                        {
+                            rotation.y = 270;
+
+                            door.roomPosXOffset = (int)(sizeX / 2) / 5;
+                            door.roomPosZOffset = (int)(sizeZ / 2);
+
+                            sizeX = storedSizeZ;
+                            sizeZ = storedSizeX;
+                        }
+                        else if (door.direction == StageHelper.RoomDirections.BOTTOM)
+                        {
+                            rotation.y = 90;
+
+                            door.roomPosXOffset = (int)(sizeZ / 2) / 5;
+                            door.roomPosZOffset = 0;
+
+                            sizeX = storedSizeZ;
+                            sizeZ = storedSizeX;
+                        }
+                        break;
+                    case StageHelper.RoomDirections.BOTTOM:
+                        if (door.direction == StageHelper.RoomDirections.RIGHT)
+                        {
+                            rotation.y = 270;
+
+                            door.roomPosXOffset = (int)(sizeZ / 5) - 1;
+                            door.roomPosZOffset = (int)(sizeZ / 2) / 5;
+
+                            sizeX = storedSizeZ;
+                            sizeZ = storedSizeX;
+                        }
+                        else if (door.direction == StageHelper.RoomDirections.LEFT)
+                        {
+                            rotation.y = 90;
+                            
+                            door.roomPosXOffset = 0;
+                            door.roomPosZOffset = (int)(sizeZ / 2) / 5;
+
+                            sizeX = storedSizeZ;
+                            sizeZ = storedSizeX;
+                        }
+                        break;
+                    case StageHelper.RoomDirections.LEFT:
+                        if (door.direction == StageHelper.RoomDirections.TOP)
+                        {
+                            rotation.y = 90;
+
+                            door.roomPosXOffset = (int)(sizeX / 2) / 5;
+                            door.roomPosZOffset = (int)(sizeZ / 5) - 1;
+
+                            sizeX = storedSizeZ;
+                            sizeZ = storedSizeX;
+                        }
+                        else if (door.direction == StageHelper.RoomDirections.BOTTOM)
+                        {
+                            rotation.y = 270;
+
+                            door.roomPosXOffset = (int)(sizeZ / 2) / 5;
+                            door.roomPosZOffset = 0;
+
+                            sizeX = storedSizeZ;
+                            sizeZ = storedSizeX;
+                        }
+                        break;
+                }
+            }
+
             return rotation;
         }
 

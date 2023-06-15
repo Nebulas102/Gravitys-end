@@ -57,5 +57,11 @@ namespace UI
             inventoryOpened = !overlay.activeSelf;
             Time.timeScale = inventoryOpened ? 0f : 1f;
         }
+
+        private void OnDisable()
+        {
+            _inputManager.Disable();
+            _inputManager.UI.ToggleInventory.performed -= _ => OnToggleInventory();
+        }
     }
 }

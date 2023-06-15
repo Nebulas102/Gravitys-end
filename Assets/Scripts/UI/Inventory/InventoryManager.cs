@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UI.Inventory
 {
-    public class InventoryManager : MonoBehaviour
+    public class InventoryManager : MonoBehaviour, IShopPlayer
     {
         [Header("Equipped Slots")]
         [SerializeField]
@@ -115,6 +115,22 @@ namespace UI.Inventory
 
             slot.SetItem(item, item.type == ItemType.WEAPON);
             return true;
+        }
+
+        public void PurchasedItem(Items.ItemType itemType) 
+        {
+            Debug.Log("Purchased item: " + itemType);
+        }
+
+        public bool TrySpendTimeAmount(float spendTimeAmount) 
+        {
+            float currentTime = Core.Timer.Instance.GetTime();
+            if (currentTime > 300) {
+                Core.Timer.Instance.ModifyTime(currentTime - 300);
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }

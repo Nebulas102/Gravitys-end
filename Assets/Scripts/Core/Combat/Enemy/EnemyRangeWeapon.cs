@@ -1,8 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Controllers.Player;
-using Core.Enemy;
-using ScriptableObjects;
 using UnityEngine;
 
 public class EnemyRangeWeapon : MonoBehaviour
@@ -85,12 +81,12 @@ public class EnemyRangeWeapon : MonoBehaviour
     }
 
     public void PerformShot()
-    {   
+    {
         Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
         Vector3 bulletDirection = enemy.transform.forward;
 
         if (Physics.Raycast(bulletOutputWorldPos, bulletDirection, out hit, Mathf.Infinity, ~ignoreLayer))
-        {   
+        {
             Debug.DrawRay(bulletOutputWorldPos, bulletDirection * Mathf.Infinity, Color.green);
             if (hit.transform.CompareTag("Player"))
             {

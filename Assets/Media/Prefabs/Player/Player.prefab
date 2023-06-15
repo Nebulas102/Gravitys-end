@@ -543,9 +543,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17487b8c5100bf74eb3c888be0e1a56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 11400000, guid: c795e57a668ce7442b78105f1e94ffa2, type: 2}
-  startHealth: 100
-  startDamage: 5
+  baseDamage: 5
+  canvas: {fileID: 0}
+  damageCounter: {fileID: 0}
+  health: 100
 --- !u!114 &8640217738828214446
 MonoBehaviour:
   m_ObjectHideFlags: 0

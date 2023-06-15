@@ -34,11 +34,7 @@ namespace UI
 
             // Get the Canvas Scaler component
             canvasScaler = GetComponentInParent<CanvasScaler>();
-        }
 
-        // Start is called before the first frame update
-        private void Start()
-        {
             EnemyBase.OnEnemyKilled += HandleEnemyKilled;
 
             objectivesHolder = GameObject.Find("ObjectivesHolder");
@@ -48,7 +44,6 @@ namespace UI
 
             UpdateObjectiveUI();
         }
-
 
         private void CompleteObjective(ObjectiveTask task)
         {
@@ -81,6 +76,7 @@ namespace UI
         {
             EnemyBase.OnEnemyKilled -= HandleEnemyKilled;
             objectives.Clear();
+            instance = null;
         }
 
         public void HandleKeycardCollected()

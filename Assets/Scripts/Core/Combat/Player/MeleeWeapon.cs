@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Controllers.Player;
-using Core.Enemy;
-using ScriptableObjects;
 using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour

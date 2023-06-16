@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using Controllers.Player;
-using Core.Enemy;
-using ScriptableObjects;
 using UnityEngine;
 
 public class RangeWeapon : MonoBehaviour
@@ -31,7 +28,8 @@ public class RangeWeapon : MonoBehaviour
 
     private PlayerManager playerManager;
 
-    private void Start() {
+    private void Start()
+    {
         PlayerShoot.shootInput += Shoot;
         PlayerShoot.reloadEvent += StartReload;
 
@@ -40,13 +38,13 @@ public class RangeWeapon : MonoBehaviour
 
     private void OnDisable() => reloading = false;
 
-    private void StartReload() 
+    private void StartReload()
     {
         if (!reloading && this.gameObject.activeSelf)
             StartCoroutine(Reload());
     }
 
-    private IEnumerator Reload() 
+    private IEnumerator Reload()
     {
         reloading = true;
 
@@ -59,11 +57,11 @@ public class RangeWeapon : MonoBehaviour
 
     private bool CanShoot() => !reloading && timeSinceLastShot > 1f / (fireRate / 60f);
 
-    private void Shoot() 
+    private void Shoot()
     {
-        if (currentAmmo > 0) 
+        if (currentAmmo > 0)
         {
-            if (CanShoot()) 
+            if (CanShoot())
             {
                 currentAmmo--;
                 timeSinceLastShot = 0;
@@ -72,7 +70,7 @@ public class RangeWeapon : MonoBehaviour
         }
     }
 
-    private void Update() 
+    private void Update()
     {
         timeSinceLastShot += Time.deltaTime;
 

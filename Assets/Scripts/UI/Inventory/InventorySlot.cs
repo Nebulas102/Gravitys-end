@@ -34,10 +34,11 @@ namespace UI.Inventory
                 return;
 
             item.GetComponent<Item>().RenderItem(false);
+            if (isEquippedSlot)
+                EquipmentSystem.Instance.DetachWeapon();
+
             if (spawn)
                 item.GetComponent<Item>().Spawn();
-            else
-                EquipmentSystem.Instance.DetachWeapon();
             ToggleItem(null, null);
         }
 

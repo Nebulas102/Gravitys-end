@@ -62,7 +62,7 @@ namespace UI.Runtime
 
         public void GoToMainMenu()
         {
-            SceneManager.LoadScene("MainMenuScene");
+            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
         }
 
         public void ToggleControls()

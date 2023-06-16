@@ -8,13 +8,14 @@ namespace UI.Main
     {
         public GameObject mainMenuButton;
 
-        void Update() {
+        void Update()
+        {
             EventSystem.current.SetSelectedGameObject(mainMenuButton);
         }
 
         public void GoToMainMenu()
         {
-            SceneManager.LoadScene("MainMenuScene");
+            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
         }
     }
 }

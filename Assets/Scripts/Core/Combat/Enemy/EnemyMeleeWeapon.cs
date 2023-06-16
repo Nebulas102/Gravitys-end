@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Controllers.Player;
-using Core.Enemy;
-using ScriptableObjects;
 using UnityEngine;
 
 public class EnemyMeleeWeapon : MonoBehaviour
-{    
+{
     [SerializeField]
     private int startDamage = 5;
     [SerializeField]

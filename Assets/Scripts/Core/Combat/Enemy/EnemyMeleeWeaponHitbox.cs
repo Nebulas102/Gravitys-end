@@ -20,7 +20,7 @@ public class EnemyMeleeWeaponHitbox : MonoBehaviour
     {
         if (other.CompareTag("Player") && allowAttack)
         {
-            other.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(startDamage, endDamage, TokenManager.instance.healthSection.GetModifier());
+            other.GetComponent<PlayerStatsController>().TakeDamage(startDamage, endDamage, TokenManager.instance.healthSection.GetModifier());
         }
     }
 }

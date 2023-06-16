@@ -121,24 +121,19 @@ namespace UI.Inventory
 
         public void PurchasedItem(Items.ItemType itemType) 
         {
-            Debug.Log(itemType);
-            switch (itemType) {
-                default:
-                case Items.ItemType.AssaultRifle: 
-                    var itemAR = Instantiate(weapons[0]);
-                    itemAR.PickupShop();
-                    break;
-                case Items.ItemType.PlasmaGun:
-                    PickupItem(Instantiate(weapons[1]));
-                    break;
+            foreach (var weapon in weapons) {
+                if (weapon.prefab.name.Replace(" ", "") == itemType.ToString()) {
+                    var itemBought = Instantiate(weapon);
+                    itemBought.PickupShop();
+                }
             }
         }
 
         public bool TrySpendTimeAmount(float spendTimeAmount) 
         {
             float currentTime = Core.Timer.Instance.GetTime();
-            if (currentTime > 300) {
-                Core.Timer.Instance.ModifyTime(currentTime - 300);
+            if (currentTime > spendTimeAmount*60) {
+                Core.Timer.Instance.ModifyTime(currentTime - spendTimeAmount*60);
                 return true;
             } else {
                 return false;

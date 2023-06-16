@@ -15,4 +15,10 @@ public class GameAssets : MonoBehaviour
 
     public Sprite SpriteAR;
     public Sprite SpritePlasmaGun;
+    public Sprite SpriteNeonAR;
+    public Sprite SpriteShotgun;
+    public Sprite SpriteEnergySword;
+    public Sprite SpriteNeonSword;
+    public Sprite SpritePlasmaScythe;
+    public Sprite SpritePlasmaSword;
 }

@@ -121,10 +121,14 @@ namespace UI.Inventory
 
         public void PurchasedItem(Items.ItemType itemType) 
         {
+            Debug.Log(itemType);
             switch (itemType) {
                 default:
                 case Items.ItemType.AssaultRifle: 
                     PickupItem(Instantiate(weapons[0]));
+                    break;
+                case Items.ItemType.PlasmaGun:
+                    PickupItem(Instantiate(weapons[1]));
                     break;
             }
         }

@@ -125,7 +125,8 @@ namespace UI.Inventory
             switch (itemType) {
                 default:
                 case Items.ItemType.AssaultRifle: 
-                    PickupItem(Instantiate(weapons[0]));
+                    var itemAR = Instantiate(weapons[0]);
+                    itemAR.PickupShop();
                     break;
                 case Items.ItemType.PlasmaGun:
                     PickupItem(Instantiate(weapons[1]));
@@ -143,5 +144,6 @@ namespace UI.Inventory
                 return false;
             }
         }
+
     }
 }

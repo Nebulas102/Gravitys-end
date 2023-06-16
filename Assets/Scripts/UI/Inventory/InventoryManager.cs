@@ -22,6 +22,9 @@ namespace UI.Inventory
         [SerializeField]
         private List<InventorySlot> weaponSlots;
 
+        [SerializeField]
+        private List<Item> weapons;
+
         public static InventoryManager instance { get; private set; }
 
         private void Awake()
@@ -119,7 +122,12 @@ namespace UI.Inventory
 
         public void PurchasedItem(Items.ItemType itemType) 
         {
-            Debug.Log("Purchased item: " + itemType);
+            switch (itemType) {
+                default:
+                case Items.ItemType.AssaultRifle: 
+                    PickupItem(Instantiate(weapons[0]));
+                    break;
+            }
         }
 
         public bool TrySpendTimeAmount(float spendTimeAmount) 

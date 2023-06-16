@@ -20,6 +20,12 @@ public class BackgroundMusicManager : MonoBehaviour
             audioSource.Play();
         }
         _bossBackgroundMusic = bossBackgroundMusic;
+
+        // Check if PlayerPrefs has a stored value for BackgroundMusicVolume
+        if (!PlayerPrefs.HasKey("BackgroundMusicVolume"))
+        {
+            SetBackgroundMusicVolume(0.5f);
+        }
         SetBackgroundMusicVolume(PlayerPrefs.GetFloat("BackgroundMusicVolume"));
     }
 

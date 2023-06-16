@@ -57,9 +57,11 @@ namespace Controllers.Player
             if (_equippedWeapon is null) return;
 
             _equippedWeapon.transform.SetParent(rangedHolder);
-            // _equippedWeapon.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+
             _equippedWeapon.transform.localPosition = Vector3.zero;
             _equippedWeapon.transform.localRotation = Quaternion.identity;
+            _equippedWeapon.transform.localScale = Vector3.one;
+
         }
 
         private void SetMeleeHolder()
@@ -72,6 +74,7 @@ namespace Controllers.Player
 
             _equippedWeapon.transform.localPosition = Vector3.zero;
             _equippedWeapon.transform.localRotation = Quaternion.identity;
+            _equippedWeapon.transform.localScale = Vector3.one;
         }
 
         public void DetachWeapon()

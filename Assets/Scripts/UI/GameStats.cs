@@ -22,5 +22,11 @@ public class GameStats : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        // Check the PlayerPrefs value for VSync
+        int vsyncValue = PlayerPrefs.GetInt("VSyncEnabled");
+
+        // Enable or disable VSync based on the PlayerPrefs value
+        QualitySettings.vSyncCount = vsyncValue;
+        Debug.Log(vsyncValue);
     }
 }

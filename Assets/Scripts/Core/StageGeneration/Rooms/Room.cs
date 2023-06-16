@@ -77,9 +77,9 @@ namespace Core.StageGeneration.Rooms
             var roomDoors = doors.Select(d => d.GetComponent<Door>()).ToList();
             int iterateCount = 0;
 
-            while (roomDoors.Any(d => d.direction == placementDirection))
+            while (!roomDoors.Any(d => d.direction == StageHelper.GetOppositeDirection(placementDirection)))
             {
-                if (iterateCount > 4) break;
+                if (iterateCount > 2) break;
 
                 RoomUtil.RotateDoors(this);
 
@@ -111,8 +111,8 @@ namespace Core.StageGeneration.Rooms
             float roomX = 0;
             float roomZ = 0;
 
-            var resizeZ = Mathf.RoundToInt(sizeZ / 2);
             var resizeX = Mathf.RoundToInt(sizeX / 2);
+            var resizeZ = Mathf.RoundToInt(sizeZ / 2);
 
             var position = doorCell.transform.position;
 

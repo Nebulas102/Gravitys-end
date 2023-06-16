@@ -41,7 +41,7 @@ namespace Core.StageGeneration.Rooms.Util
                     door.roomPosZOffset = (int)(sizeZ / 2) / 5;
                     break;
                 case StageHelper.RoomDirections.BOTTOM:
-                    door.roomPosXOffset = (int)(sizeZ / 2) / 5;
+                    door.roomPosXOffset = (int)(sizeX / 2) / 5;
                     door.roomPosZOffset = 0;
                     break;
                 case StageHelper.RoomDirections.LEFT:

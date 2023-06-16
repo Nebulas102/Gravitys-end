@@ -134,7 +134,7 @@ namespace Core.StageGeneration.Stage
         public static RoomDirections GetOppositeDirection(RoomDirections direction)
         {
             //Cant be null so I gave just a value that will always be changed
-            var oppositeDirection = RoomDirections.TOP;
+            var oppositeDirection = RoomDirections.UNDEFINED;
 
             switch (direction)
             {

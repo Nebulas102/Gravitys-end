@@ -21,23 +21,10 @@ namespace UI.Inventory
         {
             ToggleItem(obj.gameObject, obj.icon);
             obj.RenderItem(false);
-
-            if (obj.gameObject.CompareTag("Ranged"))
-            {
-                obj.gameObject.GetComponent<PlayerShoot>().OnWeaponUnequipped();
-            }
-
             if (weapon && isEquippedSlot)
             {
                 EquipmentSystem.Instance.SetCurrentWeapon(obj.gameObject);
                 obj.RenderItem(true);
-
-                GameObject equippedWeapon = EquipmentSystem.Instance._equippedWeapon;
-
-                if (equippedWeapon.CompareTag("Ranged"))
-                {
-                    equippedWeapon.GetComponent<PlayerShoot>().OnWeaponEquipped();
-                }
             }
         }
 

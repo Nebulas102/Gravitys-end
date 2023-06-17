@@ -32,7 +32,6 @@ namespace Controllers.Player
         {
             _equippedWeapon = weapon;
 
-            // This does nothing apparently
             if (_equippedWeapon is null)
             {
                 PlayerAnimator.Instance._animator.SetTrigger("unequip");
@@ -87,5 +86,15 @@ namespace Controllers.Player
             _equippedWeapon.transform.SetParent(null);
             _equippedWeapon = null;
         }
+
+
+        // public void StartDealDamage()
+        // {
+        //     currentWeaponInHand.GetComponentInChildren<DamageDealer>().StartDealDamage();
+        // }
+        // public void EndDealDamage()
+        // {
+        //     currentWeaponInHand.GetComponentInChildren<DamageDealer>().EndDealDamage();
+        // }
     }
 }

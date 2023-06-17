@@ -16,6 +16,7 @@ namespace Controllers.Player
 
         private Character _player = PlayerManager.Instance.player.GetComponent<Character>();
         private Vector2 mousePos;
+        private Vector3 lookAtPosition;
 
         public Camera _camera;
         private PlayerInput playerInput;
@@ -47,13 +48,12 @@ namespace Controllers.Player
                 {
                     Vector3 pointToLook = ray.GetPoint(rayDistance);
 
-                    _player.lookAtPosition = new Vector3(pointToLook.x, _player.transform.position.y, pointToLook.z);
+                    lookAtPosition = new Vector3(pointToLook.x, _player.transform.position.y, pointToLook.z);
 
-                    _player.transform.LookAt(_player.lookAtPosition);
+                    _player.transform.LookAt(lookAtPosition);
                 }
 
             }
-
             if (IsMelee())
             {
                 animator.SetTrigger("attack");
@@ -62,7 +62,6 @@ namespace Controllers.Player
             if (IsRanged())
             {
                 //mike here come the method call to ur shooting code
-                EquipmentSystem.Instance._equippedWeapon.GetComponent<PlayerShoot>().Shoot();
                 velocity = Vector3.zero;
                 input = Vector2.zero;
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);

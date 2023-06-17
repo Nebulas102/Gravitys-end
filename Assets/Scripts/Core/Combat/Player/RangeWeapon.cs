@@ -5,40 +5,36 @@ using UnityEngine;
 public class RangeWeapon : MonoBehaviour
 {
     [Header("Shooting")]
-    public int startDamage;
-    public int endDamage;
-    public float maxDistance;
+    public float fireRate;
 
     [Header("Reloading")]
     public int currentAmmo;
     public int magSize;
-    public float fireRate;
     public float reloadTime;
     [HideInInspector]
     public bool reloading;
 
     [Header("Bullet")]
     public GameObject bullet;
+    public int minDamage;
+    public int maxDamage;
+    public float bulletSpeed;
 
     [SerializeField]
     private Transform bulletOutput;
 
     private float timeSinceLastShot;
-    private bool isEquipped;
 
-    private PlayerManager playerManager;
+    private Character player;
 
     private void Start()
     {
-        PlayerShoot.shootInput += Shoot;
-        PlayerShoot.reloadEvent += StartReload;
-
-        playerManager = PlayerManager.Instance;
+        player = PlayerManager.Instance.player.GetComponent<Character>();
     }
 
     private void OnDisable() => reloading = false;
 
-    private void StartReload()
+    public void StartReload()
     {
         if (!reloading && this.gameObject.activeSelf)
             StartCoroutine(Reload());
@@ -57,7 +53,7 @@ public class RangeWeapon : MonoBehaviour
 
     private bool CanShoot() => !reloading && timeSinceLastShot > 1f / (fireRate / 60f);
 
-    private void Shoot()
+    public void Shoot()
     {
         if (currentAmmo > 0)
         {
@@ -73,19 +69,24 @@ public class RangeWeapon : MonoBehaviour
     private void Update()
     {
         timeSinceLastShot += Time.deltaTime;
-
-        // Debug.DrawRay(bulletOutput.position, bulletOutput.forward * maxDistance);
     }
 
     private void OnGunShot()
     {
-        Vector3 bulletOutputWorldPos = bulletOutput.TransformPoint(Vector3.zero);
+        Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
+        Vector3 bulletDirection = (player.lookAtPosition - bulletOutputWorldPos);
 
-        GameObject newBullet = Instantiate(bullet, bulletOutputWorldPos, bullet.transform.rotation);
+        bulletDirection.y = 0f;
 
-        Vector3 bulletDirection = playerManager.player.GetComponent<Character>().lookAtPosition - playerManager.player.transform.position;
+        GameObject newBullet = Instantiate(bullet, bulletOutputWorldPos, Quaternion.identity);
 
-        newBullet.GetComponent<BulletBehaviour>().SetDamage(startDamage, endDamage);
-        newBullet.GetComponent<BulletBehaviour>().SetDirection(bulletDirection);
+        newBullet.transform.LookAt(player.lookAtPosition);
+        newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.rotation.w);
+
+        BulletBehaviour newBulletBehaviour = newBullet.GetComponentInChildren<BulletBehaviour>();
+
+        newBulletBehaviour.SetDamage(minDamage, maxDamage);
+        newBulletBehaviour.SetSpeed(bulletSpeed);
+        newBulletBehaviour.SetDirection(bulletDirection);
     }
 }

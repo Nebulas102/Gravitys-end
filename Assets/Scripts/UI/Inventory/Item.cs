@@ -124,6 +124,20 @@ namespace UI.Inventory
             }
         }
 
+        public void PickupShop()
+        {
+            if (IsInInventory || _gamePaused) return;
+
+
+            if (InventoryManager.instance.PickupItem(this))
+            {
+                meshRenderer.enabled = false;
+                IsInInventory = true;
+                isPlayerNearby = false;
+                OnItemPickup?.Invoke(false);
+            }
+        }
+
         public void RenderItem(bool render)
         {
             meshRenderer.enabled = render;

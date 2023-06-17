@@ -13,7 +13,6 @@ public class ShopUI : MonoBehaviour
     private void awake() {
         //container = transform.Find("container");
         //itemTemplate = container.Find("itemTemplate");
-        itemTemplate.gameObject.SetActive(false);
     }
 
     private void Start() {
@@ -23,6 +22,7 @@ public class ShopUI : MonoBehaviour
         CreateItemButton(itemTypeList[uniqueNumbers[0]], Items.GetSprite(itemTypeList[uniqueNumbers[0]]), Items.GetCost(itemTypeList[uniqueNumbers[0]]), 0);
         CreateItemButton(itemTypeList[uniqueNumbers[1]], Items.GetSprite(itemTypeList[uniqueNumbers[1]]), Items.GetCost(itemTypeList[uniqueNumbers[1]]), 1);
         CreateItemButton(itemTypeList[uniqueNumbers[2]], Items.GetSprite(itemTypeList[uniqueNumbers[2]]), Items.GetCost(itemTypeList[uniqueNumbers[2]]), 2);
+        itemTemplate.gameObject.SetActive(false);
 
         Hide();
     }
@@ -35,7 +35,8 @@ public class ShopUI : MonoBehaviour
         itemRectTransform.anchoredPosition = new Vector2(itemWidth * positionIndex, 0);
 
         itemTransform.Find("item").GetComponent<Image>().sprite = itemSprite;
-        itemTransform.Find("price").GetComponent<TextMeshProUGUI>().SetText("0" + itemCost + ":00");
+        itemTransform.Find("price").GetComponent<TextMeshProUGUI>().SetText($"0{itemCost}:00");
+
 
         itemTransform.GetComponent<Button>().onClick.AddListener(() => AttemptPurchaseItem(itemType, itemTransform.gameObject));
     }
@@ -45,7 +46,6 @@ public class ShopUI : MonoBehaviour
         if (UI.Inventory.InventoryManager.instance.TrySpendTimeAmount(Items.GetCost(itemType))) {
             UI.Inventory.InventoryManager.instance.PurchasedItem(itemType);
             Destroy(itemButtonObject);
-            itemTemplate.gameObject.SetActive(false);
         }
     }
 

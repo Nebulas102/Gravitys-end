@@ -98,9 +98,9 @@ namespace Controllers.Player
 
             //         _player.transform.LookAt(lookAtPosition);
             //     }
-
-            //     movementSM.currentState.PhysicsUpdate();
             // }
+
+            movementSM.currentState.PhysicsUpdate();
         }
     }
 }

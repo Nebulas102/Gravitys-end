@@ -25,11 +25,11 @@ public class RangeWeapon : MonoBehaviour
 
     private float timeSinceLastShot;
 
-    private PlayerManager playerManager;
+    private Character player;
 
     private void Start()
     {
-        playerManager = PlayerManager.Instance;
+        player = PlayerManager.Instance.player.GetComponent<Character>();
     }
 
     private void OnDisable() => reloading = false;
@@ -69,19 +69,24 @@ public class RangeWeapon : MonoBehaviour
     private void Update()
     {
         timeSinceLastShot += Time.deltaTime;
-
-        // Debug.DrawRay(bulletOutput.position, bulletOutput.forward * maxDistance);
     }
 
     private void OnGunShot()
     {
-        Vector3 bulletOutputWorldPos = bulletOutput.TransformPoint(Vector3.zero);
+        Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
+        Vector3 bulletDirection = (player.lookAtPosition - bulletOutputWorldPos);
 
-        GameObject newBullet = Instantiate(bullet, bulletOutputWorldPos, bullet.transform.rotation);
+        bulletDirection.y = 0f;
 
-        Vector3 bulletDirection = playerManager.player.GetComponent<Character>().lookAtPosition - playerManager.player.transform.position;
+        GameObject newBullet = Instantiate(bullet, bulletOutputWorldPos, Quaternion.identity);
 
-        newBullet.GetComponent<BulletBehaviour>().SetDamage(startDamage, endDamage);
-        newBullet.GetComponent<BulletBehaviour>().SetDirection(bulletDirection);
+        newBullet.transform.LookAt(player.lookAtPosition);
+        newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.rotation.w);
+
+        BulletBehaviour newBulletBehaviour = newBullet.GetComponentInChildren<BulletBehaviour>();
+
+        newBulletBehaviour.SetDamage(minDamage, maxDamage);
+        newBulletBehaviour.SetSpeed(bulletSpeed);
+        newBulletBehaviour.SetDirection(bulletDirection);
     }
 }

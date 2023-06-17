@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
-    [SerializeField]
-    private float bulletSpeed = 5f;
-
-    private int startDamage;
-    private int endDamage;
-    private Vector3 direction;
-
-    private void Start()
-    {
-        transform.rotation = Quaternion.LookRotation(direction, Vector3.forward);
-    }
+    private int _minDamage;
+    private int _maxDamage;
+    private float _speed;
+    private Vector3 _direction;
 
     private void Update()
     {
-        transform.Translate(direction * bulletSpeed * Time.deltaTime, Space.World);
+        transform.root.Translate(_direction * _speed * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,7 +21,7 @@ public class BulletBehaviour : MonoBehaviour
             if (other.gameObject.GetComponent<EnemyBase>())
             {
                 float damageMod = TokenManager.instance.damageSection.GetModifier();
-                other.gameObject.GetComponent<EnemyBase>().TakeDamage((int)Mathf.Round(startDamage * damageMod), (int)Mathf.Round(endDamage * damageMod), 0);
+                other.gameObject.GetComponent<EnemyBase>().TakeDamage((int)Mathf.Round(_minDamage * damageMod), (int)Mathf.Round(_maxDamage * damageMod), 0);
             }
 
             Destroy(gameObject);
@@ -37,14 +30,19 @@ public class BulletBehaviour : MonoBehaviour
         if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) Destroy(gameObject);
     }
 
-    public void SetDamage(int _startDamage, int _endDamage)
+    public void SetDamage(int minDamage, int maxDamage)
     {
-        startDamage = _startDamage;
-        endDamage = _endDamage;
+        _minDamage = minDamage;
+        _maxDamage = maxDamage;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _speed = speed;
     }
 
     public void SetDirection(Vector3 direction)
     {
-        this.direction = direction.normalized;
+        _direction = direction.normalized;
     }
 }

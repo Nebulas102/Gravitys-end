@@ -16,7 +16,6 @@ namespace Controllers.Player
 
         private Character _player = PlayerManager.Instance.player.GetComponent<Character>();
         private Vector2 mousePos;
-        private Vector3 lookAtPosition;
 
         public Camera _camera;
         private PlayerInput playerInput;
@@ -48,9 +47,9 @@ namespace Controllers.Player
                 {
                     Vector3 pointToLook = ray.GetPoint(rayDistance);
 
-                    lookAtPosition = new Vector3(pointToLook.x, _player.transform.position.y, pointToLook.z);
+                    _player.lookAtPosition = new Vector3(pointToLook.x, _player.transform.position.y, pointToLook.z);
 
-                    _player.transform.LookAt(lookAtPosition);
+                    _player.transform.LookAt(_player.lookAtPosition);
                 }
 
             }

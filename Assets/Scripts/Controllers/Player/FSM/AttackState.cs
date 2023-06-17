@@ -54,6 +54,7 @@ namespace Controllers.Player
                 }
 
             }
+
             if (IsMelee())
             {
                 animator.SetTrigger("attack");
@@ -62,6 +63,7 @@ namespace Controllers.Player
             if (IsRanged())
             {
                 //mike here come the method call to ur shooting code
+                EquipmentSystem.Instance._equippedWeapon.GetComponent<PlayerShoot>().Shoot();
                 velocity = Vector3.zero;
                 input = Vector2.zero;
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);

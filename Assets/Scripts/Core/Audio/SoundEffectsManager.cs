@@ -46,6 +46,12 @@ public class SoundEffectsManager : MonoBehaviour
             Destroy(gameObject);
         }
         soundEffectSource = GetComponent<AudioSource>();
+
+        // Check if PlayerPrefs has a stored value for SoundEffectsVolume
+        if (!PlayerPrefs.HasKey("SoundEffectsVolume"))
+        {
+            SetSoundEffectsVolume(0.5f);
+        }
         SetSoundEffectsVolume(PlayerPrefs.GetFloat("SoundEffectsVolume"));
     }
 

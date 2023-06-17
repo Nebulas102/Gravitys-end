@@ -27,6 +27,9 @@ public class PlayerShoot : MonoBehaviour
 
     public void OnWeaponUnequipped()
     {
+        if (shootInput == null){
+            return;
+        }
         shootInput -= weapon.Shoot;
         reloadEvent -= weapon.StartReload;
     }

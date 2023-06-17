@@ -30,15 +30,15 @@ public class RangeWeapon : MonoBehaviour
 
     private void Start()
     {
-        PlayerShoot.shootInput += Shoot;
-        PlayerShoot.reloadEvent += StartReload;
+        // PlayerShoot.shootInput += Shoot;
+        // PlayerShoot.reloadEvent += StartReload;
 
         playerManager = PlayerManager.Instance;
     }
 
     private void OnDisable() => reloading = false;
 
-    private void StartReload()
+    public void StartReload()
     {
         if (!reloading && this.gameObject.activeSelf)
             StartCoroutine(Reload());
@@ -57,7 +57,7 @@ public class RangeWeapon : MonoBehaviour
 
     private bool CanShoot() => !reloading && timeSinceLastShot > 1f / (fireRate / 60f);
 
-    private void Shoot()
+    public void Shoot()
     {
         if (currentAmmo > 0)
         {

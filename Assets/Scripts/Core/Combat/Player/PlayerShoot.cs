@@ -19,14 +19,20 @@ public class PlayerShoot : MonoBehaviour
         weapon = gameObject.GetComponent<RangeWeapon>();
     }
 
-    private OnWeaponEquipped()
+    public void OnWeaponEquipped()
     {
-        
+        shootInput += weapon.Shoot;
+        reloadEvent += weapon.StartReload;
+    }
+
+    public void OnWeaponUnequipped()
+    {
+        shootInput -= weapon.Shoot;
+        reloadEvent -= weapon.StartReload;
     }
 
     public void Shoot()
     {
-
         if (EquipmentSystem.Instance._equippedWeapon == gameObject)
         {
             if (weapon.currentAmmo <= 0)

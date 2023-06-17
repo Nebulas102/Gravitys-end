@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class EnemyRangeWeapon : MonoBehaviour
 {
-    [Header("Reloading")]
-    public int currentAmmo;
-    public int magSize;
+    [Header("Shooting")]
     public float fireRate;
-    public float reloadTime;
+
+    [Header("Reloading")]
     [HideInInspector]
     public bool reloading;
+    public float reloadTime;
+    public int currentAmmo;
+    public int magSize;
 
     [Header("Bullet")]
     public GameObject bullet;

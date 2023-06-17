@@ -53,16 +53,6 @@ namespace Controllers.Player
             return;
         }
 
-        private void RemoveRangedWeaponActions()
-        {
-            // _eq
-        }
-
-        private void AddRangedWeaponActions()
-        {
-
-        }
-
         private void SetRangedHolder()
         {
             if (_equippedWeapon is null) return;

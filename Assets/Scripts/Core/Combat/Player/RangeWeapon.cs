@@ -5,34 +5,30 @@ using UnityEngine;
 public class RangeWeapon : MonoBehaviour
 {
     [Header("Shooting")]
-    public int startDamage;
-    public int endDamage;
-    public float maxDistance;
+    public float fireRate;
 
     [Header("Reloading")]
     public int currentAmmo;
     public int magSize;
-    public float fireRate;
     public float reloadTime;
     [HideInInspector]
     public bool reloading;
 
     [Header("Bullet")]
     public GameObject bullet;
+    public int minDamage;
+    public int maxDamage;
+    public float bulletSpeed;
 
     [SerializeField]
     private Transform bulletOutput;
 
     private float timeSinceLastShot;
-    private bool isEquipped;
 
     private PlayerManager playerManager;
 
     private void Start()
     {
-        // PlayerShoot.shootInput += Shoot;
-        // PlayerShoot.reloadEvent += StartReload;
-
         playerManager = PlayerManager.Instance;
     }
 

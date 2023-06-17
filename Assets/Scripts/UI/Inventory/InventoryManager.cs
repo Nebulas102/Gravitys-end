@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UI.Inventory
 {
-    public class InventoryManager : MonoBehaviour
+    public class InventoryManager : MonoBehaviour, IShopPlayer
     {
         [Header("Equipped Slots")]
         [SerializeField]
@@ -20,6 +20,9 @@ namespace UI.Inventory
 
         [SerializeField]
         private List<InventorySlot> weaponSlots;
+
+        [SerializeField]
+        private List<Item> weapons;
 
         public static InventoryManager instance { get; private set; }
 
@@ -115,5 +118,27 @@ namespace UI.Inventory
             slot.SetItem(item, item.type == ItemType.WEAPON);
             return true;
         }
+
+        public void PurchasedItem(Items.ItemType itemType) 
+        {
+            foreach (var weapon in weapons) {
+                if (weapon.prefab.name.Replace(" ", "") == itemType.ToString()) {
+                    var itemBought = Instantiate(weapon);
+                    itemBought.PickupShop();
+                }
+            }
+        }
+
+        public bool TrySpendTimeAmount(float spendTimeAmount) 
+        {
+            float currentTime = Core.Timer.Instance.GetTime();
+            if (currentTime > spendTimeAmount*60) {
+                Core.Timer.Instance.ModifyTime(currentTime - spendTimeAmount*60);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
     }
 }

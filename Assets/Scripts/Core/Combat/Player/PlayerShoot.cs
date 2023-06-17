@@ -12,37 +12,57 @@ public class PlayerShoot : MonoBehaviour
     public static Action reloadEvent;
 
     [HideInInspector]
+    public InputAction attackAction;
+    [HideInInspector]
     public RangeWeapon weapon;
+
+    private PlayerManager playerManager;
 
     private void Start()
     {
         weapon = gameObject.GetComponent<RangeWeapon>();
     }
 
-    public void OnWeaponEquipped()
+    private void Update()
     {
-        shootInput += weapon.Shoot;
-        reloadEvent += weapon.StartReload;
-    }
+        // if (playerManager != null)
+        // {
+        //     if (playerManager.player.GetComponent<Character>().movementSM.currentState == playerManager.player.GetComponent<Character>().combatting)
+        //     {
+        //         attackAction = playerManager.player.GetComponent<Character>().movementSM.currentState.attackAction;
+        //     }
+        //     else
+        //     {
+        //         attackAction = null;
+        //     }
+        // }
+        // else
+        // {
+        //     playerManager = PlayerManager.Instance;
+        // }
 
-    public void OnWeaponUnequipped()
-    {
-        shootInput -= weapon.Shoot;
-        reloadEvent -= weapon.StartReload;
-    }
+        // //if weaponslot is NOT empty AND the equipped weapon is a ranged weapon THEN u can shoot
+        // if (EquipmentSystem.Instance._equippedWeapon == null)
+        // {
+        //     return;
+        // }
+        // else if (!EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged"))
+        // {
+        //     return;
+        // }
+        // else
+        // {
+        //     attackAction = null;
 
-    public void Shoot()
-    {
-        if (EquipmentSystem.Instance._equippedWeapon == gameObject)
-        {
-            if (weapon.currentAmmo <= 0)
-            {
-                reloadEvent?.Invoke();
-            }
-            else
-            {
-                shootInput?.Invoke();
-            }
-        }
+        //     if (attackAction != null && attackAction.triggered)
+        //     {
+        //         shootInput?.Invoke();
+        //     }
+        // }
+
+        // if (weapon.currentAmmo <= 0)
+        // {
+        //     reloadEvent?.Invoke();
+        // }
     }
 }

@@ -209,15 +209,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d027b195eb492db4cbcb394decd81c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 600
+  startDamage: 5
+  endDamage: 10
+  maxDistance: 100
   currentAmmo: 10
   magSize: 11
+  fireRate: 600
   reloadTime: 1.5
   reloading: 0
-  bullet: {fileID: 1563543445386549699, guid: 488672f14df59a841b4721b174f0662e, type: 3}
-  minDamage: 5
-  maxDamage: 10
-  bulletSpeed: 3
+  bullet: {fileID: 685390340712900621, guid: 20181cc903b39ff4aae266d933372005, type: 3}
   bulletOutput: {fileID: 6542274944412366050}
 --- !u!114 &4559409835853949027
 MonoBehaviour:
@@ -231,6 +231,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e79991180704b409be79ce6fc2e119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   weapon: {fileID: 0}
 --- !u!114 &-5560565276316776853
 MonoBehaviour:

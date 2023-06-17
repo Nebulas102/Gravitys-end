@@ -22,7 +22,7 @@ public class EnemyBulletBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log(other.gameObject.name);
+        // Debug.Log(other.gameObject.name);  Check what the bullet collided with
 
         if (other.gameObject.CompareTag("Player"))
         {

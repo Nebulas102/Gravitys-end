@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core.StageGeneration.Rooms.RoomTypes;
+using Core.StageGeneration.Rooms.Util;
 using Core.StageGeneration.Stage;
 using UnityEngine;
 
@@ -42,10 +43,10 @@ namespace Core.StageGeneration.Rooms
             return Instantiate(gameObject, new Vector3(0, 20, 0), Quaternion.identity);
         }
 
-        public GameObject SetRoomData(int posX, int posZ, Quaternion rotation,StageHelper.RoomDirections direction, GameObject spawnDoor)
+        public GameObject SetRoomData(int posX, int posZ, Quaternion rotation, StageHelper.RoomDirections direction, GameObject spawnDoor)
         {
             gameObject.transform.position = new Vector3(posX, 0, posZ);
-            gameObject.transform.rotation = rotation;
+            gameObject.transform.Rotate(new Vector3(0, rotation.y, 0));
 
             spawnDoor.SetActive(false);
 
@@ -61,120 +62,44 @@ namespace Core.StageGeneration.Rooms
 
         public Quaternion RotateRoom(StageHelper.RoomDirections placementDirection)
         {
-            Door door = doors[0].GetComponent<Door>();
-
-            var rotation = NewRotationData(door, placementDirection);
+            var rotation = NewRotationData(placementDirection);
 
             return rotation;
         }
 
- public Quaternion NewRotationData(Door door, StageHelper.RoomDirections placementDirection)
+        public Quaternion NewRotationData(StageHelper.RoomDirections placementDirection)
         {
-
             var rotation = new Quaternion(0, 0, 0, 0);
 
             var storedSizeX = sizeX;
             var storedSizeZ = sizeZ;
 
-            if (door.direction == placementDirection)
+            var roomDoors = doors.Select(d => d.GetComponent<Door>()).ToList();
+            int iterateCount = 0;
+
+            while (!roomDoors.Any(d => d.direction == StageHelper.GetOppositeDirection(placementDirection)))
             {
-                door.direction = StageHelper.GetOppositeDirection(placementDirection);
-                rotation.y = 180;
+                if (iterateCount > 2) break;
+
+                RoomUtil.RotateDoors(this);
+
+                rotation.y += 90;               
+
+                iterateCount++;
             }
-            else
+
+            if (rotation.y > 270)
             {
-                switch (placementDirection)
-                {
-                    case StageHelper.RoomDirections.TOP:
-                        if (door.direction == StageHelper.RoomDirections.RIGHT)
-                        {
-                            rotation.y = 90;
-
-                            door.roomPosXOffset = (int)(sizeZ / 5) - 1;
-                            door.roomPosZOffset = (int)(sizeZ / 2) / 5;
-
-                            sizeX = storedSizeZ;
-                            sizeZ = storedSizeX;
-                        }
-                        else if (door.direction == StageHelper.RoomDirections.LEFT)
-                        {
-                            rotation.y = 270;
-
-                            door.roomPosXOffset = 0;
-                            door.roomPosZOffset = (int)(sizeZ / 2) / 5;
-
-                            sizeX = storedSizeZ;
-                            sizeZ = storedSizeX;
-                        }
-                        break;
-                    case StageHelper.RoomDirections.RIGHT:
-                        if (door.direction == StageHelper.RoomDirections.TOP)
-                        {
-                            rotation.y = 270;
-
-                            door.roomPosXOffset = (int)(sizeX / 2) / 5;
-                            door.roomPosZOffset = (int)(sizeZ / 2);
-
-                            sizeX = storedSizeZ;
-                            sizeZ = storedSizeX;
-                        }
-                        else if (door.direction == StageHelper.RoomDirections.BOTTOM)
-                        {
-                            rotation.y = 90;
-
-                            door.roomPosXOffset = (int)(sizeZ / 2) / 5;
-                            door.roomPosZOffset = 0;
-
-                            sizeX = storedSizeZ;
-                            sizeZ = storedSizeX;
-                        }
-                        break;
-                    case StageHelper.RoomDirections.BOTTOM:
-                        if (door.direction == StageHelper.RoomDirections.RIGHT)
-                        {
-                            rotation.y = 270;
-
-                            door.roomPosXOffset = (int)(sizeZ / 5) - 1;
-                            door.roomPosZOffset = (int)(sizeZ / 2) / 5;
-
-                            sizeX = storedSizeZ;
-                            sizeZ = storedSizeX;
-                        }
-                        else if (door.direction == StageHelper.RoomDirections.LEFT)
-                        {
-                            rotation.y = 90;
-                            
-                            door.roomPosXOffset = 0;
-                            door.roomPosZOffset = (int)(sizeZ / 2) / 5;
-
-                            sizeX = storedSizeZ;
-                            sizeZ = storedSizeX;
-                        }
-                        break;
-                    case StageHelper.RoomDirections.LEFT:
-                        if (door.direction == StageHelper.RoomDirections.TOP)
-                        {
-                            rotation.y = 90;
-
-                            door.roomPosXOffset = (int)(sizeX / 2) / 5;
-                            door.roomPosZOffset = (int)(sizeZ / 5) - 1;
-
-                            sizeX = storedSizeZ;
-                            sizeZ = storedSizeX;
-                        }
-                        else if (door.direction == StageHelper.RoomDirections.BOTTOM)
-                        {
-                            rotation.y = 270;
-
-                            door.roomPosXOffset = (int)(sizeZ / 2) / 5;
-                            door.roomPosZOffset = 0;
-
-                            sizeX = storedSizeZ;
-                            sizeZ = storedSizeX;
-                        }
-                        break;
-                }
+                rotation.y = 0;
             }
+
+            if (rotation.y == 90 ||rotation.y == 270)
+            {
+                sizeX = storedSizeZ;
+                sizeZ = storedSizeX;
+            }
+
+            RoomUtil.AssignDoorsPos(this);
 
             return rotation;
         }
@@ -186,8 +111,8 @@ namespace Core.StageGeneration.Rooms
             float roomX = 0;
             float roomZ = 0;
 
-            var resizeZ = Mathf.RoundToInt(sizeZ / 2);
             var resizeX = Mathf.RoundToInt(sizeX / 2);
+            var resizeZ = Mathf.RoundToInt(sizeZ / 2);
 
             var position = doorCell.transform.position;
 
@@ -336,6 +261,11 @@ namespace Core.StageGeneration.Rooms
                 }
 
             cells = roomCells;
+        }
+
+        public void SelfRemove()
+        {
+            Destroy(gameObject);
         }
     }
 }

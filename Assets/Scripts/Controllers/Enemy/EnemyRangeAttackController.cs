@@ -38,7 +38,7 @@ public class EnemyRangeAttackController : MonoBehaviour
         }
         else
         {
-            enemyController.enemyAnimator.SetTrigger("shoot");
+            enemyController.enemyAnimator.SetTrigger("stand_shoot");
         }
     }
 }

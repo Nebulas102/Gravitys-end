@@ -36,5 +36,13 @@ public class EnemyMeleeAttackController : MonoBehaviour
         // _enemyMeleeWeapon.DisAllowHitbox();
 
         // _nextAttackTime = Time.time + attackCooldown;
+        if (_enemyController.agent.velocity != Vector3.zero)
+        {
+            _enemyController.enemyAnimator.SetTrigger("run");
+        }
+        else
+        {
+            _enemyController.enemyAnimator.SetTrigger("attack");
+        }
     }
 }

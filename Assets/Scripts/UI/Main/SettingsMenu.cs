@@ -10,7 +10,6 @@ namespace Main.UI
 {
     public class SettingsMenu : MonoBehaviour
     {
-        [SerializeField] private GameObject mainMenuButton;
         [SerializeField] private Toggle vsyncToggle;
         [SerializeField] private TMP_Dropdown resolutionDropdown;
         [SerializeField] private TMP_Dropdown qualityDropdown;
@@ -28,11 +27,6 @@ namespace Main.UI
 
             InitResolutions();
             InitQualityLevels();
-        }
-
-        public void GoToMainMenu()
-        {
-            SceneManager.LoadScene("MainMenuScene");
         }
 
         public void OnVSyncToggle()

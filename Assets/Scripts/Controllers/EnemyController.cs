@@ -13,6 +13,7 @@ namespace Controllers
         public float rotationSpeed = 5f;
         public Material hitMaterial;
         public LayerMask obstacleMask;
+        public Animator enemyAnimator;
 
         [HideInInspector]
         public NavMeshAgent agent;

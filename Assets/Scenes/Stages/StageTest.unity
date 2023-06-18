@@ -5922,11 +5922,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 631c59308e0e43b4793ce141da9645f4, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.069
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -6020,9 +6020,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0cf17b43c494d4f92e0c6793a95e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalBackgroundMusic: {fileID: 8300000, guid: cd96fc582a9bc0242b01f424d949f517, type: 3}
   bossBackgroundMusic: {fileID: 8300000, guid: 982358b62cde1444380f640636ebbd3c, type: 3}
   backgroundMusicSlider: {fileID: 2000054421}
+  songs:
+  - {fileID: 8300000, guid: cd96fc582a9bc0242b01f424d949f517, type: 3}
+  - {fileID: 8300000, guid: 37dbb140407943b448053bcd2de01bd6, type: 3}
 --- !u!4 &1654874073
 Transform:
   m_ObjectHideFlags: 0

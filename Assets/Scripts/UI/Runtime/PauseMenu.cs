@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 namespace UI.Runtime
 {
@@ -58,11 +57,6 @@ namespace UI.Runtime
         private void OnDisable()
         {
             _inputManager.Disable();
-        }
-
-        public void GoToMainMenu()
-        {
-            SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
         }
 
         public void ToggleControls()

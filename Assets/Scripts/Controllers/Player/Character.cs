@@ -81,7 +81,6 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            // //Look at mouse mike
             // if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged"))
             // {
             //     Vector2 mousePosition = playerInput.actions["Look"].ReadValue<Vector2>();

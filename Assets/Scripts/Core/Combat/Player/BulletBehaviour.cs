@@ -14,7 +14,7 @@ public class BulletBehaviour : MonoBehaviour
         transform.root.Translate(_direction * _speed * Time.deltaTime, Space.World);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
@@ -22,6 +22,17 @@ public class BulletBehaviour : MonoBehaviour
             {
                 float damageMod = TokenManager.instance.damageSection.GetModifier();
                 other.gameObject.GetComponent<EnemyBase>().TakeDamage((int)Mathf.Round(_minDamage * damageMod), (int)Mathf.Round(_maxDamage * damageMod), 0);
+            }
+
+            Destroy(gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Boss"))
+        {
+            if (other.gameObject.GetComponent<Boss>())
+            {
+                float damageMod = TokenManager.instance.damageSection.GetModifier();
+                other.gameObject.GetComponent<Boss>().TakeDamage((int)Mathf.Round(_minDamage * damageMod), (int)Mathf.Round(_maxDamage * damageMod), 0);
             }
 
             Destroy(gameObject);

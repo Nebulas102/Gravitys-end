@@ -6,7 +6,6 @@ namespace Utils
 {
     public class Navigation : MonoBehaviour
     {
-
         [Header("Loading (Async only)")]
         [SerializeField]
         private GameObject loadingScreen;
@@ -18,6 +17,7 @@ namespace Utils
         public void MainMenu()
         {
             SceneManager.LoadScene(0, LoadSceneMode.Single);
+            Time.timeScale = 1f;
         }
 
         public void Credits()

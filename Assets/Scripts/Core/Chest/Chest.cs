@@ -81,22 +81,15 @@ namespace Core.Chest
 
         public void SpawnLoot()
         {
-            // Randomly select a subset of items to spawn
-            var selectedLootObjects = new List<GameObject>();
-            foreach (var lootObject in lootObjects)
-                if (Random.value <= 0.5f) // Adjust the probability as needed (e.g., 0.5f for 50% chance)
-                    selectedLootObjects.Add(lootObject);
+            int randomInt = Random.Range(0, lootObjects.Count);
+            Vector3 spawnPosition = GetRandomSpawnPosition();
 
-            foreach (var lootObject in selectedLootObjects)
-            {
-                var spawnPosition = GetRandomSpawnPosition();
-                Instantiate(lootObject, spawnPosition, Quaternion.identity);
-            }
+            Instantiate(lootObjects[randomInt], spawnPosition, Quaternion.identity);
         }
 
         private Vector3 GetRandomSpawnPosition()
         {
-            Vector3 spawnPosition = transform.localPosition + transform.forward * itemSpawnDistanceFromChest;
+            Vector3 spawnPosition = transform.position + transform.forward * itemSpawnDistanceFromChest;
 
             return spawnPosition;
         }

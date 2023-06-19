@@ -67,6 +67,7 @@ namespace Controllers.Player
             {
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", 0, 0.1f, Time.deltaTime);
                 movementSM.ChangeState(standing);
+                PlayerAnimator.Instance._animator.SetTrigger("move");
             }
             else
             {

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Linq;
 using UI.Enemy;
 using UnityEngine;
 
@@ -5,25 +7,20 @@ namespace Core.Enemy
 {
     public class EnemyBase : MonoBehaviour
     {
-        [SerializeField]
         public string name;
-
-        [SerializeField]
         public int startDamage;
-
-        [SerializeField]
         public int endDamage;
-
-        [SerializeField]
         public float health;
+        public Material hitMaterial;
 
         [Tooltip("Is in milliseconds (60f = 1 second)")]
         public float timeOnDead = 60f;
 
-        [SerializeField]
         public GameObject damageDisplay;
 
         private Canvas _canvas;
+        private Renderer[] _renderers;
+        private Material[] _originalMaterials;
 
         private float _currentHealth;
 
@@ -36,17 +33,19 @@ namespace Core.Enemy
         private void Start()
         {
             _canvas = GetComponentInChildren<Canvas>();
+            _renderers = GetComponentsInChildren<Renderer>();
+
+            _originalMaterials = new Material[_renderers.Length];
+            for (int i = 0; i < _renderers.Length; i++)
+            {
+                _originalMaterials[i] = _renderers[i].sharedMaterial;
+            }
 
             _currentHealth = health;
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                TakeDamage(1000, 2000, 0f);
-            }
-
             if (_currentHealth <= 0)
             {
                 Destroy(gameObject);
@@ -72,7 +71,14 @@ namespace Core.Enemy
             if (damageDisplay != null)
                 damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
 
+            
+
             _currentHealth -= damage;
+        }
+
+        private IEnumerator HitFeedback()
+        {
+            yield return new WaitForSeconds(1f);
         }
     }
 }

@@ -9,10 +9,12 @@ public class PlayerHitboxAnimation : MonoBehaviour
     private GameObject meleeHitbox;
 
     private EquipmentSystem equipmentSystem;
+    private Character player;
 
     private void Start()
     {
         equipmentSystem = EquipmentSystem.Instance;
+        player = PlayerManager.Instance.player.GetComponent<Character>();
     }
 
     public void EnableHitbox()
@@ -25,6 +27,8 @@ public class PlayerHitboxAnimation : MonoBehaviour
 
             meleeWeaponHitbox.allowAttack = true;
             meleeWeaponHitbox.SetDamageHitbox(meleeWeapon.GetMinDamage(), meleeWeapon.GetMaxDamage());
+
+            player.attackCount++;
         }
     }
 

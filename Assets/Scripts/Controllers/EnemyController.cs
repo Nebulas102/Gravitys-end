@@ -3,6 +3,8 @@ using Controllers.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 using BehaviorTree;
+using Controllers.Player;
+using Unity.VisualScripting;
 
 namespace Controllers
 {
@@ -11,34 +13,38 @@ namespace Controllers
         public float lookRadius = 10f;
         public float retreatDistance = 2f;
         public float rotationSpeed = 5f;
-        public Material hitMaterial;
+        public float knockbackForce = 3f;
+        public float knockbackDuration = .5f;
         public LayerMask obstacleMask;
         public Animator enemyAnimator;
 
         [HideInInspector]
         public NavMeshAgent agent;
 
-        private Material _originalMaterial;
-
         [HideInInspector]
         public Transform target;
 
-        private Renderer renderer;
+        [HideInInspector]
+        public bool isKnockbackInProgress = false;
+        [HideInInspector]
+        public Vector3 knockbackDirection;
+
         private GameObject[] enemies;
 
         private BTree behaviorTree;
+        
+        private Rigidbody rb;
 
         private void Start()
-        {   
+        {
             behaviorTree = GetComponent<BTree>();
+            
+            rb = GetComponent<Rigidbody>();
 
             // See PlayerManager.cs for explanation
             target = PlayerManager.Instance.player.transform;
             agent = GetComponent<NavMeshAgent>();
-            renderer = GetComponentInChildren<Renderer>();
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-            _originalMaterial = renderer.material;
 
             var o = gameObject;
             Physics.IgnoreLayerCollision(o.layer, o.layer);
@@ -56,6 +62,11 @@ namespace Controllers
             if (distance > lookRadius)
             {
                 return;
+            }
+
+            if (target.GetComponent<Character>().attackCount >= 4)
+            {
+                StartCoroutine(PerformKnockback(target.forward));
             }
 
             // Check if there is no wall in between the player and the enemy, if there is then return
@@ -84,19 +95,6 @@ namespace Controllers
                 }
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            //Hit on weapon or some logic needs to be implemented, this is bad
-            if (other.gameObject.CompareTag("Item")) StartCoroutine(HitFeedback());
-        }
-
-        // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, lookRadius);
-        }
-
         // When the player is too close to the enemy, it wont rotate anymore
         // This function fixes it
         private void FaceTarget()
@@ -107,11 +105,31 @@ namespace Controllers
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
 
-        private IEnumerator HitFeedback()
+        // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
+        private void OnDrawGizmosSelected()
         {
-            renderer.material = hitMaterial;
-            yield return new WaitForSeconds(.1f);
-            renderer.material = _originalMaterial;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, lookRadius / 2);
+        }
+
+        private IEnumerator PerformKnockback(Vector3 knockbackDirection)
+        {
+            isKnockbackInProgress = true;
+
+            // Disable kinematic to allow external forces to affect the enemy
+            rb.isKinematic = false;
+
+            // Apply the knockback force to the enemy's Rigidbody
+            rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+
+            yield return new WaitForSeconds(knockbackDuration);
+
+            // Enable kinematic to stop external forces from affecting the enemy
+            rb.isKinematic = true;
+
+            isKnockbackInProgress = false;
+
+            target.GetComponent<Character>().attackCount = 0;
         }
     }
 }

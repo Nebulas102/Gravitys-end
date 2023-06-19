@@ -1485,13 +1485,16 @@ MonoBehaviour:
   lookRadius: 10
   retreatDistance: 2
   rotationSpeed: 5
-  hitMaterial: {fileID: 2100000, guid: 03a535ea21aad5f4d96fe054fad5306a, type: 2}
+  knockbackForce: 0.35
+  knockbackDuration: 0.5
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1
   enemyAnimator: {fileID: 8423019611981315085}
   agent: {fileID: 0}
   target: {fileID: 0}
+  isKnockbackInProgress: 0
+  knockbackDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &2419642620470704997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1508,6 +1511,7 @@ MonoBehaviour:
   startDamage: 5
   endDamage: 8
   health: 1000
+  hitMaterial: {fileID: 2100000, guid: 03a535ea21aad5f4d96fe054fad5306a, type: 2}
   timeOnDead: 60
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}
 --- !u!114 &4157109929983363822

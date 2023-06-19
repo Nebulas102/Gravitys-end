@@ -29,6 +29,8 @@ namespace Controllers.Player
         [HideInInspector]
         public Vector3 playerVelocity;
 
+        [HideInInspector]
+        public int attackCount;
 
         public StateMachine movementSM;
         public SprintState sprinting;
@@ -58,7 +60,6 @@ namespace Controllers.Player
 
             _player = PlayerManager.Instance.player;
             UIHandler.OnPauseGameToggle += OnPauseGameToggle;
-            controller.detectCollisions = false;
         }
 
         private void Update()

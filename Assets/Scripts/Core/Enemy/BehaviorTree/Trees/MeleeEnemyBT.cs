@@ -16,11 +16,19 @@ public class MeleeEnemyBT : BTree
         enemyMeleeAttackController = GetComponent<EnemyMeleeAttackController>();
 
         Node root = new Selector(new List<Node>
-        {
+        {   
+            // Knockback sequence
+            new Sequence(new List<Node>
+            {
+                // Check and do knockback
+                new TaskKnockback(enemyController)
+            }),
             // Attack player sequence
             new Sequence(new List<Node>
             {
+                // Check if player is in attack range
                 new CheckPlayerInAttackRange(enemyMeleeAttackController.attackRange, enemyController.target, enemyController.transform),
+                // Perform melee attack
                 new TaskMeleeAttack(enemyMeleeAttackController)
             }),
             // Follow player sequence
@@ -29,7 +37,7 @@ public class MeleeEnemyBT : BTree
                 // Is Player in range
                 new CheckPlayerInRange(enemyController.transform, enemyController.target, enemyController.lookRadius),
                 // Follow the player
-                new TaskFollow(enemyController.target, enemyController.agent, enemyController.transform)
+                new TaskMeleeFollow(enemyController.target, enemyController.agent, enemyController.transform)
             })
         });
 

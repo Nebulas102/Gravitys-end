@@ -60,7 +60,7 @@ namespace Controllers
 
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,
-                    LayerMask.GetMask("Entity")))
+                    LayerMask.GetMask("Entity"), QueryTriggerInteraction.Ignore))
             {
                 if (!hit.collider.CompareTag("Enemy"))
                     return;
@@ -68,15 +68,6 @@ namespace Controllers
 
             // Face the player
             FaceTarget();
-
-            // if (distance <= agent.stoppingDistance)
-            // {
-            //     // If melee enemy
-            //     if (gameObject.GetComponent<EnemyMeleeAttackController>() != null)
-            //     {
-            //         gameObject.GetComponent<EnemyMeleeAttackController>().Attack();
-            //     }
-            // }
 
             foreach (var enemy in enemies)
                 if (enemy != gameObject && enemy != null) // don't compare to itself

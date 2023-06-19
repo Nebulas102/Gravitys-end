@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -95,7 +94,7 @@ public class SoundEffectsManager : MonoBehaviour
 
     public void StopSoundEffect(SoundEffect soundEffectType)
     {
-            soundEffectSource.Stop();
+        soundEffectSource.Stop();
     }
 
     public void SetSoundEffectsVolume(float volume)

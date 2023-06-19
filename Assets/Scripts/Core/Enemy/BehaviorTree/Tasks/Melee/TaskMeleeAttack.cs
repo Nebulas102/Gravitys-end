@@ -16,7 +16,7 @@ namespace BehaviorTree.Tasks
         public override NodeState Evaluate()
         {
             _enemyMeleeAttackController.PerformMeleeAttack();
-            state = NodeState.RUNNING;
+            state = NodeState.RUNNING; 
             return state;
         }
     }

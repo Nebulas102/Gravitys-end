@@ -138453,6 +138453,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: FreezeDuringAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1
     functionName: EnableHitbox
     data: 
@@ -138490,6 +138497,13 @@ AnimationClip:
     messageOptions: 0
   - time: 3
     functionName: DisableHitbox
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 4.2
+    functionName: UnfreezeAfterAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

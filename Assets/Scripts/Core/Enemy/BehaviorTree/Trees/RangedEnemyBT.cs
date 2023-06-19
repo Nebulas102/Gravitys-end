@@ -45,7 +45,7 @@ public class RangedEnemyBT : BTree
                     // Is Player in range
                     new CheckPlayerInRange(enemyController.transform, enemyController.target, enemyController.lookRadius),
                     // Follow the player
-                    new TaskFollow(enemyController.target, enemyController.agent),
+                    new TaskFollow(enemyController.target, enemyController.agent, enemyController.transform),
                 }),
                 new Sequence(new List<Node>
                 {

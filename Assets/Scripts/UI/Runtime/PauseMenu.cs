@@ -17,6 +17,13 @@ namespace UI.Runtime
         [SerializeField]
         private GameObject entryButton;
 
+        [Header("Settings")]
+        [SerializeField]
+        private GameObject settingsMenu;
+
+        [SerializeField]
+        private GameObject settingsEntryButton;
+
         private InputManager _inputManager;
         private bool _isPaused;
 
@@ -74,6 +81,13 @@ namespace UI.Runtime
         {
             if (isPaused && pauseMenu.activeSelf)
                 TogglePause();
+        }
+
+        public void ToggleSettings()
+        {
+            settingsMenu.SetActive(!settingsMenu.activeSelf);
+            pauseMenu.SetActive(!pauseMenu.activeSelf);
+            EventSystem.current.SetSelectedGameObject(settingsMenu.activeSelf ? settingsEntryButton : entryButton);
         }
     }
 }

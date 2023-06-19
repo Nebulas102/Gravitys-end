@@ -3,6 +3,8 @@ using Controllers.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 using BehaviorTree;
+using Controllers.Player;
+using Unity.VisualScripting;
 
 namespace Controllers
 {
@@ -11,6 +13,8 @@ namespace Controllers
         public float lookRadius = 10f;
         public float retreatDistance = 2f;
         public float rotationSpeed = 5f;
+        public float knockbackForce = 3f;
+        public float knockbackDuration = .5f;
         public LayerMask obstacleMask;
         public Animator enemyAnimator;
 
@@ -20,13 +24,22 @@ namespace Controllers
         [HideInInspector]
         public Transform target;
 
+        [HideInInspector]
+        public bool isKnockbackInProgress = false;
+        [HideInInspector]
+        public Vector3 knockbackDirection;
+
         private GameObject[] enemies;
 
         private BTree behaviorTree;
+        
+        private Rigidbody rb;
 
         private void Start()
-        {   
+        {
             behaviorTree = GetComponent<BTree>();
+            
+            rb = GetComponent<Rigidbody>();
 
             // See PlayerManager.cs for explanation
             target = PlayerManager.Instance.player.transform;
@@ -49,6 +62,11 @@ namespace Controllers
             if (distance > lookRadius)
             {
                 return;
+            }
+
+            if (target.GetComponent<Character>().attackCount >= 3)
+            {
+                StartCoroutine(PerformKnockback(transform.forward - new Vector3(-1, 0, -1)));
             }
 
             // Check if there is no wall in between the player and the enemy, if there is then return
@@ -77,13 +95,6 @@ namespace Controllers
                 }
         }
 
-        // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, lookRadius);
-        }
-
         // When the player is too close to the enemy, it wont rotate anymore
         // This function fixes it
         private void FaceTarget()
@@ -92,6 +103,31 @@ namespace Controllers
             var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        }
+
+        // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, lookRadius / 2);
+        }
+
+        private IEnumerator PerformKnockback(Vector3 knockbackDirection)
+        {
+            isKnockbackInProgress = true;
+
+            // Disable kinematic to allow external forces to affect the enemy
+            rb.isKinematic = false;
+
+            // Apply the knockback force to the enemy's Rigidbody
+            rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+
+            yield return new WaitForSeconds(knockbackDuration);
+
+            // Enable kinematic to stop external forces from affecting the enemy
+            rb.isKinematic = true;
+
+            isKnockbackInProgress = false;
         }
     }
 }

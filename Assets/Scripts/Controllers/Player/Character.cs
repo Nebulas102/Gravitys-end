@@ -29,6 +29,8 @@ namespace Controllers.Player
         [HideInInspector]
         public Vector3 playerVelocity;
 
+        [HideInInspector]
+        public int attackCount;
 
         public StateMachine movementSM;
         public SprintState sprinting;

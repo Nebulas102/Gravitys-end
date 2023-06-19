@@ -17,6 +17,12 @@ public class RangedEnemyBT : BTree
 
         Node root = new Selector(new List<Node>
         {
+            // Knockback sequence
+            new Sequence(new List<Node>
+            {
+                // Check and do knockback
+                new TaskKnockback(enemyController)
+            }),
             // Retreat parallel
             new Parallel(new List<Node>
             {
@@ -45,7 +51,7 @@ public class RangedEnemyBT : BTree
                     // Is Player in range
                     new CheckPlayerInRange(enemyController.transform, enemyController.target, enemyController.lookRadius),
                     // Follow the player
-                    new TaskFollow(enemyController.target, enemyController.agent, enemyController.transform),
+                    new TaskFollow(enemyController.target, enemyController.agent),
                 }),
                 new Sequence(new List<Node>
                 {

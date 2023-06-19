@@ -58,7 +58,6 @@ namespace Controllers.Player
 
             _player = PlayerManager.Instance.player;
             UIHandler.OnPauseGameToggle += OnPauseGameToggle;
-            controller.detectCollisions = false;
         }
 
         private void Update()

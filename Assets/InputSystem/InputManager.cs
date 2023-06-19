@@ -399,6 +399,15 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DropItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""93226209-61cc-445b-95fd-807cc66accaf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -918,6 +927,28 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""action"": ""ToggleMap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f986cb5e-7748-4633-a4be-d6e168edffd3"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""DropItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d41a9b36-e593-45d4-9750-f819bd291dec"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""DropItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1015,6 +1046,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         m_UI_CloseMenu = m_UI.FindAction("CloseMenu", throwIfNotFound: true);
         m_UI_DisplayNextSentence = m_UI.FindAction("DisplayNextSentence", throwIfNotFound: true);
         m_UI_ToggleMap = m_UI.FindAction("ToggleMap", throwIfNotFound: true);
+        m_UI_DropItem = m_UI.FindAction("DropItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1162,6 +1194,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_CloseMenu;
     private readonly InputAction m_UI_DisplayNextSentence;
     private readonly InputAction m_UI_ToggleMap;
+    private readonly InputAction m_UI_DropItem;
     public struct UIActions
     {
         private @InputManager m_Wrapper;
@@ -1181,6 +1214,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         public InputAction @CloseMenu => m_Wrapper.m_UI_CloseMenu;
         public InputAction @DisplayNextSentence => m_Wrapper.m_UI_DisplayNextSentence;
         public InputAction @ToggleMap => m_Wrapper.m_UI_ToggleMap;
+        public InputAction @DropItem => m_Wrapper.m_UI_DropItem;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1235,6 +1269,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 @ToggleMap.started -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleMap;
                 @ToggleMap.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleMap;
                 @ToggleMap.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleMap;
+                @DropItem.started -= m_Wrapper.m_UIActionsCallbackInterface.OnDropItem;
+                @DropItem.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnDropItem;
+                @DropItem.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnDropItem;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1284,6 +1321,9 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                 @ToggleMap.started += instance.OnToggleMap;
                 @ToggleMap.performed += instance.OnToggleMap;
                 @ToggleMap.canceled += instance.OnToggleMap;
+                @DropItem.started += instance.OnDropItem;
+                @DropItem.performed += instance.OnDropItem;
+                @DropItem.canceled += instance.OnDropItem;
             }
         }
     }
@@ -1359,5 +1399,6 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
         void OnCloseMenu(InputAction.CallbackContext context);
         void OnDisplayNextSentence(InputAction.CallbackContext context);
         void OnToggleMap(InputAction.CallbackContext context);
+        void OnDropItem(InputAction.CallbackContext context);
     }
 }

@@ -41,7 +41,7 @@ public class BackgroundMusicManager : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (!audioSource.isPlaying)
         {
@@ -55,8 +55,6 @@ public class BackgroundMusicManager : MonoBehaviour
             audioSource.Play();
         }
     }
-
-
 
     public void SetBackgroundMusicVolume(float volume)
     {

@@ -1,10 +1,11 @@
 using Controllers.Player;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UI.Inventory
 {
-    public class InventorySlot : MonoBehaviour
+    public class InventorySlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField]
         public GameObject iconDisplay;
@@ -16,6 +17,40 @@ namespace UI.Inventory
         public bool isEquippedSlot;
 
         public GameObject item { get; private set; }
+
+        private InputManager _inputManager;
+        private bool isHighlighted;
+
+        private void Awake()
+        {
+            _inputManager = new InputManager();
+        }
+
+        private void Update()
+        {
+            if ((EventSystem.current.currentSelectedGameObject == iconDisplay || isHighlighted) && _inputManager.UI.DropItem.triggered)
+                DropItem(true);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            isHighlighted = true;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            isHighlighted = false;
+        }
+
+        private void OnEnable()
+        {
+            _inputManager.UI.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _inputManager.UI.Disable();
+        }
 
         public void SetItem(Item obj, bool weapon = false)
         {

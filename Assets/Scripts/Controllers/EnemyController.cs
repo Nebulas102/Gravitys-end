@@ -64,9 +64,9 @@ namespace Controllers
                 return;
             }
 
-            if (target.GetComponent<Character>().attackCount >= 3)
+            if (target.GetComponent<Character>().attackCount >= 4)
             {
-                StartCoroutine(PerformKnockback(transform.forward - new Vector3(-1, 0, -1)));
+                StartCoroutine(PerformKnockback(target.forward));
             }
 
             // Check if there is no wall in between the player and the enemy, if there is then return
@@ -128,6 +128,8 @@ namespace Controllers
             rb.isKinematic = true;
 
             isKnockbackInProgress = false;
+
+            target.GetComponent<Character>().attackCount = 0;
         }
     }
 }

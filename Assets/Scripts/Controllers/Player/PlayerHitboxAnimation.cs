@@ -28,11 +28,6 @@ public class PlayerHitboxAnimation : MonoBehaviour
             meleeWeaponHitbox.allowAttack = true;
             meleeWeaponHitbox.SetDamageHitbox(meleeWeapon.GetMinDamage(), meleeWeapon.GetMaxDamage());
 
-            if (player.attackCount >= 3)
-            {
-                player.attackCount = 0;
-            }
-
             player.attackCount++;
         }
     }

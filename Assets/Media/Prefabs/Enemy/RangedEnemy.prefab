@@ -1166,12 +1166,16 @@ MonoBehaviour:
   lookRadius: 15
   retreatDistance: 4
   rotationSpeed: 8
+  knockbackForce: 0.35
+  knockbackDuration: 0.5
   obstacleMask:
     serializedVersion: 2
     m_Bits: 1
   enemyAnimator: {fileID: 273222429248031224}
   agent: {fileID: 0}
   target: {fileID: 0}
+  isKnockbackInProgress: 0
+  knockbackDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &3752245634156842909
 MonoBehaviour:
   m_ObjectHideFlags: 0

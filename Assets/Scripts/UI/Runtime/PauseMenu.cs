@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 namespace UI.Runtime
 {
@@ -13,6 +13,9 @@ namespace UI.Runtime
 
         [SerializeField]
         public GameObject controlsImage;
+
+        [SerializeField]
+        private GameObject entryButton;
 
         private InputManager _inputManager;
         private bool _isPaused;
@@ -30,6 +33,7 @@ namespace UI.Runtime
 
                 pauseMenu.SetActive(value);
                 OnPauseToggle?.Invoke(value);
+                EventSystem.current.SetSelectedGameObject(value ? entryButton : null);
             }
         }
 
@@ -53,11 +57,6 @@ namespace UI.Runtime
         private void OnDisable()
         {
             _inputManager.Disable();
-        }
-
-        public void GoToMainMenu()
-        {
-            SceneManager.LoadScene("MainMenuScene");
         }
 
         public void ToggleControls()

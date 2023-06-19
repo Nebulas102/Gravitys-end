@@ -1,19 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
-using Controllers.Player;
-using Core.Enemy;
-using ScriptableObjects;
 using UnityEngine;
 
 public class EnemyRangeWeapon : MonoBehaviour
 {
-    [Header("Reloading")]
-    public int currentAmmo;
-    public int magSize;
+    [Header("Shooting")]
     public float fireRate;
-    public float reloadTime;
+
+    [Header("Reloading")]
     [HideInInspector]
     public bool reloading;
+    public float reloadTime;
+    public int currentAmmo;
+    public int magSize;
 
     [Header("Bullet")]
     public GameObject bullet;
@@ -85,12 +83,13 @@ public class EnemyRangeWeapon : MonoBehaviour
     }
 
     public void PerformShot()
-    {   
+    {
         Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
         Vector3 bulletDirection = enemy.transform.forward;
 
         if (Physics.Raycast(bulletOutputWorldPos, bulletDirection, out hit, Mathf.Infinity, ~ignoreLayer))
-        {   
+        {
+            // Debug.DrawRay(bulletOutputWorldPos, bulletDirection, Color.green);
             if (hit.transform.CompareTag("Player"))
             {
                 Shoot();
@@ -111,8 +110,7 @@ public class EnemyRangeWeapon : MonoBehaviour
         newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.rotation.w);
 
         EnemyBulletBehaviour enemyBulletBehaviour = newBullet.GetComponentInChildren<EnemyBulletBehaviour>();
-        
-        // Set enemy bullet data
+
         enemyBulletBehaviour.SetDamage(minDamage, maxDamage);
         enemyBulletBehaviour.SetSpeed(bulletSpeed);
         enemyBulletBehaviour.SetDirection(bulletDirection);

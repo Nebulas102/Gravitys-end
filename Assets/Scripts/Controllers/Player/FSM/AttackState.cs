@@ -9,28 +9,29 @@ namespace Controllers.Player
     {
         private float timePassed;
         private bool attackTriggered;
+        private bool moveTriggered;
         private Animator animator;
         private const float ComboDelay = 0.6f;
 
 
         private Character _player = PlayerManager.Instance.player.GetComponent<Character>();
         private Vector2 mousePos;
-        private Vector3 lookAtPosition;
 
         public Camera _camera;
         private PlayerInput playerInput;
-        private bool moveTriggered;
 
 
         public AttackState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
             animator = PlayerAnimator.Instance._animator;
+            playerInput = _player.playerInput;
         }
 
         public override void Enter()
         {
             base.Enter();
             attackTriggered = false;
+            moveTriggered = false;
             timePassed = 0f;
 
             //todo need to check if keyboard or gamepad
@@ -46,12 +47,13 @@ namespace Controllers.Player
                 {
                     Vector3 pointToLook = ray.GetPoint(rayDistance);
 
-                    lookAtPosition = new Vector3(pointToLook.x, _player.transform.position.y, pointToLook.z);
+                    _player.lookAtPosition = new Vector3(pointToLook.x, _player.transform.position.y, pointToLook.z);
 
-                    _player.transform.LookAt(lookAtPosition);
+                    _player.transform.LookAt(_player.lookAtPosition);
                 }
 
             }
+
             if (IsMelee())
             {
                 animator.SetTrigger("attack");
@@ -59,7 +61,10 @@ namespace Controllers.Player
 
             if (IsRanged())
             {
-                // animator.SetTrigger("shoot");
+                velocity = Vector3.zero;
+                input = Vector2.zero;
+                PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);
+                animator.SetTrigger("shoot");
             }
         }
 
@@ -74,44 +79,73 @@ namespace Controllers.Player
             }
         }
 
+        // public override void LogicUpdate()
+        // {
+        //     base.LogicUpdate();
+        //     timePassed += Time.deltaTime;
+
+        //     // Calculate combo length based on the clip length and speed
+        //     float clipLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+        //     float clipSpeed = animator.GetCurrentAnimatorStateInfo(0).speed;
+        //     float comboLength = clipLength / clipSpeed;
+        //     float shootLength = 0.4f;
+
+        //     if (IsMelee())
+        //     {
+
+        //         // Check if attack triggered during combo delay
+        //         if (timePassed < ComboDelay && attackTriggered)
+        //         {
+        //             timePassed = 0f;
+        //             stateMachine.ChangeState(character.attacking);
+        //         }
+
+        //         // Check if combo length has passed
+        //         if (timePassed >= comboLength)
+        //         {
+        //             animator.SetTrigger("move");
+        //             stateMachine.ChangeState(character.combatting);
+        //         }
+        //     }
+
+        //     if (IsRanged())
+        //     {
+        //         if (attackTriggered)
+        //         {
+        //             timePassed = 0f;
+        //             stateMachine.ChangeState(character.attacking);
+        //         }
+
+        //         if (timePassed >= shootLength)
+        //         {
+        //             animator.SetTrigger("move");
+        //             stateMachine.ChangeState(character.combatting);
+        //         }
+        //     }
+        // }
+
         public override void LogicUpdate()
         {
             base.LogicUpdate();
-            if (IsMelee())
+            timePassed += Time.deltaTime;
+
+            bool isMelee = IsMelee();
+            bool isRanged = IsRanged();
+
+            if ((isMelee && timePassed < ComboDelay && attackTriggered) || (isRanged && attackTriggered))
             {
-                timePassed += Time.deltaTime;
-
-                // Calculate combo length based on the clip length and speed
-                float clipLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-                float clipSpeed = animator.GetCurrentAnimatorStateInfo(0).speed;
-                float comboLength = clipLength / clipSpeed;
-
-                // Check if attack triggered during combo delay
-                if (timePassed < ComboDelay && attackTriggered)
-                {
-                    timePassed = 0f;
-                    stateMachine.ChangeState(character.attacking);
-                }
-
-                // Check if combo length has passed
-                if (timePassed >= comboLength)
-                {
-                    animator.SetTrigger("move");
-                    stateMachine.ChangeState(character.combatting);
-                }
+                timePassed = 0f;
+                stateMachine.ChangeState(character.attacking);
             }
 
-            if (IsRanged())
+            float clipLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+            float clipSpeed = animator.GetCurrentAnimatorStateInfo(0).speed;
+            float comboLength = clipLength / clipSpeed;
+
+            if ((isMelee && timePassed >= comboLength) || (isRanged && timePassed >= 0.4f))
             {
-                if (attackTriggered)
-                {
-                    stateMachine.ChangeState(character.attacking);
-                }
-                else
-                {
-                    animator.SetTrigger("move");
-                    stateMachine.ChangeState(character.combatting);
-                }
+                animator.SetTrigger("move");
+                stateMachine.ChangeState(character.combatting);
             }
         }
 

@@ -9,7 +9,7 @@ public class EnemyRangeAttackController : MonoBehaviour
 {
     public float attackRange;
     public GameObject rangeWeaponObject;
-    
+
     [HideInInspector]
     public float playerDistance;
 
@@ -31,5 +31,14 @@ public class EnemyRangeAttackController : MonoBehaviour
     public void EnemyShoot()
     {
         rangeWeapon.PerformShot();
+        
+        if (enemyController.agent.velocity != Vector3.zero)
+        {
+            enemyController.enemyAnimator.SetTrigger("run_shoot");
+        }
+        else
+        {
+            enemyController.enemyAnimator.SetTrigger("stand_shoot");
+        }
     }
 }

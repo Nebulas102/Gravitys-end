@@ -21,10 +21,23 @@ namespace UI.Inventory
         {
             ToggleItem(obj.gameObject, obj.icon);
             obj.RenderItem(false);
+
+            if (obj.gameObject.CompareTag("Ranged"))
+            {
+                obj.gameObject.GetComponent<PlayerShoot>().OnWeaponUnequipped();
+            }
+
             if (weapon && isEquippedSlot)
             {
                 EquipmentSystem.Instance.SetCurrentWeapon(obj.gameObject);
                 obj.RenderItem(true);
+
+                GameObject equippedWeapon = EquipmentSystem.Instance._equippedWeapon;
+
+                if (equippedWeapon.CompareTag("Ranged"))
+                {
+                    equippedWeapon.GetComponent<PlayerShoot>().OnWeaponEquipped();
+                }
             }
         }
 
@@ -34,10 +47,11 @@ namespace UI.Inventory
                 return;
 
             item.GetComponent<Item>().RenderItem(false);
+            if (isEquippedSlot)
+                EquipmentSystem.Instance.DetachWeapon();
+
             if (spawn)
                 item.GetComponent<Item>().Spawn();
-            else
-                EquipmentSystem.Instance.DetachWeapon();
             ToggleItem(null, null);
         }
 
@@ -56,10 +70,7 @@ namespace UI.Inventory
             // Enable or disable the icon display and remove button based on whether the slot is empty
             var isEmpty = IsEmpty();
             iconImage.enabled = !isEmpty;
-            iconButton.enabled = !isEmpty;
-            iconButton.interactable = !isEmpty;
             removeImage.enabled = !isEmpty;
-            removeBtn.enabled = !isEmpty;
             removeBtn.interactable = !isEmpty;
         }
 

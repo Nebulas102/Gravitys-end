@@ -21,7 +21,7 @@ namespace Core.Enemy.StageBosses.Stage1
 
         private Vector3 _targetPosition;
         private Quaternion _targetRotation;
-        
+
         private GameObject _decal;
 
         private bool playerIndecal = false;
@@ -68,7 +68,7 @@ namespace Core.Enemy.StageBosses.Stage1
 
             if (playerIndecal)
             {
-                _player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(_minDamage, _maxDamage, 0);
+                _player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, 0);
             }
 
             Destroy(transform.root.gameObject);

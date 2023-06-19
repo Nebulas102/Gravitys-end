@@ -89,5 +89,16 @@ namespace Core
 
             display.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
         }
+
+        public void ModifyTime(float newTime)
+        {
+            time = newTime;
+            DisplayTime(time);
+        }
+
+        public float GetTime()
+        {
+            return time;
+        }
     }
 }

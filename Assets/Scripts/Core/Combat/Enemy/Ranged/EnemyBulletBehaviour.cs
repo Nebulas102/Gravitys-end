@@ -1,5 +1,4 @@
 using Controllers.Player;
-using UI.Tokens;
 using UnityEngine;
 
 public class EnemyBulletBehaviour : MonoBehaviour
@@ -8,12 +7,12 @@ public class EnemyBulletBehaviour : MonoBehaviour
     private int _maxDamage;
     private float _speed;
     private Vector3 _direction;
-    
+
     private GameObject player;
 
     private void Start()
     {
-        player = PlayerManager.Instance.player;    
+        player = PlayerManager.Instance.player;
     }
 
     private void Update()
@@ -23,11 +22,11 @@ public class EnemyBulletBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log(other.gameObject.name);
+        // Debug.Log(other.gameObject.name);  Check what the bullet collided with
 
         if (other.gameObject.CompareTag("Player"))
         {
-            player.GetComponent<PlayerStatsController>().GetPlayerObject().entity.TakeDamage(_minDamage, _maxDamage, 0);
+            player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, 0);
 
             Destroy(gameObject);
         }

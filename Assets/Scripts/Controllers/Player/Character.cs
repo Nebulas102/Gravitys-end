@@ -81,20 +81,22 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            // //Look at mouse mike
-            // Vector2 mousePosition = playerInput.actions["Look"].ReadValue<Vector2>();
-
-            // Ray ray = _camera.ScreenPointToRay(mousePosition);
-            // Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-            // float rayDistance;
-
-            // if (groundPlane.Raycast(ray, out rayDistance))
+            // if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged"))
             // {
-            //     Vector3 pointToLook = ray.GetPoint(rayDistance);
+            //     Vector2 mousePosition = playerInput.actions["Look"].ReadValue<Vector2>();
 
-            //     lookAtPosition = new Vector3(pointToLook.x, transform.position.y, pointToLook.z);
+            //     Ray ray = _camera.ScreenPointToRay(mousePosition);
+            //     Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+            //     float rayDistance;
 
-            //     _player.transform.LookAt(lookAtPosition);
+            //     if (groundPlane.Raycast(ray, out rayDistance))
+            //     {
+            //         Vector3 pointToLook = ray.GetPoint(rayDistance);
+
+            //         lookAtPosition = new Vector3(pointToLook.x, transform.position.y, pointToLook.z);
+
+            //         _player.transform.LookAt(lookAtPosition);
+            //     }
             // }
 
             movementSM.currentState.PhysicsUpdate();

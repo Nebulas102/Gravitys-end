@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class BackgroundMusicManager : MonoBehaviour
 {
-    [SerializeField] private AudioClip normalBackgroundMusic;
     [SerializeField] private AudioClip bossBackgroundMusic;
     [SerializeField] private Slider backgroundMusicSlider;
+    [SerializeField] private AudioClip[] songs;
+
+    private int currentSong = 0;
     private static AudioClip _bossBackgroundMusic;
     public static AudioSource audioSource;
 
@@ -16,10 +18,16 @@ public class BackgroundMusicManager : MonoBehaviour
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
-            audioSource.clip = normalBackgroundMusic;
+            audioSource.clip = songs[currentSong];
             audioSource.Play();
         }
         _bossBackgroundMusic = bossBackgroundMusic;
+
+        // Check if PlayerPrefs has a stored value for BackgroundMusicVolume
+        if (!PlayerPrefs.HasKey("BackgroundMusicVolume"))
+        {
+            SetBackgroundMusicVolume(0.5f);
+        }
         SetBackgroundMusicVolume(PlayerPrefs.GetFloat("BackgroundMusicVolume"));
     }
 
@@ -32,6 +40,24 @@ public class BackgroundMusicManager : MonoBehaviour
             audioSource.Play();
         }
     }
+
+    void Update()
+    {
+        Debug.Log(audioSource.isPlaying);
+        if (!audioSource.isPlaying)
+        {
+            currentSong++;
+            if (currentSong >= songs.Length)
+            {
+                currentSong = 0;
+            }
+
+            audioSource.clip = songs[currentSong];
+            audioSource.Play();
+        }
+    }
+
+
 
     public void SetBackgroundMusicVolume(float volume)
     {

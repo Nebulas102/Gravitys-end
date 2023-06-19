@@ -6,6 +6,9 @@ public class PlayerAnimationSounds : MonoBehaviour
 {
 
     AudioSource animationSoundPlayer;
+
+    [SerializeField]
+    private AudioClip[] animationSounds;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,8 +21,17 @@ public class PlayerAnimationSounds : MonoBehaviour
         
     }
 
+    // first element in animationSounds is footstep sound
     private void PlayerFootstepSound() 
     {
+        animationSoundPlayer.clip = animationSounds[0];
+        animationSoundPlayer.Play();
+    }
+
+    // second element in animationSounds is shoot sound
+    private void PlayerShootSound() 
+    {
+        animationSoundPlayer.clip = animationSounds[1];
         animationSoundPlayer.Play();
     }
 }

@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 namespace UI.Inventory
@@ -122,6 +121,20 @@ namespace UI.Inventory
                 }
 
                 SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ArmorPickup);
+            }
+        }
+
+        public void PickupShop()
+        {
+            if (IsInInventory || _gamePaused) return;
+
+
+            if (InventoryManager.instance.PickupItem(this))
+            {
+                meshRenderer.enabled = false;
+                IsInInventory = true;
+                isPlayerNearby = false;
+                OnItemPickup?.Invoke(false);
             }
         }
 

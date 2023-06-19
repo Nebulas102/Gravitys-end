@@ -16,12 +16,6 @@ namespace Core.Enemy
         private float health;
 
         [SerializeField]
-        private int startDamage;
-
-        [SerializeField]
-        private int endDamage;
-
-        [SerializeField]
         private Slider healthBar;
 
         [SerializeField]

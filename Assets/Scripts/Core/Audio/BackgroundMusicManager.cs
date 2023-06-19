@@ -43,7 +43,6 @@ public class BackgroundMusicManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(audioSource.isPlaying);
         if (!audioSource.isPlaying)
         {
             currentSong++;

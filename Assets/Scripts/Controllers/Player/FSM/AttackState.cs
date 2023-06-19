@@ -144,8 +144,8 @@ namespace Controllers.Player
 
             if ((isMelee && timePassed >= comboLength) || (isRanged && timePassed >= 0.4f))
             {
-                animator.SetTrigger("move");
                 stateMachine.ChangeState(character.combatting);
+                animator.SetTrigger("move");
             }
         }
 

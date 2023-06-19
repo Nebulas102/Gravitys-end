@@ -11,19 +11,15 @@ namespace Controllers
         public float lookRadius = 10f;
         public float retreatDistance = 2f;
         public float rotationSpeed = 5f;
-        public Material hitMaterial;
         public LayerMask obstacleMask;
         public Animator enemyAnimator;
 
         [HideInInspector]
         public NavMeshAgent agent;
 
-        private Material _originalMaterial;
-
         [HideInInspector]
         public Transform target;
 
-        private Renderer renderer;
         private GameObject[] enemies;
 
         private BTree behaviorTree;
@@ -35,10 +31,7 @@ namespace Controllers
             // See PlayerManager.cs for explanation
             target = PlayerManager.Instance.player.transform;
             agent = GetComponent<NavMeshAgent>();
-            renderer = GetComponentInChildren<Renderer>();
             enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-            _originalMaterial = renderer.material;
 
             var o = gameObject;
             Physics.IgnoreLayerCollision(o.layer, o.layer);
@@ -84,12 +77,6 @@ namespace Controllers
                 }
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            //Hit on weapon or some logic needs to be implemented, this is bad
-            if (other.gameObject.CompareTag("Item")) StartCoroutine(HitFeedback());
-        }
-
         // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
         private void OnDrawGizmosSelected()
         {
@@ -105,13 +92,6 @@ namespace Controllers
             var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             // Use Quaternion.Slerp instead of lookRotation to smooth out the animation
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-        }
-
-        private IEnumerator HitFeedback()
-        {
-            renderer.material = hitMaterial;
-            yield return new WaitForSeconds(.1f);
-            renderer.material = _originalMaterial;
         }
     }
 }

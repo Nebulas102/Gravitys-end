@@ -87,9 +87,9 @@ public class EnemyRangeWeapon : MonoBehaviour
         Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
         Vector3 bulletDirection = enemy.transform.forward;
 
-        if (Physics.Raycast(bulletOutputWorldPos, bulletDirection, out hit, Mathf.Infinity, ~ignoreLayer))
+        if (Physics.Raycast(bulletOutputWorldPos, bulletDirection, out hit, Mathf.Infinity, ~ignoreLayer, QueryTriggerInteraction.Ignore))
         {
-            // Debug.DrawRay(bulletOutputWorldPos, bulletDirection, Color.green);
+            // Debug.DrawRay(bulletOutputWorldPos, bulletDirection * 1000f, Color.green);
             if (hit.transform.CompareTag("Player"))
             {
                 Shoot();

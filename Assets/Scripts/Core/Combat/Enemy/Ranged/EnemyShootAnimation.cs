@@ -6,8 +6,13 @@ public class EnemyShootAnimation : MonoBehaviour
 {
     public EnemyRangeWeapon enemyRangeWeapon; 
 
-    public void PerformShotAnim()
+    public void AllowShot()
     {
-        enemyRangeWeapon.PerformShot();
+        enemyRangeWeapon.allowShot = true;
+    }
+
+    public void DisAllowShot()
+    {
+        enemyRangeWeapon.allowShot = false;
     }
 }

@@ -25,8 +25,16 @@ public class EnemyRangeWeapon : MonoBehaviour
     [SerializeField]
     private Transform bulletOutput;
 
+    [HideInInspector]
+    public bool allowRaycast = false;
+    [HideInInspector]
+    public bool allowShot = false;
+
     private float timeSinceLastShot;
     private RaycastHit hit;
+
+    private Vector3 bulletOutputWorldPos;
+    private Vector3 bulletDirection;
 
     private PlayerManager playerManager;
     private Transform enemy;
@@ -82,26 +90,29 @@ public class EnemyRangeWeapon : MonoBehaviour
         timeSinceLastShot += Time.deltaTime;
     }
 
-    public void PerformShot()
+    private void FixedUpdate()
     {
-        Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
-        Vector3 bulletDirection = enemy.transform.forward;
-
-        if (Physics.Raycast(bulletOutputWorldPos, bulletDirection, out hit, Mathf.Infinity, ~ignoreLayer, QueryTriggerInteraction.Ignore))
+        if (allowRaycast)
         {
-            Debug.DrawRay(bulletOutputWorldPos, bulletDirection * 1000f, Color.green);
-            if (hit.transform.CompareTag("Player"))
+            bulletOutputWorldPos = bulletOutput.transform.position;
+            bulletDirection = enemy.transform.forward;
+
+            if (Physics.Raycast(bulletOutputWorldPos, bulletDirection, out hit, Mathf.Infinity, ~ignoreLayer, QueryTriggerInteraction.Ignore))
             {
-                Shoot();
+                Debug.DrawRay(bulletOutputWorldPos, bulletDirection * 1000f, Color.green);
+                if (allowShot)
+                {
+                    if (hit.transform.CompareTag("Player"))
+                    {
+                        Shoot();
+                    }
+                }
             }
         }
     }
 
     private void OnGunShot()
     {
-        Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
-        Vector3 bulletDirection = (hit.transform.position - bulletOutputWorldPos);
-
         bulletDirection.y = 0f;
 
         GameObject newBullet = Instantiate(bullet, bulletOutputWorldPos, Quaternion.identity);

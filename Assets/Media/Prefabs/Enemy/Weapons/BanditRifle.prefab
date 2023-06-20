@@ -141,11 +141,13 @@ MonoBehaviour:
   bullet: {fileID: 1563543445386549699, guid: efc051595d82d1548a79ede3e336f243, type: 3}
   minDamage: 5
   maxDamage: 10
-  bulletSpeed: 3
+  bulletSpeed: 5
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 256
   bulletOutput: {fileID: 8217188023003102412}
+  allowRaycast: 0
+  allowShot: 0
 --- !u!1 &7376266294702615032
 GameObject:
   m_ObjectHideFlags: 0

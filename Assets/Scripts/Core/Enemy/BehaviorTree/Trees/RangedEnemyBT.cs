@@ -37,7 +37,7 @@ public class RangedEnemyBT : BTree
                 new Sequence(new List<Node>
                 {
                     // Is player in attack range
-                    new CheckPlayerInAttackRange(enemyRangeAttackController.attackRange, enemyController.target, enemyController.transform),
+                    new CheckPlayerInAttackRange(enemyRangeAttackController.attackRange, enemyController.target, enemyController.transform, enemyRangeAttackController),
                     // Shoot at player
                     new TaskShoot(enemyRangeAttackController, enemyController.transform)
                 })
@@ -56,7 +56,7 @@ public class RangedEnemyBT : BTree
                 new Sequence(new List<Node>
                 {
                     // Is player in attack range
-                    new CheckPlayerInAttackRange(enemyRangeAttackController.attackRange, enemyController.target, enemyController.transform),
+                    new CheckPlayerInAttackRange(enemyRangeAttackController.attackRange, enemyController.target, enemyController.transform, enemyRangeAttackController),
                     // Shoot at player
                     new TaskShoot(enemyRangeAttackController, enemyController.transform)
                 })

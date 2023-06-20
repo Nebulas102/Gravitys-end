@@ -9,6 +9,7 @@ public class EnemyRangeAttackController : MonoBehaviour
 {
     public float attackRange;
     public GameObject rangeWeaponObject;
+    public EnemyRangeWeapon rangeWeapon;
 
     [HideInInspector]
     public float playerDistance;
@@ -16,7 +17,6 @@ public class EnemyRangeAttackController : MonoBehaviour
     private EnemyBase enemyBase;
     private EnemyController enemyController;
     private GameObject player;
-    private EnemyRangeWeapon rangeWeapon;
 
     private void Start()
     {
@@ -28,19 +28,15 @@ public class EnemyRangeAttackController : MonoBehaviour
         rangeWeapon.SetEnemy(transform);
     }
 
-    public void EnemyShoot()
-    {
-        rangeWeapon.PerformShot();
-
-
-
-        if (enemyController.agent.velocity != Vector3.zero)
-        {
-            enemyController.enemyAnimator.SetTrigger("run_shoot");
-        }
-        else
-        {
-            enemyController.enemyAnimator.SetTrigger("stand_shoot");
-        }
-    }
+    // public void EnemyShoot()
+    // {
+    //     if (enemyController.agent.velocity != Vector3.zero)
+    //     {
+    //         enemyController.enemyAnimator.SetTrigger("run_shoot");
+    //     }
+    //     else
+    //     {
+    //         enemyController.enemyAnimator.SetTrigger("stand_shoot");
+    //     }
+    // }
 }

@@ -10,12 +10,14 @@ namespace BehaviorTree.Tasks
         private float _attackRange;
         private Transform _target;
         private Transform _transform;
+        private EnemyRangeAttackController _enemyRangeAttackController;
 
-        public CheckPlayerInAttackRange(float attackRange, Transform target, Transform transform)
+        public CheckPlayerInAttackRange(float attackRange, Transform target, Transform transform, EnemyRangeAttackController enemyRangeAttackController)
         {
             _attackRange = attackRange;
             _target = target;
             _transform = transform;
+            _enemyRangeAttackController = enemyRangeAttackController;
         }
 
         public override NodeState Evaluate()
@@ -24,10 +26,12 @@ namespace BehaviorTree.Tasks
 
             if (playerDistance <= _attackRange)
             {
+                _enemyRangeAttackController.rangeWeapon.allowRaycast = true;
                 state = NodeState.SUCCESS;
             }
             else
             {
+                _enemyRangeAttackController.rangeWeapon.allowRaycast = false;
                 state = NodeState.FAILURE;
             }
 

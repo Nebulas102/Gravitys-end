@@ -21,6 +21,11 @@ namespace BehaviorTree.Tasks
 
         public override NodeState Evaluate()
         {
+            if (_enemyRangeAttackController.rangeWeapon.allowShot)
+            {
+                _enemyRangeAttackController.rangeWeapon.allowRaycast = true;
+            }
+
             // Ryan: animations shooting trigger here
             enemyController.enemyAnimator.SetBool("run_shoot", false);
             enemyController.enemyAnimator.SetBool("stand_shoot", true);

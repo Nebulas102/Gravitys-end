@@ -1165,7 +1165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookRadius: 15
   retreatDistance: 4
-  rotationSpeed: 8
+  rotationSpeed: 25
   knockbackForce: 8
   knockbackDuration: 0.5
   obstacleMask:
@@ -1190,6 +1190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 13
   rangeWeaponObject: {fileID: 7251947205400505461}
+  rangeWeapon: {fileID: 0}
   playerDistance: 0
 --- !u!114 &-7216175424955467324
 MonoBehaviour:
@@ -2170,7 +2171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706315958600b3845b305900c1555576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyRangeWeapon: {fileID: 0}
+  enemyRangeWeapon: {fileID: 3486060848127366349}
 --- !u!1 &7062823280393646553
 GameObject:
   m_ObjectHideFlags: 0
@@ -2816,6 +2817,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}
+--- !u!114 &3486060848127366349 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2137116675508004709, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}
+  m_PrefabInstance: {fileID: 3299002811579151272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7251947205400505461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff893999b57cd284d8a5e0565c601904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7251947205400505461 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5290742319282659293, guid: 5064a7ee027c9bd409c0f0b29b4fdb8f, type: 3}

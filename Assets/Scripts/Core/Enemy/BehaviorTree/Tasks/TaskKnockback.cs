@@ -25,7 +25,7 @@ namespace BehaviorTree.Tasks
             {
                 state = NodeState.FAILURE;
             }
-
+            
             return state;
         }
     }

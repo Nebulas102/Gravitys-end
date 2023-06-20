@@ -1166,7 +1166,7 @@ MonoBehaviour:
   lookRadius: 15
   retreatDistance: 4
   rotationSpeed: 8
-  knockbackForce: 0.35
+  knockbackForce: 8
   knockbackDuration: 0.5
   obstacleMask:
     serializedVersion: 2
@@ -2170,6 +2170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706315958600b3845b305900c1555576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyRangeWeapon: {fileID: 0}
 --- !u!1 &7062823280393646553
 GameObject:
   m_ObjectHideFlags: 0

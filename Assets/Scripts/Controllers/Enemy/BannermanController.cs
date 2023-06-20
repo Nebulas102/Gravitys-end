@@ -8,7 +8,10 @@ using UnityEngine;
 public class BannermanController : MonoBehaviour
 {
     public GameObject bannerSphere;
-    public int healAmount = 10;
+    [SerializeField]
+    private int healAmount = 10;
+    [SerializeField]
+    private float healCooldown = 4;
     public bool healingAllowed;
 
     private void OnTriggerEnter(Collider other)
@@ -19,9 +22,7 @@ public class BannermanController : MonoBehaviour
 
             if (enemyBase != null)
             {
-                Debug.Log("Healing");
                 StartCoroutine(Healing(enemyBase));
-
             }
         }
     }
@@ -44,7 +45,7 @@ public class BannermanController : MonoBehaviour
         while (true)
         {
             enemyBase.health += healAmount;
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(healCooldown);
         }
     }
 }

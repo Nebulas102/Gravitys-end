@@ -1049,8 +1049,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4276069674895537660}
   - component: {fileID: 4276069674895537661}
+  - component: {fileID: 8018587079560276357}
   - component: {fileID: 4276069674895537651}
-  - component: {fileID: 5793930724556520424}
   - component: {fileID: 2419642620470704997}
   - component: {fileID: 4276069674895537648}
   - component: {fileID: 3752245634156842909}
@@ -1103,6 +1103,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &8018587079560276357
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276069674895537649}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.82716036, y: 2.5, z: 1.195209}
+  m_Center: {x: 0.009801924, y: 1.24, z: 0.011125058}
 --- !u!54 &4276069674895537651
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1115,24 +1128,10 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &5793930724556520424
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4276069674895537649}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 3
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2419642620470704997
 MonoBehaviour:
   m_ObjectHideFlags: 0

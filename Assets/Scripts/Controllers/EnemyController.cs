@@ -30,16 +30,15 @@ namespace Controllers
         public Vector3 knockbackDirection;
 
         private GameObject[] enemies;
-        private bool allowDuties;
 
         private BTree behaviorTree;
-
+        
         private Rigidbody rb;
 
         private void Start()
         {
             behaviorTree = GetComponent<BTree>();
-
+            
             rb = GetComponent<Rigidbody>();
 
             enemyAnimator = GetComponentInChildren<Animator>();
@@ -64,11 +63,8 @@ namespace Controllers
 
             if (distance > lookRadius)
             {
-                allowDuties = false;
                 return;
             }
-
-            allowDuties = true;
 
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,
@@ -106,8 +102,15 @@ namespace Controllers
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
 
-        public IEnumerator PerformKnockback()
+        // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
+        private void OnDrawGizmosSelected()
         {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, lookRadius / 2);
+        }
+
+        public IEnumerator PerformKnockback()
+        {   
             isKnockbackInProgress = true;
 
             // Disable kinematic to allow external forces to affect the enemy
@@ -119,34 +122,9 @@ namespace Controllers
             yield return new WaitForSeconds(knockbackDuration);
 
             // Enable kinematic to stop external forces from affecting the enemy
-            // rb.isKinematic = true;
+            rb.isKinematic = true;
 
             isKnockbackInProgress = false;
-        }
-
-        private void OnCollisionEnter(Collision other)
-        {
-            if (other.gameObject.CompareTag("Player") && allowDuties)
-            {
-                Debug.Log("Colliden player");
-                rb.isKinematic = true;
-            }
-        }
-
-        private void OnCollisionExit(Collision other)
-        {
-            if (other.gameObject.CompareTag("Player") && allowDuties)
-            {
-                Debug.Log("Stop player collide");
-                rb.isKinematic = false;
-            }
-        }
-
-        // Draws a sphere around the enemy to visualize the range of where the enemy will start chasing you
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, lookRadius / 2);
         }
     }
 }

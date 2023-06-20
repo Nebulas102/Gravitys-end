@@ -30,10 +30,10 @@ namespace UI.Shop
         public void BuyItem()
         {
             var script = item.GetComponent<Item>();
-            if (script.price <= 0 || Timer.Instance.time - script.price <= 0)
+            if (script.price <= 0 || Timer.instance.time - script.price <= 0)
                 return;
 
-            Timer.Instance.time -= script.price * 60;
+            Timer.instance.time -= script.price * 60;
             if (InventoryManager.instance.PickupItem(script))
             {
                 Clear();

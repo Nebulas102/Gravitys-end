@@ -887,7 +887,6 @@ GameObject:
   - component: {fileID: 8423019611981315085}
   - component: {fileID: 6372328682407832492}
   - component: {fileID: 1924086890061480412}
-  - component: {fileID: 2158923757620722483}
   - component: {fileID: 7480529101096595252}
   m_Layer: 0
   m_Name: Brute
@@ -1050,20 +1049,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!136 &2158923757620722483
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2976720808657222861}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 2.5
-  m_Height: 10.858756
-  m_Direction: 1
-  m_Center: {x: 0, y: 5.581206, z: 0}
 --- !u!114 &7480529101096595252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1388,8 +1373,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4276069674895537660}
   - component: {fileID: 4276069674895537661}
-  - component: {fileID: 8018587079560276357}
   - component: {fileID: 4276069674895537651}
+  - component: {fileID: 8878548034273279214}
   - component: {fileID: 4276069674895537648}
   - component: {fileID: 2419642620470704997}
   - component: {fileID: 4157109929983363822}
@@ -1441,19 +1426,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!65 &8018587079560276357
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4276069674895537649}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.60346824, y: 2.5951855, z: 0.59806037}
-  m_Center: {x: -0.00065639615, y: 1.2953514, z: 0.0002387762}
 --- !u!54 &4276069674895537651
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1466,10 +1438,24 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &8878548034273279214
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276069674895537649}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!114 &4276069674895537648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1540,7 +1526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCooldown: 1
   attackRange: 3
-  _enemyMeleeWeapon: {fileID: 0}
+  _enemyMeleeWeapon: {fileID: 4685673727694897767}
 --- !u!1 &4348042017698251763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2966,3 +2952,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2153588855667216892, guid: 6194d7719d8af5b47aa460013a16a04d, type: 3}
   m_PrefabInstance: {fileID: 2794785339380298661}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4685673727694897767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7480418613310648770, guid: 6194d7719d8af5b47aa460013a16a04d, type: 3}
+  m_PrefabInstance: {fileID: 2794785339380298661}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4263228596311794265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fefe3128ea0bb64f8fffd4adb7727ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

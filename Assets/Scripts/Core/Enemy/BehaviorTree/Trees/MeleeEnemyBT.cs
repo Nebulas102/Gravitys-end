@@ -27,8 +27,7 @@ public class MeleeEnemyBT : BTree
             new Sequence(new List<Node>
             {
                 // Check if player is in attack range
-                //mike 
-                // new CheckPlayerInAttackRange(enemyMeleeAttackController.attackRange, enemyController.target, enemyController.transform),
+                new CheckPlayerInMeleeAttackRange(enemyMeleeAttackController.attackRange, enemyController.target, enemyController.transform),
                 // Perform melee attack
                 new TaskMeleeAttack(enemyMeleeAttackController)
             }),

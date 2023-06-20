@@ -17,17 +17,30 @@ namespace Core
         [SerializeField]
         public TextMeshProUGUI display;
 
-        public static Timer Instance;
+        public static Timer instance;
         public float startingTime { get; set; }
 
-        private bool timerIsRunning;
+        private bool _timerIsRunning;
+        public bool timerIsRunning
+        {
+            get => _timerIsRunning;
+            set
+            {
+                _timerIsRunning = value;
+                OnTimerIsRunning?.Invoke(timerIsRunning);
+            }
+        }
+
+        public delegate void DialogueActive(bool mapOpened);
+        public static event DialogueActive OnTimerIsRunning;
+
         private bool isPlayingClockSound;
 
         private void Awake()
         {
-            if (Instance == null)
+            if (instance == null)
             {
-                Instance = this;
+                instance = this;
             }
             else
             {
@@ -38,6 +51,7 @@ namespace Core
         private void Start()
         {
             StartTimer();
+            DisplayTime(time);
 
             EnemyBase.OnEnemyKilled += AddEnemyTime;
         }

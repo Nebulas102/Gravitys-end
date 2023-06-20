@@ -63,12 +63,6 @@ namespace UI.Shop
             shopItems.Add(shopItem);
         }
 
-        public void RemoveItem(GameObject shopItem)
-        {
-            // Spawn a new random item if any items remain
-            SpawnRandomItem(FirstEmptyItem());
-        }
-
         private GameObject FirstEmptyItem()
         {
             return shopItems.Find(item => item.GetComponent<ShopItem>().item == null);

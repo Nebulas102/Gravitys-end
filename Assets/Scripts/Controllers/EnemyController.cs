@@ -64,11 +64,6 @@ namespace Controllers
                 return;
             }
 
-            if (target.GetComponent<Character>().attackCount >= 4)
-            {
-                StartCoroutine(PerformKnockback(target.forward));
-            }
-
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,
                     LayerMask.GetMask("Entity"), QueryTriggerInteraction.Ignore))
@@ -112,15 +107,15 @@ namespace Controllers
             Gizmos.DrawWireSphere(transform.position, lookRadius / 2);
         }
 
-        private IEnumerator PerformKnockback(Vector3 knockbackDirection)
-        {
+        public IEnumerator PerformKnockback()
+        {   
             isKnockbackInProgress = true;
 
             // Disable kinematic to allow external forces to affect the enemy
             rb.isKinematic = false;
 
             // Apply the knockback force to the enemy's Rigidbody
-            rb.AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
+            rb.AddForce(target.forward * knockbackForce, ForceMode.Impulse);
 
             yield return new WaitForSeconds(knockbackDuration);
 
@@ -128,8 +123,6 @@ namespace Controllers
             rb.isKinematic = true;
 
             isKnockbackInProgress = false;
-
-            target.GetComponent<Character>().attackCount = 0;
         }
     }
 }

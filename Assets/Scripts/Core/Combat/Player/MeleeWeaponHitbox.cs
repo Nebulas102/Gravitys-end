@@ -1,3 +1,5 @@
+using Controllers;
+using Controllers.Player;
 using Core.Enemy;
 using UI.Tokens;
 using UnityEngine;
@@ -9,6 +11,13 @@ public class MeleeWeaponHitbox : MonoBehaviour
 
     [HideInInspector]
     public bool allowAttack = false;
+
+    private Character player;
+
+    private void Start()
+    {
+        player = PlayerManager.Instance.player.GetComponent<Character>();
+    }
 
     public void SetDamageHitbox(int _minDamage, int _maxDamage)
     {
@@ -23,8 +32,15 @@ public class MeleeWeaponHitbox : MonoBehaviour
         int maxBaseDamage = (int)Mathf.Round(maxDamage * damageMod);
 
         if (other.CompareTag("Enemy") && allowAttack)
-        {
+        {   
+            EnemyController enemyController = other.GetComponent<EnemyController>();
+
             other.GetComponent<EnemyBase>().TakeDamage(baseDamage, maxBaseDamage, 0);
+
+            if (player.attackCount >= 4 && !other.GetComponent<EnemyController>().isKnockbackInProgress)
+            {
+                enemyController.StartCoroutine(enemyController.PerformKnockback());
+            }
         }
 
         if (other.CompareTag("Boss") && allowAttack)

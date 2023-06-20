@@ -11,11 +11,13 @@ namespace BehaviorTree.Tasks
     {
         private Transform _target;
         private NavMeshAgent _agent;
+        private EnemyController _enemyController;
 
-        public TaskFollow(Transform target, NavMeshAgent agent)
+        public TaskFollow(Transform target, NavMeshAgent agent, EnemyController enemyController)
         {
             _target = target;
             _agent = agent;
+            _enemyController = enemyController;
         }
 
         public override NodeState Evaluate()
@@ -24,6 +26,8 @@ namespace BehaviorTree.Tasks
 
             if (destinationValid)
             {
+                _enemyController.enemyAnimator.SetBool("stand_shoot", false);
+                _enemyController.enemyAnimator.SetBool("run_shoot", true);
                 state = NodeState.RUNNING;
             }
             else

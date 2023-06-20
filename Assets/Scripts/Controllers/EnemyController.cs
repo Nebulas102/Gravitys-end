@@ -41,6 +41,8 @@ namespace Controllers
             
             rb = GetComponent<Rigidbody>();
 
+            enemyAnimator = GetComponentInChildren<Animator>();
+
             // See PlayerManager.cs for explanation
             target = PlayerManager.Instance.player.transform;
             agent = GetComponent<NavMeshAgent>();

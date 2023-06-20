@@ -59,6 +59,9 @@ namespace Core.StageGeneration.Stage
         [HideInInspector]
         public List<Cell> cells;
 
+        [SerializeField]
+        public float maxYieldTime;
+
         private readonly List<Hallway> _mapHallways = new();
 
         private readonly List<GameObject> _mapRooms = new();
@@ -67,8 +70,12 @@ namespace Core.StageGeneration.Stage
 
         private GameObject _stageParent;
 
+        private float startTime;
+
         private void Start()
         {
+            startTime = Time.time;
+
             //Create empty game object called Stage to store the cells in
             _stageParent = new GameObject("Stage");
 
@@ -114,6 +121,8 @@ namespace Core.StageGeneration.Stage
             _mapHallways.Add(hallway.GetComponent<Hallway>());
 
             var _bossRoom = SpawnBossRoom(hallway);
+
+            Debug.Log(Time.time - startTime);
 
             yield return StartCoroutine(HallwayGenerator(_spawnRoom));
         }

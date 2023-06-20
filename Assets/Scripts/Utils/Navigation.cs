@@ -9,6 +9,11 @@ namespace Utils
         [Header("Loading (Async only)")]
         [SerializeField]
         private GameObject loadingScreen;
+        [SerializeField]
+        private GameObject loader;
+
+        [SerializeField]
+        private Animator animator;
 
         [SerializeField]
         [Range(0f, 10f)]
@@ -55,9 +60,18 @@ namespace Utils
 
             // Don't allow the scene to activate until ready.
             operation.allowSceneActivation = false;
-            loadingScreen.SetActive(true);
 
-            // Wait until the scene is loaded.
+            //Start loading transition
+            loadingScreen.SetActive(true);
+            animator.SetTrigger("FadeOut");
+
+            // Wait for the animation to end
+            while (animator.GetCurrentAnimatorStateInfo(0).Equals(0))
+                yield return null;
+
+            //Show the loader
+            loader.SetActive(true);
+
             while (!operation.isDone)
             {
                 // If it hasn't reached the minimum loading time yet, wait for it.

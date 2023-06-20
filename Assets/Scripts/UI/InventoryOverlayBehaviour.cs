@@ -53,6 +53,7 @@ namespace UI
         private void OnToggleInventory()
         {
             if (PauseMenu.instance.isPaused) return;
+            if (DialogueManager.instance.dialogueActive) return;
 
             inventoryOpened = !overlay.activeSelf;
             Time.timeScale = inventoryOpened ? 0f : 1f;

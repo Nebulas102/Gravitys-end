@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using Controllers;
+using Controllers.Player;
 using Core.Enemy;
 using UnityEngine;
 
 
 public class BannermanController : MonoBehaviour
 {
-    public GameObject bannerSphere;
     [SerializeField]
-    private int healAmount = 10;
+    private float healEnemyAmount = 10f;
     [SerializeField]
-    private float healCooldown = 4;
+    private float healPlayerAmount = 5f;
+    [SerializeField]
+    private float healCooldown = 4f;
     public bool healingAllowed;
 
     private void OnTriggerEnter(Collider other)
@@ -22,7 +24,16 @@ public class BannermanController : MonoBehaviour
 
             if (enemyBase != null)
             {
-                StartCoroutine(Healing(enemyBase));
+                StartCoroutine(HealEnemy(enemyBase));
+            }
+        }
+        else if (other.gameObject.CompareTag("Player") && healingAllowed)
+        {
+            PlayerStatsController playerStats = other.GetComponent<PlayerStatsController>();
+
+            if (playerStats != null)
+            {
+                StartCoroutine(HealPlayer(playerStats));
             }
         }
     }
@@ -35,16 +46,25 @@ public class BannermanController : MonoBehaviour
 
             if (enemyBase != null)
             {
-                StopCoroutine(Healing(enemyBase));
+                StopCoroutine(HealEnemy(enemyBase));
             }
         }
     }
 
-    private IEnumerator Healing(EnemyBase enemyBase)
+    private IEnumerator HealEnemy(EnemyBase enemyBase)
     {
         while (true)
         {
-            enemyBase.health += healAmount;
+            enemyBase.health += healEnemyAmount;
+            yield return new WaitForSeconds(healCooldown);
+        }
+    }
+
+    private IEnumerator HealPlayer(PlayerStatsController playerStats)
+    {
+        while (true)
+        {
+            playerStats.HealPlayer(healPlayerAmount);
             yield return new WaitForSeconds(healCooldown);
         }
     }

@@ -15,6 +15,9 @@ namespace UI
         [SerializeField]
         private GameObject entryButton;
 
+        [SerializeField]
+        private GameObject shop;
+
         private InputManager _inputManager;
         private bool _inventoryOpened;
 
@@ -29,6 +32,7 @@ namespace UI
                 OnInventoryToggle?.Invoke(value);
                 overlay.SetActive(inventoryOpened);
                 EventSystem.current.SetSelectedGameObject(value ? entryButton : null);
+                shop.SetActive(value);
             }
         }
 

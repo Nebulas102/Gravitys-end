@@ -7,7 +7,10 @@ namespace Core.Player
     public class DashTimer : MonoBehaviour
     {
         [SerializeField]
-        private TextMeshProUGUI timer;
+        private GameObject available;
+
+        [SerializeField]
+        private GameObject cooldown;
 
         private float _cooldown;
 
@@ -15,8 +18,7 @@ namespace Core.Player
 
         private void Start()
         {
-            //Cant get player on start because this UI element runs earlier than the spawnroom where the player is
-            // player = PlayerManager.instance.player;
+            cooldown.SetActive(false);
         }
 
         private void Update()
@@ -24,7 +26,6 @@ namespace Core.Player
             if (_player == null)
             {
                 _player = PlayerManager.Instance.player;
-
                 _cooldown = _player.GetComponent<Dashing>().GetDashTimer();
             }
             else
@@ -32,9 +33,15 @@ namespace Core.Player
                 var dashAvailable = _player.GetComponent<Dashing>().GetDashAvailable();
 
                 if (dashAvailable)
-                    timer.text = "Dash";
+                {
+                    available.SetActive(true);
+                    cooldown.SetActive(false);
+                }
                 else
-                    timer.text = "Cooldown";
+                {
+                    available.SetActive(false);
+                    cooldown.SetActive(true);
+                }
             }
         }
     }

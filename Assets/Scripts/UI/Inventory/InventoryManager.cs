@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UI.Shop;
 using UnityEngine;
 
 namespace UI.Inventory
 {
-    public class InventoryManager : MonoBehaviour, IShopPlayer
+    public class InventoryManager : MonoBehaviour
     {
         [Header("Equipped Slots")]
         [SerializeField]
@@ -118,27 +119,5 @@ namespace UI.Inventory
             slot.SetItem(item, item.type == ItemType.WEAPON);
             return true;
         }
-
-        public void PurchasedItem(Items.ItemType itemType) 
-        {
-            foreach (var weapon in weapons) {
-                if (weapon.prefab.name.Replace(" ", "") == itemType.ToString()) {
-                    var itemBought = Instantiate(weapon);
-                    itemBought.PickupShop();
-                }
-            }
-        }
-
-        public bool TrySpendTimeAmount(float spendTimeAmount) 
-        {
-            float currentTime = Core.Timer.instance.GetTime();
-            if (currentTime > spendTimeAmount*60) {
-                Core.Timer.instance.ModifyTime(currentTime - spendTimeAmount*60);
-                return true;
-            } else {
-                return false;
-            }
-        }
-
     }
 }

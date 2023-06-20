@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using UI;
 
 public class DialogueManager : MonoBehaviour
 {
     // Singleton for DialogueManager
-    public static DialogueManager Instance;
+    public static DialogueManager instance;
 
     //Make sure the the name of the character portrait is the same as the character name
     public TextMeshProUGUI characterNameText;
@@ -20,8 +21,20 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<string> sentences;
 
-    [HideInInspector]
-    public bool dialogueActive;
+    private bool _dialogueActive;
+
+    public bool dialogueActive
+    {
+        get => _dialogueActive;
+        set
+        {
+            _dialogueActive = value;
+            OnDialgueActive?.Invoke(dialogueActive);
+        }
+    }
+
+    public delegate void DialogueActive(bool mapOpened);
+    public static event DialogueActive OnDialgueActive;
 
     private bool textIsTyping;
     private string currentSentence;
@@ -29,8 +42,8 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        if (Instance == null)
-            Instance = this;
+        if (instance == null)
+            instance = this;
         else
             Destroy(gameObject);
 

@@ -45,7 +45,7 @@ public class MapUIManager : MonoBehaviour
     void Update()
     {
         _inputManager.UI.Enable();
-        if (_inputManager.UI.ToggleMap.triggered && !(DialogueManager.Instance.dialogueActive || PauseMenu.instance.isPaused))
+        if (_inputManager.UI.ToggleMap.triggered && !(DialogueManager.instance.dialogueActive || PauseMenu.instance.isPaused))
         {
             ToggleMap();
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 using UI;
+using Core;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class DialogueManager : MonoBehaviour
         set
         {
             _dialogueActive = value;
+            Timer.instance.timerIsRunning = !value;
             OnDialgueActive?.Invoke(dialogueActive);
         }
     }

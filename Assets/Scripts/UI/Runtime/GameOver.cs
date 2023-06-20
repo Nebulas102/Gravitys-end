@@ -16,8 +16,8 @@ namespace UI.Runtime
 
         public void PlayerGameOver()
         {
-            GameStats.Instance.timePlayed = Timer.Instance.startingTime - Timer.Instance.time;
-            GameStats.Instance.timeLeft = Timer.Instance.time;
+            GameStats.Instance.timePlayed = Timer.instance.startingTime - Timer.instance.time;
+            GameStats.Instance.timeLeft = Timer.instance.time;
             SceneManager.LoadScene("GameOverScene", LoadSceneMode.Single);
         }
     }

@@ -131,9 +131,9 @@ namespace UI.Inventory
 
         public bool TrySpendTimeAmount(float spendTimeAmount) 
         {
-            float currentTime = Core.Timer.Instance.GetTime();
+            float currentTime = Core.Timer.instance.GetTime();
             if (currentTime > spendTimeAmount*60) {
-                Core.Timer.Instance.ModifyTime(currentTime - spendTimeAmount*60);
+                Core.Timer.instance.ModifyTime(currentTime - spendTimeAmount*60);
                 return true;
             } else {
                 return false;

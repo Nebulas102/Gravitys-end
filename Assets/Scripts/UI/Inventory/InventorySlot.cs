@@ -55,6 +55,7 @@ namespace UI.Inventory
         public void SetItem(Item obj, bool weapon = false)
         {
             ToggleItem(obj.gameObject, obj.icon);
+            obj.IsInInventory = true;
             obj.RenderItem(false);
 
             if (obj.gameObject.CompareTag("Ranged"))

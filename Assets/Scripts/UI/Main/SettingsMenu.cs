@@ -10,13 +10,14 @@ namespace Main.UI
 {
     public class SettingsMenu : MonoBehaviour
     {
-        [SerializeField] private Toggle vsyncToggle;
-        [SerializeField] private TMP_Dropdown resolutionDropdown;
-        [SerializeField] private TMP_Dropdown qualityDropdown;
+        [SerializeField]
+        private Toggle vsyncToggle;
+
+        [SerializeField]
+        private TMP_Dropdown resolutionDropdown;
 
         private Resolution[] resolutions;
         private List<Resolution> filteredResolutions;
-
         private float currentRefreshRate;
         private int currentResolutionIndex = 0;
 
@@ -26,7 +27,6 @@ namespace Main.UI
             vsyncToggle.isOn = PlayerPrefs.GetInt("VSyncEnabled", 0) == 1;
 
             InitResolutions();
-            InitQualityLevels();
         }
 
         public void OnVSyncToggle()
@@ -70,45 +70,10 @@ namespace Main.UI
             resolutionDropdown.RefreshShownValue();
         }
 
-        private void InitQualityLevels()
-        {
-            string[] qualityLevels = QualitySettings.names;
-            List<string> options = new List<string>(qualityLevels);
-
-            qualityDropdown.ClearOptions();
-            qualityDropdown.AddOptions(options);
-
-            // Get the saved quality level index from PlayerPrefs
-            int savedQualityIndex = PlayerPrefs.GetInt("QualityLevel", -1);
-
-            // If a valid saved index exists, set it as the default selection
-            if (savedQualityIndex != -1 && savedQualityIndex < qualityLevels.Length)
-            {
-                qualityDropdown.value = savedQualityIndex;
-            }
-            else
-            {
-                // Otherwise, find the index of the "High" quality level and set it as the default selection
-                int defaultIndex = Array.IndexOf(qualityLevels, "High");
-                if (defaultIndex != -1)
-                {
-                    qualityDropdown.value = defaultIndex;
-                }
-            }
-
-            qualityDropdown.RefreshShownValue();
-        }
-
         public void SetResolution(int resolutionIndex)
         {
             Resolution resolution = filteredResolutions[resolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, true);
-        }
-
-        public void SetQualityLevel(int qualityIndex)
-        {
-            PlayerPrefs.SetInt("QualityLevel", qualityIndex);
-            PlayerPrefs.Save();
         }
 
         public void SetFullscreen(bool isFullScreen)

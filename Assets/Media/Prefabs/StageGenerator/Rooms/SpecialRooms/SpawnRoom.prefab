@@ -1656,6 +1656,7 @@ GameObject:
   - component: {fileID: 5931777429515376512}
   - component: {fileID: 3613239381333316622}
   - component: {fileID: 693227207466884444}
+  - component: {fileID: 8584713125811912163}
   m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
@@ -1741,6 +1742,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8584713125811912163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409641856201544469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a012ed2b201b99f4782cb92c7a10c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 6938870701564385626}
+  - {fileID: 6596837304081969849}
+  - {fileID: 6582218883232301715}
 --- !u!1 &446948159628645248
 GameObject:
   m_ObjectHideFlags: 0
@@ -8347,11 +8364,11 @@ Transform:
   - {fileID: 5483905675859573674}
   - {fileID: 2640431124489561847}
   - {fileID: 629033855065510574}
-  - {fileID: 6282519681146115780}
   - {fileID: 6509252451606771542}
   - {fileID: 2552633321085648369}
   - {fileID: 8837605314199777299}
   - {fileID: 6520018702988020951}
+  - {fileID: 6282519681146115780}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23368,7 +23385,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
       propertyPath: m_LocalPosition.x

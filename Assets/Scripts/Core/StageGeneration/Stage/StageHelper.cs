@@ -196,9 +196,7 @@ namespace Core.StageGeneration.Stage
             var centerCell = CalculateCenterStage();
 
             // Build the NavMesh
-            var data = new NavMeshData();
-
-            data = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(
+            var data = NavMeshBuilder.BuildNavMeshData(settings, sources, new Bounds(
                 centerCell.gameObject.transform.position,
                 new Vector3(_gridX * _offset, 30f, _gridZ * _offset)), Vector3.zero, Quaternion.identity);
             NavMesh.AddNavMeshData(data);

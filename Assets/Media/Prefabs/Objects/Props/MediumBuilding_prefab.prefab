@@ -2085,6 +2085,7 @@ GameObject:
   m_Component:
   - component: {fileID: 354375081915182181}
   - component: {fileID: 6238182648291472689}
+  - component: {fileID: -3905497435648466991}
   m_Layer: 0
   m_Name: MediumBuilding_prefab
   m_TagString: Untagged
@@ -2173,6 +2174,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10.5, y: 4, z: 10.5}
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!208 &-3905497435648466991
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862755708124518674}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.25, y: 2, z: 5.25}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1207530230263165657
 GameObject:
   m_ObjectHideFlags: 0

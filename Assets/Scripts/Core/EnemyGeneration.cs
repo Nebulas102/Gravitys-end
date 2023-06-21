@@ -18,12 +18,6 @@ namespace Core
         private int minGroupSize;
         [SerializeField]
         private int maxGroupSize;
-        
-
-        void Start()
-        {
-
-        }
 
         IEnumerator EnemyDrop()
         {
@@ -37,18 +31,18 @@ namespace Core
                 spawnPosition = availableSpawnPoints[randomIndex].position;
                 GameObject enemyType = enemy[Random.Range(0, enemy.Length)];
 
-                for (int _ = 0; _ < groupSize; _++)
+                for (int j = 0; j < groupSize; j++)
                 {
                     spawnPosition.x += Random.Range(-1f, 1f);
                     Instantiate(enemyType, spawnPosition, Quaternion.identity);
-                    yield return new WaitForSeconds(0.1f);
+                    yield return null;
                 }
 
                 availableSpawnPoints.RemoveAt(randomIndex);
                 spawnPointCount--;
+                yield return null;
             }
         }
-
 
         public void SpawnEnemy()
         {

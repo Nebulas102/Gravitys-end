@@ -8310,7 +8310,6 @@ GameObject:
   - component: {fileID: 8852711044157568988}
   - component: {fileID: 3488478737702702937}
   - component: {fileID: 1711132120465147707}
-  - component: {fileID: 8216608313479407764}
   m_Layer: 0
   m_Name: SpawnRoom
   m_TagString: Room
@@ -8398,29 +8397,6 @@ MonoBehaviour:
   cells: []
   bossDoor: {fileID: 75673497736359809}
   bossRoomHallway: {fileID: 8401705454308091190, guid: 5ae8b3a858ab73a4e9a47f33578032bb, type: 3}
---- !u!114 &8216608313479407764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3939904267268250419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4d6156d86c414148ac6c27792ac688c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue:
-    name: Mysterious Voice
-    sentences:
-    - Welcome to Gravity's End
-    - In this game you'll need to fight your way through the halls of this ship and
-      get to the center.
-    - If you don't make it in time, the ship explodes and you'll start from the beginning.
-    - The way to the next area is ahead, but the door is locked.
-    - Find the key and return here to move on.
-    - You can move using WASD, pick up items with f and attack with the left mouse
-      button
 --- !u!1 &4041880585985287172
 GameObject:
   m_ObjectHideFlags: 0

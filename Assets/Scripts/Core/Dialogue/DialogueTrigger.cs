@@ -8,13 +8,16 @@ public class DialogueTrigger : MonoBehaviour
 
     private bool hasTriggered;
 
-    public void TriggerDialogue()
+    public void TriggerDialogue(DialogueManager dialogueManager)
     {
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        if (dialogueManager == null)
+            FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        else
+            dialogueManager.StartDialogue(dialogue);
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!hasTriggered)
+        if (!hasTriggered && other.gameObject.CompareTag("Player"))
         {
             FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
             hasTriggered = true;

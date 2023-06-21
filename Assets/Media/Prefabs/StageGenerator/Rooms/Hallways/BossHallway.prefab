@@ -8578,7 +8578,7 @@ GameObject:
   - component: {fileID: 3148462070750381280}
   - component: {fileID: 1296068224964469677}
   - component: {fileID: 5522493199717001013}
-  - component: {fileID: 3278761121374964572}
+  - component: {fileID: 2722844603600524824}
   m_Layer: 0
   m_Name: BossHallway
   m_TagString: Room
@@ -8630,7 +8630,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 25, y: 5, z: 45}
   m_Center: {x: 0, y: 2.5, z: 0}
---- !u!114 &3278761121374964572
+--- !u!114 &2722844603600524824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8639,16 +8639,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8401705454308091190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bf646c2b79d454438d2952781577290, type: 3}
+  m_Script: {fileID: 11500000, guid: 6681a03a35079b34a9b062f275764a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 25
-  sizeY: 5
-  sizeZ: 44.99999
+  sizeX: 0
+  sizeY: 0
+  sizeZ: 0
   doors: []
   weight: 0
   doorReplacement: {fileID: 0}
   cells: []
+  endDoor: {fileID: 4717344258302094663}
 --- !u!1 &8513266692265850063
 GameObject:
   m_ObjectHideFlags: 0
@@ -9920,6 +9921,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f46d0301190341ab86042ecc2abb7f6, type: 3}
+--- !u!1 &4717344258302094663 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4544696922028587842, guid: 8f46d0301190341ab86042ecc2abb7f6, type: 3}
+  m_PrefabInstance: {fileID: 9107789581092132357}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6620923307786803864 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2704236707644738717, guid: 8f46d0301190341ab86042ecc2abb7f6, type: 3}

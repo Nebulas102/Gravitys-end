@@ -415,7 +415,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 207
+  m_VersionIndex: 210
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -651,6 +651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WallBlock: {fileID: 3256389696473021489, guid: bd3faffee6d2743769c4ed7cce8c2432, type: 3}
   DoorModelObject: {fileID: 8910419528027670285}
+  wallBlockObject: {fileID: 0}
 --- !u!1 &108283143568927540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1051,7 +1052,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3663
+  m_VersionIndex: 3666
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1406,7 +1407,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 763
+  m_VersionIndex: 766
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1642,6 +1643,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WallBlock: {fileID: 3256389696473021489, guid: bd3faffee6d2743769c4ed7cce8c2432, type: 3}
   DoorModelObject: {fileID: 6834207257669202178}
+  wallBlockObject: {fileID: 0}
 --- !u!1 &409641856201544469
 GameObject:
   m_ObjectHideFlags: 0
@@ -5009,7 +5011,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3663
+  m_VersionIndex: 3666
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5327,7 +5329,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 651
+  m_VersionIndex: 654
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5847,7 +5849,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3663
+  m_VersionIndex: 3666
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -6580,7 +6582,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 651
+  m_VersionIndex: 654
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -7917,6 +7919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WallBlock: {fileID: 3256389696473021489, guid: bd3faffee6d2743769c4ed7cce8c2432, type: 3}
   DoorModelObject: {fileID: 945479825854694412}
+  wallBlockObject: {fileID: 0}
 --- !u!1 &3872904104226902080
 GameObject:
   m_ObjectHideFlags: 0
@@ -8344,6 +8347,7 @@ Transform:
   - {fileID: 5483905675859573674}
   - {fileID: 2640431124489561847}
   - {fileID: 629033855065510574}
+  - {fileID: 6282519681146115780}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8392,11 +8396,11 @@ MonoBehaviour:
   doors:
   - {fileID: 3849638580075858016}
   - {fileID: 303493231293065467}
+  - {fileID: 75673497736359809}
   weight: 0
   doorReplacement: {fileID: 0}
   cells: []
-  bossDoor: {fileID: 75673497736359809}
-  bossRoomHallway: {fileID: 8401705454308091190, guid: 5ae8b3a858ab73a4e9a47f33578032bb, type: 3}
+  bossHallwayDoor: {fileID: 75673497736359809}
 --- !u!1 &4041880585985287172
 GameObject:
   m_ObjectHideFlags: 0
@@ -9772,7 +9776,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 33
+  m_VersionIndex: 36
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -11594,7 +11598,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 33
+  m_VersionIndex: 36
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -13093,7 +13097,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2477
+  m_VersionIndex: 2480
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -13866,7 +13870,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3663
+  m_VersionIndex: 3666
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -14304,7 +14308,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 763
+  m_VersionIndex: 766
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -15030,7 +15034,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2477
+  m_VersionIndex: 2480
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -18704,7 +18708,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 207
+  m_VersionIndex: 210
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -19904,7 +19908,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 763
+  m_VersionIndex: 766
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -21068,7 +21072,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 763
+  m_VersionIndex: 766
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -22704,6 +22708,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6631119692106547054}
     m_Modifications:
+    - target: {fileID: 1445582941014855406, guid: 8f46d0301190341ab86042ecc2abb7f6, type: 3}
+      propertyPath: OpenModel
+      value: 
+      objectReference: {fileID: 6413274186353656663, guid: 97cb0ed09fd1f4f4cbf155585d0f9ba8, type: 3}
     - target: {fileID: 2704236707644738717, guid: 8f46d0301190341ab86042ecc2abb7f6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -23223,6 +23231,68 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1001 &7068678927421630102
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8185884245627623752}
+    m_Modifications:
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.704453
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.016
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.633948
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4502703498817465064, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+      propertyPath: m_Name
+      value: KeyCard
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+--- !u!4 &6282519681146115780 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3834533974233591890, guid: d407c06922829054bbd206b7a84b09d6, type: 3}
+  m_PrefabInstance: {fileID: 7068678927421630102}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7300816733212534904
 PrefabInstance:
   m_ObjectHideFlags: 0

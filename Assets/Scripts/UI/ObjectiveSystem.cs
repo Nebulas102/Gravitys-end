@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.Enemy;
+using Core.StageGeneration.Stage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -82,6 +83,8 @@ namespace UI
         public void HandleKeycardCollected()
         {
             CompleteObjective(ObjectiveTask.COLLECT_KEY);
+
+            StageHelper.Instance.spawnRoom.bossHallwayDoor.GetComponent<RoomEditor.DoorBlock>().OpenDoor();
         }
 
         public void HandleEnemyKilled(EnemyBase enemy)

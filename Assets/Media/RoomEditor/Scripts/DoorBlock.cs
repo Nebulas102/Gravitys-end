@@ -8,16 +8,28 @@ namespace RoomEditor {
 		public GameObject WallBlock;
 		public GameObject DoorModelObject;
 
+		[SerializeField]
+		private GameObject wallBlockObject;
+
 		public void CloseDoor() {
+			gameObject.SetActive(true);
+
 			// Closes the door model
 			DoorModelObject.GetComponent<DoorModel>().Close();
 
 			// Creates a wall block
-			GameObject lWallBlockObject = Instantiate(WallBlock, this.transform.position, this.transform.rotation, this.transform.parent);
-			lWallBlockObject.transform.localScale = this.transform.localScale;
+			wallBlockObject = Instantiate(WallBlock, this.transform.position, this.transform.rotation, this.transform.parent);
+			wallBlockObject.transform.localScale = this.transform.localScale;
+		}
 
-			// Destroys self
-			Destroy(this);
+		public void OpenDoor() {
+			// Closes the door model
+			DoorModelObject.GetComponent<DoorModel>().Open();
+
+			// destroyes the wall block
+			Destroy(wallBlockObject);
+
+			gameObject.SetActive(false);
 		}
 	}
 }

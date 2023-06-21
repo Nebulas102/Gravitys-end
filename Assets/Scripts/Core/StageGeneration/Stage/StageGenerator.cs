@@ -66,9 +66,9 @@ namespace Core.StageGeneration.Stage
         [SerializeField]
         public float maxYieldTime;
 
-        private readonly List<Hallway> _mapHallways = new();
+        public readonly List<GameObject> mapHallways = new();
 
-        private readonly List<GameObject> _mapRooms = new();
+        public readonly List<GameObject> mapRooms = new();
 
         public static StageGenerator instance;
 
@@ -129,7 +129,7 @@ namespace Core.StageGeneration.Stage
             var roomCells = SetRoomCells(hallway, posX, posZ);
             hallway.GetComponent<Room>().cells = roomCells;
 
-            _mapHallways.Add(hallway.GetComponent<Hallway>());
+            mapHallways.Add(hallway);
 
             var _bossRoom = SpawnBossRoom(hallway);
 
@@ -225,7 +225,7 @@ namespace Core.StageGeneration.Stage
 
         private IEnumerator GenerateRooms()
         {
-            StartCoroutine(_roomGenerator.BranchRoomGeneration(_mapHallways, minWeightRoomsBranch, maxWeightRoomsBranch, startTime));
+            StartCoroutine(_roomGenerator.BranchRoomGeneration(mapHallways, minWeightRoomsBranch, maxWeightRoomsBranch, startTime));
             while (_roomGenerator.coroutineRunning == true)
                 yield return null;
 
@@ -234,7 +234,7 @@ namespace Core.StageGeneration.Stage
 
         private IEnumerator ReplaceDoors()
         {
-            foreach (var room in _mapRooms)
+            foreach (var room in mapRooms)
                 StageHelper.ReplaceAllDoors(room);
             yield return StartCoroutine(StageNavMeshBaker());
         }
@@ -247,14 +247,14 @@ namespace Core.StageGeneration.Stage
 
         private IEnumerator StageEnemyGeneration()
         {
-            foreach (var room in _mapRooms.Where(room => room.GetComponent<EnemyGeneration>() is not null))
+            foreach (var room in mapRooms.Where(room => room.GetComponent<EnemyGeneration>() is not null))
                 room.GetComponent<EnemyGeneration>().SpawnEnemy();
             yield return StartCoroutine(StageChestGeneration());
         }
 
         private IEnumerator StageChestGeneration()
         {
-            foreach (var room in _mapRooms.Where(room => room.GetComponent<ChestSpawner>() is not null))
+            foreach (var room in mapRooms.Where(room => room.GetComponent<ChestSpawner>() is not null))
                 room.GetComponent<ChestSpawner>().SpawnChest();
             Navigation.instance.StageGenComplete = true;
             yield return null;
@@ -274,9 +274,11 @@ namespace Core.StageGeneration.Stage
             room.GetComponent<Room>().cells = roomCells;
             room.name = "Spawn Room";
 
-            room.GetComponent<Room>().GetDoors().ForEach(d => d.SetActive(false));
+            room.GetComponent<Room>().GetDoors().Where(d => d != room.GetComponent<SpawnRoom>().bossHallwayDoor).ToList().ForEach(d => d.SetActive(false));
 
-            room.GetComponent<SpawnRoom>().bossHallwayDoor.GetComponent<RoomEditor.DoorBlock>().CloseDoor();
+            StageHelper.Instance.spawnRoom = room.GetComponent<SpawnRoom>();
+
+            mapRooms.Add(room);
 
             return room;
         }
@@ -360,7 +362,7 @@ namespace Core.StageGeneration.Stage
             var roomCells = SetRoomCells(chosenHallway, posX, posZ);
             _hallway.GetComponent<Room>().cells = roomCells;
 
-            _mapHallways.Add(_hallway.GetComponent<Hallway>());
+            mapHallways.Add(_hallway.gameObject);
 
             return _hallway;
         }
@@ -373,7 +375,7 @@ namespace Core.StageGeneration.Stage
             var roomCells = SetRoomCells(hallwayEnd, posX, posZ);
             _hallway.GetComponent<Room>().cells = roomCells;
 
-            _mapHallways.Add(_hallway.GetComponent<Hallway>());
+            mapHallways.Add(_hallway.gameObject);
         }
 
         //Spawn cell in the grid on the calculated location
@@ -426,7 +428,7 @@ namespace Core.StageGeneration.Stage
 
         public void AddRoomToMap(GameObject room)
         {
-            _mapRooms.Add(room);
+            mapRooms.Add(room);
         }
     }
 }

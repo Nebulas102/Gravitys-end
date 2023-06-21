@@ -1,5 +1,7 @@
+using System.Linq;
 using Cinemachine;
 using Core.StageGeneration.Rooms.RoomTypes;
+using Core.StageGeneration.Stage;
 using UI;
 using UnityEngine;
 
@@ -15,6 +17,7 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
 
         private GameObject bossRoom;
         private GameObject player;
+        private BossHallway bossHallway;
 
         private CinemachineVirtualCamera topDownCamera;
 
@@ -24,6 +27,8 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
             player = PlayerManager.Instance.player;
 
             bossFightCanvas.enabled = false;
+
+            bossHallway = FindObjectOfType<BossHallway>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -37,6 +42,7 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
                 TeleportPlayer();
 
                 ReplaceDoor(_bossRoom.GetDoors()[0]);
+                bossHallway.endDoor.GetComponent<DoorModel>().Close();
 
                 bossFightCanvas.enabled = true;
 

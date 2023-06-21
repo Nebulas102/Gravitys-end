@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core.StageGeneration.Rooms;
+using Core.StageGeneration.Rooms.RoomTypes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -29,6 +30,9 @@ namespace Core.StageGeneration.Stage
         private static GameObject _keyRoom;
         private static List<Cell> _cells;
         private static List<GameObject> _rooms;
+
+        [HideInInspector]
+        public SpawnRoom spawnRoom;
 
         private static List<NavMeshBuildSource> sources;
 

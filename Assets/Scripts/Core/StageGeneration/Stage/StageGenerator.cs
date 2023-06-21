@@ -6,6 +6,7 @@ using Core.StageGeneration.Rooms;
 using Core.StageGeneration.Rooms.RoomTypes;
 using Core.StageGeneration.Rooms.Util;
 using UnityEngine;
+using Utils;
 
 namespace Core.StageGeneration.Stage
 {
@@ -62,16 +63,30 @@ namespace Core.StageGeneration.Stage
         [HideInInspector]
         public List<Cell> cells;
 
+        [SerializeField]
+        public float maxYieldTime;
+
         private readonly List<Hallway> _mapHallways = new();
 
         private readonly List<GameObject> _mapRooms = new();
+
+        public static StageGenerator instance;
 
         private RoomGenerator _roomGenerator;
 
         private GameObject _stageParent;
 
+        private float startTime;
+
         private void Start()
         {
+            if (instance == null)
+                instance = this;
+            else
+                Destroy(gameObject);
+
+            startTime = Time.time;
+
             //Create empty game object called Stage to store the cells in
             _stageParent = new GameObject("Stage");
 
@@ -89,7 +104,7 @@ namespace Core.StageGeneration.Stage
 
             InitializeRoomSizes();
 
-            _roomGenerator = new RoomGenerator();
+            _roomGenerator = RoomGenerator.instance;
 
             //Start spawning bossroom
             StartCoroutine(BossRoomGenerator());
@@ -201,6 +216,8 @@ namespace Core.StageGeneration.Stage
                 }
 
                 latestHallway = CreateHallway(posX, posZ, chosenHallway);
+
+                yield return null;
             }
 
             yield return StartCoroutine(GenerateRooms());
@@ -208,7 +225,9 @@ namespace Core.StageGeneration.Stage
 
         private IEnumerator GenerateRooms()
         {
-            _roomGenerator.BranchRoomGeneration(_mapHallways, minWeightRoomsBranch, maxWeightRoomsBranch);
+            StartCoroutine(_roomGenerator.BranchRoomGeneration(_mapHallways, minWeightRoomsBranch, maxWeightRoomsBranch, startTime));
+            while (_roomGenerator.coroutineRunning == true)
+                yield return null;
 
             yield return StartCoroutine(ReplaceDoors());
         }
@@ -237,6 +256,7 @@ namespace Core.StageGeneration.Stage
         {
             foreach (var room in _mapRooms.Where(room => room.GetComponent<ChestSpawner>() is not null))
                 room.GetComponent<ChestSpawner>().SpawnChest();
+            Navigation.instance.StageGenComplete = true;
             yield return null;
         }
 

@@ -45,17 +45,16 @@ namespace Core.StageGeneration.Rooms
 
         public GameObject SetRoomData(int posX, int posZ, Quaternion rotation, StageHelper.RoomDirections direction, GameObject spawnDoor)
         {
-            gameObject.transform.position = new Vector3(posX, 0, posZ);
-            gameObject.transform.Rotate(new Vector3(0, rotation.y, 0));
+            transform.position = new Vector3(posX, 0, posZ);
+            transform.Rotate(new Vector3(0, rotation.y, 0));
 
             spawnDoor.SetActive(false);
 
-            gameObject.GetComponent<Room>().doors
-                .SingleOrDefault(d =>
+            doors.SingleOrDefault(d =>
                     d.GetComponent<Door>().GetDirection() == StageHelper.GetOppositeDirection(direction))
                 ?.SetActive(false);
-
-            GameObject.FindWithTag("StageGenerator").GetComponent<StageGenerator>().AddRoomToMap(gameObject);
+            
+            StageGenerator.instance.AddRoomToMap(gameObject);
 
             return gameObject;
         }
@@ -162,25 +161,21 @@ namespace Core.StageGeneration.Rooms
         {
             var room = gameObject.GetComponent<Room>();
 
-            if (room.doors is not null)
+            foreach (var door in room.doors)
             {
-                foreach (var door in room.doors)
-                {
-                    var doorCellX = room.cells.Select(mh => mh.x).Distinct()
-                        .ToArray()[door.GetComponent<Door>().roomPosXOffset];
-                    var doorCellZ = room.cells.Select(mh => mh.z).Distinct()
-                        .ToArray()[door.GetComponent<Door>().roomPosZOffset];
+                var doorCellX = room.cells.Select(mh => mh.x).Distinct()
+                    .ToArray()[door.GetComponent<Door>().roomPosXOffset];
+                var doorCellZ = room.cells.Select(mh => mh.z).Distinct()
+                    .ToArray()[door.GetComponent<Door>().roomPosZOffset];
 
-                    var doorCellRoom = StageHelper.GetCells()
-                        .SingleOrDefault(c => c.x == doorCellX && c.z == doorCellZ);
+                var doorCellRoom = StageHelper.GetCells()
+                    .SingleOrDefault(c => c.x == doorCellX && c.z == doorCellZ);
 
-                    if (doorCellRoom is null) continue;
-                    doorCellRoom.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
+                if (doorCellRoom is null) continue;
+                doorCellRoom.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
 
-                    door.GetComponent<Door>().cell = doorCellRoom;
-                }
+                door.GetComponent<Door>().cell = doorCellRoom;
             }
-
         }
 
         public bool CanPlace(int posX, int posZ)

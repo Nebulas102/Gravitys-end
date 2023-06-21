@@ -1,3 +1,4 @@
+using System.Linq;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -32,6 +33,9 @@ namespace Controllers.Player
         [HideInInspector]
         public int attackCount;
 
+        [HideInInspector]
+        public bool takingDamage;
+
         public StateMachine movementSM;
         public SprintState sprinting;
         public StandingState standing;
@@ -42,6 +46,9 @@ namespace Controllers.Player
         private bool _gamePaused;
 
         public LayerMask allowedLayers;
+
+        [Header("Effects")]
+        public ParticleSystem hitParticle;
 
 
         // Start is called before the first frame update

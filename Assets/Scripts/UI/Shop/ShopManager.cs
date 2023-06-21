@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 namespace UI.Shop
 {
@@ -22,6 +23,9 @@ namespace UI.Shop
 
         [SerializeField]
         private GameObject container;
+
+        [SerializeField]
+        private GameObject errorHandler;
 
         private List<GameObject> shopItems = new List<GameObject>();
 
@@ -66,6 +70,20 @@ namespace UI.Shop
         private GameObject FirstEmptyItem()
         {
             return shopItems.Find(item => item.GetComponent<ShopItem>().item == null);
+        }
+
+        public void ShowError(string message)
+        {
+            // Set the error message
+            errorHandler.GetComponentInChildren<TextMeshProUGUI>().text = message;
+            // Show the error message for 2 seconds
+            errorHandler.SetActive(true);
+            Invoke("HideError", 2f);
+        }
+
+        private void HideError()
+        {
+            errorHandler.SetActive(false);
         }
     }
 }

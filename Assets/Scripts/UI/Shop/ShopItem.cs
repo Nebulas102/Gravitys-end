@@ -32,7 +32,10 @@ namespace UI.Shop
             var script = item.GetComponent<Item>();
             var time = script.price * 60;
             if (time <= 0 || Timer.instance.time - time <= 0)
+            {
+                ShopManager.instance.ShowError("Not enough time!");
                 return;
+            }
 
             Timer.instance.time -= time;
             if (InventoryManager.instance.PickupItem(script))

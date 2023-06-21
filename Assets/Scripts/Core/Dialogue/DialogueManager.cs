@@ -67,6 +67,8 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueActive)
         {
+            if (Timer.instance.timerIsRunning)
+                Timer.instance.timerIsRunning = false;
             _inputManager.UI.Enable();
             if (_inputManager.UI.DisplayNextSentence.triggered)
                 OnDisplayNextSentence();

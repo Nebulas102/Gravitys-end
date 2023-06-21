@@ -30,15 +30,14 @@ namespace Controllers
         public Vector3 knockbackDirection;
 
         private GameObject[] enemies;
-
         private BTree behaviorTree;
-        
+
         private Rigidbody rb;
 
         private void Start()
         {
             behaviorTree = GetComponent<BTree>();
-            
+
             rb = GetComponent<Rigidbody>();
 
             enemyAnimator = GetComponentInChildren<Animator>();
@@ -110,7 +109,7 @@ namespace Controllers
         }
 
         public IEnumerator PerformKnockback()
-        {   
+        {
             isKnockbackInProgress = true;
 
             // Disable kinematic to allow external forces to affect the enemy

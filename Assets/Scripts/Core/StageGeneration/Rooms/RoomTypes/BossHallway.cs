@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Core.StageGeneration.Rooms.RoomTypes
 {
-    public class SpawnRoom : Room
+    public class BossHallway : Room
     {
-        public GameObject bossHallwayDoor;
+        public GameObject endDoor;
     }
 }

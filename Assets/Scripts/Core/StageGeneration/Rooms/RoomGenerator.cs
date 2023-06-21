@@ -43,7 +43,7 @@ namespace Core.StageGeneration.Rooms
                 Destroy(gameObject);
         }
 
-        public IEnumerator BranchRoomGeneration(List<Hallway> mapHallways, int minWeightRoomsBranch, int maxWeightRoomsBranch, float _startTime)
+        public IEnumerator BranchRoomGeneration(List<GameObject> mapHallways, int minWeightRoomsBranch, int maxWeightRoomsBranch, float _startTime)
         {
             startTime = _startTime;
 
@@ -59,7 +59,7 @@ namespace Core.StageGeneration.Rooms
             {
                 hallway.GetComponent<Room>().SetDoorCells();
 
-                foreach (var door in hallway.GetDoors())
+                foreach (var door in hallway.GetComponent<Room>().GetDoors())
                 {
                     var branchLength = Random.Range(minWeightRoomsBranch, maxWeightRoomsBranch + 1);
 
@@ -95,8 +95,8 @@ namespace Core.StageGeneration.Rooms
                 if (!keyRoomInBranch)
                 {
                     // Pick only a door at the end of the right or left hallway
-                    if (currentHallwayDoorCount >= startDoorsLeftCount && currentHallwayDoorCount <= (startDoorsLeftCount + 4)
-                        || currentHallwayDoorCount >= startDoorsRightCount && currentHallwayDoorCount <= (startDoorsRightCount + 4))
+                    if ((currentHallwayDoorCount >= startDoorsLeftCount && currentHallwayDoorCount <= (startDoorsLeftCount + 4))
+                        || (currentHallwayDoorCount >= startDoorsRightCount && currentHallwayDoorCount <= (startDoorsRightCount + 4)))
                     {
                         SpawnKeyRoom(initialSpawned, spawnDoor);
                         break;

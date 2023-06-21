@@ -8311,7 +8311,6 @@ GameObject:
   - component: {fileID: 3488478737702702937}
   - component: {fileID: 1711132120465147707}
   - component: {fileID: 8216608313479407764}
-  - component: {fileID: 5028536987279859607}
   m_Layer: 0
   m_Name: SpawnRoom
   m_TagString: Room
@@ -8422,18 +8421,6 @@ MonoBehaviour:
     - Find the key and return here to move on.
     - You can move using WASD, pick up items with f and attack with the left mouse
       button
---- !u!114 &5028536987279859607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3939904267268250419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e78028ef0f6fa34e9990b775c81ef7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4041880585985287172
 GameObject:
   m_ObjectHideFlags: 0
@@ -8944,7 +8931,6 @@ GameObject:
   m_Component:
   - component: {fileID: 629033855065510574}
   - component: {fileID: 2402211763792089634}
-  - component: {fileID: 7222962898076436954}
   m_Layer: 0
   m_Name: ShopArea
   m_TagString: Untagged
@@ -8980,18 +8966,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 34.46, y: 5.1, z: 34.46}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7222962898076436954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4249668867758435577}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e78028ef0f6fa34e9990b775c81ef7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4253070238810629729
 GameObject:
   m_ObjectHideFlags: 0
@@ -10552,7 +10526,6 @@ GameObject:
   - component: {fileID: 5540701237959483268}
   - component: {fileID: 7316304410220883489}
   - component: {fileID: 1687152687597243768}
-  - component: {fileID: 1359066048551390402}
   m_Layer: 6
   m_Name: FogPrefab(Clone)
   m_TagString: Untagged
@@ -10625,20 +10598,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1359066048551390402
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4783972092864371330}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &4890392609837179767
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,6 +41,8 @@ namespace Controllers.Player
         private GameObject _player;
         private bool _gamePaused;
 
+        public LayerMask allowedLayers;
+
 
         // Start is called before the first frame update
         private void Start()

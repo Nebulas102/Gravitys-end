@@ -25,6 +25,7 @@ namespace Controllers.Player
         {
             animator = PlayerAnimator.Instance._animator;
             playerInput = _player.playerInput;
+
         }
 
         public override void Enter()
@@ -40,19 +41,21 @@ namespace Controllers.Player
                 _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
                 mousePos = lookAction.ReadValue<Vector2>();
                 Ray ray = _camera.ScreenPointToRay(mousePos);
-                Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-                float rayDistance;
+                float rayDistance = Mathf.Infinity;
 
-                if (groundPlane.Raycast(ray, out rayDistance))
+                if (Physics.Raycast(ray, out RaycastHit raycastHit, rayDistance, _player.allowedLayers, QueryTriggerInteraction.Ignore))
                 {
-                    Vector3 pointToLook = ray.GetPoint(rayDistance);
+                    Debug.Log("Raycast hit: " + raycastHit.collider.gameObject.name);
+                    Vector3 pointToLook = raycastHit.collider.gameObject.CompareTag("Enemy") || raycastHit.collider.gameObject.CompareTag("Boss")
+                        ? new Vector3(raycastHit.collider.gameObject.transform.position.x, _player.transform.position.y, raycastHit.collider.gameObject.transform.position.z)
+                        : raycastHit.point;
 
-                    _player.lookAtPosition = new Vector3(pointToLook.x, _player.transform.position.y, pointToLook.z);
-
+                    pointToLook.y = _player.transform.position.y;
+                    _player.lookAtPosition = pointToLook;
                     _player.transform.LookAt(_player.lookAtPosition);
                 }
-
             }
+
 
             if (IsMelee())
             {
@@ -79,51 +82,7 @@ namespace Controllers.Player
             }
         }
 
-        // public override void LogicUpdate()
-        // {
-        //     base.LogicUpdate();
-        //     timePassed += Time.deltaTime;
-
-        //     // Calculate combo length based on the clip length and speed
-        //     float clipLength = animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
-        //     float clipSpeed = animator.GetCurrentAnimatorStateInfo(0).speed;
-        //     float comboLength = clipLength / clipSpeed;
-        //     float shootLength = 0.4f;
-
-        //     if (IsMelee())
-        //     {
-
-        //         // Check if attack triggered during combo delay
-        //         if (timePassed < ComboDelay && attackTriggered)
-        //         {
-        //             timePassed = 0f;
-        //             stateMachine.ChangeState(character.attacking);
-        //         }
-
-        //         // Check if combo length has passed
-        //         if (timePassed >= comboLength)
-        //         {
-        //             animator.SetTrigger("move");
-        //             stateMachine.ChangeState(character.combatting);
-        //         }
-        //     }
-
-        //     if (IsRanged())
-        //     {
-        //         if (attackTriggered)
-        //         {
-        //             timePassed = 0f;
-        //             stateMachine.ChangeState(character.attacking);
-        //         }
-
-        //         if (timePassed >= shootLength)
-        //         {
-        //             animator.SetTrigger("move");
-        //             stateMachine.ChangeState(character.combatting);
-        //         }
-        //     }
-        // }
-
+      
         public override void LogicUpdate()
         {
             base.LogicUpdate();

@@ -8,6 +8,9 @@ using Core;
 
 public class DialogueManager : MonoBehaviour
 {
+    [SerializeField]
+    private bool notInstance;
+
     // Singleton for DialogueManager
     public static DialogueManager instance;
 
@@ -44,9 +47,9 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        if (instance == null)
+        if (instance == null && !notInstance)
             instance = this;
-        else
+        else if (!notInstance)
             Destroy(gameObject);
 
         _inputManager = new InputManager();

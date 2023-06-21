@@ -253,7 +253,7 @@ namespace Core.StageGeneration.Stage
         {
             foreach (var room in _mapRooms.Where(room => room.GetComponent<ChestSpawner>() is not null))
                 room.GetComponent<ChestSpawner>().SpawnChest();
-            StartCoroutine(Navigation.instance.CloseLoadingScreen());
+            Navigation.instance.StageGenComplete = true;
             yield return null;
         }
 

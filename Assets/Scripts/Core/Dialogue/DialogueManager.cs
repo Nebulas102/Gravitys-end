@@ -52,6 +52,13 @@ public class DialogueManager : MonoBehaviour
         _inputManager = new InputManager();
 
         sentences = new Queue<string>();
+
+        if (gameObject.GetComponentInChildren<DialogueTrigger>() != null)
+        {
+            gameObject.GetComponentInChildren<DialogueTrigger>().TriggerDialogue(this);
+            Debug.Log("trigger");
+        }
+            
     }
 
     private void Update()
@@ -129,5 +136,12 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueActive = false;
         animator.SetBool("IsOpen", false);
+    }
+
+    public void SkipDialogue()
+    {
+        sentences.Clear();
+        dialogueText.text = "";
+        EndDialogue();
     }
 }

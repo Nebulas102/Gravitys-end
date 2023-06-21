@@ -1,3 +1,4 @@
+using Core;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,26 +17,45 @@ namespace Utils
         private Animator animator;
 
         [SerializeField]
-        [Range(0f, 10f)]
-        private float minLoadingTime = 5f;
+        private DialogueManager dialogue;
+
+        [SerializeField]
+        private GameObject skipDialogueButton;
         
         public static Navigation instance;
+
+        [HideInInspector]
+        public bool StageGenComplete;
 
         private void Start()
         {
             if (instance == null)
-            {
                 instance = this;
-            }
             else
-            {
                 Destroy(gameObject);
-            }
         }
+
+        private void Update()
+        {
+            if(loader != null && loader.activeSelf && StageGenComplete)
+            {
+                loader.SetActive(false);
+                skipDialogueButton.SetActive(true);
+            }
+                
+            if (loader != null && !loader.activeSelf && !dialogue.dialogueActive)
+            {
+                skipDialogueButton.SetActive(false);
+                FadeIn();
+            }
+        } 
 
         public void MainMenu()
         {
-            SceneManager.LoadScene(0, LoadSceneMode.Single);
+            if(Timer.instance != null)
+                Timer.instance.timerIsRunning = false;
+
+            StartCoroutine(FadeOutCoroutine(0));
             Time.timeScale = 1f;
         }
 
@@ -51,60 +71,62 @@ namespace Utils
 
         public void Game()
         {
-            StartCoroutine(FadeToMainScene());
+            StartCoroutine(FadeOutCoroutine(3));
         }
 
         public void GameOver()
         {
-            SceneManager.LoadScene(4, LoadSceneMode.Single);
+            Timer.instance.timerIsRunning = false;
+            FadeOutCoroutine(4);
         }
 
         public void Quit()
         {
+            StartCoroutine(QuitGame());
+        }
+
+        public void FadeIn()
+        {
+            StartCoroutine(FadeInCoroutine());
+        }
+
+        public IEnumerator FadeInCoroutine()
+        {
+            if(loader != null)
+                loader.SetActive(false);
+
+            if (dialogue != null)
+                dialogue.SkipDialogue();
+
+            if (loadingScreen != null)
+            {
+                animator.SetTrigger("FadeIn");
+                yield return new WaitForSeconds(1f);
+                loadingScreen.SetActive(false);
+                yield return null;
+            }
+        }
+
+        public IEnumerator FadeOutCoroutine(int scene)
+        {
+            if(loadingScreen != null)
+            {
+                loadingScreen.SetActive(true);
+                animator.SetTrigger("FadeOut");
+                yield return new WaitForSeconds(0.99f);
+                SceneManager.LoadScene(scene);
+                yield return null;
+            }
+            else
+                SceneManager.LoadScene(scene);
+        }
+
+        public IEnumerator QuitGame()
+        {
+            loadingScreen.SetActive(true);
+            animator.SetTrigger("FadeOut");
+            yield return new WaitForSeconds(0.99f);
             Application.Quit();
-        }
-
-        public IEnumerator CloseLoadingScreen()
-        { 
-            loader.SetActive(false);
-            animator.SetTrigger("FadeIn");
-            yield return new WaitForSeconds(1f);
-            loadingScreen.SetActive(false);
-            yield return null;
-        }
-
-        public IEnumerator FadeToMainScene()
-        {
-            loadingScreen.SetActive(true);
-            animator.SetTrigger("FadeOut");
-            yield return new WaitForSeconds(1f);
-            SceneManager.LoadScene(3);
-            yield return null;
-        }
-
-        private IEnumerator LoadSceneAsync(int index)
-        {
-            // Record the current time.
-            var time = Time.time;
-
-            //Start loading transition
-            loadingScreen.SetActive(true);
-            animator.SetTrigger("FadeOut");
-
-            // Wait for the animation to end
-            yield return new WaitForSeconds(1.5f);
-
-            // Load the scene asynchronously.
-            var operation = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
-            while (!operation.isDone)
-                yield return null;
-
-            SceneManager.SetActiveScene(SceneManager.GetSceneAt(index));
-
-            while (Time.time - time > minLoadingTime)
-                yield return null;
-
-            SceneManager.UnloadSceneAsync(0);
         }
     }
 }

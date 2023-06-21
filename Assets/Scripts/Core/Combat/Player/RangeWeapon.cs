@@ -9,8 +9,10 @@ public class RangeWeapon : MonoBehaviour
 
     [Header("Reloading")]
     public int currentAmmo;
+    public int reserveAmmo;
     public int magSize;
     public float reloadTime;
+
     [HideInInspector]
     public bool reloading;
 
@@ -46,24 +48,22 @@ public class RangeWeapon : MonoBehaviour
 
         yield return new WaitForSeconds(reloadTime);
 
-        currentAmmo = magSize;
+        currentAmmo = reserveAmmo - magSize > 0 ? magSize : reserveAmmo;
+        reserveAmmo -= currentAmmo;
 
         reloading = false;
     }
 
-    private bool CanShoot() => !reloading && timeSinceLastShot > 1f / (fireRate / 60f);
+    private bool CanShoot() => !reloading && timeSinceLastShot > 1f / (fireRate / 60f) && currentAmmo > 0;
 
     public void Shoot()
     {
-        if (currentAmmo > 0)
-        {
-            if (CanShoot())
-            {
-                currentAmmo--;
-                timeSinceLastShot = 0;
-                OnGunShot();
-            }
-        }
+        if (!CanShoot())
+            return;
+
+        currentAmmo--;
+        timeSinceLastShot = 0;
+        OnGunShot();
     }
 
     private void Update()

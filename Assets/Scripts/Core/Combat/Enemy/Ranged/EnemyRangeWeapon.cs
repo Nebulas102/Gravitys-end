@@ -99,7 +99,7 @@ public class EnemyRangeWeapon : MonoBehaviour
 
             if (Physics.Raycast(bulletOutputWorldPos, bulletDirection, out hit, Mathf.Infinity, ~ignoreLayer, QueryTriggerInteraction.Ignore))
             {
-                Debug.DrawRay(bulletOutputWorldPos, bulletDirection * 1000f, Color.green);
+                // Debug.DrawRay(bulletOutputWorldPos, bulletDirection * 1000f, Color.green);
                 if (allowShot)
                 {
                     if (hit.transform.CompareTag("Player"))

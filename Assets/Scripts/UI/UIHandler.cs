@@ -46,15 +46,13 @@ namespace UI
             OnPauseGameToggle.Invoke(condition);
         }
 
-        private void OnShowPickupPrompt(bool show, int instance, ItemType type)
+        public void ShowPickupPrompt(ItemType type, bool show)
         {
-            if (show)
+            if (!show)
             {
-                if (!_itemsNearby.Contains(instance))
-                    _itemsNearby.Add(instance);
+                itemPickupPrompt.SetActive(false);
+                return;
             }
-            else
-                _itemsNearby.Remove(instance);
 
             var prompt = itemPickupPrompt.GetComponent<TextMeshProUGUI>();
             if (InventoryManager.instance.IsInventoryFull(type))
@@ -70,7 +68,32 @@ namespace UI
                 prompt.text = $"[{key}] Take";
             }
 
-            itemPickupPrompt.SetActive(_itemsNearby.Count > 0);
+            itemPickupPrompt.SetActive(true);
+        }
+
+        private void OnShowPickupPrompt(bool show, ItemType type)
+        {
+            if (!show)
+            {
+                itemPickupPrompt.SetActive(false);
+                return;
+            }
+
+            var prompt = itemPickupPrompt.GetComponent<TextMeshProUGUI>();
+            if (InventoryManager.instance.IsInventoryFull(type))
+                prompt.text = "Inventory full";
+            else
+            {
+                var action = _inputManager.Player.LootPickup;
+                int bindingIndex = action.GetBindingIndexForControl(action.controls[0]);
+                string key = InputControlPath.ToHumanReadableString(
+                    action.bindings[bindingIndex].effectivePath,
+                    InputControlPath.HumanReadableStringOptions.OmitDevice
+                );
+                prompt.text = $"[{key}] Take";
+            }
+
+            itemPickupPrompt.SetActive(true);
         }
     }
 }

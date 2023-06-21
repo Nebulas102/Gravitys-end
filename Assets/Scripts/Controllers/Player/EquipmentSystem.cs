@@ -11,6 +11,9 @@ namespace Controllers.Player
         public GameObject _equippedWeapon;
 
         [SerializeField]
+        public GameObject _equippedArmor;
+
+        [SerializeField]
         private Transform meleeHolder;
 
         [SerializeField]
@@ -50,7 +53,23 @@ namespace Controllers.Player
                 SetRangedHolder();
             }
 
-            return;
+            // if (_equippedArmor.CompareTag("Armor")){
+            //     SetArmorHolder();
+            // }
+
+                return;
+        }
+
+        private void SetArmorHolder()
+        {
+            if (_equippedArmor is null) return;
+
+            _equippedArmor.transform.SetParent(rangedHolder);
+
+            _equippedArmor.transform.localPosition = Vector3.zero;
+            _equippedArmor.transform.localRotation = Quaternion.identity;
+            _equippedArmor.transform.localScale = Vector3.one;
+
         }
 
         private void SetRangedHolder()

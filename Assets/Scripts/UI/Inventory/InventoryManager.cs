@@ -119,5 +119,18 @@ namespace UI.Inventory
             slot.SetItem(item, item.type == ItemType.WEAPON);
             return true;
         }
+
+        public bool IsInventoryFull(ItemType type)
+        {
+            switch (type)
+            {
+                case ItemType.ARMOR:
+                    return armorSlots.All(s => !s.IsEmpty());
+                case ItemType.WEAPON:
+                    return weaponSlots.All(s => !s.IsEmpty());
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 }

@@ -1,6 +1,11 @@
 using UnityEngine;
 using UI.Runtime;
 using UI.Inventory;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 namespace UI
 {
@@ -18,6 +23,9 @@ namespace UI
         [SerializeField]
         private GameObject itemPickupPrompt;
 
+        private List<int> _itemsNearby = new List<int>();
+        private InputManager _inputManager;
+
         private void Start()
         {
             InventoryOverlayBehaviour.OnInventoryToggle += (bool active) => PauseGame(active);
@@ -25,6 +33,7 @@ namespace UI
             MapUIManager.OnMapToggled += (bool active) => PauseGame(active);
 
             Item.OnItemPickup += OnShowPickupPrompt;
+            _inputManager = new InputManager();
         }
 
         private void OnDestroy()
@@ -37,9 +46,31 @@ namespace UI
             OnPauseGameToggle.Invoke(condition);
         }
 
-        private void OnShowPickupPrompt(bool show)
+        private void OnShowPickupPrompt(bool show, int instance, ItemType type)
         {
-            itemPickupPrompt.SetActive(!itemPickupPrompt.activeSelf);
+            if (show)
+            {
+                if (!_itemsNearby.Contains(instance))
+                    _itemsNearby.Add(instance);
+            }
+            else
+                _itemsNearby.Remove(instance);
+
+            var prompt = itemPickupPrompt.GetComponent<TextMeshProUGUI>();
+            if (InventoryManager.instance.IsInventoryFull(type))
+                prompt.text = "Inventory full";
+            else
+            {
+                var action = _inputManager.Player.LootPickup;
+                int bindingIndex = action.GetBindingIndexForControl(action.controls[0]);
+                string key = InputControlPath.ToHumanReadableString(
+                    action.bindings[bindingIndex].effectivePath,
+                    InputControlPath.HumanReadableStringOptions.OmitDevice
+                );
+                prompt.text = $"[{key}] Take";
+            }
+
+            itemPickupPrompt.SetActive(_itemsNearby.Count > 0);
         }
     }
 }

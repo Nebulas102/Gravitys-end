@@ -46,15 +46,13 @@ namespace UI.Inventory
         [HideInInspector]
         public bool IsInInventory;
 
-        public delegate void ItemPickupEventHandler(bool canPickup);
+        public delegate void ItemPickupEventHandler(bool canPickup, int instance, ItemType type);
         public static event ItemPickupEventHandler OnItemPickup;
 
         private GameObject _player;
         private GameInput _gameInput;
         private bool _gamePaused;
         private float originalYPosition;
-        private bool isPlayerNearby;
-        private bool isShowingPrompt;
 
         private void Awake()
         {
@@ -87,8 +85,7 @@ namespace UI.Inventory
         {
             IsInInventory = false;
             RenderItem(true);
-            isPlayerNearby = true;
-            OnItemPickup?.Invoke(false);
+            InvokeOnItemPickup(false);
             gameObject.transform.position = position;
         }
 
@@ -120,8 +117,7 @@ namespace UI.Inventory
 
             meshRenderer.enabled = false;
             IsInInventory = true;
-            isPlayerNearby = false;
-            OnItemPickup?.Invoke(false);
+            InvokeOnItemPickup(false);
             if (type == ItemType.WEAPON)
             {
                 SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.GunPickup);
@@ -138,51 +134,42 @@ namespace UI.Inventory
 
         public void RenderItem(bool render)
         {
+            if (render)
+                originalYPosition = transform.position.y;
             meshRenderer.enabled = render;
         }
 
+        private void InvokeOnItemPickup(bool canPickup)
+        {
+            OnItemPickup?.Invoke(canPickup, gameObject.GetInstanceID(), type);
+        }
+
+        // This method shows a prompt to the player if they are nearby the item
         public void ShowPrompt()
         {
-            // Check if a player is nearby the item
-            if (IsPlayerNearby())
-            {
-                if (!isPlayerNearby)
-                {
-                    isPlayerNearby = true;
+            // Check if the player is nearby the item
+            var nearby = IsPlayerNearby();
+            // Invoke the OnItemPickup event with the nearby flag
+            InvokeOnItemPickup(nearby);
+            if (!nearby)
+                return;
 
-                    // Start showing prompt, store current position as original position
-                    originalYPosition = transform.position.y;
-                    OnItemPickup?.Invoke(true);
-                    isShowingPrompt = true;
-                }
-                // Calculate the vertical offset based on a smooth oscillation using Mathf.Sin
-                float verticalOffset = Mathf.Sin(Time.time * verticalMotionSpeed) * verticalMotionAmplitude;
+            // Calculate the vertical offset based on a smooth oscillation using Mathf.Sin
+            float verticalOffset = Mathf.Sin(Time.time * verticalMotionSpeed) * verticalMotionAmplitude;
 
-                // Set the target position with the vertical offset applied
-                float targetPosition = originalYPosition + verticalOffset;
+            // Set the target position with the vertical offset applied
+            float targetPosition = originalYPosition + verticalOffset;
 
-                // Clamp the target position to stay at or above y = 0
-                targetPosition = Mathf.Max(targetPosition, 0.3f);
-                Vector3 tPos = new Vector3(transform.position.x, targetPosition, transform.position.z);
+            // Clamp the target position to stay at or above y = 0.3f
+            targetPosition = Mathf.Max(targetPosition, 0.3f);
 
-                // Smoothly move the item towards the target position using Lerp
-                transform.position = Vector3.Lerp(transform.position, tPos, Time.deltaTime * verticalMotionSpeed);
-            }
-            else
-            {
-                if (isPlayerNearby)
-                {
-                    isPlayerNearby = false;
+            // Create a new Vector3 with the x and z positions of the item and the target y position
+            Vector3 tPos = new Vector3(transform.position.x, targetPosition, transform.position.z);
 
-                    // Stop showing prompt, reset item position
-                    // transform.position = originalPosition;
-                    OnItemPickup?.Invoke(false);
-                    isShowingPrompt = false;
-                }
-            }
+            // Smoothly move the item towards the target position using Lerp
+            transform.position = Vector3.Lerp(transform.position, tPos, Time.deltaTime * verticalMotionSpeed);
         }
     }
-
 
     public enum ItemType
     {

@@ -34,7 +34,7 @@ namespace UI.Shop
             if (time <= 0 || Timer.instance.time - time <= 0)
                 return;
 
-            Timer.instance.time -= time * 60;
+            Timer.instance.time -= time;
             if (InventoryManager.instance.PickupItem(script))
             {
                 Clear();

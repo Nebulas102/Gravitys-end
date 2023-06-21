@@ -18,6 +18,20 @@ namespace Utils
         [SerializeField]
         [Range(0f, 10f)]
         private float minLoadingTime = 5f;
+        
+        public static Navigation instance;
+
+        private void Start()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         public void MainMenu()
         {
@@ -37,7 +51,7 @@ namespace Utils
 
         public void Game()
         {
-            StartCoroutine(LoadSceneAsync(3));
+            StartCoroutine(FadeToMainScene());
         }
 
         public void GameOver()
@@ -50,39 +64,47 @@ namespace Utils
             Application.Quit();
         }
 
+        public IEnumerator CloseLoadingScreen()
+        { 
+            loader.SetActive(false);
+            animator.SetTrigger("FadeIn");
+            yield return new WaitForSeconds(1f);
+            loadingScreen.SetActive(false);
+            yield return null;
+        }
+
+        public IEnumerator FadeToMainScene()
+        {
+            loadingScreen.SetActive(true);
+            animator.SetTrigger("FadeOut");
+            yield return new WaitForSeconds(1f);
+            SceneManager.LoadScene(3);
+            yield return null;
+        }
+
         private IEnumerator LoadSceneAsync(int index)
         {
             // Record the current time.
             var time = Time.time;
-
-            // Load the scene asynchronously.
-            var operation = SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
-
-            // Don't allow the scene to activate until ready.
-            operation.allowSceneActivation = false;
 
             //Start loading transition
             loadingScreen.SetActive(true);
             animator.SetTrigger("FadeOut");
 
             // Wait for the animation to end
-            while (animator.GetCurrentAnimatorStateInfo(0).Equals(0))
-                yield return null;
+            yield return new WaitForSeconds(1.5f);
 
-            //Show the loader
-            loader.SetActive(true);
-
+            // Load the scene asynchronously.
+            var operation = SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
             while (!operation.isDone)
-            {
-                // If it hasn't reached the minimum loading time yet, wait for it.
-                var elapsedTime = Time.time - time;
-                if (elapsedTime < minLoadingTime)
-                    yield return new WaitForSeconds(minLoadingTime - elapsedTime);
-
-                // Allow the scene to activate.
-                operation.allowSceneActivation = true;
                 yield return null;
-            }
+
+            SceneManager.SetActiveScene(SceneManager.GetSceneAt(index));
+
+            while (Time.time - time > minLoadingTime)
+                yield return null;
+
+            SceneManager.UnloadSceneAsync(0);
         }
     }
 }

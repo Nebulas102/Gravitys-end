@@ -30,13 +30,13 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
         {
             var _bossRoom = bossRoom.GetComponent<BossRoom>();
 
-            if (other.tag == "Player")
+            if (other.CompareTag("Player"))
             {
                 _bossRoom.SetPlayerEnterBossFight(true);
 
                 TeleportPlayer();
 
-                _bossRoom.GetDoors()[0].SetActive(true);
+                ReplaceDoor(_bossRoom.GetDoors()[0]);
 
                 bossFightCanvas.enabled = true;
 
@@ -45,6 +45,13 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
                 // Play the boss music
                 BackgroundMusicManager.SwitchToBossBackgroundMusic();
             }
+        }
+
+        private void ReplaceDoor(GameObject door)
+        {
+            RoomEditor.DoorBlock lDoorBlock = door.GetComponent<RoomEditor.DoorBlock>();
+            if (lDoorBlock != null)
+                lDoorBlock.CloseDoor();
         }
 
         //if teleport doesn't work, check at the project settings > Physics > Auto Sync Transforms is enabled.

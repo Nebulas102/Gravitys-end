@@ -37,6 +37,9 @@ namespace Core.StageGeneration.Stage
         [SerializeField]
         private GameObject hallwayEndRight;
 
+        [SerializeField]
+        private GameObject bossHallway;
+
         [Header("Room Settings")]
         [SerializeField]
         private int minWeightRoomsBranch;
@@ -100,7 +103,7 @@ namespace Core.StageGeneration.Stage
         private IEnumerator BossRoomGenerator()
         {
             var _spawnRoomObject = SpawnRoom();
-            var hallway = _spawnRoomObject.GetComponent<SpawnRoom>().bossRoomHallway;
+            var hallway = bossHallway;
             var _spawnRoom = _spawnRoomObject.GetComponent<Room>();
 
             float posX = _spawnRoom.transform.position.x;
@@ -212,7 +215,7 @@ namespace Core.StageGeneration.Stage
 
         private IEnumerator ReplaceDoors()
         {
-            foreach (var room in _mapRooms.Where(room => room.GetComponent<Room>().GetDoorReplacement() is not null))
+            foreach (var room in _mapRooms)
                 StageHelper.ReplaceAllDoors(room);
             yield return StartCoroutine(StageNavMeshBaker());
         }
@@ -253,8 +256,7 @@ namespace Core.StageGeneration.Stage
 
             room.GetComponent<Room>().GetDoors().ForEach(d => d.SetActive(false));
 
-            //currently open for testing, needs later a condition when the door may open
-            room.GetComponent<SpawnRoom>().bossDoor.SetActive(false);
+            room.GetComponent<SpawnRoom>().bossHallwayDoor.GetComponent<RoomEditor.DoorBlock>().CloseDoor();
 
             return room;
         }
@@ -382,7 +384,7 @@ namespace Core.StageGeneration.Stage
             var allRooms = new List<GameObject>
             {
                 spawnRoom,
-                spawnRoom.GetComponent<SpawnRoom>().bossRoomHallway,
+                bossHallway,
                 bossRoom,
                 hallwayEndLeft,
                 hallwayEndRight

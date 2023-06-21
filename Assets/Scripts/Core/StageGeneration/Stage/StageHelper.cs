@@ -161,9 +161,6 @@ namespace Core.StageGeneration.Stage
 
             foreach (var _door in doors)
             {
-                var doorPos = _door.transform.position;
-                var doorRot = _door.transform.rotation;
-
                 // Tells the door block to replace itself with a wall and open the door model
                 // If no door block component was found, the door is destroyed like before
                 // Test rooms before the roomeditor implementation wont work anymore
@@ -172,10 +169,6 @@ namespace Core.StageGeneration.Stage
                     lDoorBlock.CloseDoor();
                 else
                     Destroy(_door);
-
-                //var wall = Instantiate(room.GetComponent<Room>().GetDoorReplacement(), doorPos, doorRot);
-
-                //wall.transform.parent = room.transform;
             }
         }
 

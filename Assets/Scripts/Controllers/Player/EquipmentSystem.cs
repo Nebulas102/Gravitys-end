@@ -19,6 +19,9 @@ namespace Controllers.Player
         [SerializeField]
         private Transform rangedHolder;
 
+        [SerializeField]
+        private Transform armorHolder;
+
         private Quaternion oldRotation;
 
         private void Awake()
@@ -52,19 +55,24 @@ namespace Controllers.Player
                 PlayerAnimator.Instance._animator.SetTrigger("rangedEquip");
                 SetRangedHolder();
             }
+            return;
+        }
 
-            // if (_equippedArmor.CompareTag("Armor")){
-            //     SetArmorHolder();
-            // }
+        public void SetCurrentArmor(GameObject armor)
+        {
+            _equippedArmor = armor;
 
-                return;
+            if (_equippedArmor.CompareTag("Armor"))
+            {
+                SetArmorHolder();
+            }
         }
 
         private void SetArmorHolder()
         {
             if (_equippedArmor is null) return;
 
-            _equippedArmor.transform.SetParent(rangedHolder);
+            _equippedArmor.transform.SetParent(armorHolder);
 
             _equippedArmor.transform.localPosition = Vector3.zero;
             _equippedArmor.transform.localRotation = Quaternion.identity;

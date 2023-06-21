@@ -32,7 +32,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4919654385148986891}
-  - {fileID: 7702319327121840201}
   - {fileID: 6034292703153625376}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -135,6 +134,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6034292704095665018}
+  - {fileID: 8896897607542795161}
   m_Father: {fileID: 4919654385054473572}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -216,7 +216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6034292703153625376
 RectTransform:
   m_ObjectHideFlags: 0
@@ -231,7 +231,7 @@ RectTransform:
   m_Children:
   - {fileID: 6034292703724533801}
   m_Father: {fileID: 4919654385054473572}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -400,8 +400,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Continue
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 63b269c09912ed84891b1c8d54e615fa, type: 2}
+  m_sharedMaterial: {fileID: -7292847359205270580, guid: 63b269c09912ed84891b1c8d54e615fa, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -574,12 +574,12 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
---- !u!1001 &4915393565578724694
+--- !u!1001 &6173027462393034374
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 4919654385054473572}
+    m_TransformParent: {fileID: 4919654385148986891}
     m_Modifications:
     - target: {fileID: 3374004232422595870, guid: 8d14f31780603424597eb58f7e69e727, type: 3}
       propertyPath: m_Name
@@ -669,18 +669,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3374004233584853185, guid: 8d14f31780603424597eb58f7e69e727, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 3374004233584853185, guid: 8d14f31780603424597eb58f7e69e727, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d14f31780603424597eb58f7e69e727, type: 3}
---- !u!224 &7702319327121840201 stripped
+--- !u!224 &8896897607542795161 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3374004232422595871, guid: 8d14f31780603424597eb58f7e69e727, type: 3}
-  m_PrefabInstance: {fileID: 4915393565578724694}
+  m_PrefabInstance: {fileID: 6173027462393034374}
   m_PrefabAsset: {fileID: 0}

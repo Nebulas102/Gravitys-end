@@ -10,7 +10,7 @@ public class EnemyBulletBehaviour : MonoBehaviour
 
     private GameObject player;
 
-    private void Start()
+    private void Awake()
     {
         player = PlayerManager.Instance.player;
     }

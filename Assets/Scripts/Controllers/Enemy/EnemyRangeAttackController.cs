@@ -9,6 +9,8 @@ public class EnemyRangeAttackController : MonoBehaviour
 {
     public float attackRange;
     public GameObject rangeWeaponObject;
+
+    [HideInInspector]
     public EnemyRangeWeapon rangeWeapon;
 
     [HideInInspector]

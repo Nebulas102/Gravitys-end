@@ -86,6 +86,11 @@ namespace UI.Inventory
             if (isEquippedSlot)
                 EquipmentSystem.Instance.DetachWeapon();
 
+            if (item.gameObject.CompareTag("Ranged") && isEquippedSlot)
+            {
+                item.GetComponent<PlayerShoot>().OnWeaponUnequipped();
+            }
+
             if (spawn)
                 item.GetComponent<Item>().Spawn();
             ToggleItem(null, null);

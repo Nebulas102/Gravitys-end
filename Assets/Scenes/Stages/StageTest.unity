@@ -1658,6 +1658,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1626405469237510788, guid: 51db8a37a9dc5494698c4a5489838f93, type: 3}
+      propertyPath: m_Name
+      value: DialogueBox_new_load
+      objectReference: {fileID: 0}
     - target: {fileID: 4919654385054473568, guid: 51db8a37a9dc5494698c4a5489838f93, type: 3}
       propertyPath: m_Name
       value: LoadingScreen_with_Dialogue
@@ -2147,7 +2151,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1306659781}
         m_TargetAssemblyTypeName: Utils.Navigation, Assembly-CSharp
         m_MethodName: MainMenu
         m_Mode: 1
@@ -2281,7 +2285,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1306659781}
         m_TargetAssemblyTypeName: Utils.Navigation, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1

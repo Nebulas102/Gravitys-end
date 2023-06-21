@@ -11,7 +11,7 @@ public class DialogueTrigger : MonoBehaviour
     public void TriggerDialogue(DialogueManager dialogueManager)
     {
         if (dialogueManager == null)
-            FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+            DialogueManager.instance.StartDialogue(dialogue);  
         else
             dialogueManager.StartDialogue(dialogue);
     }
@@ -19,7 +19,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (!hasTriggered && other.gameObject.CompareTag("Player"))
         {
-            FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+            DialogueManager.instance.StartDialogue(dialogue);
             hasTriggered = true;
         }
     }

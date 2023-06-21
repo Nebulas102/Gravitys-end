@@ -42,6 +42,11 @@ namespace Controllers.Player
                 Die();
         }
 
+        public void HealPlayer(float healPlayerAmount)
+        {
+            health += healPlayerAmount;
+        }
+
         private void Die()
         {
             // Load the death scene

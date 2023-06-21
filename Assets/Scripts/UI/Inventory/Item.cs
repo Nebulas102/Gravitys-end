@@ -33,11 +33,15 @@ namespace UI.Inventory
         private MeshRenderer meshRenderer;
 
         [SerializeField]
+        [Range(0f, 5f)]
+        [Tooltip("The price of the item in the shop in minutes")]
+        public float price = 3f;
+
+        [SerializeField]
         private float verticalMotionSpeed = 4f; // Adjust the speed as desired
 
         [SerializeField]
         private float verticalMotionAmplitude = 1f; // Adjust the vertical motion amplitude as desired
-
 
         [HideInInspector]
         public bool IsInInventory;
@@ -48,7 +52,7 @@ namespace UI.Inventory
         private GameObject _player;
         private GameInput _gameInput;
         private bool _gamePaused;
-        private Vector3 originalPosition;
+        private float originalYPosition;
         private bool isPlayerNearby;
         private bool isShowingPrompt;
 
@@ -58,7 +62,7 @@ namespace UI.Inventory
             _gameInput = FindObjectOfType<GameInput>();
             UIHandler.OnPauseGameToggle += PauseGame;
 
-            originalPosition = transform.position;
+            originalYPosition = transform.position.y;
         }
 
         public void PauseGame(bool paused)
@@ -68,6 +72,9 @@ namespace UI.Inventory
 
         private void Update()
         {
+            if (_player == null) _player = GameObject.FindGameObjectWithTag("Player");
+            if (_gameInput == null) _gameInput = FindObjectOfType<GameInput>();
+
             Pickup();
         }
 
@@ -80,9 +87,9 @@ namespace UI.Inventory
         {
             IsInInventory = false;
             RenderItem(true);
-            gameObject.transform.position = position;
             isPlayerNearby = true;
             OnItemPickup?.Invoke(false);
+            gameObject.transform.position = position;
         }
 
         public void Spawn()
@@ -105,37 +112,28 @@ namespace UI.Inventory
 
         private void Pickup()
         {
-            if (!_gameInput.GetPickUp() || !IsPlayerNearby() || IsInInventory || _gamePaused) return;
+            if (!CanPickup())
+                return;
 
+            if (!InventoryManager.instance.PickupItem(this))
+                return;
 
-            if (InventoryManager.instance.PickupItem(this))
+            meshRenderer.enabled = false;
+            IsInInventory = true;
+            isPlayerNearby = false;
+            OnItemPickup?.Invoke(false);
+            if (type == ItemType.WEAPON)
             {
-                meshRenderer.enabled = false;
-                IsInInventory = true;
-                isPlayerNearby = false;
-                OnItemPickup?.Invoke(false);
-                if (type == ItemType.WEAPON)
-                {
-                    SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.GunPickup);
-                    return;
-                }
-
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ArmorPickup);
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.GunPickup);
+                return;
             }
+
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ArmorPickup);
         }
 
-        public void PickupShop()
+        private bool CanPickup()
         {
-            if (IsInInventory || _gamePaused) return;
-
-
-            if (InventoryManager.instance.PickupItem(this))
-            {
-                meshRenderer.enabled = false;
-                IsInInventory = true;
-                isPlayerNearby = false;
-                OnItemPickup?.Invoke(false);
-            }
+            return meshRenderer.enabled && !IsInInventory && !_gamePaused && _gameInput.GetPickUp() && IsPlayerNearby();
         }
 
         public void RenderItem(bool render)
@@ -153,7 +151,7 @@ namespace UI.Inventory
                     isPlayerNearby = true;
 
                     // Start showing prompt, store current position as original position
-                    originalPosition = transform.position;
+                    originalYPosition = transform.position.y;
                     OnItemPickup?.Invoke(true);
                     isShowingPrompt = true;
                 }
@@ -161,13 +159,14 @@ namespace UI.Inventory
                 float verticalOffset = Mathf.Sin(Time.time * verticalMotionSpeed) * verticalMotionAmplitude;
 
                 // Set the target position with the vertical offset applied
-                Vector3 targetPosition = originalPosition + Vector3.up * verticalOffset;
+                float targetPosition = originalYPosition + verticalOffset;
 
                 // Clamp the target position to stay at or above y = 0
-                targetPosition.y = Mathf.Max(targetPosition.y, 0.3f);
+                targetPosition = Mathf.Max(targetPosition, 0.3f);
+                Vector3 tPos = new Vector3(transform.position.x, targetPosition, transform.position.z);
 
                 // Smoothly move the item towards the target position using Lerp
-                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * verticalMotionSpeed);
+                transform.position = Vector3.Lerp(transform.position, tPos, Time.deltaTime * verticalMotionSpeed);
             }
             else
             {

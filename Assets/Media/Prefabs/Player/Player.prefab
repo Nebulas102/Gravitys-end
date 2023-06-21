@@ -527,10 +527,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13939f2f52dcefc4595b58707758870e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 20
-  dashDuration: 0.25
+  dashSpeed: 30
+  dashDuration: 0.15
   dashTimer: 0
-  dashCooldown: 3
+  dashCooldown: 1
   dashAvailable: 1
   isDashing: 0
 --- !u!114 &4482070294439889658
@@ -546,7 +546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseDamage: 5
-  health: 1000
+  health: 100
 --- !u!114 &8640217738828214446
 MonoBehaviour:
   m_ObjectHideFlags: 0

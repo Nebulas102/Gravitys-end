@@ -54,11 +54,7 @@ public class DialogueManager : MonoBehaviour
         sentences = new Queue<string>();
 
         if (gameObject.GetComponentInChildren<DialogueTrigger>() != null)
-        {
             gameObject.GetComponentInChildren<DialogueTrigger>().TriggerDialogue(this);
-            Debug.Log("trigger");
-        }
-            
     }
 
     private void Update()

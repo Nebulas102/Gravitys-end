@@ -32,7 +32,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4919654385148986891}
-  - {fileID: 973936325026462910}
+  - {fileID: 7702319327121840201}
   - {fileID: 6034292703153625376}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -574,7 +574,7 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
---- !u!1001 &2546437131320664481
+--- !u!1001 &4915393565578724694
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -669,10 +669,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3374004233584853185, guid: 8d14f31780603424597eb58f7e69e727, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 3374004233584853185, guid: 8d14f31780603424597eb58f7e69e727, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d14f31780603424597eb58f7e69e727, type: 3}
---- !u!224 &973936325026462910 stripped
+--- !u!224 &7702319327121840201 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3374004232422595871, guid: 8d14f31780603424597eb58f7e69e727, type: 3}
-  m_PrefabInstance: {fileID: 2546437131320664481}
+  m_PrefabInstance: {fileID: 4915393565578724694}
   m_PrefabAsset: {fileID: 0}

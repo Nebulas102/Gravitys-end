@@ -18,13 +18,10 @@ namespace Core.StageGeneration.Rooms
         private GameObject _previousRoom;
 
         private int hallwayDoorCount;
-        private int currentHallwayDoorCount = 0;
-
         private int startDoorsLeftCount;
         private int startDoorsRightCount;
 
-        private bool keyRoomInBranch = false;
-        private bool keyRoomOutsideBranch = false;
+        private bool keyRoomInMap = false;
 
         private bool initialSpawned = false;
 
@@ -51,20 +48,16 @@ namespace Core.StageGeneration.Rooms
 
             var weightTotal = StageHelper.GetRooms().Sum(h => h.GetComponent<Room>().GetWeight());
 
-            hallwayDoorCount = mapHallways.Count * 4;
-            startDoorsLeftCount = hallwayDoorCount / 2 - 4;
-            startDoorsRightCount = hallwayDoorCount - 4;
-
             foreach (var hallway in mapHallways)
             {
-                hallway.GetComponent<Room>().SetDoorCells();
+                // hallway.GetComponent<Room>().SetDoorCells();
 
                 foreach (var door in hallway.GetComponent<Room>().GetDoors())
                 {
                     var branchLength = Random.Range(minWeightRoomsBranch, maxWeightRoomsBranch + 1);
 
                     StartCoroutine(PlaceRooms(door, branchLength, weightTotal));
-                    while(placeRoomsCoroutineActive)
+                    while (placeRoomsCoroutineActive)
                         yield return null;
                 }
 
@@ -84,24 +77,10 @@ namespace Core.StageGeneration.Rooms
             initialSpawned = false;
             placeRoomsCoroutineActive = true;
 
-            currentHallwayDoorCount++;
-
             // Loop through a single branch
             for (var i = 0; i < branchLength; i++)
             {
                 var roomRotation = new Quaternion(0, 0, 0, 0);
-
-                // If there is no key room spawned in a branch
-                if (!keyRoomInBranch)
-                {
-                    // Pick only a door at the end of the right or left hallway
-                    if ((currentHallwayDoorCount >= startDoorsLeftCount && currentHallwayDoorCount <= (startDoorsLeftCount + 4))
-                        || (currentHallwayDoorCount >= startDoorsRightCount && currentHallwayDoorCount <= (startDoorsRightCount + 4)))
-                    {
-                        SpawnKeyRoom(initialSpawned, spawnDoor);
-                        break;
-                    }
-                }
 
                 // Get random room based on the total weight
                 _currentRoom = RoomUtil.GetRandomRoom(StageHelper.GetRooms(), weightTotal).GetComponent<Room>().PlaceRoom();
@@ -155,7 +134,7 @@ namespace Core.StageGeneration.Rooms
                     var initialPos = currentRoom.PlacementPos(placementSide, doorCell);
 
                     // Set the canPlace that saves a boolean to know that room can be placed or not
-                    var canPlace = currentRoom.CanPlace((int)initialPos["x"], (int)initialPos["z"]);
+                    var canPlace = currentRoom.CanPlace((int)initialPos.x, (int)initialPos.z);
 
                     // If not can be placed, go the next iteration
                     if (!canPlace)
@@ -167,10 +146,10 @@ namespace Core.StageGeneration.Rooms
 
                 var pos = currentRoom.PlacementPos(placementSide, doorCell);
 
-                currentRoom.SetRoomCells((int)pos["x"], (int)pos["z"]);
+                currentRoom.SetRoomCells((int)pos.x, (int)pos.z);
                 currentRoom.SetDoorCells();
 
-                _previousRoom = currentRoom.SetRoomData((int)pos["x"], (int)pos["z"], roomRotation, placementSide, currentSpawnDoor);
+                _previousRoom = currentRoom.SetRoomData((int)pos.x, (int)pos.z, roomRotation, placementSide, currentSpawnDoor);
 
                 initialSpawned = true;
                 yield return new WaitForSeconds(0.05f);
@@ -179,72 +158,66 @@ namespace Core.StageGeneration.Rooms
             yield return null;
         }
 
-        private void SpawnKeyRoom(bool _initialSpawned, GameObject _spawnDoor)
+        private void CountHallwayDoors(List<GameObject> mapHallways)
         {
-            _currentRoom = StageHelper.GetKeyRoom().GetComponent<Room>().PlaceRoom();
-            Room currentRoom = _currentRoom.GetComponent<Room>();
+            hallwayDoorCount = mapHallways.Count * 6;
+            startDoorsLeftCount = hallwayDoorCount / 2 - 6;
+            startDoorsRightCount = hallwayDoorCount - 6;
+        }
+
+        // Spawn key room
+        public IEnumerator SpawnKeyRoom(List<GameObject> mapHallways)
+        {
+            CountHallwayDoors(mapHallways);
+
+            var room = StageHelper.GetKeyRoom().GetComponent<Room>().PlaceRoom();
+            var keyRoom = room.GetComponent<Room>();
 
             Cell doorCell = null;
-            var currentSpawnDoor = _spawnDoor;
             StageHelper.RoomDirections placementSide;
+            Vector3 roomPosition;
 
             var canPlace = false;
-            var isInitial = false;
-
             var roomRotation = new Quaternion(0, 0, 0, 0);
+            var hallwayDoorId = 0;
 
-            if (_initialSpawned)
-            {
-                placementSide = DeterminePlacementSide();
+            bool isLeft = (Random.Range(0, 2) == 0);
 
-                if (placementSide != StageHelper.RoomDirections.UNDEFINED)
-                {
-                    currentSpawnDoor = _previousRoom.GetComponent<Room>()
-                                .GetDoors().SingleOrDefault(d => d.GetComponent<Door>().GetDirection() == placementSide);
-                }
-
-                if (currentRoom.GetDoors().Count < 4 &&
-                    currentRoom.GetDoors().Where(d => d.GetComponent<Door>().direction != StageHelper.GetOppositeDirection(placementSide)).Any())
-                {
-                    roomRotation = currentRoom.RotateRoom(placementSide);
-                }
-
-                if (currentSpawnDoor is not null) doorCell = currentSpawnDoor.GetComponent<Door>().cell;
-            }
+            if (isLeft)
+                hallwayDoorId = Random.Range(startDoorsLeftCount, startDoorsLeftCount + 3);
             else
+                hallwayDoorId = Random.Range(startDoorsRightCount, startDoorsRightCount + 3);
+
+            var hallwaysDoors = mapHallways.SelectMany(hallway => hallway.GetComponent<Room>().GetDoors()).ToList();
+
+            var spawnDoor = hallwaysDoors[hallwayDoorId].GetComponent<Door>();
+
+            doorCell = spawnDoor.cell;
+            placementSide = spawnDoor.GetDirection();
+
+            if (keyRoom.GetDoors().Where(d => d.GetComponent<Door>().direction != StageHelper.GetOppositeDirection(placementSide)).Any())
             {
-                Door door = currentSpawnDoor.GetComponent<Door>();
-                placementSide = door.GetDirection();
-                doorCell = door.cell;
-
-                if (currentRoom.GetDoors().Count < 4 &&
-                    currentRoom.GetDoors().Where(d => d.GetComponent<Door>().direction != StageHelper.GetOppositeDirection(placementSide)).Any())
-                {
-                    roomRotation = currentRoom.RotateRoom(placementSide);
-                }
-
-                var initialPos = currentRoom.PlacementPos(placementSide, doorCell);
-
-                canPlace = currentRoom.CanPlace((int)initialPos["x"], (int)initialPos["z"]);
-
-                isInitial = true;
+                roomRotation = keyRoom.RotateRoom(placementSide);
             }
+
+            roomPosition = keyRoom.PlacementPos(placementSide, doorCell);
+
+            canPlace = keyRoom.CanPlace((int)roomPosition.x, (int)roomPosition.z);
 
             if (canPlace)
             {
-                var pos = currentRoom.PlacementPos(placementSide, doorCell);
+                keyRoom.SetRoomCells((int)roomPosition.x, (int)roomPosition.z);
+                keyRoom.SetDoorCells();
 
-                currentRoom.SetRoomCells((int)pos["x"], (int)pos["z"]);
-                currentRoom.SetDoorCells();
+                _previousRoom = keyRoom.SetRoomData((int)roomPosition.x, (int)roomPosition.z, roomRotation, placementSide, spawnDoor.gameObject);
 
-                _previousRoom = currentRoom.SetRoomData((int)pos["x"], (int)pos["z"], roomRotation, placementSide, currentSpawnDoor);
-
-                keyRoomInBranch = true;
-
-                if (isInitial) initialSpawned = true;
+                keyRoomInMap = true;
             }
+
+            yield return null;
         }
 
+        // Determine placement side of room
         private StageHelper.RoomDirections DeterminePlacementSide()
         {
             var openDirections = _previousRoom.GetComponent<Room>().GetDoors()
@@ -269,7 +242,7 @@ namespace Core.StageGeneration.Rooms
                     var pos = _currentRoom.GetComponent<Room>()
                     .PlacementPos(doorDirection, previousDoor.GetComponent<Door>().cell);
 
-                    canPlace = _currentRoom.GetComponent<Room>().CanPlace((int)pos["x"], (int)pos["z"]);
+                    canPlace = _currentRoom.GetComponent<Room>().CanPlace((int)pos.x, (int)pos.z);
                 }
             }
 
@@ -293,7 +266,7 @@ namespace Core.StageGeneration.Rooms
                         var pos = _currentRoom.GetComponent<Room>()
                         .PlacementPos(doorDirection, previousDoor.GetComponent<Door>().cell);
 
-                        canPlace = _currentRoom.GetComponent<Room>().CanPlace((int)pos["x"], (int)pos["z"]);
+                        canPlace = _currentRoom.GetComponent<Room>().CanPlace((int)pos.x, (int)pos.z);
                     }
 
                     iteration++;

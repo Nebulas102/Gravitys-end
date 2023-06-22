@@ -22,9 +22,6 @@ namespace Controllers.Player
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Backspace))
-                TakeDamage(10000, 10001, 0);
-
             _slider.value = health;
         }
 

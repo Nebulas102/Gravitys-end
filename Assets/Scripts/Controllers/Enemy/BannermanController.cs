@@ -14,7 +14,10 @@ public class BannermanController : MonoBehaviour
     private float healPlayerAmount = 5f;
     [SerializeField]
     private float healCooldown = 4f;
+    [HideInInspector]
     public bool healingAllowed;
+    private List<(Coroutine coroutine, EnemyBase enemy)> healingEnemies = new List<(Coroutine, EnemyBase)>();
+    private Coroutine healingPlayer;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -24,7 +27,8 @@ public class BannermanController : MonoBehaviour
 
             if (enemyBase != null)
             {
-                StartCoroutine(HealEnemy(enemyBase));
+                Coroutine healingEnemy = StartCoroutine(HealEnemy(enemyBase));
+                healingEnemies.Add((healingEnemy, enemyBase));
             }
         }
         else if (other.gameObject.CompareTag("Player") && healingAllowed)
@@ -33,7 +37,7 @@ public class BannermanController : MonoBehaviour
 
             if (playerStats != null)
             {
-                StartCoroutine(HealPlayer(playerStats));
+                healingPlayer = StartCoroutine(HealPlayer(playerStats));
             }
         }
     }
@@ -46,7 +50,22 @@ public class BannermanController : MonoBehaviour
 
             if (enemyBase != null)
             {
-                StopCoroutine(HealEnemy(enemyBase));
+                var enemyEntry = healingEnemies.Find(entry => entry.enemy == enemyBase);
+                if (enemyEntry.coroutine != null)
+                {
+                    StopCoroutine(enemyEntry.coroutine);
+                    healingEnemies.Remove(enemyEntry);
+                }
+            }
+        }
+
+        else if (other.gameObject.CompareTag("Player") && healingAllowed)
+        {
+            PlayerStatsController playerStats = other.GetComponent<PlayerStatsController>();
+
+            if (playerStats != null)
+            {
+                StopCoroutine(healingPlayer);
             }
         }
     }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 220377326863881332}
   - component: {fileID: 5198127360845289495}
   - component: {fileID: -8305011218337281288}
+  - component: {fileID: 8829131871259817758}
   m_Layer: 0
   m_Name: CyberArmor
   m_TagString: Armor
@@ -98,6 +99,19 @@ MonoBehaviour:
   verticalMotionSpeed: 4
   verticalMotionAmplitude: 0.5
   IsInInventory: 0
+--- !u!65 &8829131871259817758
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595918458583371470}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.260333, y: 1.2473793, z: 1.2230544}
+  m_Center: {x: 0.0052089095, y: -0.011685848, z: 0.023650438}
 --- !u!1 &3908388795115109791
 GameObject:
   m_ObjectHideFlags: 0

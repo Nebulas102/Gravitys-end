@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Controllers.Enemy;
+using Core.Audio;
 using Core.Enemy.StageBosses;
 using TMPro;
 using UI;
@@ -126,7 +127,7 @@ namespace Core.Enemy
                 damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
 
             _currentHealth -= damage;
-            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossYells);
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_YELLS);
 
             healthBar.value = _currentHealth;
 
@@ -137,7 +138,7 @@ namespace Core.Enemy
                 ObjectiveSystem.instance.HandleBossKilled();
                 Destroy(gameObject);
 
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossDies);
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_DIES);
             }
         }
 

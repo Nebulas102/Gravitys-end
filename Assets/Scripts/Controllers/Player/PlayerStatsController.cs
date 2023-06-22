@@ -15,14 +15,16 @@ namespace Controllers.Player
         [HideInInspector]
         public int hitCounter;
 
+        private float _currentHealth;
         private Slider _slider;
         private Character _player;
         private ParticleSystem _hitParticle;
 
         private void Start()
-        {
+        {   
+            _currentHealth = health;
             _slider = GameObject.Find("Healthbar").GetComponent<Slider>();
-            _slider.maxValue = health;
+            _slider.maxValue = _currentHealth;
 
             _player = transform.GetComponent<Character>();
             _hitParticle = _player.hitParticle;
@@ -30,12 +32,12 @@ namespace Controllers.Player
 
         private void Update()
         {
-            _slider.value = health;
+            _slider.value = _currentHealth;
         }
 
         public void TakeDamage(int startDamage, int endDamage, float modifier)
         {
-            if (health <= 0)
+            if (_currentHealth <= 0)
                 Die();
 
             var damage = Random.Range(startDamage, endDamage);
@@ -44,7 +46,7 @@ namespace Controllers.Player
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
             // Damage character
-            health -= damage;
+            _currentHealth -= damage;
             
             if (!_hitParticle.isPlaying)
             {
@@ -54,7 +56,10 @@ namespace Controllers.Player
 
         public void HealPlayer(float healPlayerAmount)
         {
-            health += healPlayerAmount;
+            if (_currentHealth < health)
+            {
+                _currentHealth += healPlayerAmount;
+            }
         }
 
         private void Die()

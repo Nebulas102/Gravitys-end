@@ -100,7 +100,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -111,7 +111,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -122,7 +122,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -133,7 +133,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -155,7 +155,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": ""Tap"",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -177,7 +177,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -199,7 +199,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": ""Tap"",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Loot Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -243,7 +243,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""OpenChest"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -254,7 +254,7 @@ public partial class @InputManager : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""OpenChest"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

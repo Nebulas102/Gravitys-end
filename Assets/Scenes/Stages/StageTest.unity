@@ -1250,6 +1250,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4898845049956350490, guid: 8f14c4395d7234540a254e77e10371f7, type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898845049956350490, guid: 8f14c4395d7234540a254e77e10371f7, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898845049956350490, guid: 8f14c4395d7234540a254e77e10371f7, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4898845050784185721, guid: 8f14c4395d7234540a254e77e10371f7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1402,8 +1414,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 263.65002, y: -280.70496}
-  m_SizeDelta: {x: 527.30005, y: 561.4099}
+  m_AnchoredPosition: {x: 263.65002, y: -225}
+  m_SizeDelta: {x: 527.3, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &599811976
 MonoBehaviour:
@@ -1665,6 +1677,10 @@ PrefabInstance:
     - target: {fileID: 4919654385054473568, guid: 51db8a37a9dc5494698c4a5489838f93, type: 3}
       propertyPath: m_Name
       value: LoadingScreen_with_Dialogue
+      objectReference: {fileID: 0}
+    - target: {fileID: 4919654385054473568, guid: 51db8a37a9dc5494698c4a5489838f93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4919654385054473572, guid: 51db8a37a9dc5494698c4a5489838f93, type: 3}
       propertyPath: m_Pivot.x

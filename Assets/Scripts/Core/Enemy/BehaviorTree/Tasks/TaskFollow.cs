@@ -26,8 +26,16 @@ namespace BehaviorTree.Tasks
 
             if (destinationValid)
             {
-                _enemyController.enemyAnimator.SetBool("stand_shoot", false);
-                _enemyController.enemyAnimator.SetBool("run_shoot", true);
+                if (_enemyController.enemyAnimator.name == "Bannerman")
+                {
+                    _enemyController.enemyAnimator.SetTrigger("walk");
+                }
+
+                if (_enemyController.enemyAnimator.name == "commonRangedAnim")
+                {
+                    _enemyController.enemyAnimator.SetBool("stand_shoot", false);
+                    _enemyController.enemyAnimator.SetBool("run_shoot", true);
+                }
                 state = NodeState.RUNNING;
             }
             else

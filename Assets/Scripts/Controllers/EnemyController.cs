@@ -18,6 +18,9 @@ namespace Controllers
         public LayerMask obstacleMask;
         public Animator enemyAnimator;
 
+        [Header("Effects")]
+        public ParticleSystem hitParticle;
+
         [HideInInspector]
         public NavMeshAgent agent;
 

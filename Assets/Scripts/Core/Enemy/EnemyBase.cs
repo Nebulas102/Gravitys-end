@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using Controllers;
 using UI.Enemy;
 using UnityEngine;
 
@@ -19,10 +20,11 @@ namespace Core.Enemy
         public GameObject damageDisplay;
 
         private Canvas _canvas;
-        private Renderer[] _renderers;
-        private Material[] _originalMaterials;
+        // private Renderer[] _renderers;
+        // private Material[] _originalMaterials;
 
         private float _currentHealth;
+        private ParticleSystem _hitParticle;
 
         public static int enemyKillCounter;
 
@@ -33,14 +35,15 @@ namespace Core.Enemy
         private void Start()
         {
             _canvas = GetComponentInChildren<Canvas>();
-            _renderers = GetComponentsInChildren<Renderer>();
+            // _renderers = GetComponentsInChildren<Renderer>();
 
-            _originalMaterials = new Material[_renderers.Length];
-            for (int i = 0; i < _renderers.Length; i++)
-            {
-                _originalMaterials[i] = _renderers[i].sharedMaterial;
-            }
+            // _originalMaterials = new Material[_renderers.Length];
+            // for (int i = 0; i < _renderers.Length; i++)
+            // {
+            //     _originalMaterials[i] = _renderers[i].sharedMaterial;
+            // }
 
+            _hitParticle = GetComponent<EnemyController>().hitParticle;
             _currentHealth = health;
         }
 
@@ -71,9 +74,12 @@ namespace Core.Enemy
             if (damageDisplay != null)
                 damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
 
-            
-
             _currentHealth -= damage;
+
+            if (!_hitParticle.isPlaying)
+            {
+                _hitParticle.Play();
+            }
         }
 
         private IEnumerator HitFeedback()

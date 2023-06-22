@@ -5438,14 +5438,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94474810cf6c37f4487f291bffd548ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy:
-  - {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
-  enemySpawnPoints:
-  - {fileID: 5027206133629602038}
-  - {fileID: 3340779029909879026}
-  - {fileID: 8258764061634096280}
-  minGroupSize: 2
-  maxGroupSize: 3
+  enemySpawnpoints:
+  - spawnpoint: {fileID: 5027206133629602038}
+    enemy: {fileID: 1829273986078120232, guid: 09d3b13d6e4ba684d977d9187f5528ea, type: 3}
+    minSpawn: 1
+    maxSpawn: 1
+  - spawnpoint: {fileID: 3340779029909879026}
+    enemy: {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
+    minSpawn: 1
+    maxSpawn: 1
+  - spawnpoint: {fileID: 8258764061634096280}
+    enemy: {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
+    minSpawn: 1
+    maxSpawn: 3
 --- !u!114 &8627684976986758269
 MonoBehaviour:
   m_ObjectHideFlags: 0

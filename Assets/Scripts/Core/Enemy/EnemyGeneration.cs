@@ -9,37 +9,33 @@ namespace Core
 {
     public class EnemyGeneration : MonoBehaviour
     {
-        public GameObject[] enemy;
         [SerializeField]
-        private Transform[] enemySpawnPoints;
-        private Vector3 spawnPosition;
-        private int groupSize;
-        [SerializeField]
-        private int minGroupSize;
-        [SerializeField]
-        private int maxGroupSize;
+        private List<EnemySpawnpoints> enemySpawnpoints;
 
         IEnumerator EnemyDrop()
         {
-            List<Transform> availableSpawnPoints = new List<Transform>(enemySpawnPoints);
-            int spawnPointCount = availableSpawnPoints.Count;
-
-            for (int i = 0; i < 3 && spawnPointCount > 0; i++)
+            // Iterate through each EnemySpawnpoints object
+            foreach (EnemySpawnpoints spawnpoint in enemySpawnpoints)
             {
-                int randomIndex = Random.Range(0, spawnPointCount);
-                groupSize = Random.Range(minGroupSize, maxGroupSize + 1);
-                spawnPosition = availableSpawnPoints[randomIndex].position;
-                GameObject enemyType = enemy[Random.Range(0, enemy.Length)];
+                // Generate a random number of enemies to spawn between minSpawn and maxSpawn
+                int numEnemiesToSpawn = UnityEngine.Random.Range(spawnpoint.minSpawn, spawnpoint.maxSpawn + 1);
 
-                for (int j = 0; j < groupSize; j++)
+                // Spawn the enemies
+                if (numEnemiesToSpawn == 1)
                 {
-                    spawnPosition.x += Random.Range(-1f, 1f);
-                    Instantiate(enemyType, spawnPosition, Quaternion.identity);
-                    yield return null;
+                    Instantiate(spawnpoint.enemy, spawnpoint.spawnpoint.position, spawnpoint.spawnpoint.rotation);
                 }
-
-                availableSpawnPoints.RemoveAt(randomIndex);
-                spawnPointCount--;
+                else if (numEnemiesToSpawn > 1) 
+                {
+                    for (int i = 0; i < numEnemiesToSpawn; i++)
+                    {
+                        float randomOffsetX = UnityEngine.Random.Range(-1f, 1f);
+                        Vector3 spawnPosition = spawnpoint.spawnpoint.position + new Vector3(randomOffsetX, 0f, 0f);
+                        Instantiate(spawnpoint.enemy, spawnPosition, spawnpoint.spawnpoint.rotation);
+                        yield return null;
+                    }
+                }
+                
                 yield return null;
             }
         }

@@ -66,7 +66,7 @@ namespace Controllers.Player
 
         private void Update()
         {
-            if (_gamePaused)
+            if (_gamePaused || DialogueManager.instance.dialogueActive)
             {
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", 0, 0.1f, Time.deltaTime);
                 movementSM.ChangeState(standing);

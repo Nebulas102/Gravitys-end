@@ -14,12 +14,9 @@ public class DialogueTrigger : MonoBehaviour
 
     private bool hasTriggered;
 
-    public void TriggerDialogue(DialogueManager dialogueManager)
+    public void TriggerDialogue()
     {
-        if (dialogueManager == null)
-            DialogueManager.instance.StartDialogue(dialogue);  
-        else
-            dialogueManager.StartDialogue(dialogue);
+        DialogueManager.instance.StartDialogue(dialogue);  
     }
     private void OnTriggerEnter(Collider other)
     {

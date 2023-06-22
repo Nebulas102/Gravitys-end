@@ -1,6 +1,7 @@
 using UI.Runtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Utils;
 
 namespace UI
 {
@@ -58,6 +59,7 @@ namespace UI
         {
             if (PauseMenu.instance.isPaused) return;
             if (DialogueManager.instance.dialogueActive) return;
+            if (Navigation.instance.loadingScreenActive) return;
 
             inventoryOpened = !overlay.activeSelf;
             Time.timeScale = inventoryOpened ? 0f : 1f;

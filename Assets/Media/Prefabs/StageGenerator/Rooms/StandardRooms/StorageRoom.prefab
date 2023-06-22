@@ -1325,6 +1325,7 @@ GameObject:
   - component: {fileID: 5263816733229105088}
   - component: {fileID: 7829593767027937589}
   - component: {fileID: 8995968380927326064}
+  - component: {fileID: 3227531740170125404}
   m_Layer: 6
   m_Name: FloorBlock(Clone)
   m_TagString: Floor
@@ -1397,6 +1398,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3227531740170125404
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115686138091822393}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2275358178623858870
 GameObject:
   m_ObjectHideFlags: 0

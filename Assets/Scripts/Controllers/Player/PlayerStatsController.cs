@@ -12,12 +12,20 @@ namespace Controllers.Player
         [SerializeField]
         private float health;
 
+        [HideInInspector]
+        public int hitCounter;
+
         private Slider _slider;
+        private Character _player;
+        private ParticleSystem _hitParticle;
 
         private void Start()
         {
             _slider = GameObject.Find("Healthbar").GetComponent<Slider>();
             _slider.maxValue = health;
+
+            _player = transform.GetComponent<Character>();
+            _hitParticle = _player.hitParticle;
         }
 
         private void Update()
@@ -27,6 +35,9 @@ namespace Controllers.Player
 
         public void TakeDamage(int startDamage, int endDamage, float modifier)
         {
+            if (health <= 0)
+                Die();
+
             var damage = Random.Range(startDamage, endDamage);
             // Subtract the armor value
             damage -= Mathf.RoundToInt(modifier) * damage;
@@ -34,9 +45,11 @@ namespace Controllers.Player
 
             // Damage character
             health -= damage;
-
-            if (health <= 0)
-                Die();
+            
+            if (!_hitParticle.isPlaying)
+            {
+                _hitParticle.Play();
+            }
         }
 
         public void HealPlayer(float healPlayerAmount)

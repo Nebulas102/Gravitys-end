@@ -1,5 +1,6 @@
 using System.Linq;
 using Cinemachine;
+using Core.Audio;
 using Core.StageGeneration.Rooms.RoomTypes;
 using Core.StageGeneration.Stage;
 using UI;

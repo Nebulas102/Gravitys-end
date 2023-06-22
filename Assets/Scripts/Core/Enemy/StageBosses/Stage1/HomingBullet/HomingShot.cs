@@ -1,4 +1,5 @@
 using System.Collections;
+using Core.Audio;
 using UnityEngine;
 
 namespace Core.Enemy.StageBosses.Stage1
@@ -60,7 +61,7 @@ namespace Core.Enemy.StageBosses.Stage1
             newHomingBulletBehavior.SetSpeed(bulletSpeed);
             newHomingBulletBehavior.SetRotationSpeed(bulletRotationSpeed);
 
-            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossShoots);
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_SHOOTS);
         }
     }
 }

@@ -102,6 +102,8 @@ namespace Core.StageGeneration.Stage
             StageHelper.SetRooms(rooms);
             StageHelper.SetKeyRoom(keyRoom);
 
+            InitializeRoomSizes();
+
             _roomGenerator = RoomGenerator.instance;
 
             //Start spawning bossroom
@@ -223,7 +225,7 @@ namespace Core.StageGeneration.Stage
 
         private IEnumerator SpawnKeyRoom()
         {
-             StartCoroutine( _roomGenerator.SpawnKeyRoom(mapHallways));
+            StartCoroutine(_roomGenerator.SpawnKeyRoom(mapHallways));
             yield return StartCoroutine(GenerateRooms());
         }
 
@@ -408,6 +410,32 @@ namespace Core.StageGeneration.Stage
             //Add the cell to the cells list
             cells.Add(newCell.GetComponent<Cell>());
         }
+
+        private void InitializeRoomSizes()
+        {
+            var allRooms = new List<GameObject>
+            {
+                spawnRoom,
+                bossHallway,
+                bossRoom,
+                hallwayEndLeft,
+                hallwayEndRight
+            };
+
+            allRooms.AddRange(rooms);
+            allRooms.AddRange(hallways);
+
+            foreach (var room in allRooms)
+            {
+                var newSizes = RoomUtil.CalculateSizeBasedOnChildren(room);
+                var roomComp = room.GetComponent<Room>();
+
+                roomComp.sizeX = newSizes["x"];
+                roomComp.sizeY = newSizes["y"];
+                roomComp.sizeZ = newSizes["z"];
+            }
+        }
+
 
         public void AddRoomToMap(GameObject room)
         {

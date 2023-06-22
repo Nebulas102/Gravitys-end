@@ -29,16 +29,4 @@ public class EnemyRangeAttackController : MonoBehaviour
 
         rangeWeapon.SetEnemy(transform);
     }
-
-    // public void EnemyShoot()
-    // {
-    //     if (enemyController.agent.velocity != Vector3.zero)
-    //     {
-    //         enemyController.enemyAnimator.SetTrigger("run_shoot");
-    //     }
-    //     else
-    //     {
-    //         enemyController.enemyAnimator.SetTrigger("stand_shoot");
-    //     }
-    // }
 }

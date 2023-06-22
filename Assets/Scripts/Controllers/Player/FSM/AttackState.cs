@@ -41,20 +41,17 @@ namespace Controllers.Player
                 _camera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
                 mousePos = lookAction.ReadValue<Vector2>();
                 Ray ray = _camera.ScreenPointToRay(mousePos);
-                float rayDistance = Mathf.Infinity;
 
-                if (Physics.Raycast(ray, out RaycastHit raycastHit, rayDistance, _player.allowedLayers, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity,  _player.allowedLayers))
                 {
-                    Vector3 pointToLook = raycastHit.collider.gameObject.CompareTag("Enemy") || raycastHit.collider.gameObject.CompareTag("Boss")
-                        ? new Vector3(raycastHit.collider.gameObject.transform.position.x, _player.transform.position.y, raycastHit.collider.gameObject.transform.position.z)
-                        : raycastHit.point;
-
+                    Debug.Log("Raycast hit: " + raycastHit.collider.gameObject.name);
+                    Vector3 pointToLook = raycastHit.point;
                     pointToLook.y = _player.transform.position.y;
                     _player.lookAtPosition = pointToLook;
                     _player.transform.LookAt(_player.lookAtPosition);
                 }
-            }
 
+            }
 
             if (IsMelee())
             {
@@ -81,7 +78,7 @@ namespace Controllers.Player
             }
         }
 
-      
+
         public override void LogicUpdate()
         {
             base.LogicUpdate();

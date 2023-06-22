@@ -22,6 +22,10 @@ public class RangeWeapon : MonoBehaviour
     public int maxDamage;
     public float bulletSpeed;
 
+    [Header("Effect")]
+    [SerializeField]
+    private ParticleSystem destructionEffect;
+
     [SerializeField]
     private Transform bulletOutput;
 
@@ -88,5 +92,6 @@ public class RangeWeapon : MonoBehaviour
         newBulletBehaviour.SetDamage(minDamage, maxDamage);
         newBulletBehaviour.SetSpeed(bulletSpeed);
         newBulletBehaviour.SetDirection(bulletDirection);
+        newBulletBehaviour.SetDestructionEffect(destructionEffect);
     }
 }

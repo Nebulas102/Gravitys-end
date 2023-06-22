@@ -173,15 +173,21 @@ MonoBehaviour:
   bossAbilityStages:
   - healthStageActivation: 100
     bossAbilitySequences:
-    - bossAbility: {fileID: 1232051141004310871}
-      amountOfTimes: 2
     - bossAbility: {fileID: 6588389978399913415}
       amountOfTimes: 3
     - bossAbility: {fileID: 3039630364116265136}
       amountOfTimes: 1
+    - bossAbility: {fileID: 1232051141004310871}
+      amountOfTimes: 2
     - bossAbility: {fileID: 5868248664225388700}
       amountOfTimes: 3
-  - healthStageActivation: 70
+  - healthStageActivation: 60
+    bossAbilitySequences:
+    - bossAbility: {fileID: 6588389978399913415}
+      amountOfTimes: 2
+    - bossAbility: {fileID: 3039630364116265136}
+      amountOfTimes: 2
+  - healthStageActivation: 30
     bossAbilitySequences:
     - bossAbility: {fileID: 6588389978399913415}
       amountOfTimes: 2
@@ -418,10 +424,6 @@ PrefabInstance:
     - target: {fileID: 767206544970825474, guid: c8e884ed03e4cff4aa4f90acf0cedbdb, type: 3}
       propertyPath: m_Name
       value: HomingShot
-      objectReference: {fileID: 0}
-    - target: {fileID: 3313712564282753253, guid: c8e884ed03e4cff4aa4f90acf0cedbdb, type: 3}
-      propertyPath: bulletInterval
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7208658105574866238, guid: c8e884ed03e4cff4aa4f90acf0cedbdb, type: 3}
       propertyPath: m_RootOrder

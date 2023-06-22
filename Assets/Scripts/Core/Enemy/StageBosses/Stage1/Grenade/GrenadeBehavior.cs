@@ -11,6 +11,7 @@ namespace Core.Enemy.StageBosses.Stage1
         private float _curveHeight;
         private int _minDamage;
         private int _maxDamage;
+        private ParticleSystem _destructionEffect;
 
         private float _throwStartTime = 0f;
 
@@ -35,6 +36,8 @@ namespace Core.Enemy.StageBosses.Stage1
             _startRotation = transform.rotation;
             _targetPosition = _player.transform.position;
             _throwStartTime = Time.time;
+
+            _destructionEffect = Instantiate(_destructionEffect);
 
             PlaceDecal();
 
@@ -63,6 +66,8 @@ namespace Core.Enemy.StageBosses.Stage1
                 Quaternion currentRot = CalculateThrowRotation(normalizedTime);
                 transform.root.rotation = currentRot;
 
+                _destructionEffect.gameObject.transform.position = transform.root.position;
+
                 yield return null;
             }
 
@@ -70,6 +75,8 @@ namespace Core.Enemy.StageBosses.Stage1
             {
                 _player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, 0);
             }
+
+            _destructionEffect.Play();
 
             Destroy(transform.root.gameObject);
             Destroy(_decal);
@@ -118,6 +125,11 @@ namespace Core.Enemy.StageBosses.Stage1
         public void SetCurveHeight(float curveHeight)
         {
             _curveHeight = curveHeight;
+        }
+
+        public void SetDestructionEffect(ParticleSystem destructionEffect)
+        {
+            _destructionEffect = destructionEffect;
         }
     }
 }

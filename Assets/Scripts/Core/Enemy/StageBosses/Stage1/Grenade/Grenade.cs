@@ -29,6 +29,10 @@ namespace Core.Enemy.StageBosses.Stage1
         [SerializeField]
         private float decalRadius;
 
+        [Header("Effect")]
+        [SerializeField]
+        private ParticleSystem destructionEffect;
+
         private GameObject _boss;
         private GameObject _player;
 
@@ -57,6 +61,7 @@ namespace Core.Enemy.StageBosses.Stage1
             newGrenadeBehavior.SetDamage(minDamage, maxDamage);
             newGrenadeBehavior.SetThrowDuration(throwDuration);
             newGrenadeBehavior.SetCurveHeight(curveHeight);
+            newGrenadeBehavior.SetDestructionEffect(destructionEffect);
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_SHOOTS);
         }

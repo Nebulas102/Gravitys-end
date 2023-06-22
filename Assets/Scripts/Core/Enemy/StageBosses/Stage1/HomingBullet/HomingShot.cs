@@ -19,10 +19,16 @@ namespace Core.Enemy.StageBosses.Stage1
         private int maxDamage;
         [SerializeField]
         private float bulletInterval;
+        [SerializeField]
+        private float timeAlive;
 
         [Header("Spray logic")]
         [SerializeField]
         private float sprayAmountBullets;
+
+        [Header("Effect")]
+        [SerializeField]
+        private ParticleSystem destructionEffect;
 
         [SerializeField]
         private float sprayInterval;
@@ -60,6 +66,8 @@ namespace Core.Enemy.StageBosses.Stage1
             newHomingBulletBehavior.SetDamage(minDamage, maxDamage);
             newHomingBulletBehavior.SetSpeed(bulletSpeed);
             newHomingBulletBehavior.SetRotationSpeed(bulletRotationSpeed);
+            newHomingBulletBehavior.SetTimeAlive(timeAlive);
+            newHomingBulletBehavior.SetDestructionEffect(destructionEffect);
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_SHOOTS);
         }

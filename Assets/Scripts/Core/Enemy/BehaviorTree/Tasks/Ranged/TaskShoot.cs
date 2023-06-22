@@ -27,16 +27,9 @@ namespace BehaviorTree.Tasks
             }
 
             // Ryan: animations shooting trigger here
-            if (enemyController.enemyAnimator.name == "Bannerman")
-            {
-                enemyController.enemyAnimator.SetTrigger("idle");
-            }
+            enemyController.enemyAnimator.SetBool("run_shoot", false);
+            enemyController.enemyAnimator.SetBool("stand_shoot", true);
 
-            if (enemyController.enemyAnimator.name == "commonRangedAnim")
-            {
-                enemyController.enemyAnimator.SetBool("run_shoot", false);
-                enemyController.enemyAnimator.SetBool("stand_shoot", true);
-            }
             state = NodeState.RUNNING;
             return state;
         }

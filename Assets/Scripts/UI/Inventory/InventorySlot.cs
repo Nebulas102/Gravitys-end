@@ -63,29 +63,18 @@ namespace UI.Inventory
                 obj.gameObject.GetComponent<PlayerShoot>().OnWeaponUnequipped();
             }
 
-
-            switch (isEquippedSlot)
+            if (weapon && isEquippedSlot)
             {
-                case true when weapon:
-                    EquipmentSystem.Instance.SetCurrentWeapon(obj.gameObject);
-                    obj.RenderItem(true);
+                EquipmentSystem.Instance.SetCurrentWeapon(obj.gameObject);
+                obj.RenderItem(true);
 
-                    GameObject equippedWeapon = EquipmentSystem.Instance._equippedWeapon;
+                GameObject equippedWeapon = EquipmentSystem.Instance._equippedWeapon;
 
-                    if (equippedWeapon.CompareTag("Ranged"))
-                    {
-                        equippedWeapon.GetComponent<PlayerShoot>().OnWeaponEquipped();
-                    }
-                    break;
-
-                case true when !weapon:
-
-                    EquipmentSystem.Instance.SetCurrentArmor(obj.gameObject);
-                    obj.RenderItem(true);
-                    break;
-
+                if (equippedWeapon.CompareTag("Ranged"))
+                {
+                    equippedWeapon.GetComponent<PlayerShoot>().OnWeaponEquipped();
+                }
             }
-
         }
 
         public void DropItem(bool spawn = false)

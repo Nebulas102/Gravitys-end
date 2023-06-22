@@ -28,10 +28,10 @@ public class EnemyBulletBehaviour : MonoBehaviour
         {
             player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, 0);
 
-            Destroy(transform.root.gameObject);
+            Destroy(gameObject);
         }
 
-        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door") || other.gameObject.CompareTag("Enemy")) Destroy(transform.root.gameObject);
+        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door") || other.gameObject.CompareTag("Enemy")) Destroy(gameObject);
     }
 
     public void SetDamage(int minDamage, int maxDamage)

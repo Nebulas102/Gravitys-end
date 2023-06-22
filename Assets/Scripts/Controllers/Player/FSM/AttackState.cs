@@ -45,6 +45,7 @@ namespace Controllers.Player
 
                 if (Physics.Raycast(ray, out RaycastHit raycastHit, rayDistance, _player.allowedLayers, QueryTriggerInteraction.Ignore))
                 {
+                    Debug.Log("Raycast hit: " + raycastHit.collider.gameObject.name);
                     Vector3 pointToLook = raycastHit.collider.gameObject.CompareTag("Enemy") || raycastHit.collider.gameObject.CompareTag("Boss")
                         ? new Vector3(raycastHit.collider.gameObject.transform.position.x, _player.transform.position.y, raycastHit.collider.gameObject.transform.position.z)
                         : raycastHit.point;

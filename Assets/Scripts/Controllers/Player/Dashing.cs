@@ -2,6 +2,7 @@ using System.Collections;
 using Core.Audio;
 using UI;
 using UnityEngine;
+using Utils;
 
 namespace Controllers.Player
 {
@@ -51,7 +52,7 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            if (_gamePaused || isDashing || DialogueManager.instance.dialogueActive)
+            if (_gamePaused || isDashing || DialogueManager.instance.dialogueActive || Navigation.instance.loadingScreenActive)
                 return;
 
             HandleDash();

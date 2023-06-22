@@ -1,6 +1,7 @@
 using UI;
 using UI.Runtime;
 using UnityEngine;
+using Utils;
 
 public class MapUIManager : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class MapUIManager : MonoBehaviour
     void Update()
     {
         _inputManager.UI.Enable();
-        if (_inputManager.UI.ToggleMap.triggered && !(DialogueManager.instance.dialogueActive || PauseMenu.instance.isPaused))
+        if (_inputManager.UI.ToggleMap.triggered && !(DialogueManager.instance.dialogueActive || PauseMenu.instance.isPaused || Navigation.instance.loadingScreenActive))
         {
             ToggleMap();
         }

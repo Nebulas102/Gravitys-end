@@ -4,6 +4,7 @@ using Core.Enemy;
 using UI.Runtime;
 using UI.Tokens;
 using Core.Audio;
+using Utils;
 
 namespace Core
 {
@@ -60,7 +61,7 @@ namespace Core
         private void Update()
         {
             // Checks whether the timer update should be executed
-            if (timerIsRunning)
+            if (timerIsRunning && !Navigation.instance.loadingScreenActive)
             {
                 if (time > 0)
                 {

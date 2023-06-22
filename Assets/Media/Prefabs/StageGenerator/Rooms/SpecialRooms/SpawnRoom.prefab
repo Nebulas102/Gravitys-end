@@ -8513,7 +8513,6 @@ GameObject:
   - component: {fileID: 8852711044157568988}
   - component: {fileID: 3488478737702702937}
   - component: {fileID: 1711132120465147707}
-  - component: {fileID: 3835575801492168207}
   m_Layer: 0
   m_Name: SpawnRoom
   m_TagString: Room
@@ -8606,26 +8605,6 @@ MonoBehaviour:
   doorReplacement: {fileID: 0}
   cells: []
   bossHallwayDoor: {fileID: 75673497736359809}
---- !u!114 &3835575801492168207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3939904267268250419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4d6156d86c414148ac6c27792ac688c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enableTriggerEnter: 1
-  enableTriggerExit: 0
-  dialogue:
-    name: Mysterious Voice
-    sentences:
-    - It appears you've made it back.
-    - You must stop history from repeating itself. The explosion cannot happen again.
-    - Try to move using WASD or the control stick.
 --- !u!1 &4041880585985287172
 GameObject:
   m_ObjectHideFlags: 0

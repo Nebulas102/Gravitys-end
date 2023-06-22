@@ -20,7 +20,7 @@ public class DialogueCharacterAnimation : MonoBehaviour
     {
         if(!triggered && !finished)
         {
-            GameObject obj = Instantiate(characterAltPrefab, inWorldCharacter.transform.parent);
+            GameObject obj = Instantiate(characterAltPrefab, inWorldCharacter.transform.position, inWorldCharacter.transform.rotation, inWorldCharacter.transform.parent);
             Destroy(inWorldCharacter);
             inWorldCharacter = obj;
             triggered = true;
@@ -32,7 +32,7 @@ public class DialogueCharacterAnimation : MonoBehaviour
         if(triggered)
             if(!DialogueManager.instance.dialogueActive)
             {
-                GameObject obj = Instantiate(characterPrefab, inWorldCharacter.transform.parent);
+                GameObject obj = Instantiate(characterPrefab, inWorldCharacter.transform.position, inWorldCharacter.transform.rotation, inWorldCharacter.transform.parent);
                 Destroy(inWorldCharacter);
                 inWorldCharacter = obj;
                 finished = true;

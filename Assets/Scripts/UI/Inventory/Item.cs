@@ -1,3 +1,4 @@
+using Core.Audio;
 using UnityEngine;
 
 namespace UI.Inventory
@@ -128,11 +129,11 @@ namespace UI.Inventory
             isPlayerNearby = false;
             if (type == ItemType.WEAPON)
             {
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.GunPickup);
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.GUN_PICKUP);
                 return;
             }
 
-            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ArmorPickup);
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.ARMOR_PICKUP);
         }
 
         private bool CanPickup()

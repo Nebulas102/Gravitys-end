@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public Dialogue dialogue;
+    [SerializeField]
+    private bool enableTriggerEnter;
+    [SerializeField]
+    private bool enableTriggerExit;
+
+    [SerializeField]
+    private Dialogue dialogue;
 
     private bool hasTriggered;
 
@@ -17,7 +23,16 @@ public class DialogueTrigger : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!hasTriggered && other.gameObject.CompareTag("Player"))
+        if (enableTriggerEnter && !hasTriggered && other.gameObject.CompareTag("Player"))
+        {
+            DialogueManager.instance.StartDialogue(dialogue);
+            hasTriggered = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (enableTriggerExit && !hasTriggered && other.gameObject.CompareTag("Player"))
         {
             DialogueManager.instance.StartDialogue(dialogue);
             hasTriggered = true;

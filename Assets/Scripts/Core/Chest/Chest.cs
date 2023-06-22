@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.Audio;
 using UnityEngine;
 
 namespace Core.Chest
@@ -65,7 +66,7 @@ namespace Core.Chest
                 var newChild = Instantiate(openedChestGameObject, transform);
                 newChild.transform.localPosition = Vector3.zero;
 
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ChestOpening);
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.CHEST_OPENING);
 
                 SpawnLoot();
             }

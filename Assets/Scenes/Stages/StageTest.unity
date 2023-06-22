@@ -1910,17 +1910,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d6156d86c414148ac6c27792ac688c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableTriggerEnter: 0
+  enableTriggerExit: 0
   dialogue:
     name: Mysterious Voice
     sentences:
-    - Welcome to Gravity's End.
-    - In this game you'll need to fight your way through the halls of this ship and
-      get to the center.
-    - If you don't make it in time, the ship explodes and you'll start from the beginning.
-    - The way to the next area is ahead, but the door is locked.
-    - Find the key and return here to move on.
-    - You can move using WASD, pick up items with F and attack with the left mouse
-      button.
+    - All is gone, but not lost.
+    - This universe has seized to be and yet you are.
+    - Use what keeps you here.
+    - Go.
 --- !u!114 &839705418 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8637817613304205672, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
@@ -6621,6 +6619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd4ac5ba5f058f04385f8fb4658a8a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnRoom: {fileID: 0}
 --- !u!1 &1786951658
 GameObject:
   m_ObjectHideFlags: 0

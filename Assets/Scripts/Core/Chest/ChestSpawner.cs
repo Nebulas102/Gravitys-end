@@ -13,30 +13,15 @@ namespace Core.Chest
 
         [SerializeField] List<GameObject> possibleLoot;
 
-        private bool _chestWillSpawn;
-
-        private Transform _spawnPointPos;
-
-        private void DetermineChestSpawn()
-        {
-            var randValue = Random.value;
-
-            // It will spawn a chest X% of time which is set in the inspector
-            _chestWillSpawn = randValue < chestSpawnChance;
-        }
-
         public void SpawnChest()
         {
-            DetermineChestSpawn();
-
-            if (_chestWillSpawn)
+            foreach(Transform spawnpoint in chestSpawnPoints)
             {
-                var chestSpawnPointKey = Random.Range(0, chestSpawnPoints.Length - 1);
-
-                _spawnPointPos = chestSpawnPoints[chestSpawnPointKey];
-
-                GameObject spawnedChest = Instantiate(chest, _spawnPointPos);
-                spawnedChest.GetComponent<Chest>().SetLootObjects(possibleLoot);
+                if(Random.value < chestSpawnChance)
+                {
+                    GameObject spawnedChest = Instantiate(chest, spawnpoint);
+                    spawnedChest.GetComponent<Chest>().SetLootObjects(possibleLoot);
+                }
             }
         }
     }

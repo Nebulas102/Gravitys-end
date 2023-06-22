@@ -26,12 +26,12 @@ namespace BehaviorTree.Tasks
 
             if (destinationValid)
             {
-                if (_enemyController.enemyAnimator.name == "Bannerman")
+                if (_enemyController.enemyAnimator.runtimeAnimatorController.name == "BannermanAnim")
                 {
                     _enemyController.enemyAnimator.SetTrigger("walk");
                 }
 
-                if (_enemyController.enemyAnimator.name == "commonRangedAnim")
+                if (_enemyController.enemyAnimator.runtimeAnimatorController.name == "commonRangedAnim")
                 {
                     _enemyController.enemyAnimator.SetBool("stand_shoot", false);
                     _enemyController.enemyAnimator.SetBool("run_shoot", true);

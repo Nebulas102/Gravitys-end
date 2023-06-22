@@ -54,56 +54,71 @@ namespace UI.Inventory
 
         public void SetItem(Item obj, bool weapon = false)
         {
+            // Toggle the item in the slot to the given object and its icon sprite.
             ToggleItem(obj.gameObject, obj.icon);
+
             obj.IsInInventory = true;
             obj.RenderItem(false);
 
             if (obj.gameObject.CompareTag("Ranged"))
-            {
                 obj.gameObject.GetComponent<PlayerShoot>().OnWeaponUnequipped();
-            }
 
-
+            // If the slot is an equipped slot and the item is a weapon, attach the weapon to the EquipmentSystem and render it as in the inventory.
             switch (isEquippedSlot)
             {
                 case true when weapon:
                     EquipmentSystem.Instance.SetCurrentWeapon(obj.gameObject);
                     obj.RenderItem(true);
 
+                    // If the equipped weapon is a ranged weapon, call the OnWeaponEquipped method of the PlayerShoot component.
                     GameObject equippedWeapon = EquipmentSystem.Instance._equippedWeapon;
-
                     if (equippedWeapon.CompareTag("Ranged"))
                     {
                         equippedWeapon.GetComponent<PlayerShoot>().OnWeaponEquipped();
                     }
                     break;
 
+                // If the slot is an equipped slot and the item is not a weapon, attach the armor to the EquipmentSystem and render it as in the inventory.
                 case true when !weapon:
-
                     EquipmentSystem.Instance.SetCurrentArmor(obj.gameObject);
                     obj.RenderItem(true);
                     break;
-
             }
-
         }
 
         public void DropItem(bool spawn = false)
         {
+            // If there is no item in the slot, return early.
             if (item is null)
                 return;
 
-            item.GetComponent<Item>().RenderItem(false);
-            if (isEquippedSlot)
-                EquipmentSystem.Instance.DetachWeapon();
+            var script = item.GetComponent<Item>();
+            script.RenderItem(false);
 
+            // If the slot is an equipment slot, detach the weapon or armor from the EquipmentSystem.
+            switch (isEquippedSlot)
+            {
+                case true when script.type == ItemType.WEAPON:
+                    EquipmentSystem.Instance.DetachWeapon();
+                    break;
+                case true when script.type == ItemType.ARMOR:
+                    EquipmentSystem.Instance.DetachArmor();
+                    break;
+                default:
+                    break;
+            }
+
+            // If the item is a ranged weapon and was equipped, call the OnWeaponUnequipped method of the PlayerShoot component.
             if (item.gameObject.CompareTag("Ranged") && isEquippedSlot)
             {
                 item.GetComponent<PlayerShoot>().OnWeaponUnequipped();
             }
 
+            // If the 'spawn' parameter is true, spawn the item in the game world.
             if (spawn)
                 item.GetComponent<Item>().Spawn();
+
+            // Toggle the item in the slot to null and the icon sprite to null.
             ToggleItem(null, null);
         }
 

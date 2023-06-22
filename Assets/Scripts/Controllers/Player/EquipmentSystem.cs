@@ -29,7 +29,7 @@ namespace Controllers.Player
             if (Instance == null)
                 Instance = this;
         }
-        void Start()
+        private void Start()
         {
             var player = GameObject.FindWithTag("Player");
         }
@@ -77,7 +77,6 @@ namespace Controllers.Player
             _equippedArmor.transform.localPosition = Vector3.zero;
             _equippedArmor.transform.localRotation = Quaternion.identity;
             _equippedArmor.transform.localScale = Vector3.one;
-
         }
 
         private void SetRangedHolder()
@@ -113,6 +112,14 @@ namespace Controllers.Player
             PlayerAnimator.Instance._animator.SetTrigger("unequip");
             _equippedWeapon.transform.SetParent(null);
             _equippedWeapon = null;
+        }
+
+        public void DetachArmor()
+        {
+            if (_equippedArmor == null) return;
+
+            _equippedArmor.transform.SetParent(null);
+            _equippedArmor = null;
         }
     }
 }

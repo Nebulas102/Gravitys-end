@@ -572,6 +572,7 @@ GameObject:
   - component: {fileID: 42010026644164719}
   - component: {fileID: 5487679426030116455}
   - component: {fileID: 4971408986841443578}
+  - component: {fileID: 2753609389632938287}
   m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
@@ -657,6 +658,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2753609389632938287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648371457985675352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a012ed2b201b99f4782cb92c7a10c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 3904950661100421938}
+  - {fileID: 7860452845287860943}
+  - {fileID: 6470434667949503868}
 --- !u!1 &652483719547662726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1902,6 +1919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WallBlock: {fileID: 3256389696473021489, guid: bd3faffee6d2743769c4ed7cce8c2432, type: 3}
   DoorModelObject: {fileID: 147890201405225732}
+  wallBlockObject: {fileID: 0}
 --- !u!1 &1013964947473307535
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,6 +2370,7 @@ GameObject:
   - component: {fileID: 487250538077342947}
   - component: {fileID: 119564110183746412}
   - component: {fileID: 2720366071885905416}
+  - component: {fileID: 4646885981441437119}
   m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
@@ -2437,6 +2456,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4646885981441437119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154653188439013156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a012ed2b201b99f4782cb92c7a10c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 3319968632177434521}
+  - {fileID: 506015728138392377}
+  - {fileID: 2503871025857388142}
 --- !u!1 &1181137385747173683
 GameObject:
   m_ObjectHideFlags: 0
@@ -4373,6 +4408,7 @@ GameObject:
   - component: {fileID: 5235718010248955205}
   - component: {fileID: 840432136203981868}
   - component: {fileID: 4063695744817116379}
+  - component: {fileID: 6324677962632649224}
   m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
@@ -4458,6 +4494,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6324677962632649224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2240808684174482614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a012ed2b201b99f4782cb92c7a10c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 7151951285186955384}
+  - {fileID: 6453028279689997461}
+  - {fileID: 3444912017714299065}
 --- !u!1 &2345882104317538941
 GameObject:
   m_ObjectHideFlags: 0
@@ -4671,6 +4723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WallBlock: {fileID: 3256389696473021489, guid: bd3faffee6d2743769c4ed7cce8c2432, type: 3}
   DoorModelObject: {fileID: 420581484197755452}
+  wallBlockObject: {fileID: 0}
 --- !u!1 &2467387179189336277
 GameObject:
   m_ObjectHideFlags: 0
@@ -5454,6 +5507,7 @@ GameObject:
   - component: {fileID: 2110525027187417582}
   - component: {fileID: 4643150259858078805}
   - component: {fileID: 6352090904104517502}
+  - component: {fileID: 2408256258900287429}
   m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
@@ -5539,6 +5593,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2408256258900287429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2665934313021906469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a012ed2b201b99f4782cb92c7a10c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 6881004351340351158}
+  - {fileID: 4581749469102756462}
+  - {fileID: 619243073654706893}
 --- !u!1 &2675336460832570941
 GameObject:
   m_ObjectHideFlags: 0
@@ -9636,6 +9706,7 @@ GameObject:
   - component: {fileID: 4428282820666687231}
   - component: {fileID: 4389566413136691543}
   - component: {fileID: 5389632793190885208}
+  - component: {fileID: 1268248772176480415}
   m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
@@ -9721,6 +9792,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1268248772176480415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4183994668054846718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a012ed2b201b99f4782cb92c7a10c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 2345882104317538941}
+  - {fileID: 6250490307598563683}
+  - {fileID: 2624028232079803524}
 --- !u!1 &4248063646972735332
 GameObject:
   m_ObjectHideFlags: 0
@@ -12259,6 +12346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WallBlock: {fileID: 3256389696473021489, guid: bd3faffee6d2743769c4ed7cce8c2432, type: 3}
   DoorModelObject: {fileID: 6207062820324925022}
+  wallBlockObject: {fileID: 0}
 --- !u!1 &5217074593704859345
 GameObject:
   m_ObjectHideFlags: 0
@@ -13779,6 +13867,7 @@ GameObject:
   - component: {fileID: 8962734469212572777}
   - component: {fileID: 1327031948318548038}
   - component: {fileID: 4732566849035127777}
+  - component: {fileID: 1013151560732501868}
   m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
@@ -13864,6 +13953,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1013151560732501868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6258718843757055905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a012ed2b201b99f4782cb92c7a10c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 1446250224424322018}
+  - {fileID: 7055564598404004032}
+  - {fileID: 9126881666142995791}
 --- !u!1 &6287772987485707478
 GameObject:
   m_ObjectHideFlags: 0
@@ -15089,6 +15194,7 @@ GameObject:
   - component: {fileID: 2632243316440783661}
   - component: {fileID: 3112092830804776293}
   - component: {fileID: 8137307892169161577}
+  - component: {fileID: 8798510491278260431}
   m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
@@ -15174,6 +15280,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8798510491278260431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822697073346220116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a012ed2b201b99f4782cb92c7a10c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 5503532098473417736}
+  - {fileID: 5840375817131255443}
+  - {fileID: 9035466977499555259}
 --- !u!1 &6835419055311017813
 GameObject:
   m_ObjectHideFlags: 0
@@ -16860,6 +16982,7 @@ GameObject:
   - component: {fileID: 4208186521780924009}
   - component: {fileID: 5814374975972197106}
   - component: {fileID: 1192123656975718328}
+  - component: {fileID: 3329290381809789227}
   m_Layer: 6
   m_Name: WallBlock(Clone)
   m_TagString: Wall
@@ -16945,6 +17068,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3329290381809789227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7741696313345655630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a012ed2b201b99f4782cb92c7a10c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 4594596900043785485}
+  - {fileID: 2971010641367047782}
+  - {fileID: 6553400023689112065}
 --- !u!1 &7797650147473282267
 GameObject:
   m_ObjectHideFlags: 0
@@ -18412,15 +18551,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94474810cf6c37f4487f291bffd548ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy:
-  - {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
-  - {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
-  enemySpawnPoints:
-  - {fileID: 1761435399734763577}
-  - {fileID: 7119310417285273490}
-  - {fileID: 5127232965654057349}
-  minGroupSize: 2
-  maxGroupSize: 4
+  enemySpawnpoints:
+  - spawnpoint: {fileID: 1761435399734763577}
+    enemy: {fileID: 1829273986078120232, guid: 09d3b13d6e4ba684d977d9187f5528ea, type: 3}
+    minSpawn: 1
+    maxSpawn: 1
+  - spawnpoint: {fileID: 7119310417285273490}
+    enemy: {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
+    minSpawn: 1
+    maxSpawn: 1
+  - spawnpoint: {fileID: 5127232965654057349}
+    enemy: {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
+    minSpawn: 1
+    maxSpawn: 1
 --- !u!114 &7126185331708932632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19310,6 +19453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WallBlock: {fileID: 3256389696473021489, guid: bd3faffee6d2743769c4ed7cce8c2432, type: 3}
   DoorModelObject: {fileID: 6968833416129969037}
+  wallBlockObject: {fileID: 0}
 --- !u!1 &9126881666142995791
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -41,6 +43,7 @@ namespace Controllers.Player
 
         private GameObject _player;
         private bool _gamePaused;
+        private List<WallSeeThrough> currentWalls = new();
 
         public LayerMask allowedLayers;
 
@@ -87,25 +90,44 @@ namespace Controllers.Player
 
         private void FixedUpdate()
         {
-            // if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged"))
-            // {
-            //     Vector2 mousePosition = playerInput.actions["Look"].ReadValue<Vector2>();
+            // Get all the colliders within the sphere
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 1);
 
-            //     Ray ray = _camera.ScreenPointToRay(mousePosition);
-            //     Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-            //     float rayDistance;
+            var filteredWalls = colliders.Where(wall => wall.GetComponent<WallSeeThrough>()).Select(wall => wall.GetComponent<WallSeeThrough>()).ToList();
 
-            //     if (groundPlane.Raycast(ray, out rayDistance))
-            //     {
-            //         Vector3 pointToLook = ray.GetPoint(rayDistance);
 
-            //         lookAtPosition = new Vector3(pointToLook.x, transform.position.y, pointToLook.z);
-
-            //         _player.transform.LookAt(lookAtPosition);
-            //     }
-            // }
+            filteredWalls.ForEach(wall =>
+            {
+                CheckWall(wall);
+            });
+            
+            if (filteredWalls != null)
+            {
+                RemoveWalls(filteredWalls);
+            }
 
             movementSM.currentState.PhysicsUpdate();
+        }
+
+        private void CheckWall(WallSeeThrough wall)
+        {
+            if (!currentWalls.Contains(wall))
+            {
+                currentWalls.Add(wall);
+                wall.GetComponent<WallSeeThrough>().DisableTiles();
+            }
+        }
+
+        private void RemoveWalls(List<WallSeeThrough> filteredWalls)
+        {
+            if (currentWalls.Count > 0)
+            {
+                currentWalls.Except(filteredWalls).ToList().ForEach(wall =>
+                {
+                    wall.EnableTiles();
+                    currentWalls.Remove(wall);
+                });
+            }
         }
     }
 }

@@ -129,7 +129,7 @@ namespace Core.StageGeneration.Stage
             var roomCells = SetRoomCells(hallway, posX, posZ);
             hallway.GetComponent<Room>().cells = roomCells;
 
-            mapHallways.Add(hallway);
+            // mapHallways.Add(hallway);
 
             var _bossRoom = SpawnBossRoom(hallway);
 
@@ -220,6 +220,12 @@ namespace Core.StageGeneration.Stage
                 yield return null;
             }
 
+            yield return StartCoroutine(SpawnKeyRoom());
+        }
+
+        private IEnumerator SpawnKeyRoom()
+        {
+            StartCoroutine(_roomGenerator.SpawnKeyRoom(mapHallways));
             yield return StartCoroutine(GenerateRooms());
         }
 
@@ -360,7 +366,9 @@ namespace Core.StageGeneration.Stage
                 .GetComponent<Room>();
 
             var roomCells = SetRoomCells(chosenHallway, posX, posZ);
+
             _hallway.GetComponent<Room>().cells = roomCells;
+            _hallway.GetComponent<Room>().SetDoorCells();
 
             mapHallways.Add(_hallway.gameObject);
 
@@ -373,7 +381,9 @@ namespace Core.StageGeneration.Stage
                 .GetComponent<Room>();
 
             var roomCells = SetRoomCells(hallwayEnd, posX, posZ);
+
             _hallway.GetComponent<Room>().cells = roomCells;
+            _hallway.GetComponent<Room>().SetDoorCells();
 
             mapHallways.Add(_hallway.gameObject);
         }
@@ -425,6 +435,7 @@ namespace Core.StageGeneration.Stage
                 roomComp.sizeZ = newSizes["z"];
             }
         }
+
 
         public void AddRoomToMap(GameObject room)
         {

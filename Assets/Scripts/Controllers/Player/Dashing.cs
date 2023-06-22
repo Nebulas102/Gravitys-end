@@ -1,4 +1,5 @@
 using System.Collections;
+using Core.Audio;
 using UI;
 using UnityEngine;
 
@@ -108,7 +109,7 @@ namespace Controllers.Player
             var dashDir = new Vector3(_movementInput.x, 0, _movementInput.y);
             //makes player move independent of camera rotation (W means north, S means south, etc.)
             dashDir = Quaternion.Euler(0, -45, 0) * dashDir;
-            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.Dash);
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.DASH);
 
             while (dashTimer > 0)
             {

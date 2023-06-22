@@ -1,4 +1,5 @@
 using System.Collections;
+using Core.Audio;
 using UnityEngine;
 
 namespace Core.Enemy.StageBosses.Stage1
@@ -63,7 +64,7 @@ namespace Core.Enemy.StageBosses.Stage1
                 newBullet.transform.forward = newBullet.transform.position - transform.position;
             }
 
-            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossClockShot);
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_CLOCK_SHOT);
 
             yield return new WaitForSeconds(clockShotInterval);
         }

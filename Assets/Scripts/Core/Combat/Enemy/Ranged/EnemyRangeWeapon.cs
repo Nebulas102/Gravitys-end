@@ -1,4 +1,5 @@
 using System.Collections;
+using Core.Audio;
 using UnityEngine;
 
 public class EnemyRangeWeapon : MonoBehaviour
@@ -126,7 +127,7 @@ public class EnemyRangeWeapon : MonoBehaviour
         enemyBulletBehaviour.SetSpeed(bulletSpeed);
         enemyBulletBehaviour.SetDirection(bulletDirection);
 
-        SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.EnemyShoots);
+        SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.ENEMY_SHOOTS);
     }
 
     public void SetEnemy(Transform _enemy)

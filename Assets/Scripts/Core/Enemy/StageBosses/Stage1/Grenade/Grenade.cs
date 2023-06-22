@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.Audio;
 using Core.Enemy;
 using Core.Enemy.StageBosses;
 using UnityEngine;
@@ -57,7 +58,7 @@ namespace Core.Enemy.StageBosses.Stage1
             newGrenadeBehavior.SetThrowDuration(throwDuration);
             newGrenadeBehavior.SetCurveHeight(curveHeight);
 
-            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossShoots);
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_SHOOTS);
         }
     }
 }

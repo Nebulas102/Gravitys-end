@@ -46,15 +46,13 @@ namespace UI
             OnPauseGameToggle.Invoke(condition);
         }
 
-        private void OnShowPickupPrompt(bool show, int instance, ItemType type)
+        private void OnShowPickupPrompt(bool show, ItemType type)
         {
-            if (show)
+            if (!show)
             {
-                if (!_itemsNearby.Contains(instance))
-                    _itemsNearby.Add(instance);
+                itemPickupPrompt.SetActive(false);
+                return;
             }
-            else
-                _itemsNearby.Remove(instance);
 
             var prompt = itemPickupPrompt.GetComponent<TextMeshProUGUI>();
             if (InventoryManager.instance.IsInventoryFull(type))
@@ -70,7 +68,7 @@ namespace UI
                 prompt.text = $"[{key}] Take";
             }
 
-            itemPickupPrompt.SetActive(_itemsNearby.Count > 0);
+            itemPickupPrompt.SetActive(true);
         }
     }
 }

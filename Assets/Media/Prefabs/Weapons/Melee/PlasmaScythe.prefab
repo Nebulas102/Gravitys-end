@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -5868243254772000087}
   - component: {fileID: -8719202677082341999}
   - component: {fileID: 7753345952745044058}
+  - component: {fileID: -5861019183377911329}
   m_Layer: 0
   m_Name: PlasmaScythe
   m_TagString: Melee
@@ -109,9 +110,23 @@ MonoBehaviour:
   prefab: {fileID: 4159606930266189779}
   radius: 2
   meshRenderer: {fileID: 754579656837465165}
+  price: 3
   verticalMotionSpeed: 4
   verticalMotionAmplitude: 0.5
   IsInInventory: 0
+--- !u!65 &-5861019183377911329
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159606930266189779}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 3.5}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!1 &4536512593292681446
 GameObject:
   m_ObjectHideFlags: 0

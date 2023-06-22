@@ -8,9 +8,6 @@ using Core;
 
 public class DialogueManager : MonoBehaviour
 {
-    [SerializeField]
-    private bool notInstance;
-
     // Singleton for DialogueManager
     public static DialogueManager instance;
 
@@ -48,27 +45,22 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         if (instance == null)
-            if(!notInstance)
-                instance = this;
-            
-        else if (!notInstance)   
+            instance = this;
+        else
             Destroy(gameObject);
-
 
         _inputManager = new InputManager();
 
         sentences = new Queue<string>();
 
         if (gameObject.GetComponentInChildren<DialogueTrigger>() != null)
-            gameObject.GetComponentInChildren<DialogueTrigger>().TriggerDialogue(this);
+            gameObject.GetComponentInChildren<DialogueTrigger>().TriggerDialogue();
     }
 
     private void Update()
     {
         if (dialogueActive)
         {
-            if (Timer.instance.timerIsRunning)
-                Timer.instance.timerIsRunning = false;
             _inputManager.UI.Enable();
             if (_inputManager.UI.DisplayNextSentence.triggered)
                 OnDisplayNextSentence();

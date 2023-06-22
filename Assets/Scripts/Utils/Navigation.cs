@@ -21,11 +21,14 @@ namespace Utils
 
         [SerializeField]
         private GameObject skipDialogueButton;
-        
+
         public static Navigation instance;
 
         [HideInInspector]
         public bool StageGenComplete;
+
+        private bool coroutineActive;
+        public bool loadingScreenActive { get; private set; }
 
         private void Start()
         {
@@ -37,15 +40,19 @@ namespace Utils
 
         private void Update()
         {
-            if(loader != null && loader.activeSelf && StageGenComplete)
+            if (loadingScreen != null && loadingScreen.activeSelf)
+                loadingScreenActive = true;
+            else
+                loadingScreenActive = false;
+
+            if (loadingScreenActive && loader != null && loader.activeSelf && StageGenComplete)
             {
                 loader.SetActive(false);
                 skipDialogueButton.SetActive(true);
             }
-                
-            if (loader != null && !loader.activeSelf && !dialogue.dialogueActive)
+
+            if (loadingScreenActive && !coroutineActive && loader != null && !loader.activeSelf && !dialogue.dialogueActive)
             {
-                skipDialogueButton.SetActive(false);
                 FadeIn();
             }
         } 
@@ -55,7 +62,7 @@ namespace Utils
             if(Timer.instance != null)
                 Timer.instance.timerIsRunning = false;
 
-            StartCoroutine(FadeOutCoroutine(0));
+            SceneManager.LoadScene(0);
             Time.timeScale = 1f;
         }
 
@@ -76,23 +83,27 @@ namespace Utils
 
         public void GameOver()
         {
-            Timer.instance.timerIsRunning = false;
-            FadeOutCoroutine(4);
+            SceneManager.LoadScene(4);
         }
 
         public void Quit()
         {
-            StartCoroutine(QuitGame());
+            Application.Quit();
+            //StartCoroutine(QuitGame());
         }
 
         public void FadeIn()
         {
+            if(skipDialogueButton != null)
+                skipDialogueButton.SetActive(false);
+
             StartCoroutine(FadeInCoroutine());
         }
 
         public IEnumerator FadeInCoroutine()
         {
-            if(loader != null)
+            coroutineActive = true;
+            if (loader != null)
                 loader.SetActive(false);
 
             if (dialogue != null)
@@ -102,9 +113,13 @@ namespace Utils
             {
                 animator.SetTrigger("FadeIn");
                 yield return new WaitForSeconds(1f);
+
                 loadingScreen.SetActive(false);
-                yield return null;
+
+                if (gameObject.GetComponent<DialogueTrigger>() != null)
+                    gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
             }
+            coroutineActive = false;
         }
 
         public IEnumerator FadeOutCoroutine(int scene)
@@ -115,7 +130,6 @@ namespace Utils
                 animator.SetTrigger("FadeOut");
                 yield return new WaitForSeconds(0.99f);
                 SceneManager.LoadScene(scene);
-                yield return null;
             }
             else
                 SceneManager.LoadScene(scene);
@@ -123,10 +137,15 @@ namespace Utils
 
         public IEnumerator QuitGame()
         {
-            loadingScreen.SetActive(true);
-            animator.SetTrigger("FadeOut");
-            yield return new WaitForSeconds(0.99f);
-            Application.Quit();
+            if (loadingScreen != null)
+            {
+                loadingScreen.SetActive(true);
+                animator.SetTrigger("FadeOut");
+                yield return new WaitForSeconds(0.99f);
+                Application.Quit();
+            }
+            else
+                Application.Quit();
         }
     }
 }

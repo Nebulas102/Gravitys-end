@@ -2,6 +2,7 @@
 using Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utils;
 
 namespace UI.Runtime
 {
@@ -18,7 +19,8 @@ namespace UI.Runtime
         {
             GameStats.Instance.timePlayed = Timer.instance.startingTime - Timer.instance.time;
             GameStats.Instance.timeLeft = Timer.instance.time;
-            SceneManager.LoadScene("GameOverScene", LoadSceneMode.Single);
+            Timer.instance.timerIsRunning = false;
+            Navigation.instance.GameOver();
         }
     }
 

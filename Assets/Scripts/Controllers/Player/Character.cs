@@ -3,6 +3,7 @@ using System.Linq;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils;
 
 namespace Controllers.Player
 {
@@ -72,7 +73,7 @@ namespace Controllers.Player
 
         private void Update()
         {
-            if (_gamePaused || DialogueManager.instance.dialogueActive)
+            if (_gamePaused || DialogueManager.instance.dialogueActive || Navigation.instance.loadingScreenActive)
             {
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", 0, 0.1f, Time.deltaTime);
                 movementSM.ChangeState(standing);

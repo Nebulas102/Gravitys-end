@@ -3,6 +3,7 @@ using TMPro;
 using Core.Enemy;
 using UI.Runtime;
 using UI.Tokens;
+using Core.Audio;
 
 namespace Core
 {
@@ -98,7 +99,7 @@ namespace Core
                 display.color = Color.red;
                 // Play clock ticking sound effect
                 isPlayingClockSound = true;
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ClockTicking);
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.CLOCK_TICKING);
             }
 
             display.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);

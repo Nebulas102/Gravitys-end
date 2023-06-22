@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Core.Audio;
 using Core.Enemy;
 using Core.StageGeneration.Stage;
 using TMPro;
@@ -63,7 +64,7 @@ namespace UI
             TextMeshProUGUI objectiveText = objectiveUI.GetComponent<TextMeshProUGUI>();
             objectiveText.color = objective.color;
 
-            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.ObjectiveCompleted);
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.OBJECTIVE_COMPLETED);
             GameStats.Instance.objectivesCompleted++;
         }
 

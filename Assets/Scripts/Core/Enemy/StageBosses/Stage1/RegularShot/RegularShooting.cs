@@ -1,4 +1,5 @@
 using System.Collections;
+using Core.Audio;
 using UnityEngine;
 
 namespace Core.Enemy.StageBosses.Stage1
@@ -53,7 +54,7 @@ namespace Core.Enemy.StageBosses.Stage1
         private void Shoot()
         {
             GameObject newBullet = Instantiate(bullet, transform.position, Quaternion.identity);
-            
+
             Vector3 bulletOutputWorldPos = newBullet.transform.TransformPoint(Vector3.zero);
             RegularBulletBehaviour newRegularBulletBehaviour = newBullet.GetComponentInChildren<RegularBulletBehaviour>();
 
@@ -68,7 +69,7 @@ namespace Core.Enemy.StageBosses.Stage1
             newBullet.transform.LookAt(_player.transform.position);
             newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.root.rotation.w);
 
-            SoundEffectsManager.instance.PlaySoundEffect(SoundEffectsManager.SoundEffect.BossShoots);
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_SHOOTS);
         }
     }
 }

@@ -90,7 +90,7 @@ namespace Controllers.Player
         private void FixedUpdate()
         {
             // Get all the colliders within the sphere
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 3);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 1);
 
             var filteredWalls = colliders.Where(wall => wall.GetComponent<WallSeeThrough>()).Select(wall => wall.GetComponent<WallSeeThrough>()).ToList();
 

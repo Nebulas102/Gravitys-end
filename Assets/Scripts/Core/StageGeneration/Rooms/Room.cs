@@ -103,9 +103,9 @@ namespace Core.StageGeneration.Rooms
             return rotation;
         }
 
-        public Dictionary<string, float> PlacementPos(StageHelper.RoomDirections roomDirection, Cell doorCell)
+        public Vector3 PlacementPos(StageHelper.RoomDirections roomDirection, Cell doorCell)
         {
-            var pos = new Dictionary<string, float>();
+            var pos = new Vector3();
 
             float roomX = 0;
             float roomZ = 0;
@@ -151,8 +151,8 @@ namespace Core.StageGeneration.Rooms
                     throw new ArgumentOutOfRangeException(nameof(roomDirection), roomDirection, null);
             }
 
-            pos.Add("x", roomX);
-            pos.Add("z", roomZ);
+            pos.x = roomX;
+            pos.z = roomZ;
 
             return pos;
         }

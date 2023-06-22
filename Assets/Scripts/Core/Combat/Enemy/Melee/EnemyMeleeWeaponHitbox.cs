@@ -31,6 +31,7 @@ public class EnemyMeleeWeaponHitbox : MonoBehaviour
 
         if (other.CompareTag("Player") && allowAttack)
         {
+            allowAttack = false;
             player.GetComponent<PlayerStatsController>().TakeDamage(minDamage, maxDamage, 0);
         }
     }

@@ -18,6 +18,9 @@ namespace Controllers
         public LayerMask obstacleMask;
         public Animator enemyAnimator;
 
+        [Header("Effects")]
+        public ParticleSystem hitParticle;
+
         [HideInInspector]
         public NavMeshAgent agent;
 
@@ -64,7 +67,7 @@ namespace Controllers
             {
                 return;
             }
-
+            
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,
                     LayerMask.GetMask("Entity"), QueryTriggerInteraction.Ignore))

@@ -17699,14 +17699,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94474810cf6c37f4487f291bffd548ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy:
-  - {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
-  - {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
-  enemySpawnPoints:
-  - {fileID: 3098878803352276285}
-  - {fileID: 7737166307505693360}
-  minGroupSize: 1
-  maxGroupSize: 1
+  enemySpawnpoints:
+  - spawnpoint: {fileID: 3098878803352276285}
+    enemy: {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
+    minSpawn: 1
+    maxSpawn: 1
+  - spawnpoint: {fileID: 7737166307505693360}
+    enemy: {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
+    minSpawn: 1
+    maxSpawn: 3
 --- !u!114 &5084225206655318341
 MonoBehaviour:
   m_ObjectHideFlags: 0

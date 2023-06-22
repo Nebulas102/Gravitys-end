@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 5396274149442224754}
   - component: {fileID: -8079711847852174373}
   - component: {fileID: 4067759031682792715}
+  - component: {fileID: 2100327707947897553}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Ranged
@@ -75,7 +76,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750474869211693055}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -168,6 +169,19 @@ MonoBehaviour:
   verticalMotionSpeed: 4
   verticalMotionAmplitude: 0.5
   IsInInventory: 0
+--- !u!65 &2100327707947897553
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 750474869211693055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 3.5}
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!1 &1224176606622740188
 GameObject:
   m_ObjectHideFlags: 0

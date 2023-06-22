@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5099098534359381256}
   - component: {fileID: 2842433041539069802}
   - component: {fileID: -5850582189651804746}
+  - component: {fileID: 1289729412038697793}
   m_Layer: 0
   m_Name: PlasmaGun
   m_TagString: Ranged
@@ -44,7 +45,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4487968532897041239}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -137,6 +138,19 @@ MonoBehaviour:
   verticalMotionSpeed: 4
   verticalMotionAmplitude: 0.5
   IsInInventory: 0
+--- !u!65 &1289729412038697793
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4487968532897041239}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 3.5}
+  m_Center: {x: 0, y: 0, z: 1}
 --- !u!1 &5814282401347080551
 GameObject:
   m_ObjectHideFlags: 0

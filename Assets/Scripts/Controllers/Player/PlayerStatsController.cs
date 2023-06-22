@@ -16,6 +16,7 @@ namespace Controllers.Player
         public int hitCounter;
 
         private Slider _slider;
+        private Character _player;
         private ParticleSystem _hitParticle;
 
         private void Start()
@@ -23,7 +24,8 @@ namespace Controllers.Player
             _slider = GameObject.Find("Healthbar").GetComponent<Slider>();
             _slider.maxValue = health;
 
-            _hitParticle = transform.GetComponent<Character>().hitParticle;
+            _player = transform.GetComponent<Character>();
+            _hitParticle = _player.hitParticle;
         }
 
         private void Update()
@@ -46,6 +48,11 @@ namespace Controllers.Player
 
             // Damage character
             health -= damage;
+            
+            if (!_hitParticle.isPlaying)
+            {
+                _hitParticle.Play();
+            }
         }
 
         public void HealPlayer(float healPlayerAmount)

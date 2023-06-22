@@ -33,9 +33,6 @@ namespace Controllers.Player
         [HideInInspector]
         public int attackCount;
 
-        [HideInInspector]
-        public bool takingDamage;
-
         public StateMachine movementSM;
         public SprintState sprinting;
         public StandingState standing;

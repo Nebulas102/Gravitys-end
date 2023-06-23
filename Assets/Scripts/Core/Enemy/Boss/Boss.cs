@@ -145,7 +145,7 @@ namespace Core.Enemy
                 Destroy(gameObject);
 
                 SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_DIES);
-                GameOver.Instance.PlayerGameOver();
+                GameOver.Instance.PlayerEndGame();
             }
         }
 

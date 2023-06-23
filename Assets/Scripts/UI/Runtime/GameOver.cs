@@ -22,6 +22,10 @@ namespace UI.Runtime
             GameStats.Instance.gameEnd = Timer.instance.time <= 0 ? GameEnd.TIME : GameEnd.KIA;
             Navigation.instance.GameOver();
         }
-    }
 
+        public void PlayerEndGame()
+        {
+            Navigation.instance.EndGame();
+        }
+    }
 }

@@ -86,6 +86,11 @@ namespace Utils
             StartCoroutine(FadeOutCoroutine(4));
         }
 
+        public void EndGame()
+        {
+            StartCoroutine(FadeOutCoroutine(5));
+        }
+
         public void Quit()
         {
             Application.Quit();

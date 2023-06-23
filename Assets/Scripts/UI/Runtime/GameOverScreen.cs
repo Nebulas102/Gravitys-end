@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UI;
 using UnityEngine;
+using Utils;
 
 public class GameOverScreen : MonoBehaviour
 {
@@ -28,8 +29,10 @@ public class GameOverScreen : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI timeLeft;
 
-    private void Awake()
+    private void Start()
     {
+        Navigation.instance.FadeIn();
+
         header.text = GameStats.Instance.gameEnd == GameEnd.TIME ? gameOverOnTime : gameOverOnKIA;
 
         objectivesCompleted.text = GameStats.Instance.objectivesCompleted.ToString();

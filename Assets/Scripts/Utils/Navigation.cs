@@ -51,7 +51,7 @@ namespace Utils
                 skipDialogueButton.SetActive(true);
             }
 
-            if (loadingScreenActive && !coroutineActive && loader != null && !loader.activeSelf && !dialogue.dialogueActive)
+            if (loadingScreenActive && loader != null && !loader.activeSelf && !dialogue.dialogueActive)
             {
                 FadeIn();
             }
@@ -78,26 +78,35 @@ namespace Utils
 
         public void Game()
         {
-            StartCoroutine(FadeOutCoroutine(3));
+            FadeOut(3);
         }
 
         public void GameOver()
         {
-            StartCoroutine(FadeOutCoroutine(4));
+            FadeOut(4);
         }
 
         public void Quit()
         {
-            Application.Quit();
-            //StartCoroutine(QuitGame());
+            if(!coroutineActive)
+                StartCoroutine(QuitGame());
         }
 
         public void FadeIn()
         {
-            if (skipDialogueButton != null)
-                skipDialogueButton.SetActive(false);
+            if(!coroutineActive)
+            {
+                if (skipDialogueButton != null)
+                    skipDialogueButton.SetActive(false);
 
-            StartCoroutine(FadeInCoroutine());
+                StartCoroutine(FadeInCoroutine());
+            }
+        }
+
+        public void FadeOut(int scene)
+        {
+            if (!coroutineActive)
+                StartCoroutine(FadeOutCoroutine(scene));
         }
 
         public IEnumerator FadeInCoroutine()
@@ -124,6 +133,7 @@ namespace Utils
 
         public IEnumerator FadeOutCoroutine(int scene)
         {
+            coroutineActive = true;
             if (loadingScreen != null)
             {
                 loadingScreen.SetActive(true);
@@ -133,10 +143,12 @@ namespace Utils
             }
             else
                 SceneManager.LoadScene(scene);
+            coroutineActive = false;
         }
 
         public IEnumerator QuitGame()
         {
+            coroutineActive = true;
             if (loadingScreen != null)
             {
                 loadingScreen.SetActive(true);
@@ -146,6 +158,7 @@ namespace Utils
             }
             else
                 Application.Quit();
+            coroutineActive = false;
         }
     }
 }

@@ -9,8 +9,6 @@ namespace Core.Enemy
     public class EnemyBase : MonoBehaviour
     {
         public string name;
-        public int startDamage;
-        public int endDamage;
         public float health;
         public Material hitMaterial;
 
@@ -20,8 +18,6 @@ namespace Core.Enemy
         public GameObject damageDisplay;
 
         private Canvas _canvas;
-        // private Renderer[] _renderers;
-        // private Material[] _originalMaterials;
 
         private float _currentHealth;
         private ParticleSystem _hitParticle;
@@ -35,14 +31,6 @@ namespace Core.Enemy
         private void Start()
         {
             _canvas = GetComponentInChildren<Canvas>();
-            // _renderers = GetComponentsInChildren<Renderer>();
-
-            // _originalMaterials = new Material[_renderers.Length];
-            // for (int i = 0; i < _renderers.Length; i++)
-            // {
-            //     _originalMaterials[i] = _renderers[i].sharedMaterial;
-            // }
-
             _hitParticle = GetComponent<EnemyController>().hitParticle;
             _currentHealth = health;
         }
@@ -58,11 +46,6 @@ namespace Core.Enemy
                     OnEnemyKilled(this);
                 }
             }
-        }
-
-        public int GetDamage()
-        {
-            return Random.Range(startDamage, endDamage);
         }
 
         public void TakeDamage(int takeStartDamage, int takeEndDamage, float modifier)

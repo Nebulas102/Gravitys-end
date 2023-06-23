@@ -23,6 +23,7 @@ namespace Controllers.Player
         private Transform armorHolder;
 
         private Quaternion oldRotation;
+        private Character player;
 
         private void Awake()
         {
@@ -31,14 +32,13 @@ namespace Controllers.Player
         }
         private void Start()
         {
-            var player = GameObject.FindWithTag("Player");
+            player = PlayerManager.Instance.player.GetComponent<Character>();
         }
 
         public void SetCurrentWeapon(GameObject weapon)
         {
             _equippedWeapon = weapon;
 
-            // This does nothing apparently
             if (_equippedWeapon is null)
             {
                 PlayerAnimator.Instance._animator.SetTrigger("unequip");
@@ -46,7 +46,20 @@ namespace Controllers.Player
 
             if (_equippedWeapon.CompareTag("Melee"))
             {
+                var _meleeWeapon = _equippedWeapon.GetComponent<MeleeWeapon>();
+
                 PlayerAnimator.Instance._animator.SetTrigger("meleeEquip");
+
+                player.GetComponent<PlayerWeaponSlash>().SetSlashStyle(
+                    _meleeWeapon.slashColor,
+                    _meleeWeapon.slashTexture,
+                    _meleeWeapon.smokeColor,
+                    _meleeWeapon.sparkColor,
+                    _meleeWeapon.hitColor,
+                    _meleeWeapon.sparkCoreColor,
+                    _meleeWeapon.fireColor
+                );
+
                 SetMeleeHolder();
             }
 

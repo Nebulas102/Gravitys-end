@@ -65,7 +65,7 @@ namespace Core.Chest
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Player") && _canOpen)
+            if (other.CompareTag("Player"))
                 ToggleCanOpen(false);
         }
 
@@ -82,8 +82,8 @@ namespace Core.Chest
             var newChild = Instantiate(openedChestGameObject, transform);
             newChild.transform.localPosition = Vector3.zero;
 
-                newChild.GetComponentInChildren<ParticleSystem>().Play();
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.CHEST_OPENING);
+            newChild.GetComponentInChildren<ParticleSystem>().Play();
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.CHEST_OPENING);
 
             SpawnLoot();
 

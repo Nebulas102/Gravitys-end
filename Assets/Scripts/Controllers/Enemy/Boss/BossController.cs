@@ -50,12 +50,5 @@ namespace Controllers.Enemy
             var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
         }
-
-        public IEnumerator HitFeedback()
-        {
-            _renderer.material = hitMaterial;
-            yield return new WaitForSeconds(.5f);
-            _renderer.material = _originalMaterial;
-        }
     }
 }

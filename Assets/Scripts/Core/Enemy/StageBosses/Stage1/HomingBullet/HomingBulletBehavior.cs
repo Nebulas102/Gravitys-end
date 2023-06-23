@@ -32,6 +32,8 @@ namespace Core.Enemy.StageBosses.Stage1
             _allowedTimeAlive = _timeAlive + Time.time;
 
             transform.root.LookAt(_player.transform.position);
+
+            _destructionEffect = Instantiate(_destructionEffect);
         }
 
         private void Update()

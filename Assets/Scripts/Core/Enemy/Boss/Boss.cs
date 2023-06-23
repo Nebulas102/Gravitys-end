@@ -25,8 +25,10 @@ namespace Core.Enemy
         [SerializeField]
         private List<BossAbilityStage> bossAbilityStages;
 
-        [SerializeField]
         public GameObject damageDisplay;
+
+        [SerializeField]
+        private ParticleSystem hitParticle;
 
         private Canvas _canvas;
 
@@ -131,7 +133,10 @@ namespace Core.Enemy
 
             healthBar.value = _currentHealth;
 
-            StartCoroutine(_bossController.HitFeedback());
+            if (!hitParticle.isPlaying)
+            {
+                hitParticle.Play();
+            }
 
             if (_currentHealth <= 0)
             {

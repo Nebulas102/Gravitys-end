@@ -4972,7 +4972,7 @@ MonoBehaviour:
   sizeZ: 25
   doors:
   - {fileID: 1445942623272938954}
-  weight: 3
+  weight: 4
   doorReplacement: {fileID: 0}
   cells: []
 --- !u!114 &5765635368400161083
@@ -4991,12 +4991,17 @@ MonoBehaviour:
   chestSpawnPoints:
   - {fileID: 7397400524346285137}
   chest: {fileID: 3273778572118770245, guid: 759439ab11a7031409a5aa051d74c7ae, type: 3}
-  possibleLoot:
-  - {fileID: 6284918362569833036, guid: 13c376cb3bb82d94fade37c1ee637613, type: 3}
-  - {fileID: 8523112251336745203, guid: 290f31467c9f6f34f989325373188ca5, type: 3}
-  - {fileID: 7039120194793019379, guid: 1f0e5f5492ec75b469944a09176567f2, type: 3}
-  - {fileID: 4487968532897041239, guid: e4f9ed0b699410647ac8c30f9ebe14c9, type: 3}
-  - {fileID: 750474869211693055, guid: dccc01cefb6ad3c45a0f27df4e0823a3, type: 3}
+  LootItems:
+  - spawnChanceWeight: 2
+    item: {fileID: 5017546938602902393, guid: 1b2ec05c9843a0243824c0fe7bc5b907, type: 3}
+  - spawnChanceWeight: 3
+    item: {fileID: 4487968532897041239, guid: e4f9ed0b699410647ac8c30f9ebe14c9, type: 3}
+  - spawnChanceWeight: 2
+    item: {fileID: 4159606930266189779, guid: 8343d3de9a9ae9c48992b7dd3a8307b1, type: 3}
+  - spawnChanceWeight: 3
+    item: {fileID: 8523112251336745203, guid: 290f31467c9f6f34f989325373188ca5, type: 3}
+  - spawnChanceWeight: 2
+    item: {fileID: 4159606930266189779, guid: 8343d3de9a9ae9c48992b7dd3a8307b1, type: 3}
 --- !u!114 &34164619462656062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6710,6 +6715,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2234892829992042444}
     m_Modifications:
+    - target: {fileID: -7511558181221131132, guid: d789e7b73091d3747aa12a875bc6e1a3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3ad2cfe625c6b4b18823bbecd6c1e630, type: 2}
     - target: {fileID: 1171502610628361845, guid: d789e7b73091d3747aa12a875bc6e1a3, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -6839,6 +6848,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2234892829992042444}
     m_Modifications:
+    - target: {fileID: -7511558181221131132, guid: d789e7b73091d3747aa12a875bc6e1a3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3ad2cfe625c6b4b18823bbecd6c1e630, type: 2}
     - target: {fileID: 1171502610628361845, guid: d789e7b73091d3747aa12a875bc6e1a3, type: 3}
       propertyPath: m_RootOrder
       value: 5

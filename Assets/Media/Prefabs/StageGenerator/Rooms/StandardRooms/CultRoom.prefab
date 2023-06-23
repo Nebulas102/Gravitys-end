@@ -17354,7 +17354,7 @@ MonoBehaviour:
   sizeZ: 45
   doors:
   - {fileID: 3146321109360763083}
-  weight: 5
+  weight: 6
   doorReplacement: {fileID: 0}
   cells:
   - {fileID: 0}
@@ -17479,9 +17479,17 @@ MonoBehaviour:
   chestSpawnPoints:
   - {fileID: 7483998887845196542}
   chest: {fileID: 3273778572118770245, guid: 759439ab11a7031409a5aa051d74c7ae, type: 3}
-  possibleLoot:
-  - {fileID: 750474869211693055, guid: dccc01cefb6ad3c45a0f27df4e0823a3, type: 3}
-  - {fileID: 7039120194793019379, guid: 1f0e5f5492ec75b469944a09176567f2, type: 3}
+  LootItems:
+  - spawnChanceWeight: 1
+    item: {fileID: 4159606930266189779, guid: 8343d3de9a9ae9c48992b7dd3a8307b1, type: 3}
+  - spawnChanceWeight: 2
+    item: {fileID: 8523112251336745203, guid: 290f31467c9f6f34f989325373188ca5, type: 3}
+  - spawnChanceWeight: 2
+    item: {fileID: 7290339216021685883, guid: 74501af065eda1149a027592af0f18cc, type: 3}
+  - spawnChanceWeight: 2
+    item: {fileID: 7290339216021685883, guid: 74501af065eda1149a027592af0f18cc, type: 3}
+  - spawnChanceWeight: 3
+    item: {fileID: 8615974926673144041, guid: 380a3e52fce004e4c8fd8200d8631efc, type: 3}
 --- !u!114 &5518870609479839208
 MonoBehaviour:
   m_ObjectHideFlags: 0

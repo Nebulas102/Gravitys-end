@@ -11,7 +11,7 @@ namespace Core.Chest
 
         [SerializeField] public GameObject chest;
 
-        [SerializeField] List<GameObject> possibleLoot;
+        [SerializeField] List<LootItem> LootItems;
 
         public void SpawnChest()
         {
@@ -20,7 +20,7 @@ namespace Core.Chest
                 if(Random.value < chestSpawnChance)
                 {
                     GameObject spawnedChest = Instantiate(chest, spawnpoint);
-                    spawnedChest.GetComponent<Chest>().SetLootObjects(possibleLoot);
+                    spawnedChest.GetComponent<Chest>().SetLootObjects(LootItems);
                 }
             }
         }

@@ -44,7 +44,6 @@ namespace Controllers.Player
 
                 if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity,  _player.allowedLayers))
                 {
-                    Debug.Log("Raycast hit: " + raycastHit.collider.gameObject.name);
                     Vector3 pointToLook = raycastHit.point;
                     pointToLook.y = _player.transform.position.y;
                     _player.lookAtPosition = pointToLook;

@@ -168,11 +168,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1919332d524919d4ba9d8dd33a99fbc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 5
   healthBar: {fileID: 0}
   bossNameBar: {fileID: 0}
   bossAbilityStages:
-  - healthStageActivation: 100
+  - healthStageActivation: 5
     bossAbilitySequences:
     - bossAbility: {fileID: 6588389978399913415}
       amountOfTimes: 3
@@ -182,13 +182,13 @@ MonoBehaviour:
       amountOfTimes: 2
     - bossAbility: {fileID: 5868248664225388700}
       amountOfTimes: 3
-  - healthStageActivation: 60
+  - healthStageActivation: 200
     bossAbilitySequences:
     - bossAbility: {fileID: 6588389978399913415}
       amountOfTimes: 2
     - bossAbility: {fileID: 3039630364116265136}
       amountOfTimes: 2
-  - healthStageActivation: 30
+  - healthStageActivation: 100
     bossAbilitySequences:
     - bossAbility: {fileID: 6588389978399913415}
       amountOfTimes: 2

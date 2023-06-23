@@ -6,6 +6,7 @@ using Core.Enemy.StageBosses;
 using TMPro;
 using UI;
 using UI.Enemy;
+using UI.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -144,6 +145,7 @@ namespace Core.Enemy
                 Destroy(gameObject);
 
                 SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_DIES);
+                GameOver.Instance.PlayerGameOver();
             }
         }
 

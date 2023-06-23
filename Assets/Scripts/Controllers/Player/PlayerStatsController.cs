@@ -35,9 +35,6 @@ namespace Controllers.Player
 
         public void TakeDamage(int startDamage, int endDamage, float modifier)
         {
-            if (_currentHealth <= 0)
-                Die();
-
             var damage = Random.Range(startDamage, endDamage);
             // Subtract the armor value
             damage -= Mathf.RoundToInt(modifier * damage);
@@ -52,6 +49,9 @@ namespace Controllers.Player
             {
                 _hitParticle.Play();
             }
+
+            if (_currentHealth <= 0)
+                Die();
         }
 
         public void HealPlayer(float healPlayerAmount)

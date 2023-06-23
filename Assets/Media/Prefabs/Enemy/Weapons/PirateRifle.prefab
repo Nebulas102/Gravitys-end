@@ -46,17 +46,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff893999b57cd284d8a5e0565c601904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 25
+  fireRate: 400
+  reloading: 0
+  reloadTime: 0.5
   currentAmmo: 0
   magSize: 0
-  fireRate: 400
-  reloadTime: 0.5
-  reloading: 0
   bullet: {fileID: 1563543445386549699, guid: b7894c3397e2c0a44b8023bc07391049, type: 3}
-  minDamage: 5
-  maxDamage: 10
-  bulletSpeed: 3
+  minDamage: 50
+  maxDamage: 80
+  bulletSpeed: 7
+  destructionEffect: {fileID: 0}
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
   bulletOutput: {fileID: 5114647794687169468}
+  allowRaycast: 0
+  allowShot: 0
 --- !u!1 &9120346735725038923
 GameObject:
   m_ObjectHideFlags: 0

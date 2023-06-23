@@ -12,7 +12,8 @@ public class DialogueTrigger : MonoBehaviour
     [SerializeField]
     private Dialogue dialogue;
 
-    private bool hasTriggered;
+    [HideInInspector]
+    public bool hasTriggered;
 
     public void TriggerDialogue()
     {

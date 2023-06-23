@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Linq;
 using Controllers;
+using UI;
 using UI.Enemy;
 using UnityEngine;
 
@@ -8,7 +8,6 @@ namespace Core.Enemy
 {
     public class EnemyBase : MonoBehaviour
     {
-        public string name;
         public float health;
         public Material hitMaterial;
 

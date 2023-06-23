@@ -1,4 +1,5 @@
 using Controllers.Player;
+using UI.Inventory;
 using UI.Tokens;
 using UnityEngine;
 
@@ -32,7 +33,8 @@ public class EnemyMeleeWeaponHitbox : MonoBehaviour
         if (other.CompareTag("Player") && allowAttack)
         {
             allowAttack = false;
-            player.GetComponent<PlayerStatsController>().TakeDamage(minDamage, maxDamage, 0);
+            var armor = player.GetComponent<EquipmentSystem>()._equippedArmor;
+            player.GetComponent<PlayerStatsController>().TakeDamage(minDamage, maxDamage, armor != null ? armor.GetComponent<Item>().GetArmorModifier() : 0);
         }
     }
 }

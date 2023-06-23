@@ -1,4 +1,5 @@
 using UI.Runtime;
+using UI.Tokens;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,9 +7,6 @@ namespace Controllers.Player
 {
     public class PlayerStatsController : MonoBehaviour
     {
-        [SerializeField]
-        private float baseDamage;
-
         [SerializeField]
         private float health;
 
@@ -21,7 +19,7 @@ namespace Controllers.Player
         private ParticleSystem _hitParticle;
 
         private void Start()
-        {   
+        {
             _currentHealth = health;
             _slider = GameObject.Find("Healthbar").GetComponent<Slider>();
             _slider.maxValue = _currentHealth;
@@ -42,12 +40,14 @@ namespace Controllers.Player
 
             var damage = Random.Range(startDamage, endDamage);
             // Subtract the armor value
-            damage -= Mathf.RoundToInt(modifier) * damage;
+            damage -= Mathf.RoundToInt(modifier * damage);
+            // Substract the damage reduction
+            damage -= Mathf.RoundToInt((TokenManager.instance.healthSection.GetModifier() - 1) * damage);
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
             // Damage character
             _currentHealth -= damage;
-            
+
             if (!_hitParticle.isPlaying)
             {
                 _hitParticle.Play();

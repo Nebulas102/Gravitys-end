@@ -16,18 +16,13 @@ namespace UI.Inventory
 
         [Header("Gameplay")]
         [SerializeField]
-        [Range(0f, 100f)]
-        [Tooltip("The amount of damage or armor increase this item gives in percentage")]
-        private float modifier;
+        [Range(0, 100)]
+        [Tooltip("Modifier in percentage (armor only)")]
+        public int armorModifier;
 
         [SerializeField]
         [Tooltip("The prefab to spawn when this item is dropped")]
         public GameObject prefab;
-
-        [SerializeField]
-        [Range(0f, 2f)]
-        [Tooltip("The radius around the item that the player must be in to be able to pick it up")]
-        private float radius = 2f;
 
         [SerializeField]
         [Tooltip("The mesh renderer of the item")]
@@ -37,12 +32,6 @@ namespace UI.Inventory
         [Range(0f, 5f)]
         [Tooltip("The price of the item in the shop in minutes")]
         public float price = 3f;
-
-        [SerializeField]
-        private float verticalMotionSpeed = 4f; // Adjust the speed as desired
-
-        [SerializeField]
-        private float verticalMotionAmplitude = 1f; // Adjust the vertical motion amplitude as desired
 
         [HideInInspector]
         public bool IsInInventory;
@@ -96,6 +85,11 @@ namespace UI.Inventory
             Pickup();
         }
 
+        public float GetArmorModifier()
+        {
+            return (float)armorModifier / 100;
+        }
+
         public void Spawn(Vector3 position)
         {
             IsInInventory = false;
@@ -108,11 +102,6 @@ namespace UI.Inventory
         public void Spawn()
         {
             Spawn(_player.transform.position);
-        }
-
-        public float GetModifier()
-        {
-            return 1 + (modifier / 100);
         }
 
         private void Pickup()

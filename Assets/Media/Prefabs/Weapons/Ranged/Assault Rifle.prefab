@@ -217,9 +217,9 @@ MonoBehaviour:
   reloadTime: 1.5
   reloading: 0
   bullet: {fileID: 1563543445386549699, guid: 488672f14df59a841b4721b174f0662e, type: 3}
-  minDamage: 5
-  maxDamage: 10
-  bulletSpeed: 3
+  minDamage: 80
+  maxDamage: 100
+  bulletSpeed: 9
   destructionEffect: {fileID: 5896232801978186725, guid: 0b4aa1e054b62924184a5fc3713e41bc, type: 3}
   bulletOutput: {fileID: 6542274944412366050}
 --- !u!114 &4559409835853949027
@@ -249,13 +249,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 689f63d3d4e055f4e8cd37b1d654a1f8, type: 3}
   type: 0
-  modifier: 0
+  armorModifier: 0
   prefab: {fileID: 7039120194793019379}
-  radius: 2
   meshRenderer: {fileID: 2046558697129947553}
   price: 3
-  verticalMotionSpeed: 4
-  verticalMotionAmplitude: 0.5
   IsInInventory: 0
 --- !u!65 &-6274302476578063380
 BoxCollider:

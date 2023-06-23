@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Controllers.Player;
+using UI.Inventory;
 using UnityEngine;
 
 namespace Core.Enemy.StageBosses.Stage1
@@ -73,7 +74,8 @@ namespace Core.Enemy.StageBosses.Stage1
 
             if (playerIndecal)
             {
-                _player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, 0);
+                var armor = _player.GetComponent<EquipmentSystem>()._equippedArmor;
+                _player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, armor != null ? armor.GetComponent<Item>().GetArmorModifier() : 0);
             }
 
             _destructionEffect.Play();

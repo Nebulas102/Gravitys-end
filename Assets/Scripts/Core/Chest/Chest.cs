@@ -12,7 +12,7 @@ namespace Core.Chest
         [SerializeField] private float itemSpawnDistanceFromChest = 1f;
         [SerializeField] private ParticleSystem chestOpeningParticles;
 
-        public List<GameObject> lootObjects;
+        public List<LootItem> lootObjects;
 
         private InputManager _inputManager;
 
@@ -46,7 +46,7 @@ namespace Core.Chest
             _inputManager.Disable();
         }
 
-        public void SetLootObjects(List<GameObject> _lootObjects)
+        public void SetLootObjects(List<LootItem> _lootObjects)
         {
             lootObjects = _lootObjects;
         }
@@ -84,10 +84,17 @@ namespace Core.Chest
 
         public void SpawnLoot()
         {
-            int randomInt = Random.Range(0, lootObjects.Count);
+            List<int> randomizer = new();
+            for(int i = 0; i < lootObjects.Count; i++)
+                for(int j = 0; j < lootObjects[i].spawnChanceWeight; j++)
+                    randomizer.Add(i);
+
+            int randomInt = Random.Range(0, randomizer.Count);
+            int randomizerResult = randomizer[randomInt];
+
             Vector3 spawnPosition = GetRandomSpawnPosition();
 
-            Instantiate(lootObjects[randomInt], spawnPosition, Quaternion.identity);
+            Instantiate(lootObjects[randomizerResult].item, spawnPosition, Quaternion.identity);
         }
 
         private Vector3 GetRandomSpawnPosition()

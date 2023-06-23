@@ -13,13 +13,11 @@ namespace Controllers.Player
         private Animator animator;
         private const float ComboDelay = 0.6f;
 
-
         private Character _player = PlayerManager.Instance.player.GetComponent<Character>();
         private Vector2 mousePos;
 
         public Camera _camera;
         private PlayerInput playerInput;
-
 
         public AttackState(Character character, StateMachine stateMachine) : base(character, stateMachine)
         {
@@ -42,7 +40,7 @@ namespace Controllers.Player
                 mousePos = lookAction.ReadValue<Vector2>();
                 Ray ray = _camera.ScreenPointToRay(mousePos);
 
-                if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity,  _player.allowedLayers))
+                if (Physics.Raycast(ray, out RaycastHit raycastHit, Mathf.Infinity, _player.allowedLayers))
                 {
                     Vector3 pointToLook = raycastHit.point;
                     pointToLook.y = _player.transform.position.y;

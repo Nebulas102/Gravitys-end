@@ -22,6 +22,9 @@ namespace UI
         [SerializeField]
         private GameObject objectivePrefab;
 
+        [SerializeField]
+        private int enemyKillObjective;
+
         private int enemiesKilledCount;
         private CanvasScaler canvasScaler;
         private float screenRatio;
@@ -41,7 +44,7 @@ namespace UI
 
             objectivesHolder = GameObject.Find("ObjectivesHolder");
             objectives.Add(new Objective(ObjectiveTask.COLLECT_KEY, "Find the bossroom key"));
-            objectives.Add(new Objective(ObjectiveTask.KILL_50, "Kill 50 enemies"));
+            objectives.Add(new Objective(ObjectiveTask.KILL_Enemies, "Kill " + enemyKillObjective + " enemies"));
             objectives.Add(new Objective(ObjectiveTask.KILL_BOSS, "Defeat the Boss"));
 
             UpdateObjectiveUI();
@@ -89,9 +92,9 @@ namespace UI
         public void HandleEnemyKilled(EnemyBase enemy)
         {
             enemiesKilledCount++;
-            if (enemiesKilledCount == 50)
+            if (enemiesKilledCount == enemyKillObjective)
             {
-                CompleteObjective(ObjectiveTask.KILL_50);
+                CompleteObjective(ObjectiveTask.KILL_Enemies);
             }
         }
 
@@ -143,7 +146,7 @@ namespace UI
     public enum ObjectiveTask
     {
         COLLECT_KEY,
-        KILL_50,
+        KILL_Enemies,
         KILL_BOSS,
     }
 

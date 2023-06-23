@@ -11,7 +11,7 @@ public class DissableMissingKeyDialogue : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (ObjectiveSystem.instance.IsObjectiveCompleted(ObjectiveTask.COLLECT_KEY))
+        if (other.gameObject.CompareTag("Player") && ObjectiveSystem.instance.IsObjectiveCompleted(ObjectiveTask.COLLECT_KEY))
             closedBossRoomDialogue.hasTriggered = true;
     }
 }

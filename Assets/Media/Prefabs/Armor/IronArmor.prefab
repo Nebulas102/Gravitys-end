@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9019249437767619239}
   - component: {fileID: 3102820187237050526}
-  - component: {fileID: 6092442349334828775}
   - component: {fileID: 439861494308592254}
+  - component: {fileID: 6092442349334828775}
   m_Layer: 0
   m_Name: IronArmor
   m_TagString: Armor
@@ -77,19 +77,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6092442349334828775
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4955559360566687083}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.260333, y: 1.2473793, z: 1.2230544}
-  m_Center: {x: 0.0052089095, y: -0.011685848, z: 0.023650438}
 --- !u!114 &439861494308592254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,6 +96,19 @@ MonoBehaviour:
   meshRenderer: {fileID: 6729329735097961793}
   price: 3
   IsInInventory: 0
+--- !u!65 &6092442349334828775
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4955559360566687083}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.260333, y: 1.2473793, z: 1.2230544}
+  m_Center: {x: 0.0052089095, y: -0.011685848, z: 0.023650438}
 --- !u!1 &5072071111866543252
 GameObject:
   m_ObjectHideFlags: 0

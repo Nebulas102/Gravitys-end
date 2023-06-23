@@ -2,10 +2,9 @@ using UnityEngine;
 using UI.Runtime;
 using UI.Inventory;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine.InputSystem;
-using UnityEngine.EventSystems;
+using Core.Chest;
 
 namespace UI
 {
@@ -33,6 +32,7 @@ namespace UI
             MapUIManager.OnMapToggled += (bool active) => PauseGame(active);
 
             Item.OnItemPickup += OnShowPickupPrompt;
+            Chest.OnChestOpen += OnChestOpen;
             _inputManager = new InputManager();
         }
 
@@ -54,21 +54,48 @@ namespace UI
                 return;
             }
 
-            var prompt = itemPickupPrompt.GetComponent<TextMeshProUGUI>();
             if (InventoryManager.instance.IsInventoryFull(type))
-                prompt.text = "Inventory full";
+                SetPlayerPrompt("Inventory Full");
             else
             {
-                var action = _inputManager.Player.LootPickup;
-                int bindingIndex = action.GetBindingIndexForControl(action.controls[0]);
-                string key = InputControlPath.ToHumanReadableString(
-                    action.bindings[bindingIndex].effectivePath,
-                    InputControlPath.HumanReadableStringOptions.OmitDevice
-                );
-                prompt.text = $"[{key}] Take";
+                string key = FetchReadableKey(_inputManager.Player.LootPickup);
+                SetPlayerPrompt($"[{key}] Take");
             }
 
             itemPickupPrompt.SetActive(true);
+        }
+
+        private void OnChestOpen(bool show)
+        {
+            if (!show)
+            {
+                itemPickupPrompt.SetActive(false);
+                return;
+            }
+
+            string key = FetchReadableKey(_inputManager.Player.OpenChest);
+            SetPlayerPrompt($"[{key}] Open Chest");
+
+            itemPickupPrompt.SetActive(true);
+        }
+
+        private string FetchReadableKey(InputAction action)
+        {
+            if (action == null)
+                return string.Empty;
+
+            int bindingIndex = action.GetBindingIndexForControl(action.controls[0]);
+            string key = InputControlPath.ToHumanReadableString(
+                action.bindings[bindingIndex].effectivePath,
+                InputControlPath.HumanReadableStringOptions.OmitDevice
+            );
+            return key;
+        }
+
+        private void SetPlayerPrompt(string value)
+        {
+            var prompt = itemPickupPrompt.GetComponent<TextMeshProUGUI>();
+            prompt.text = value;
         }
     }
 }

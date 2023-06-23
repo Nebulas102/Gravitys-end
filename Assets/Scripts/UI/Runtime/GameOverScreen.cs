@@ -45,5 +45,4 @@ public class GameOverScreen : MonoBehaviour
 
         return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-
 }

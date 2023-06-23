@@ -16,7 +16,7 @@ public class KeyHallwayTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!triggered && ObjectiveSystem.instance.IsObjectiveCompleted(ObjectiveTask.COLLECT_KEY))
+        if (!triggered && other.gameObject.CompareTag("Player") && ObjectiveSystem.instance.IsObjectiveCompleted(ObjectiveTask.COLLECT_KEY))
         {
             StageHelper.Instance.spawnRoom.bossHallwayDoor.GetComponent<RoomEditor.DoorBlock>().OpenDoor();
             keyBossRoomDialogue.TriggerDialogue();

@@ -1262,6 +1262,10 @@ PrefabInstance:
       propertyPath: m_enableAutoSizing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4898845050784185720, guid: 8f14c4395d7234540a254e77e10371f7, type: 3}
+      propertyPath: enemyKillObjective
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 4898845050784185721, guid: 8f14c4395d7234540a254e77e10371f7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2024,6 +2028,7 @@ MonoBehaviour:
     - This universe has seized to be and yet you are.
     - Use what keeps you here.
     - Go.
+  hasTriggered: 0
 --- !u!114 &839705418 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8637817613304205672, guid: f37a1f821fdcbda4693707e1e3a4cd5b, type: 3}
@@ -7048,6 +7053,7 @@ MonoBehaviour:
     - It appears you've made it back.
     - You must stop history from repeating itself. The explosion cannot happen again.
     - Try to move using WASD or the control stick.
+  hasTriggered: 0
 --- !u!1 &2099516716 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 596855510892743117, guid: 9819b58c4ad566d40969d66acace6321, type: 3}

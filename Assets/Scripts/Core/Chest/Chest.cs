@@ -10,7 +10,6 @@ namespace Core.Chest
 
         [SerializeField] private float detectionRadius = 2f; // The radius to detect chests
         [SerializeField] private float itemSpawnDistanceFromChest = 1f;
-        [SerializeField] private ParticleSystem chestOpeningParticles;
 
         public List<LootItem> lootObjects;
 

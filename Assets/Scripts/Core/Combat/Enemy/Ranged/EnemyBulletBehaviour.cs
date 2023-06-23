@@ -1,4 +1,5 @@
 using Controllers.Player;
+using UI.Inventory;
 using UnityEngine;
 
 public class EnemyBulletBehaviour : MonoBehaviour
@@ -29,11 +30,10 @@ public class EnemyBulletBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        // Debug.Log(other.gameObject.name);  Check what the bullet collided with
-
         if (other.gameObject.CompareTag("Player"))
         {
-            player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, 0);
+            var armor = player.GetComponent<EquipmentSystem>()._equippedArmor;
+            player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, armor != null ? armor.GetComponent<Item>().GetArmorModifier() : 0);
 
             Destroy(transform.root.gameObject);
         }

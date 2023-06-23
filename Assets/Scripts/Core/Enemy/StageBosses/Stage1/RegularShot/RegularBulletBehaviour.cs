@@ -1,4 +1,5 @@
 using Controllers.Player;
+using UI.Inventory;
 using UnityEngine;
 
 namespace Core.Enemy.StageBosses.Stage1
@@ -39,7 +40,8 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                _player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, 0);
+                var armor = _player.GetComponent<EquipmentSystem>()._equippedArmor;
+                _player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, armor != null ? armor.GetComponent<Item>().GetArmorModifier() : 0);
 
                 Destroy(gameObject);
             }

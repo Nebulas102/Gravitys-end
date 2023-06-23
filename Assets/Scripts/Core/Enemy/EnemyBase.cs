@@ -8,9 +8,6 @@ namespace Core.Enemy
 {
     public class EnemyBase : MonoBehaviour
     {
-        public string name;
-        public int startDamage;
-        public int endDamage;
         public float health;
         public Material hitMaterial;
 
@@ -58,11 +55,6 @@ namespace Core.Enemy
                     OnEnemyKilled(this);
                 }
             }
-        }
-
-        public int GetDamage()
-        {
-            return Random.Range(startDamage, endDamage);
         }
 
         public void TakeDamage(int takeStartDamage, int takeEndDamage, float modifier)

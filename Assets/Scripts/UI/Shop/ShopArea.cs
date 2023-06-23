@@ -15,8 +15,7 @@ namespace UI.Shop
         {
             if (other.CompareTag("Player"))
             {
-                Destroy(_shopManager.gameObject);
-                Destroy(gameObject);
+                _shopManager.gameObject.SetActive(false);
             }
         }
     }

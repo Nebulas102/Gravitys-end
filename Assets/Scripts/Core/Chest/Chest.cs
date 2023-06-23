@@ -82,7 +82,8 @@ namespace Core.Chest
             var newChild = Instantiate(openedChestGameObject, transform);
             newChild.transform.localPosition = Vector3.zero;
 
-            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.CHEST_OPENING);
+                newChild.GetComponentInChildren<ParticleSystem>().Play();
+                SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.CHEST_OPENING);
 
             SpawnLoot();
 

@@ -22,9 +22,12 @@ namespace Core.Enemy.StageBosses.Stage1
         [Header("Spray logic")]
         [SerializeField]
         private float sprayAmountBullets;
-
         [SerializeField]
         private float sprayInterval;
+
+        [Header("Effect")]
+        [SerializeField]
+        private ParticleSystem destructionEffect;
 
         private GameObject _boss;
         private GameObject _player;
@@ -65,6 +68,7 @@ namespace Core.Enemy.StageBosses.Stage1
             newRegularBulletBehaviour.SetDirection(bulletDirection);
             newRegularBulletBehaviour.SetDamage(minDamage, maxDamage);
             newRegularBulletBehaviour.SetSpeed(bulletSpeed);
+            newRegularBulletBehaviour.SetDestructionEffect(destructionEffect);
 
             newBullet.transform.LookAt(_player.transform.position);
             newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.root.rotation.w);

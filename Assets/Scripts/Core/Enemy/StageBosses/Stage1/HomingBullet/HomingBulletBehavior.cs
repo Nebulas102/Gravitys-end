@@ -12,6 +12,10 @@ namespace Core.Enemy.StageBosses.Stage1
         private int _maxDamage;
         private float _speed;
         private float _rotationSpeed;
+        private ParticleSystem _destructionEffect;
+
+        private float _timeAlive;
+        private float _allowedTimeAlive;
 
         private GameObject _boss;
         private GameObject _player;
@@ -25,11 +29,21 @@ namespace Core.Enemy.StageBosses.Stage1
 
             _startPosition = transform.position;
 
+            _allowedTimeAlive = _timeAlive + Time.time;
+
             transform.root.LookAt(_player.transform.position);
+
+            _destructionEffect = Instantiate(_destructionEffect);
         }
 
         private void Update()
         {
+            if (_allowedTimeAlive <= Time.time)
+            {
+                _destructionEffect.Play();
+                Destroy(transform.root.gameObject);
+            }
+
             _targetPosition = _player.transform.position;
             // Preserve starting y position
             _targetPosition.y = transform.root.position.y;
@@ -42,6 +56,7 @@ namespace Core.Enemy.StageBosses.Stage1
 
             // Move forward in the direction of the current rotation
             transform.root.Translate(transform.root.forward * _speed * Time.deltaTime, Space.World);
+            _destructionEffect.gameObject.transform.position = transform.root.position;
         }
 
         private void OnCollisionEnter(Collision other)
@@ -53,7 +68,11 @@ namespace Core.Enemy.StageBosses.Stage1
                 Destroy(gameObject);
             }
 
-            if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) Destroy(gameObject);
+            if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door"))
+            {
+                _destructionEffect.Play();
+                Destroy(gameObject);
+            }
         }
 
         public void SetDamage(int minDamage, int maxDamage)
@@ -70,6 +89,16 @@ namespace Core.Enemy.StageBosses.Stage1
         public void SetRotationSpeed(float rotationSpeed)
         {
             _rotationSpeed = rotationSpeed;
+        }
+
+        public void SetTimeAlive(float timeAlive)
+        {
+            _timeAlive = timeAlive;
+        }
+
+        public void SetDestructionEffect(ParticleSystem destructionEffect)
+        {
+            _destructionEffect = destructionEffect;
         }
     }
 }

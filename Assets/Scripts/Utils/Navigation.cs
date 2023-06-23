@@ -86,6 +86,11 @@ namespace Utils
             FadeOut(4);
         }
 
+        public void EndGame()
+        {
+            StartCoroutine(FadeOutCoroutine(5));
+        }
+
         public void Quit()
         {
             if(!coroutineActive)

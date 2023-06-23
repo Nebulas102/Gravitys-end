@@ -9,7 +9,7 @@ public class EnemySpawnpoints
     [SerializeField]
     public Transform spawnpoint;
     [SerializeField]
-    public GameObject enemy;
+    public GameObject[] enemy;
     [SerializeField]
     public int minSpawn;
     [SerializeField]

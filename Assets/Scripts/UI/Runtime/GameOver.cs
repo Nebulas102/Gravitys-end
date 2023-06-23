@@ -1,7 +1,6 @@
 
 using Core;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Utils;
 
 namespace UI.Runtime
@@ -20,6 +19,7 @@ namespace UI.Runtime
             GameStats.Instance.timePlayed = Timer.instance.startingTime - Timer.instance.time;
             GameStats.Instance.timeLeft = Timer.instance.time;
             Timer.instance.timerIsRunning = false;
+            GameStats.Instance.gameEnd = Timer.instance.time <= 0 ? GameEnd.TIME : GameEnd.KIA;
             Navigation.instance.GameOver();
         }
     }

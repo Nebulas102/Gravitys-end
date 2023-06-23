@@ -55,11 +55,11 @@ namespace Utils
             {
                 FadeIn();
             }
-        } 
+        }
 
         public void MainMenu()
         {
-            if(Timer.instance != null)
+            if (Timer.instance != null)
                 Timer.instance.timerIsRunning = false;
 
             SceneManager.LoadScene(0);
@@ -83,7 +83,7 @@ namespace Utils
 
         public void GameOver()
         {
-            SceneManager.LoadScene(4);
+            StartCoroutine(FadeOutCoroutine(4));
         }
 
         public void Quit()
@@ -94,7 +94,7 @@ namespace Utils
 
         public void FadeIn()
         {
-            if(skipDialogueButton != null)
+            if (skipDialogueButton != null)
                 skipDialogueButton.SetActive(false);
 
             StartCoroutine(FadeInCoroutine());
@@ -124,7 +124,7 @@ namespace Utils
 
         public IEnumerator FadeOutCoroutine(int scene)
         {
-            if(loadingScreen != null)
+            if (loadingScreen != null)
             {
                 loadingScreen.SetActive(true);
                 animator.SetTrigger("FadeOut");

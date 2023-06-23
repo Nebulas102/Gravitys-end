@@ -10,6 +10,7 @@ namespace Core.Chest
 
         [SerializeField] private float detectionRadius = 2f; // The radius to detect chests
         [SerializeField] private float itemSpawnDistanceFromChest = 1f;
+        [SerializeField] private ParticleSystem chestOpeningParticles;
 
         public List<GameObject> lootObjects;
 
@@ -66,6 +67,7 @@ namespace Core.Chest
                 var newChild = Instantiate(openedChestGameObject, transform);
                 newChild.transform.localPosition = Vector3.zero;
 
+                newChild.GetComponentInChildren<ParticleSystem>().Play();
                 SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.CHEST_OPENING);
 
                 SpawnLoot();

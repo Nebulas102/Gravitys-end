@@ -72,26 +72,12 @@ public class BulletBehaviour : MonoBehaviour
 
     public void SetBulletStyle(Color albedo, Color glow, float glowPower, Gradient trailGradient)
     {
-        EffectsHelper.ChangeShaderColorMaterial(transform, "_Albedo", albedo);
-        EffectsHelper.ChangeShaderColorMaterial(transform, "_Glow", glow);
-
-        EffectsHelper.ChangeShaderFloatMaterial(transform, "_GlowPower", glowPower);
-
-        trail.colorGradient = trailGradient;
+        BulletStyleHelper.SetBulletStyle(transform, trail, albedo, glow, glowPower, trailGradient);
     }
 
     public void SetBulletDestructionStyle(Color standard, Color emission, Color nonEmissive)
     {
-        EffectsHelper.ChangeShaderColorParticle(destructionEffect.transform, "_BaseColor", standard);
-        EffectsHelper.ChangeShaderColorParticle(destructionEffect.transform, "_EmissionColor", emission);
-
-        EffectsHelper.ChangeShaderColorParticle(destructionEffect.transform, "HitFeedbackExtra", "_BaseColor", nonEmissive);
-
-        EffectsHelper.ChangeShaderColorParticle(destructionEffect.transform, "HitFeedbackParticleTrail", "_BaseColor", standard);
-        EffectsHelper.ChangeShaderColorParticle(destructionEffect.transform, "HitFeedbackParticleTrail", "_EmissionColor", emission);
-
-        EffectsHelper.ChangeShaderColorTrailParticle(destructionEffect.transform, "HitFeedbackParticleTrail", "_BaseColor", standard);
-        EffectsHelper.ChangeShaderColorTrailParticle(destructionEffect.transform, "HitFeedbackParticleTrail", "_EmissionColor", emission);
+        BulletStyleHelper.SetBulletDestructionStyle(destructionEffect, standard, emission, nonEmissive);
     }
 
     public void SetDamage(int minDamage, int maxDamage)

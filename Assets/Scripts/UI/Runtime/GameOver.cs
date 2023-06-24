@@ -16,7 +16,7 @@ namespace UI.Runtime
 
         public void PlayerGameOver()
         {
-            GameStats.Instance.timePlayed = Timer.instance.startingTime - Timer.instance.time;
+            GameStats.Instance.timePlayed = Timer.instance.timePlayed;
             GameStats.Instance.timeLeft = Timer.instance.time;
             Timer.instance.timerIsRunning = false;
             GameStats.Instance.gameEnd = Timer.instance.time <= 0 ? GameEnd.TIME : GameEnd.KIA;

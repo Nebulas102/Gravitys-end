@@ -28,7 +28,6 @@ namespace UI
 
             // Enable or disable VSync based on the PlayerPrefs value
             QualitySettings.vSyncCount = vsyncValue;
-            Debug.Log(vsyncValue);
         }
     }
 

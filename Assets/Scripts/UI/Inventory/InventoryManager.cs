@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Controllers.Player;
+using TMPro;
 using UI.Shop;
 using UnityEngine;
 
@@ -22,6 +24,13 @@ namespace UI.Inventory
         [SerializeField]
         private List<InventorySlot> weaponSlots;
 
+        [Header("Settings")]
+        [SerializeField]
+        private TextMeshProUGUI damageReduction;
+
+        [SerializeField]
+        private TextMeshProUGUI damageRange;
+
         [SerializeField]
         private List<Item> weapons;
 
@@ -34,6 +43,41 @@ namespace UI.Inventory
                 instance = this;
             else
                 Destroy(gameObject);
+        }
+
+        private void Update()
+        {
+            RenderGearStats();
+        }
+
+        private void RenderGearStats()
+        {
+            if (equippedArmorSlot.IsEmpty())
+                damageReduction.text = "0%";
+            else
+            {
+                Item item = equippedArmorSlot.item.GetComponent<Item>();
+                damageReduction.text = item.armorModifier.ToString() + "%";
+            }
+
+            if (equippedWeaponSlot.IsEmpty())
+                damageRange.text = "0";
+            else
+            {
+                Item item = equippedWeaponSlot.item.GetComponent<Item>();
+                string start = string.Empty, end = string.Empty;
+                if (equippedWeaponSlot.item.CompareTag("Melee"))
+                {
+                    start = item.GetComponent<MeleeWeapon>().GetMinDamage().ToString();
+                    end = item.GetComponent<MeleeWeapon>().GetMaxDamage().ToString();
+                }
+                else if (equippedWeaponSlot.item.CompareTag("Ranged"))
+                {
+                    start = item.GetComponent<RangeWeapon>().minDamage.ToString();
+                    end = item.GetComponent<RangeWeapon>().maxDamage.ToString();
+                }
+                damageRange.text = start + " - " + end;
+            }
         }
 
         public bool PickupItem(Item item)

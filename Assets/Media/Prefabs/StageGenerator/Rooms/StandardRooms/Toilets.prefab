@@ -7032,9 +7032,15 @@ MonoBehaviour:
   - {fileID: 4401717950040734000}
   - {fileID: 7148808041200993416}
   chest: {fileID: 3273778572118770245, guid: 759439ab11a7031409a5aa051d74c7ae, type: 3}
-  possibleLoot:
-  - {fileID: 7039120194793019379, guid: 1f0e5f5492ec75b469944a09176567f2, type: 3}
-  - {fileID: 6284918362569833036, guid: 13c376cb3bb82d94fade37c1ee637613, type: 3}
+  LootItems:
+  - spawnChanceWeight: 2
+    item: {fileID: 1438772135582517200, guid: 8ac6159756efb7a4a9c91abf60684497, type: 3}
+  - spawnChanceWeight: 2
+    item: {fileID: 7446093825456627677, guid: f2314e18077c2194ebc89d562ae3e832, type: 3}
+  - spawnChanceWeight: 1
+    item: {fileID: 4768140122548972407, guid: f3f987742058ca84680d67de4987fed8, type: 3}
+  - spawnChanceWeight: 3
+    item: {fileID: 8615974926673144041, guid: 380a3e52fce004e4c8fd8200d8631efc, type: 3}
 --- !u!114 &3329690256124181632
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -31,11 +31,9 @@ public class RangeWeapon : MonoBehaviour
     public Gradient trailGradient;
 
     [Header("Effect styling")]
-    [SerializeField]
-    private ParticleSystem destructionEffect;
+    public Color standardColor;
     [ColorUsageAttribute(true, true)]
     public Color emission;
-
     public Color nonEmissive;
 
     [SerializeField]
@@ -109,8 +107,7 @@ public class RangeWeapon : MonoBehaviour
         newBulletBehaviour.SetDamage(minDamage, maxDamage);
         newBulletBehaviour.SetSpeed(bulletSpeed);
         newBulletBehaviour.SetDirection(bulletDirection);
-        newBulletBehaviour.SetDestructionEffect(destructionEffect);
         newBulletBehaviour.SetBulletStyle(albedo, glow, glowPower, trailGradient);
-        newBulletBehaviour.SetBulletDestructionStyle(emission, nonEmissive);
+        newBulletBehaviour.SetBulletDestructionStyle(standardColor, emission, nonEmissive);
     }
 }

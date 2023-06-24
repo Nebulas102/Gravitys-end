@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8630663376ba44d8fc75d744fc75c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trail: {fileID: 4018158115183610425}
 --- !u!54 &4417606877897360822
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -243,8 +244,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.12121695
+        time: 0.03592682
+        value: 0.12802237
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -296,8 +297,8 @@ TrailRenderer:
     numCapVertices: 0
     alignment: 0
     textureMode: 0
-    shadowBias: 0.5
-    generateLightingData: 0
+    shadowBias: 1
+    generateLightingData: 1
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1

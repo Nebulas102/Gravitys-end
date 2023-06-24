@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
+    [SerializeField]
+    private TrailRenderer trail;
+
     private int _minDamage;
     private int _maxDamage;
     private float _speed;
@@ -50,6 +53,23 @@ public class BulletBehaviour : MonoBehaviour
             _destructionEffect.Play();
             Destroy(gameObject);
         }
+    }
+
+    public void SetBulletStyle(Color albedo, Color glow, float glowPower, Gradient trailGradient)
+    {
+        EffectsHelper.ChangeShaderColorMaterial(transform, "_Albedo", albedo);
+        EffectsHelper.ChangeShaderColorMaterial(transform, "_Glow", glow);
+
+        EffectsHelper.ChangeShaderFloatMaterial(transform, "_GlowPower", glowPower);
+
+        trail.colorGradient = trailGradient;
+    }
+
+    public void SetBulletDestructionStyle(Color emission, Color nonEmissive)
+    {
+        EffectsHelper.ChangeShaderColorMaterial(_destructionEffect.transform, "_EmissionColor", emission);
+        EffectsHelper.ChangeShaderColorMaterial(_destructionEffect.transform, "_BaseColor", "HitFeedbackExtra", nonEmissive);
+        EffectsHelper.ChangeShaderColorMaterial(_destructionEffect.transform, "_EmissionColor", "HitFeedbackParticleTrail", emission);
     }
 
     public void SetDamage(int minDamage, int maxDamage)

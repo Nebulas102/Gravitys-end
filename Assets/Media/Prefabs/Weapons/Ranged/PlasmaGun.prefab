@@ -102,7 +102,41 @@ MonoBehaviour:
   minDamage: 100
   maxDamage: 120
   bulletSpeed: 10
+  albedo: {r: 0, g: 0, b: 0, a: 0}
+  glow: {r: 0, g: 0, b: 0, a: 0}
+  glowPower: 0
+  trailGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
   destructionEffect: {fileID: 5896232801978186725, guid: 0b4aa1e054b62924184a5fc3713e41bc, type: 3}
+  emission: {r: 0, g: 0.14819865, b: 0.8113208, a: 0}
+  nonEmissive: {r: 0, g: 0.24893552, b: 0.4245283, a: 0}
   bulletOutput: {fileID: 4036258045295088956}
 --- !u!114 &2842433041539069802
 MonoBehaviour:

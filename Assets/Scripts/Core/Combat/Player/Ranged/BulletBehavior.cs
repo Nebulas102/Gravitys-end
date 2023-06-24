@@ -3,7 +3,7 @@ using Core.Enemy;
 using UI.Tokens;
 using UnityEngine;
 
-public class BulletBehaviour : MonoBehaviour
+public class BulletBehavior : MonoBehaviour
 {
     [SerializeField]
     private TrailRenderer trail;
@@ -18,7 +18,7 @@ public class BulletBehaviour : MonoBehaviour
     private float destructiomTime;
     private bool allowMovement = true;
 
-    private void Update()
+    protected virtual void Update()
     {
         if (allowMovement)
         {
@@ -27,7 +27,7 @@ public class BulletBehaviour : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {

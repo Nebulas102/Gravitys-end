@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7702327619086896457}
   - component: {fileID: 6238210669448695569}
-  - component: {fileID: 4991507361130423622}
+  - component: {fileID: 3936323943845735973}
   - component: {fileID: 4559409835853949027}
   - component: {fileID: -5560565276316776853}
   - component: {fileID: -6274302476578063380}
@@ -198,7 +198,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4991507361130423622
+--- !u!114 &3936323943845735973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,20 +207,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 7039120194793019379}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d027b195eb492db4cbcb394decd81c65, type: 3}
+  m_Script: {fileID: 11500000, guid: edec34397d38bd140aada35166bb737f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 600
-  currentAmmo: 10
+  fireRate: 0.3
+  countOfProjectilesShot: 1
+  delayBetweenShots: 0
+  currentAmmo: 11
   reserveAmmo: 44
   magSize: 11
   reloadTime: 1.5
   reloading: 0
-  bullet: {fileID: 1563543445386549699, guid: 488672f14df59a841b4721b174f0662e, type: 3}
+  projectile: {fileID: 1563543445386549699, guid: 2f3f81940d283464c840376430dbcfd3, type: 3}
   minDamage: 80
   maxDamage: 100
   bulletSpeed: 9
-  albedo: {r: 0.3726415, g: 1, b: 0.4724797, a: 0}
+  albedo: {r: 0.37254903, g: 1, b: 0.47058824, a: 0}
   glow: {r: 0, g: 47.937256, b: 0.7529412, a: 0}
   glowPower: 20
   trailGradient:
@@ -252,9 +254,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
-  destructionEffect: {fileID: 5896232801978186725, guid: 0b4aa1e054b62924184a5fc3713e41bc, type: 3}
+  standardColor: {r: 0.003921569, g: 0.7921569, b: 0.16078432, a: 0}
   emission: {r: 0, g: 47.937256, b: 0.7529412, a: 0}
-  nonEmissive: {r: 0.009478444, g: 0.6698113, b: 0.32144675, a: 1}
+  nonEmissive: {r: 0.007843138, g: 0.67058825, b: 0.32156864, a: 1}
   bulletOutput: {fileID: 6542274944412366050}
 --- !u!114 &4559409835853949027
 MonoBehaviour:

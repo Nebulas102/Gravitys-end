@@ -93,12 +93,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 600
+  countOfProjectilesShot: 0
   currentAmmo: 10
   reserveAmmo: 44
   magSize: 11
   reloadTime: 1.5
   reloading: 0
-  bullet: {fileID: 1563543445386549699, guid: 488672f14df59a841b4721b174f0662e, type: 3}
+  projectile: {fileID: 1563543445386549699, guid: 488672f14df59a841b4721b174f0662e, type: 3}
   minDamage: 100
   maxDamage: 120
   bulletSpeed: 10
@@ -134,7 +135,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  destructionEffect: {fileID: 5896232801978186725, guid: 0b4aa1e054b62924184a5fc3713e41bc, type: 3}
+  standardColor: {r: 0, g: 0, b: 0, a: 0}
   emission: {r: 0, g: 0.14819865, b: 0.8113208, a: 0}
   nonEmissive: {r: 0, g: 0.24893552, b: 0.4245283, a: 0}
   bulletOutput: {fileID: 4036258045295088956}

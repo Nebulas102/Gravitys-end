@@ -11,9 +11,6 @@ namespace Core.Enemy
         public float health;
         public Material hitMaterial;
 
-        [Tooltip("Is in milliseconds (60f = 1 second)")]
-        public float timeOnDead = 60f;
-
         public GameObject damageDisplay;
 
         private Canvas _canvas;
@@ -23,7 +20,7 @@ namespace Core.Enemy
 
         public static int enemyKillCounter;
 
-        public delegate void EnemyKilledEventHandler(EnemyBase enemy);
+        public delegate void EnemyKilledEventHandler();
 
         public static event EnemyKilledEventHandler OnEnemyKilled;
 
@@ -40,10 +37,7 @@ namespace Core.Enemy
             {
                 Destroy(gameObject);
                 GameStats.Instance.enemiesKilled++;
-                if (OnEnemyKilled != null)
-                {
-                    OnEnemyKilled(this);
-                }
+                OnEnemyKilled?.Invoke();
             }
         }
 

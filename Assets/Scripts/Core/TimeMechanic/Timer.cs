@@ -25,6 +25,7 @@ namespace Core
 
         public static Timer instance;
         public float startingTime { get; set; }
+        public float timePlayed { get; set; }
 
         private bool _timerIsRunning;
         public bool timerIsRunning
@@ -66,6 +67,7 @@ namespace Core
                 if (time > 0)
                 {
                     time -= Time.deltaTime;
+                    timePlayed += Time.deltaTime;
                 }
                 else
                 {

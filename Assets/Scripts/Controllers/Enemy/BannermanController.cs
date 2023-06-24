@@ -9,9 +9,16 @@ using UnityEngine;
 public class BannermanController : MonoBehaviour
 {
     [SerializeField]
-    private float healEnemyAmount = 10f;
+    [Header("Enemy Settings")]
+    private float healEnemyAmountMinimum = 65f;
     [SerializeField]
-    private float healPlayerAmount = 5f;
+    private float healEnemyAmountMaximum = 85f;
+    [SerializeField]
+    [Header("Player Settings")]
+    private float healPlayerAmountMinimum = 40f;
+    [SerializeField]
+    private float healPlayerAmountMaximum = 60f;
+    [Header("Healing cooldown")]
     [SerializeField]
     private float healCooldown = 4f;
     [HideInInspector]
@@ -74,6 +81,7 @@ public class BannermanController : MonoBehaviour
     {
         while (true)
         {
+            float healEnemyAmount = Random.Range(healEnemyAmountMinimum, healEnemyAmountMaximum);
             enemyBase.health += healEnemyAmount;
             yield return new WaitForSeconds(healCooldown);
         }
@@ -83,6 +91,7 @@ public class BannermanController : MonoBehaviour
     {
         while (true)
         {
+            float healPlayerAmount = Random.Range(healPlayerAmountMinimum, healPlayerAmountMaximum);
             playerStats.HealPlayer(healPlayerAmount);
             yield return new WaitForSeconds(healCooldown);
         }

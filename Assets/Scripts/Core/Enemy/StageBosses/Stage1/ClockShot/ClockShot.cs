@@ -52,6 +52,7 @@ namespace Core.Enemy.StageBosses.Stage1
 
         public override IEnumerator UseBossAbility()
         {
+            //ryan anim
             yield return StartCoroutine(Shoot());
         }
 

@@ -25,9 +25,19 @@ namespace Core.Enemy.StageBosses.Stage1
         [SerializeField]
         private float sprayInterval;
 
-        [Header("Effect")]
-        [SerializeField]
-        private ParticleSystem destructionEffect;
+        [Header("Bullet styling")]
+        [ColorUsageAttribute(true, true)]
+        public Color albedo;
+        [ColorUsageAttribute(true, true)]
+        public Color glow;
+        public float glowPower;
+        public Gradient trailGradient;
+
+        [Header("Effect styling")]
+        public Color standardColor;
+        [ColorUsageAttribute(true, true)]
+        public Color emission;
+        public Color nonEmissive;
 
         private GameObject _boss;
         private GameObject _player;
@@ -68,7 +78,8 @@ namespace Core.Enemy.StageBosses.Stage1
             newRegularBulletBehaviour.SetDirection(bulletDirection);
             newRegularBulletBehaviour.SetDamage(minDamage, maxDamage);
             newRegularBulletBehaviour.SetSpeed(bulletSpeed);
-            newRegularBulletBehaviour.SetDestructionEffect(destructionEffect);
+            newRegularBulletBehaviour.SetBulletStyle(albedo, glow, glowPower, trailGradient);
+            newRegularBulletBehaviour.SetBulletDestructionStyle(standardColor, emission, nonEmissive);
 
             newBullet.transform.LookAt(_player.transform.position);
             newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.root.rotation.w);

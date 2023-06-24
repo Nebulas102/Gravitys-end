@@ -24,9 +24,19 @@ namespace Core.Enemy.StageBosses.Stage1
         private float clockShotInterval;
         private int _amountOfBullets;
 
-        [Header("Effect")]
-        [SerializeField]
-        private ParticleSystem destructionEffect;
+        [Header("Bullet styling")]
+        [ColorUsageAttribute(true, true)]
+        public Color albedo;
+        [ColorUsageAttribute(true, true)]
+        public Color glow;
+        public float glowPower;
+        public Gradient trailGradient;
+
+        [Header("Effect styling")]
+        public Color standardColor;
+        [ColorUsageAttribute(true, true)]
+        public Color emission;
+        public Color nonEmissive;
 
         private GameObject _boss;
         private Quaternion _bulletRot;
@@ -63,7 +73,8 @@ namespace Core.Enemy.StageBosses.Stage1
 
                 newClockBulletBehaviour.SetDamage(minDamage, maxDamage);
                 newClockBulletBehaviour.SetSpeed(bulletSpeed);
-                newClockBulletBehaviour.SetDestructionEffect(destructionEffect);
+                newClockBulletBehaviour.SetBulletStyle(albedo, glow, glowPower, trailGradient);
+                newClockBulletBehaviour.SetBulletDestructionStyle(standardColor, emission, nonEmissive);
 
                 newBullet.transform.forward = newBullet.transform.position - transform.position;
             }

@@ -1,24 +1,30 @@
+using System.Collections;
 using Core.Enemy;
 using UI.Tokens;
 using UnityEngine;
 
 public class BulletBehaviour : MonoBehaviour
 {
+    [SerializeField]
+    private TrailRenderer trail;
+    [SerializeField]
+    private ParticleSystem destructionEffect;
+
     private int _minDamage;
     private int _maxDamage;
     private float _speed;
-    private ParticleSystem _destructionEffect;
     private Vector3 _direction;
 
-    private void Start()
-    {
-        _destructionEffect = Instantiate(_destructionEffect);
-    }
+    private float destructiomTime;
+    private bool allowMovement = true;
 
     private void Update()
     {
-        transform.root.Translate(_direction * _speed * Time.deltaTime, Space.World);
-        _destructionEffect.gameObject.transform.position = transform.root.position;
+        if (allowMovement)
+        {
+            transform.root.Translate(_direction * _speed * Time.deltaTime, Space.World);
+            destructionEffect.gameObject.transform.position = transform.root.position;
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -31,7 +37,7 @@ public class BulletBehaviour : MonoBehaviour
                 other.gameObject.GetComponent<EnemyBase>().TakeDamage((int)Mathf.Round(_minDamage * damageMod), (int)Mathf.Round(_maxDamage * damageMod), 0);
             }
 
-            Destroy(gameObject);
+            Destroy(transform.root.gameObject);
         }
 
         if (other.gameObject.CompareTag("Boss"))
@@ -42,14 +48,36 @@ public class BulletBehaviour : MonoBehaviour
                 other.gameObject.GetComponent<Boss>().TakeDamage((int)Mathf.Round(_minDamage * damageMod), (int)Mathf.Round(_maxDamage * damageMod), 0);
             }
 
-            Destroy(gameObject);
+            Destroy(transform.root.gameObject);
         }
 
         if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door"))
         {
-            _destructionEffect.Play();
-            Destroy(gameObject);
+            StartCoroutine(DestroyBullet());
         }
+    }
+
+    private IEnumerator DestroyBullet()
+    {
+        allowMovement = false;
+
+        destructionEffect.Play();
+
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
+
+        yield return new WaitForSeconds(destructionEffect.main.duration);
+
+        Destroy(transform.root.gameObject);
+    }
+
+    public void SetBulletStyle(Color albedo, Color glow, float glowPower, Gradient trailGradient)
+    {
+        BulletStyleHelper.SetBulletStyle(transform, trail, albedo, glow, glowPower, trailGradient);
+    }
+
+    public void SetBulletDestructionStyle(Color standard, Color emission, Color nonEmissive)
+    {
+        BulletStyleHelper.SetBulletDestructionStyle(destructionEffect, standard, emission, nonEmissive);
     }
 
     public void SetDamage(int minDamage, int maxDamage)
@@ -66,10 +94,5 @@ public class BulletBehaviour : MonoBehaviour
     public void SetDirection(Vector3 direction)
     {
         _direction = direction.normalized;
-    }
-
-    public void SetDestructionEffect(ParticleSystem destructionEffect)
-    {
-        _destructionEffect = destructionEffect;
     }
 }

@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class EnemySpawnpoints
+public class EnemyVariant
 {
     [SerializeField]
-    public Transform spawnpoint;
+    public GameObject enemy;
+
     [SerializeField]
-    public int minSpawn;
-    [SerializeField]
-    public int maxSpawn;
+    public int spawnWeight;
 }

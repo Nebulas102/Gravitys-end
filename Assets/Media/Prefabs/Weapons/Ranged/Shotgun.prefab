@@ -133,7 +133,41 @@ MonoBehaviour:
   minDamage: 100
   maxDamage: 140
   bulletSpeed: 8
-  destructionEffect: {fileID: 5896232801978186725, guid: 0b4aa1e054b62924184a5fc3713e41bc, type: 3}
+  albedo: {r: 1, g: 0.3160377, b: 0.3160377, a: 0}
+  glow: {r: 766.9961, g: 0, b: 72.28236, a: 0}
+  glowPower: 10
+  trailGradient:
+    serializedVersion: 2
+    key0: {r: 0.9811321, g: 0.0046279924, b: 0.20646659, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 1, g: 1, b: 1, a: 1}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  standardColor: {r: 0.92941177, g: 0, b: 0.08377661, a: 1}
+  emission: {r: 0.8584906, g: 0, b: 0.08597834, a: 0}
+  nonEmissive: {r: 0.4433962, g: 0, b: 0.10255432, a: 0}
   bulletOutput: {fileID: 2960653143182745868}
 --- !u!114 &-8079711847852174373
 MonoBehaviour:

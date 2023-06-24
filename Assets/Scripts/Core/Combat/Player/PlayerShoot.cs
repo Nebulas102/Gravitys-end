@@ -22,7 +22,6 @@ public class PlayerShoot : MonoBehaviour
     public void OnWeaponEquipped()
     {
         shootInput += weapon.Shoot;
-        reloadEvent += weapon.StartReload;
     }
 
     public void OnWeaponUnequipped()
@@ -31,21 +30,13 @@ public class PlayerShoot : MonoBehaviour
             return;
         }
         shootInput -= weapon.Shoot;
-        reloadEvent -= weapon.StartReload;
     }
 
     public void Shoot()
     {
-        if (EquipmentSystem.Instance._equippedWeapon == gameObject)
+        if (EquipmentSystem.Instance._equippedWeapon == gameObject && weapon.currentAmmo > 0)
         {
-            if (weapon.currentAmmo <= 0)
-            {
-                reloadEvent?.Invoke();
-            }
-            else
-            {
-                shootInput?.Invoke();
-            }
+            shootInput?.Invoke();
         }
     }
 }

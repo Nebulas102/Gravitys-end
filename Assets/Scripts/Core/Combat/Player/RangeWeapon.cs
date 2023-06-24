@@ -22,9 +22,19 @@ public class RangeWeapon : MonoBehaviour
     public int maxDamage;
     public float bulletSpeed;
 
-    [Header("Effect")]
-    [SerializeField]
-    private ParticleSystem destructionEffect;
+    [Header("Bullet styling")]
+    [ColorUsageAttribute(true, true)]
+    public Color albedo;
+    [ColorUsageAttribute(true, true)]
+    public Color glow;
+    public float glowPower;
+    public Gradient trailGradient;
+
+    [Header("Effect styling")]
+    public Color standardColor;
+    [ColorUsageAttribute(true, true)]
+    public Color emission;
+    public Color nonEmissive;
 
     [SerializeField]
     private Transform bulletOutput;
@@ -68,6 +78,11 @@ public class RangeWeapon : MonoBehaviour
         currentAmmo--;
         timeSinceLastShot = 0;
         OnGunShot();
+
+        if (currentAmmo <= 0 && reserveAmmo > 0)
+        {
+            StartReload();
+        }
     }
 
     private void Update()
@@ -92,6 +107,7 @@ public class RangeWeapon : MonoBehaviour
         newBulletBehaviour.SetDamage(minDamage, maxDamage);
         newBulletBehaviour.SetSpeed(bulletSpeed);
         newBulletBehaviour.SetDirection(bulletDirection);
-        newBulletBehaviour.SetDestructionEffect(destructionEffect);
+        newBulletBehaviour.SetBulletStyle(albedo, glow, glowPower, trailGradient);
+        newBulletBehaviour.SetBulletDestructionStyle(standardColor, emission, nonEmissive);
     }
 }

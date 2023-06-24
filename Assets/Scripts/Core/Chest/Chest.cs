@@ -103,14 +103,9 @@ namespace Core.Chest
             int randomInt = Random.Range(0, randomizer.Count);
             int randomizerResult = randomizer[randomInt];
 
-            Vector3 spawnPosition = GetRandomSpawnPosition();
+            Vector3 spawnPosition = transform.position + transform.forward * itemSpawnDistanceFromChest;
 
             Instantiate(_lootObjects[randomizerResult].item, spawnPosition, Quaternion.identity);
-        }
-
-        private Vector3 GetRandomSpawnPosition()
-        {
-            return transform.position + transform.forward * itemSpawnDistanceFromChest;
         }
 
         private void OnOpenChestInput()

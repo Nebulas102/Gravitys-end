@@ -4235,6 +4235,7 @@ GameObject:
   - component: {fileID: 4948894632101060623}
   - component: {fileID: 3815944585182235028}
   - component: {fileID: 6795333961244543778}
+  - component: {fileID: 1085847130357856198}
   m_Layer: 0
   m_Name: MessHall
   m_TagString: Room
@@ -4297,21 +4298,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawnpoints:
   - spawnpoint: {fileID: 7699024184296978265}
-    enemy:
-    - {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
-    - {fileID: 4762182825552911128, guid: 27b4478121cc05f46886d54d25bf929d, type: 3}
-    - {fileID: 6714146852020011135, guid: 0f102170559d4d0489e290e30e0e1ffe, type: 3}
-    - {fileID: 5734400625356844651, guid: e2eb4c7cdb06872468d7be50d87f18c5, type: 3}
-    minSpawn: 1
-    maxSpawn: 1
+    minSpawn: 3
+    maxSpawn: 6
   - spawnpoint: {fileID: 3019367449866652634}
-    enemy:
-    - {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
-    - {fileID: 2634792126719282848, guid: bf56adf125b9d4b4b8461bd10cd359f1, type: 3}
-    - {fileID: 5843317787074358162, guid: f46a0a3df9e495147978d19c60cf2532, type: 3}
-    - {fileID: 783898304264283845, guid: 5de2b21c34d10b940a169342e1e2543b, type: 3}
-    minSpawn: 1
-    maxSpawn: 2
+    minSpawn: 2
+    maxSpawn: 4
+  enemyTypes:
+    enemyTypes:
+    - enemys:
+      - enemy: {fileID: 783898304264283845, guid: 5de2b21c34d10b940a169342e1e2543b, type: 3}
+        spawnWeight: 1
+      - enemy: {fileID: 5734400625356844651, guid: e2eb4c7cdb06872468d7be50d87f18c5, type: 3}
+        spawnWeight: 5
+      - enemy: {fileID: 4817303409735151379, guid: 60c6e5d65fac4b94abd5870d4a452a40, type: 3}
+        spawnWeight: 1
+      typeWeight: 4
+    - enemys:
+      - enemy: {fileID: 2634792126719282848, guid: bf56adf125b9d4b4b8461bd10cd359f1, type: 3}
+        spawnWeight: 5
+      - enemy: {fileID: 4762182825552911128, guid: 27b4478121cc05f46886d54d25bf929d, type: 3}
+        spawnWeight: 1
+      typeWeight: 1
 --- !u!114 &4948894632101060623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4365,6 +4372,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 40, y: 5, z: 40}
   m_Center: {x: 0, y: 2.5, z: 0}
+--- !u!114 &1085847130357856198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2267428550991964170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9f5456e255f437439e6e075877993d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redGreenPurpleMat:
+  - {fileID: 2100000, guid: 101eb5eb50c0a41a4817a915aaaab630, type: 2}
+  - {fileID: 2100000, guid: 041f208f01c4c43e6833fe33983bc305, type: 2}
+  - {fileID: 2100000, guid: 3ad2cfe625c6b4b18823bbecd6c1e630, type: 2}
+  banners:
+  - {fileID: 4212289396892230418}
+  - {fileID: 8547338740987424729}
 --- !u!1 &2393658879915242227
 GameObject:
   m_ObjectHideFlags: 0
@@ -19137,6 +19163,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1171502610628361845, guid: d789e7b73091d3747aa12a875bc6e1a3, type: 3}
   m_PrefabInstance: {fileID: 577510418469530136}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4212289396892230418 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3636291978969303306, guid: d789e7b73091d3747aa12a875bc6e1a3, type: 3}
+  m_PrefabInstance: {fileID: 577510418469530136}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &761706509863220181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20565,6 +20596,11 @@ PrefabInstance:
 --- !u!4 &6100838658546210982 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1171502610628361845, guid: d789e7b73091d3747aa12a875bc6e1a3, type: 3}
+  m_PrefabInstance: {fileID: 4965371444602873555}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8547338740987424729 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3636291978969303306, guid: d789e7b73091d3747aa12a875bc6e1a3, type: 3}
   m_PrefabInstance: {fileID: 4965371444602873555}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4967694765242837083

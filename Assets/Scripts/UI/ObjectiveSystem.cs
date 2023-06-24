@@ -89,7 +89,7 @@ namespace UI
             CompleteObjective(ObjectiveTask.COLLECT_KEY);
         }
 
-        public void HandleEnemyKilled(EnemyBase enemy)
+        public void HandleEnemyKilled()
         {
             enemiesKilledCount++;
             if (enemiesKilledCount == enemyKillObjective)

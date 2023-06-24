@@ -17,6 +17,10 @@ namespace Core
         public float dangerZone = 600;
 
         [SerializeField]
+        [Range(0, 0.1f)]
+        private float timePercentageOnKill = 0.02f;
+
+        [SerializeField]
         public TextMeshProUGUI display;
 
         public static Timer instance;
@@ -41,13 +45,9 @@ namespace Core
         private void Awake()
         {
             if (instance == null)
-            {
                 instance = this;
-            }
             else
-            {
                 Destroy(gameObject);
-            }
         }
 
         private void Start()
@@ -84,9 +84,9 @@ namespace Core
             startingTime = time;
         }
 
-        private void AddEnemyTime(EnemyBase enemy)
+        private void AddEnemyTime()
         {
-            time += enemy.timeOnDead * TokenManager.instance.timeSection.GetModifier();
+            time += (time * timePercentageOnKill) * TokenManager.instance.timeSection.GetModifier();
         }
 
         private void DisplayTime(float ttd)

@@ -45,8 +45,6 @@ public class PlayerWeaponSlash : MonoBehaviour
 
             var attackHit = parentParticle.Find("Hit");
 
-            EffectsHelper.ChangeParticleColor(attackHit, "_Color", hit);
-
             EffectsHelper.ChangeParticleColor(attackHit, "Flare", sparksCore);
             EffectsHelper.ChangeParticleColor(attackHit, "SparksCore", sparksCore);
         }

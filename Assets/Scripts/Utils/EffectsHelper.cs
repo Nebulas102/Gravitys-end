@@ -8,7 +8,7 @@ public static class EffectsHelper
     public static void ChangeShaderTextureParticle(Transform particle, string nameField, Texture texture)
     {
         var renderer = particle.GetComponent<ParticleSystemRenderer>();
-        var originalMat = renderer.sharedMaterial;
+        var originalMat = renderer.material;
         var newMat = new Material(originalMat);
 
         newMat.SetTexture(nameField, texture);
@@ -21,7 +21,7 @@ public static class EffectsHelper
     public static void ChangeShaderTextureParticle(Transform particle, string name, string nameField, Texture texture)
     {
         var renderer = particle.transform.Find(name).GetComponent<ParticleSystemRenderer>();
-        var originalMat = renderer.sharedMaterial;
+        var originalMat = renderer.material;
         var newMat = new Material(originalMat);
 
         newMat.SetTexture(nameField, texture);
@@ -34,7 +34,7 @@ public static class EffectsHelper
     public static void ChangeShaderColorParticle(Transform particle, string nameField, Color color)
     {
         var renderer = particle.GetComponent<ParticleSystemRenderer>();
-        var originalMat = renderer.sharedMaterial;
+        var originalMat = renderer.material;
         var newMat = new Material(originalMat);
 
         newMat.SetColor(nameField, color);
@@ -46,12 +46,24 @@ public static class EffectsHelper
     public static void ChangeShaderColorParticle(Transform particle, string name, string nameField, Color color)
     {
         var renderer = particle.transform.Find(name).GetComponent<ParticleSystemRenderer>();
-        var originalMat = renderer.sharedMaterial;
+        var originalMat = renderer.material;
         var newMat = new Material(originalMat);
 
         newMat.SetColor(nameField, color);
 
         renderer.material = newMat;
+    }
+
+    // Change the shader color of the particle trail of a child.
+    public static void ChangeShaderColorTrailParticle(Transform particle, string name, string nameField, Color color)
+    {
+        var renderer = particle.transform.Find(name).GetComponent<ParticleSystemRenderer>();
+        var originalMat = renderer.trailMaterial;
+        var newMat = new Material(originalMat);
+
+        newMat.SetColor(nameField, color);
+
+        renderer.trailMaterial = newMat;
     }
 
     // Change the shader color of the material.

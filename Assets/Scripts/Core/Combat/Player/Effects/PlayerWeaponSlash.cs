@@ -22,33 +22,33 @@ public class PlayerWeaponSlash : MonoBehaviour
         {
             var parentParticle = attacks[i].transform;
 
-            ParticleHelper.ChangeShaderColor(parentParticle, "_AddColor", slash);
-            ParticleHelper.ChangeShaderTexture(parentParticle, "_EmissionTex", slashTexture);
+            EffectsHelper.ChangeShaderColorParticle(parentParticle, "_AddColor", slash);
+            EffectsHelper.ChangeShaderTextureParticle(parentParticle, "_EmissionTex", slashTexture);
 
             if (i > 2)
             {
-                ParticleHelper.ChangeShaderColor(parentParticle, "Slash2", "_AddColor", slash);
-                ParticleHelper.ChangeShaderTexture(parentParticle, "Slash2", "_EmissionTex", slashTexture);
+                EffectsHelper.ChangeShaderColorParticle(parentParticle, "Slash2", "_AddColor", slash);
+                EffectsHelper.ChangeShaderTextureParticle(parentParticle, "Slash2", "_EmissionTex", slashTexture);
 
-                ParticleHelper.ChangeShaderColor(parentParticle, "Slash3", "_AddColor", slash);
-                ParticleHelper.ChangeShaderTexture(parentParticle, "Slash3", "_EmissionTex", slashTexture);
+                EffectsHelper.ChangeShaderColorParticle(parentParticle, "Slash3", "_AddColor", slash);
+                EffectsHelper.ChangeShaderTextureParticle(parentParticle, "Slash3", "_EmissionTex", slashTexture);
 
-                ParticleHelper.ChangeParticleColor(parentParticle, "Fire", fire);
+                EffectsHelper.ChangeParticleColor(parentParticle, "Fire", fire);
             }
             else
             {
-                ParticleHelper.ChangeParticleColor(parentParticle, "Smoke", smoke);
+                EffectsHelper.ChangeParticleColor(parentParticle, "Smoke", smoke);
             }
 
-            ParticleHelper.ChangeParticleColor(parentParticle, "Sparks", spark);
-            ParticleHelper.ChangeParticleColor(parentParticle, "Hit", hit);
+            EffectsHelper.ChangeParticleColor(parentParticle, "Sparks", spark);
+            EffectsHelper.ChangeParticleColor(parentParticle, "Hit", hit);
 
             var attackHit = parentParticle.Find("Hit");
 
-            ParticleHelper.ChangeShaderColor(attackHit, "_Color", hit);
+            EffectsHelper.ChangeParticleColor(attackHit, "_Color", hit);
 
-            ParticleHelper.ChangeParticleColor(attackHit, "Flare", sparksCore);
-            ParticleHelper.ChangeParticleColor(attackHit, "SparksCore", sparksCore);
+            EffectsHelper.ChangeParticleColor(attackHit, "Flare", sparksCore);
+            EffectsHelper.ChangeParticleColor(attackHit, "SparksCore", sparksCore);
         }
     }
 }

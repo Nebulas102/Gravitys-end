@@ -44,6 +44,7 @@ namespace Core.Enemy.StageBosses.Stage1
 
         public override IEnumerator UseBossAbility()
         {
+            //ryan anim
             yield return StartCoroutine(Spray());
         }
 
@@ -51,6 +52,7 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             for (var i = 0; i < sprayAmountBullets; i++)
             {
+                //ryan anim? (deze is voor elke schot)
                 Shoot();
                 yield return new WaitForSeconds(bulletInterval);
             }

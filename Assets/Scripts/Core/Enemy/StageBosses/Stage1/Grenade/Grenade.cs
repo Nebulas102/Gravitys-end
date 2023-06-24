@@ -44,6 +44,7 @@ namespace Core.Enemy.StageBosses.Stage1
 
         public override IEnumerator UseBossAbility()
         {
+            //ryan anim
             ThrowGrenade();
 
             yield return new WaitForSeconds(grenadeInterval);

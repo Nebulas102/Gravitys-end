@@ -60,7 +60,14 @@ namespace Controllers.Player
                 velocity = Vector3.zero;
                 input = Vector2.zero;
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);
-                animator.SetTrigger("shoot");
+                if (EquipmentSystem.Instance._equippedWeapon.GetComponent<RangeWeapon>().currentAmmo != 0)
+                {
+                    animator.SetTrigger("shoot");
+                }
+                else
+                {
+                    animator.SetTrigger("reload");
+                }
             }
         }
 

@@ -29243,6 +29243,7 @@ MonoBehaviour:
     sentences:
     - You will pay for the men you've killed.
     - I will not let you destroy my home.
+  hasTriggered: 0
 --- !u!1 &6313682922509465290
 GameObject:
   m_ObjectHideFlags: 0
@@ -44710,7 +44711,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 586304723147068401, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.728
+      value: 3.43
       objectReference: {fileID: 0}
     - target: {fileID: 1176069971641675334, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: m_Layer
@@ -44784,6 +44785,10 @@ PrefabInstance:
       propertyPath: m_AngularSpeed
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 6494643800520604456, guid: 060ad79147367be4db949192a78d4109, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6575595425671537587, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: m_Name
       value: Boss1
@@ -44843,6 +44848,18 @@ PrefabInstance:
     - target: {fileID: 9140657706882274251, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140657706882274251, guid: 060ad79147367be4db949192a78d4109, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140657706882274251, guid: 060ad79147367be4db949192a78d4109, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140657706882274251, guid: 060ad79147367be4db949192a78d4109, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 9140657706882274251, guid: 060ad79147367be4db949192a78d4109, type: 3}
       propertyPath: m_LocalPosition.x

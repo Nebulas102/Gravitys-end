@@ -7,6 +7,15 @@ public class MeleeWeapon : MonoBehaviour
     [SerializeField]
     private int maxDamage = 10;
 
+    [Header("Slash Color")]
+    public Color slashColor;
+    public Texture slashTexture;
+    public Color smokeColor;
+    public Color sparkColor;
+    public Color sparkCoreColor;
+    public Color fireColor;
+    public Color hitColor;
+
     private bool isEquipped = false;
 
     public int GetMinDamage()

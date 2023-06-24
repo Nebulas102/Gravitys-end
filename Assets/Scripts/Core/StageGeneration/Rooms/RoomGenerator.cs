@@ -160,7 +160,7 @@ namespace Core.StageGeneration.Rooms
 
         private void CountHallwayDoors(List<GameObject> mapHallways)
         {
-            hallwayDoorCount = mapHallways.Count * 6;
+            hallwayDoorCount = (mapHallways.Count - 1) * 6;
             startDoorsLeftCount = hallwayDoorCount / 2 - 6;
             startDoorsRightCount = hallwayDoorCount - 6;
         }

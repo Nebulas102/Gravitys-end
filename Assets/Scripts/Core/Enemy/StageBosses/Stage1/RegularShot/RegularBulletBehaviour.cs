@@ -1,4 +1,5 @@
 using Controllers.Player;
+using UI.Inventory;
 using UnityEngine;
 
 namespace Core.Enemy.StageBosses.Stage1
@@ -8,6 +9,7 @@ namespace Core.Enemy.StageBosses.Stage1
         private int _minDamage;
         private int _maxDamage;
         private float _speed;
+        private ParticleSystem _destructionEffect;
 
         private GameObject _boss;
         private GameObject _player;
@@ -23,23 +25,32 @@ namespace Core.Enemy.StageBosses.Stage1
 
             _startPosition = transform.position;
             _targetPosition = _player.transform.position;
+
+
+            _destructionEffect = Instantiate(_destructionEffect);
         }
 
         private void Update()
         {
             transform.root.Translate(_direction * _speed * Time.deltaTime, Space.World);
+            _destructionEffect.gameObject.transform.position = transform.root.position;
         }
 
         private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                _player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, 0);
+                var armor = _player.GetComponent<EquipmentSystem>()._equippedArmor;
+                _player.GetComponent<PlayerStatsController>().TakeDamage(_minDamage, _maxDamage, armor != null ? armor.GetComponent<Item>().GetArmorModifier() : 0);
 
                 Destroy(gameObject);
             }
 
-            if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door")) Destroy(gameObject);
+            if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door"))
+            {
+                _destructionEffect.Play();
+                Destroy(gameObject);
+            }
         }
 
         public void SetDamage(int minDamage, int maxDamage)
@@ -56,6 +67,11 @@ namespace Core.Enemy.StageBosses.Stage1
         public void SetDirection(Vector3 direction)
         {
             _direction = direction;
+        }
+
+        public void SetDestructionEffect(ParticleSystem destructionEffect)
+        {
+            _destructionEffect = destructionEffect;
         }
     }
 }

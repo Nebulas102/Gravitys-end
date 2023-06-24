@@ -1,39 +1,51 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
+using UI;
 using UnityEngine;
+using Utils;
 
 public class GameOverScreen : MonoBehaviour
 {
-    [SerializeField] private GameObject gameOverStatsHolder;
+    [Header("Header")]
+    [SerializeField]
+    private TextMeshProUGUI header;
 
-    private TMP_Text gameOverStatsText;
+    [SerializeField]
+    private string gameOverOnTime;
 
-    void Start()
+    [SerializeField]
+    private string gameOverOnKIA;
+
+    [Header("Game Stats")]
+    [SerializeField]
+    private TextMeshProUGUI objectivesCompleted;
+
+    [SerializeField]
+    private TextMeshProUGUI enemiesKilled;
+
+    [SerializeField]
+    private TextMeshProUGUI timePlayed;
+
+    [SerializeField]
+    private TextMeshProUGUI timeLeft;
+
+    private void Start()
     {
-        gameOverStatsText = gameOverStatsHolder.GetComponent<TextMeshProUGUI>();
+        Navigation.instance.FadeIn();
 
-        UpdateStatsText();
+        header.text = GameStats.Instance.gameEnd == GameEnd.TIME ? gameOverOnTime : gameOverOnKIA;
+
+        objectivesCompleted.text = GameStats.Instance.objectivesCompleted.ToString();
+        enemiesKilled.text = GameStats.Instance.enemiesKilled.ToString();
+        timePlayed.text = FormatTime(GameStats.Instance.timePlayed);
+        timeLeft.text = FormatTime(GameStats.Instance.timeLeft);
     }
 
-    private void UpdateStatsText()
+    private String FormatTime(float time)
     {
-        string statsText = "";
-
-        statsText += "Objectives Completed: " + GameStats.Instance.objectivesCompleted.ToString() + "\n";
-        statsText += "Enemies killed: " + GameStats.Instance.enemiesKilled + "\n";
-        statsText += "Time played: " + FormatTime(GameStats.Instance.timePlayed) + "\n";
-        statsText += "Time left: " + FormatTime(GameStats.Instance.timeLeft);
-
-        gameOverStatsText.text = statsText;
-    }
-
-    private String FormatTime(float time) {
         float minutes = Mathf.FloorToInt(time / 60);
         float seconds = Mathf.FloorToInt(time % 60);
 
         return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-
 }

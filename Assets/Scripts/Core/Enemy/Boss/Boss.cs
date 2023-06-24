@@ -6,6 +6,7 @@ using Core.Enemy.StageBosses;
 using TMPro;
 using UI;
 using UI.Enemy;
+using UI.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,8 +26,10 @@ namespace Core.Enemy
         [SerializeField]
         private List<BossAbilityStage> bossAbilityStages;
 
-        [SerializeField]
         public GameObject damageDisplay;
+
+        [SerializeField]
+        private ParticleSystem hitParticle;
 
         private Canvas _canvas;
 
@@ -131,7 +134,10 @@ namespace Core.Enemy
 
             healthBar.value = _currentHealth;
 
-            StartCoroutine(_bossController.HitFeedback());
+            if (!hitParticle.isPlaying)
+            {
+                hitParticle.Play();
+            }
 
             if (_currentHealth <= 0)
             {
@@ -139,6 +145,7 @@ namespace Core.Enemy
                 Destroy(gameObject);
 
                 SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_DIES);
+                GameOver.Instance.PlayerEndGame();
             }
         }
 

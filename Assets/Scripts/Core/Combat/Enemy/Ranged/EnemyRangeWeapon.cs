@@ -19,6 +19,7 @@ public class EnemyRangeWeapon : MonoBehaviour
     public int minDamage;
     public int maxDamage;
     public float bulletSpeed;
+    public ParticleSystem destructionEffect;
 
     [SerializeField]
     private LayerMask ignoreLayer;
@@ -126,6 +127,7 @@ public class EnemyRangeWeapon : MonoBehaviour
         enemyBulletBehaviour.SetDamage(minDamage, maxDamage);
         enemyBulletBehaviour.SetSpeed(bulletSpeed);
         enemyBulletBehaviour.SetDirection(bulletDirection);
+        enemyBulletBehaviour.SetDestructionEffect(destructionEffect);
 
         SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.ENEMY_SHOOTS);
     }

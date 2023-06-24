@@ -1,32 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GameStats : MonoBehaviour
-{  
-    public static GameStats Instance;
-
-    public int objectivesCompleted { get; set; }
-    public int enemiesKilled { get; set; }
-    public float timePlayed { get; set; }
-    public float timeLeft { get; set; }
-
-    private void Awake()
+namespace UI
+{
+    public class GameStats : MonoBehaviour
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        // Check the PlayerPrefs value for VSync
-        int vsyncValue = PlayerPrefs.GetInt("VSyncEnabled");
+        public static GameStats Instance;
 
-        // Enable or disable VSync based on the PlayerPrefs value
-        QualitySettings.vSyncCount = vsyncValue;
-        Debug.Log(vsyncValue);
+        public int objectivesCompleted;
+        public int enemiesKilled;
+        public float timePlayed;
+        public float timeLeft;
+        public GameEnd gameEnd;
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            // Check the PlayerPrefs value for VSync
+            int vsyncValue = PlayerPrefs.GetInt("VSyncEnabled");
+
+            // Enable or disable VSync based on the PlayerPrefs value
+            QualitySettings.vSyncCount = vsyncValue;
+            Debug.Log(vsyncValue);
+        }
+    }
+
+    public enum GameEnd
+    {
+        TIME,
+        KIA
     }
 }

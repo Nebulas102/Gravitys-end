@@ -22,8 +22,11 @@ namespace Core.Enemy.StageBosses.Stage1
         [Header("Clockshot")]
         [SerializeField]
         private float clockShotInterval;
-
         private int _amountOfBullets;
+
+        [Header("Effect")]
+        [SerializeField]
+        private ParticleSystem destructionEffect;
 
         private GameObject _boss;
         private Quaternion _bulletRot;
@@ -60,6 +63,7 @@ namespace Core.Enemy.StageBosses.Stage1
 
                 newClockBulletBehaviour.SetDamage(minDamage, maxDamage);
                 newClockBulletBehaviour.SetSpeed(bulletSpeed);
+                newClockBulletBehaviour.SetDestructionEffect(destructionEffect);
 
                 newBullet.transform.forward = newBullet.transform.position - transform.position;
             }

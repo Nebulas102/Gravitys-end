@@ -1,4 +1,5 @@
 using UI.Runtime;
+using UI.Shop;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Utils;
@@ -33,7 +34,8 @@ namespace UI
                 OnInventoryToggle?.Invoke(value);
                 overlay.SetActive(inventoryOpened);
                 EventSystem.current.SetSelectedGameObject(value ? entryButton : null);
-                shop.SetActive(value);
+                if (shop != null)
+                    shop.SetActive(value);
             }
         }
 

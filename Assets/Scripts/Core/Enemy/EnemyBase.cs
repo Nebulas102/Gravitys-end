@@ -1,5 +1,6 @@
 using System.Collections;
-using System.Linq;
+using Controllers;
+using UI;
 using UI.Enemy;
 using UnityEngine;
 
@@ -7,9 +8,6 @@ namespace Core.Enemy
 {
     public class EnemyBase : MonoBehaviour
     {
-        public string name;
-        public int startDamage;
-        public int endDamage;
         public float health;
         public Material hitMaterial;
 
@@ -21,6 +19,7 @@ namespace Core.Enemy
         private Canvas _canvas;
 
         private float _currentHealth;
+        private ParticleSystem _hitParticle;
 
         public static int enemyKillCounter;
 
@@ -31,7 +30,7 @@ namespace Core.Enemy
         private void Start()
         {
             _canvas = GetComponentInChildren<Canvas>();
-
+            _hitParticle = GetComponent<EnemyController>().hitParticle;
             _currentHealth = health;
         }
 
@@ -48,11 +47,6 @@ namespace Core.Enemy
             }
         }
 
-        public int GetDamage()
-        {
-            return Random.Range(startDamage, endDamage);
-        }
-
         public void TakeDamage(int takeStartDamage, int takeEndDamage, float modifier)
         {
             var damage = Random.Range(takeStartDamage, takeEndDamage);
@@ -62,9 +56,12 @@ namespace Core.Enemy
             if (damageDisplay != null)
                 damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
 
-            
-
             _currentHealth -= damage;
+
+            if (!_hitParticle.isPlaying)
+            {
+                _hitParticle.Play();
+            }
         }
 
         private IEnumerator HitFeedback()

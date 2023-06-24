@@ -4297,11 +4297,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawnpoints:
   - spawnpoint: {fileID: 7699024184296978265}
-    enemy: {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
+    enemy:
+    - {fileID: 4276069674895537649, guid: 698103dbaf5e25444b027a4a6fd3edc6, type: 3}
+    - {fileID: 4762182825552911128, guid: 27b4478121cc05f46886d54d25bf929d, type: 3}
+    - {fileID: 6714146852020011135, guid: 0f102170559d4d0489e290e30e0e1ffe, type: 3}
+    - {fileID: 5734400625356844651, guid: e2eb4c7cdb06872468d7be50d87f18c5, type: 3}
     minSpawn: 1
-    maxSpawn: 2
+    maxSpawn: 1
   - spawnpoint: {fileID: 3019367449866652634}
-    enemy: {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
+    enemy:
+    - {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
+    - {fileID: 2634792126719282848, guid: bf56adf125b9d4b4b8461bd10cd359f1, type: 3}
+    - {fileID: 5843317787074358162, guid: f46a0a3df9e495147978d19c60cf2532, type: 3}
+    - {fileID: 783898304264283845, guid: 5de2b21c34d10b940a169342e1e2543b, type: 3}
     minSpawn: 1
     maxSpawn: 2
 --- !u!114 &4948894632101060623
@@ -4319,11 +4327,17 @@ MonoBehaviour:
   chestSpawnChance: 0.3
   chestSpawnPoints:
   - {fileID: 4429591738106164682}
+  - {fileID: 2028065703637682738}
   chest: {fileID: 3273778572118770245, guid: 759439ab11a7031409a5aa051d74c7ae, type: 3}
-  possibleLoot:
-  - {fileID: 7039120194793019379, guid: 1f0e5f5492ec75b469944a09176567f2, type: 3}
-  - {fileID: 4487968532897041239, guid: e4f9ed0b699410647ac8c30f9ebe14c9, type: 3}
-  - {fileID: 750474869211693055, guid: dccc01cefb6ad3c45a0f27df4e0823a3, type: 3}
+  LootItems:
+  - spawnChanceWeight: 4
+    item: {fileID: 7039120194793019379, guid: 1f0e5f5492ec75b469944a09176567f2, type: 3}
+  - spawnChanceWeight: 3
+    item: {fileID: 750474869211693055, guid: dccc01cefb6ad3c45a0f27df4e0823a3, type: 3}
+  - spawnChanceWeight: 2
+    item: {fileID: 4487968532897041239, guid: e4f9ed0b699410647ac8c30f9ebe14c9, type: 3}
+  - spawnChanceWeight: 1
+    item: {fileID: 5017546938602902393, guid: 1b2ec05c9843a0243824c0fe7bc5b907, type: 3}
 --- !u!114 &3815944585182235028
 MonoBehaviour:
   m_ObjectHideFlags: 0

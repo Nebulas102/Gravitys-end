@@ -33,6 +33,8 @@ public class MeleeWeaponHitbox : MonoBehaviour
 
         if (other.CompareTag("Enemy") && allowAttack)
         {   
+            allowAttack = false;
+
             EnemyController enemyController = other.GetComponent<EnemyController>();
 
             other.GetComponent<EnemyBase>().TakeDamage(baseDamage, maxBaseDamage, 0);
@@ -45,6 +47,8 @@ public class MeleeWeaponHitbox : MonoBehaviour
 
         if (other.CompareTag("Boss") && allowAttack)
         {
+            allowAttack = false;
+            
             other.GetComponent<Boss>().TakeDamage(baseDamage, maxBaseDamage, 0);
         }
     }

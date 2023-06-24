@@ -47,6 +47,9 @@ namespace Controllers.Player
 
         public LayerMask allowedLayers;
 
+        [Header("Effects")]
+        public ParticleSystem hitParticle;
+
 
         // Start is called before the first frame update
         private void Start()

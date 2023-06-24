@@ -6,38 +6,45 @@ namespace Core.Chest
 {
     public class Chest : MonoBehaviour
     {
-        [SerializeField] private GameObject openedChestGameObject;
+        [SerializeField]
+        private GameObject openedChestGameObject;
 
-        [SerializeField] private float detectionRadius = 2f; // The radius to detect chests
-        [SerializeField] private float itemSpawnDistanceFromChest = 1f;
+        [SerializeField]
+        [Tooltip("The radius to detect chests")]
+        private float detectionRadius = 2f;
 
-        public List<GameObject> lootObjects;
+        [SerializeField]
+        [Tooltip("The distance from the chest to spawn the item")]
+        private float itemSpawnDistanceFromChest = 1f;
 
+        private List<LootItem> _lootObjects;
         private InputManager _inputManager;
-
         private GameObject _player;
+        private bool _chestOpened;
+        private bool _chestOpeningInput;
+        private bool _canOpen;
 
-        private bool chestOpened;
-        private bool chestOpeningInput;
+        public delegate void ChestOpenHandler(bool canOpen);
+        public static event ChestOpenHandler OnChestOpen;
 
         private void Awake()
         {
             _inputManager = new InputManager();
             _player = PlayerManager.Instance.player;
-            lootObjects = new();
+            _lootObjects = new();
         }
 
         // Update is called once per frame
         private void Update()
         {
-            OpenChest();
-            chestOpeningInput = false;
+            if (_canOpen)
+                OpenChest();
         }
 
         private void OnEnable()
         {
             _inputManager.Enable();
-            _inputManager.Player.OpenChest.performed += ctx => chestOpeningInput = true;
+            _inputManager.Player.OpenChest.performed += _ => OnOpenChestInput();
         }
 
         private void OnDisable()
@@ -45,54 +52,76 @@ namespace Core.Chest
             _inputManager.Disable();
         }
 
-        public void SetLootObjects(List<GameObject> _lootObjects)
+        public void SetLootObjects(List<LootItem> lootObjects)
         {
-            lootObjects = _lootObjects;
+            _lootObjects = lootObjects;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+                ToggleCanOpen(true);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Player"))
+                ToggleCanOpen(false);
         }
 
         private void OpenChest()
         {
-            if (!IsPlayerNearby()) return;
-
             // When the chest isn't opened yet, the player can open the chest.
-            if (chestOpeningInput && !chestOpened)
-            {
-                chestOpened = true;
+            if (!_chestOpeningInput)
+                return;
 
-                // Code for changing the chest state to open
-                foreach (Transform child in transform) Destroy(child.gameObject);
+            // Code for changing the chest state to open
+            foreach (Transform child in transform) Destroy(child.gameObject);
 
-                // Instantiate the serialized GameObject as a child of the parent GameObject
-                var newChild = Instantiate(openedChestGameObject, transform);
-                newChild.transform.localPosition = Vector3.zero;
+            // Instantiate the serialized GameObject as a child of the parent GameObject
+            var newChild = Instantiate(openedChestGameObject, transform);
+            newChild.transform.localPosition = Vector3.zero;
 
-                SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.CHEST_OPENING);
+            newChild.GetComponentInChildren<ParticleSystem>().Play();
+            SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.CHEST_OPENING);
 
-                SpawnLoot();
-            }
+            SpawnLoot();
+
+            // Force the chest to be unusable after opening
+            _chestOpeningInput = false;
+            _chestOpened = true;
+            ToggleCanOpen(false);
         }
 
-        public bool IsPlayerNearby()
+        private void SpawnLoot()
         {
-            if (_player is null) return false;
+            List<int> randomizer = new();
+            for (int i = 0; i < _lootObjects.Count; i++)
+                for (int j = 0; j < _lootObjects[i].spawnChanceWeight; j++)
+                    randomizer.Add(i);
 
-            var distance = Vector3.Distance(transform.position, _player.transform.position);
-            return distance <= detectionRadius;
-        }
+            int randomInt = Random.Range(0, randomizer.Count);
+            int randomizerResult = randomizer[randomInt];
 
-        public void SpawnLoot()
-        {
-            int randomInt = Random.Range(0, lootObjects.Count);
             Vector3 spawnPosition = GetRandomSpawnPosition();
 
-            Instantiate(lootObjects[randomInt], spawnPosition, Quaternion.identity);
+            Instantiate(_lootObjects[randomizerResult].item, spawnPosition, Quaternion.identity);
         }
 
         private Vector3 GetRandomSpawnPosition()
         {
-            Vector3 spawnPosition = transform.position + transform.forward * itemSpawnDistanceFromChest;
+            return transform.position + transform.forward * itemSpawnDistanceFromChest;
+        }
 
-            return spawnPosition;
+        private void OnOpenChestInput()
+        {
+            _chestOpeningInput = !_chestOpened && _canOpen;
+        }
+
+        private void ToggleCanOpen(bool canOpen)
+        {
+            OnChestOpen?.Invoke(canOpen);
+            _canOpen = canOpen;
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Core.Chest
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
-                ToggleCanOpen(true);
+                ToggleCanOpen(!_chestOpened);
         }
 
         private void OnTriggerExit(Collider other)

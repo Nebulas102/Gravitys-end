@@ -65,10 +65,11 @@ namespace Controllers
 
             if (distance > lookRadius)
             {
-                behaviorTree.state = true;
+                behaviorTree.state = false;
                 return;
             }
 
+            enemyAnimator.SetTrigger("idle");
             behaviorTree.state = true;
             
             // Check if there is no wall in between the player and the enemy, if there is then return

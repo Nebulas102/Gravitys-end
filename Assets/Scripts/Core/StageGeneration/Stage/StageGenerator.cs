@@ -216,7 +216,6 @@ namespace Core.StageGeneration.Stage
                 }
 
                 latestHallway = CreateHallway(posX, posZ, chosenHallway);
-
                 yield return null;
             }
 
@@ -225,12 +224,13 @@ namespace Core.StageGeneration.Stage
 
         private IEnumerator SpawnKeyRoom()
         {
-            StartCoroutine(_roomGenerator.SpawnKeyRoom(mapHallways));
+            _roomGenerator.SpawnKeyRoom(mapHallways);
             yield return StartCoroutine(GenerateRooms());
         }
 
         private IEnumerator GenerateRooms()
         {
+            
             StartCoroutine(_roomGenerator.BranchRoomGeneration(mapHallways, minWeightRoomsBranch, maxWeightRoomsBranch, startTime));
             while (_roomGenerator.coroutineRunning == true)
                 yield return null;
@@ -241,7 +241,10 @@ namespace Core.StageGeneration.Stage
         private IEnumerator ReplaceDoors()
         {
             foreach (var room in mapRooms)
+            {
                 StageHelper.ReplaceAllDoors(room);
+                yield return null;
+            } 
             yield return StartCoroutine(StageNavMeshBaker());
         }
 
@@ -254,14 +257,21 @@ namespace Core.StageGeneration.Stage
         private IEnumerator StageEnemyGeneration()
         {
             foreach (var room in mapRooms.Where(room => room.GetComponent<EnemyGeneration>() is not null))
+            {
                 room.GetComponent<EnemyGeneration>().SpawnEnemy();
+                yield return null;
+            }  
             yield return StartCoroutine(StageChestGeneration());
         }
 
         private IEnumerator StageChestGeneration()
         {
             foreach (var room in mapRooms.Where(room => room.GetComponent<ChestSpawner>() is not null))
+            {
                 room.GetComponent<ChestSpawner>().SpawnChest();
+                yield return null;
+            }
+
             Navigation.instance.StageGenComplete = true;
             yield return null;
         }
@@ -341,10 +351,10 @@ namespace Core.StageGeneration.Stage
                 {
                     var cell = cells.SingleOrDefault(c => c.x == i && c.z == j && !c.isOccupied);
 
-                    if (cell is null)
+                    /*if (cell is null)
                         Debug.Log("No cell x" + i + " z" + j);
                     else
-                    {
+                    {*/
                         if (roomScript.GetComponent<StandardRoom>())
                             cell.gameObject.GetComponent<MeshRenderer>().material.color = Color.cyan;
                         else if (roomScript.GetComponent<SpawnRoom>())
@@ -354,7 +364,7 @@ namespace Core.StageGeneration.Stage
                         cell.isOccupied = true;
 
                         roomCells.Add(cell);
-                    }
+                    //}
                 }
 
             return roomCells;

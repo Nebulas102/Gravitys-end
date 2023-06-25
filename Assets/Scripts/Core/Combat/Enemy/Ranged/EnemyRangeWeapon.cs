@@ -19,7 +19,20 @@ public class EnemyRangeWeapon : MonoBehaviour
     public int minDamage;
     public int maxDamage;
     public float bulletSpeed;
-    public ParticleSystem destructionEffect;
+
+    [Header("Bullet styling")]
+    [ColorUsageAttribute(true, true)]
+    public Color albedo;
+    [ColorUsageAttribute(true, true)]
+    public Color glow;
+    public float glowPower;
+    public Gradient trailGradient;
+
+    [Header("Effect styling")]
+    public Color standardColor;
+    [ColorUsageAttribute(true, true)]
+    public Color emission;
+    public Color nonEmissive;
 
     [SerializeField]
     private LayerMask ignoreLayer;
@@ -127,7 +140,8 @@ public class EnemyRangeWeapon : MonoBehaviour
         enemyBulletBehaviour.SetDamage(minDamage, maxDamage);
         enemyBulletBehaviour.SetSpeed(bulletSpeed);
         enemyBulletBehaviour.SetDirection(bulletDirection);
-        enemyBulletBehaviour.SetDestructionEffect(destructionEffect);
+        enemyBulletBehaviour.SetBulletStyle(albedo, glow, glowPower, trailGradient);
+        enemyBulletBehaviour.SetBulletDestructionStyle(standardColor, emission, nonEmissive);
 
         SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.ENEMY_SHOOTS);
     }

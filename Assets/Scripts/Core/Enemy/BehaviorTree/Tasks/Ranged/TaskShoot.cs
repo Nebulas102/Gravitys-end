@@ -21,18 +21,20 @@ namespace BehaviorTree.Tasks
 
         public override NodeState Evaluate()
         {
-            if (_enemyRangeAttackController.rangeWeapon.allowShot)
+            string animControllerName = enemyController.enemyAnimator.runtimeAnimatorController.name;
+            EnemyRangeWeapon rangeWeapon = _enemyRangeAttackController.rangeWeapon;
+
+            if (rangeWeapon.allowShot)
             {
-                _enemyRangeAttackController.rangeWeapon.allowRaycast = true;
+                rangeWeapon.allowRaycast = true;
             }
 
-            // Ryan: animations shooting trigger here
-            if (enemyController.enemyAnimator.runtimeAnimatorController.name == "BannermanAnim")
+            if (animControllerName == "BannermanAnim")
             {
                 enemyController.enemyAnimator.SetTrigger("idle");
             }
 
-            if (enemyController.enemyAnimator.runtimeAnimatorController.name == "commonRangedAnim")
+            if (animControllerName == "commonRangedAnim")
             {
                 enemyController.enemyAnimator.SetBool("run_shoot", false);
                 enemyController.enemyAnimator.SetBool("stand_shoot", true);

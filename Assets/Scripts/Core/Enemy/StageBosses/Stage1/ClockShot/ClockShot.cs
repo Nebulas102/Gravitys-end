@@ -24,24 +24,42 @@ namespace Core.Enemy.StageBosses.Stage1
         private float clockShotInterval;
         private int _amountOfBullets;
 
-        [Header("Effect")]
-        [SerializeField]
-        private ParticleSystem destructionEffect;
+        [Header("Bullet styling")]
+        [ColorUsageAttribute(true, true)]
+        public Color albedo;
+        [ColorUsageAttribute(true, true)]
+        public Color glow;
+        public float glowPower;
+        public Gradient trailGradient;
+
+        [Header("Effect styling")]
+        public Color standardColor;
+        [ColorUsageAttribute(true, true)]
+        public Color emission;
+        public Color nonEmissive;
 
         private GameObject _boss;
         private Quaternion _bulletRot;
         private GameObject _player;
+        private Animator _bossAnimator;
 
         private void Start()
         {
             _boss = BossManager.Instance.boss;
             _player = PlayerManager.Instance.player;
+            _bossAnimator = GameObject.Find("PirateNew").GetComponent<Animator>();
 
             _amountOfBullets = 360 / 30;
         }
 
         public override IEnumerator UseBossAbility()
         {
+            while (!activateAbility)
+            {
+                yield return null;
+            }
+            _bossAnimator.SetTrigger("clockshot");
+
             yield return StartCoroutine(Shoot());
         }
 
@@ -63,12 +81,15 @@ namespace Core.Enemy.StageBosses.Stage1
 
                 newClockBulletBehaviour.SetDamage(minDamage, maxDamage);
                 newClockBulletBehaviour.SetSpeed(bulletSpeed);
-                newClockBulletBehaviour.SetDestructionEffect(destructionEffect);
+                newClockBulletBehaviour.SetBulletStyle(albedo, glow, glowPower, trailGradient);
+                newClockBulletBehaviour.SetBulletDestructionStyle(standardColor, emission, nonEmissive);
 
                 newBullet.transform.forward = newBullet.transform.position - transform.position;
             }
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_CLOCK_SHOT);
+
+            activateAbility = false;
 
             yield return new WaitForSeconds(clockShotInterval);
         }

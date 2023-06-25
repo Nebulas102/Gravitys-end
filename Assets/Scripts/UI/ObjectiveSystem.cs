@@ -43,8 +43,8 @@ namespace UI
             EnemyBase.OnEnemyKilled += HandleEnemyKilled;
 
             objectivesHolder = GameObject.Find("ObjectivesHolder");
-            objectives.Add(new Objective(ObjectiveTask.COLLECT_KEY, "Find the bossroom key"));
             objectives.Add(new Objective(ObjectiveTask.KILL_Enemies, "Kill " + enemyKillObjective + " enemies"));
+            objectives.Add(new Objective(ObjectiveTask.COLLECT_KEY, "Find the bossroom key"));
             objectives.Add(new Objective(ObjectiveTask.KILL_BOSS, "Defeat the Boss"));
 
             UpdateObjectiveUI();
@@ -89,7 +89,7 @@ namespace UI
             CompleteObjective(ObjectiveTask.COLLECT_KEY);
         }
 
-        public void HandleEnemyKilled(EnemyBase enemy)
+        public void HandleEnemyKilled()
         {
             enemiesKilledCount++;
             if (enemiesKilledCount == enemyKillObjective)

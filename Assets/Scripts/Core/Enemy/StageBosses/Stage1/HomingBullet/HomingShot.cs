@@ -34,11 +34,14 @@ namespace Core.Enemy.StageBosses.Stage1
         private float sprayInterval;
 
         private GameObject _boss;
+        private Animator _bossAnimator;
         private GameObject _player;
 
         private void Start()
         {
             _boss = BossManager.Instance.boss;
+            _bossAnimator = GameObject.Find("PirateNew").GetComponent<Animator>();
+
             _player = PlayerManager.Instance.player;
         }
 
@@ -51,10 +54,11 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             for (var i = 0; i < sprayAmountBullets; i++)
             {
+                _bossAnimator.SetBool("shoot", true);
                 Shoot();
                 yield return new WaitForSeconds(bulletInterval);
             }
-
+            _bossAnimator.SetBool("shoot", false);
             yield return new WaitForSeconds(sprayInterval);
         }
 
@@ -68,6 +72,8 @@ namespace Core.Enemy.StageBosses.Stage1
             newHomingBulletBehavior.SetRotationSpeed(bulletRotationSpeed);
             newHomingBulletBehavior.SetTimeAlive(timeAlive);
             newHomingBulletBehavior.SetDestructionEffect(destructionEffect);
+
+            activateAbility = false;
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_SHOOTS);
         }

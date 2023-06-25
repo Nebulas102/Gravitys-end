@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Core.Enemy;
 using Core.StageGeneration.Rooms.RoomTypes;
 using UnityEngine;
@@ -20,6 +21,8 @@ namespace Controllers.Enemy
         private Material _originalMaterial;
         private Renderer _renderer;
         private Transform _target;
+        private Animator _bossAnimator;
+        private bool _allowMovement;
 
         private void Start()
         {
@@ -28,6 +31,7 @@ namespace Controllers.Enemy
             _boss = BossManager.Instance.boss.GetComponent<Boss>();
             _bossRoom = transform.root.gameObject.GetComponent<BossRoom>();
             _renderer = BossManager.Instance.boss.GetComponentInChildren<Renderer>();
+            _bossAnimator = BossManager.Instance.boss.GetComponentInChildren<Animator>();
 
             _originalMaterial = _renderer.material;
         }
@@ -39,9 +43,35 @@ namespace Controllers.Enemy
             var target = _target.position;
             var distance = Vector3.Distance(target, transform.position);
 
-            _agent.SetDestination(target);
+            if (distance > _agent.stoppingDistance)
+            {
+                WalkToPlayer(target);
+                _bossAnimator.SetFloat("velocity", _agent.velocity.magnitude);
 
-            if (distance <= _agent.stoppingDistance) FaceTarget();
+            }
+            else
+            {
+                _bossAnimator.SetFloat("velocity", 0);
+
+                FaceTarget();
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 2f);
+
+
+            Collider player = colliders.Where(c => c.CompareTag("Player")).FirstOrDefault();
+
+            if (player != null)
+            {
+                _allowMovement = false;
+            }
+            else
+            {
+                _allowMovement = true;
+            }
         }
 
         private void FaceTarget()
@@ -49,6 +79,14 @@ namespace Controllers.Enemy
             var direction = (_target.position - transform.position).normalized;
             var lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        }
+
+        private void WalkToPlayer(Vector3 target)
+        {
+            if (_allowMovement)
+            {
+                _agent.SetDestination(target);
+            }
         }
     }
 }

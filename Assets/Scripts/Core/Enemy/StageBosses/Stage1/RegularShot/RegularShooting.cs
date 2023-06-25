@@ -25,16 +25,29 @@ namespace Core.Enemy.StageBosses.Stage1
         [SerializeField]
         private float sprayInterval;
 
-        [Header("Effect")]
-        [SerializeField]
-        private ParticleSystem destructionEffect;
+        [Header("Bullet styling")]
+        [ColorUsageAttribute(true, true)]
+        public Color albedo;
+        [ColorUsageAttribute(true, true)]
+        public Color glow;
+        public float glowPower;
+        public Gradient trailGradient;
+
+        [Header("Effect styling")]
+        public Color standardColor;
+        [ColorUsageAttribute(true, true)]
+        public Color emission;
+        public Color nonEmissive;
 
         private GameObject _boss;
+        private Animator _bossAnimator;
         private GameObject _player;
 
         private void Start()
         {
             _boss = BossManager.Instance.boss;
+            _bossAnimator = GameObject.Find("PirateNew").GetComponent<Animator>();
+            
             _player = PlayerManager.Instance.player;
         }
 
@@ -47,11 +60,15 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             for (var i = 0; i < sprayAmountBullets; i++)
             {
+                //start shooting anim
+                _bossAnimator.SetBool("shoot", true);
                 Shoot();
                 yield return new WaitForSeconds(bulletInterval);
             }
-
+            //after every bullet burst is shot, stop shooting anim
+            _bossAnimator.SetBool("shoot", false);
             yield return new WaitForSeconds(sprayInterval);
+
         }
 
         private void Shoot()
@@ -68,10 +85,13 @@ namespace Core.Enemy.StageBosses.Stage1
             newRegularBulletBehaviour.SetDirection(bulletDirection);
             newRegularBulletBehaviour.SetDamage(minDamage, maxDamage);
             newRegularBulletBehaviour.SetSpeed(bulletSpeed);
-            newRegularBulletBehaviour.SetDestructionEffect(destructionEffect);
+            newRegularBulletBehaviour.SetBulletStyle(albedo, glow, glowPower, trailGradient);
+            newRegularBulletBehaviour.SetBulletDestructionStyle(standardColor, emission, nonEmissive);
 
             newBullet.transform.LookAt(_player.transform.position);
             newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.root.rotation.w);
+
+            activateAbility = false;
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_SHOOTS);
         }

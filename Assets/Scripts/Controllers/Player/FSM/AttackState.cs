@@ -11,7 +11,7 @@ namespace Controllers.Player
         private bool attackTriggered;
         private bool moveTriggered;
         private Animator animator;
-        private const float ComboDelay = 0.6f;
+        private const float ComboDelay = 0.55f;
 
         private Character _player = PlayerManager.Instance.player.GetComponent<Character>();
         private Vector2 mousePos;
@@ -60,7 +60,15 @@ namespace Controllers.Player
                 velocity = Vector3.zero;
                 input = Vector2.zero;
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);
-                animator.SetTrigger("shoot");
+
+                if (EquipmentSystem.Instance._equippedWeapon.GetComponent<RangeWeapon>().CanShoot())
+                {
+                    animator.SetTrigger("shoot");
+                    velocity = Vector3.zero;
+                    input = Vector2.zero;
+                    PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);
+                }
+
             }
         }
 

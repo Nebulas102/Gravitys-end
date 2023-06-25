@@ -5440,29 +5440,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawnpoints:
   - spawnpoint: {fileID: 5027206133629602038}
-    enemy:
-    - {fileID: 1829273986078120232, guid: 09d3b13d6e4ba684d977d9187f5528ea, type: 3}
-    - {fileID: 8064413062590298601, guid: 429b57dd1828ffb4f899ce941a982242, type: 3}
-    - {fileID: 4817303409735151379, guid: 60c6e5d65fac4b94abd5870d4a452a40, type: 3}
-    - {fileID: 1829273986078120232, guid: 09d3b13d6e4ba684d977d9187f5528ea, type: 3}
     minSpawn: 1
-    maxSpawn: 1
+    maxSpawn: 4
   - spawnpoint: {fileID: 3340779029909879026}
-    enemy:
-    - {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
-    - {fileID: 2634792126719282848, guid: bf56adf125b9d4b4b8461bd10cd359f1, type: 3}
-    - {fileID: 5843317787074358162, guid: f46a0a3df9e495147978d19c60cf2532, type: 3}
-    - {fileID: 783898304264283845, guid: 5de2b21c34d10b940a169342e1e2543b, type: 3}
-    minSpawn: 1
-    maxSpawn: 1
+    minSpawn: 2
+    maxSpawn: 4
   - spawnpoint: {fileID: 8258764061634096280}
-    enemy:
-    - {fileID: 4276069674895537649, guid: 3b271bfafe36f1142b8cdced793b2845, type: 3}
-    - {fileID: 2634792126719282848, guid: bf56adf125b9d4b4b8461bd10cd359f1, type: 3}
-    - {fileID: 5843317787074358162, guid: f46a0a3df9e495147978d19c60cf2532, type: 3}
-    - {fileID: 783898304264283845, guid: 5de2b21c34d10b940a169342e1e2543b, type: 3}
-    minSpawn: 1
-    maxSpawn: 3
+    minSpawn: 3
+    maxSpawn: 6
+  enemyTypes:
+    enemyTypes:
+    - enemys:
+      - enemy: {fileID: 783898304264283845, guid: 5de2b21c34d10b940a169342e1e2543b, type: 3}
+        spawnWeight: 3
+      - enemy: {fileID: 5734400625356844651, guid: e2eb4c7cdb06872468d7be50d87f18c5, type: 3}
+        spawnWeight: 1
+      typeWeight: 4
+    - enemys:
+      - enemy: {fileID: 2634792126719282848, guid: bf56adf125b9d4b4b8461bd10cd359f1, type: 3}
+        spawnWeight: 3
+      - enemy: {fileID: 4762182825552911128, guid: 27b4478121cc05f46886d54d25bf929d, type: 3}
+        spawnWeight: 1
+      typeWeight: 1
+    - enemys:
+      - enemy: {fileID: 5843317787074358162, guid: f46a0a3df9e495147978d19c60cf2532, type: 3}
+        spawnWeight: 3
+      - enemy: {fileID: 6714146852020011135, guid: 0f102170559d4d0489e290e30e0e1ffe, type: 3}
+        spawnWeight: 1
+      typeWeight: 2
 --- !u!114 &8627684976986758269
 MonoBehaviour:
   m_ObjectHideFlags: 0

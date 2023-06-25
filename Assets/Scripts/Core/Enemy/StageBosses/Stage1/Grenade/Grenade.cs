@@ -44,7 +44,11 @@ namespace Core.Enemy.StageBosses.Stage1
 
         public override IEnumerator UseBossAbility()
         {
-            _boss.GetComponentInChildren<Animator>().SetTrigger("grenade");
+            while (!activateAbility)
+            { 
+                yield return null;
+            }
+            
             ThrowGrenade();
 
             yield return new WaitForSeconds(grenadeInterval);
@@ -63,6 +67,8 @@ namespace Core.Enemy.StageBosses.Stage1
             newGrenadeBehavior.SetThrowDuration(throwDuration);
             newGrenadeBehavior.SetCurveHeight(curveHeight);
             newGrenadeBehavior.SetDestructionEffect(destructionEffect);
+
+            activateAbility = false;
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_SHOOTS);
         }

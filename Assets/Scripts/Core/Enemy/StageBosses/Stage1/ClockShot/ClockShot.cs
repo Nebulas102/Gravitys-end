@@ -52,7 +52,11 @@ namespace Core.Enemy.StageBosses.Stage1
 
         public override IEnumerator UseBossAbility()
         {
-            _boss.GetComponentInChildren<Animator>().SetTrigger("clockshot");
+            while (!activateAbility)
+            { 
+                yield return null;
+            }
+
             yield return StartCoroutine(Shoot());
         }
 
@@ -81,6 +85,8 @@ namespace Core.Enemy.StageBosses.Stage1
             }
 
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_CLOCK_SHOT);
+
+            activateAbility = false;
 
             yield return new WaitForSeconds(clockShotInterval);
         }

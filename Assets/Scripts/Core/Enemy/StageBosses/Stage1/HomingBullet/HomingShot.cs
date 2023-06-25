@@ -70,6 +70,8 @@ namespace Core.Enemy.StageBosses.Stage1
             newHomingBulletBehavior.SetTimeAlive(timeAlive);
             newHomingBulletBehavior.SetDestructionEffect(destructionEffect);
 
+            activateAbility = false;
+
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_SHOOTS);
         }
     }

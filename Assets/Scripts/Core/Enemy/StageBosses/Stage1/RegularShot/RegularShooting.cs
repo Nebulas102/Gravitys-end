@@ -88,6 +88,8 @@ namespace Core.Enemy.StageBosses.Stage1
             newBullet.transform.LookAt(_player.transform.position);
             newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.root.rotation.w);
 
+            activateAbility = false;
+
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_SHOOTS);
         }
     }

@@ -20,6 +20,9 @@ public class DialogueCharacterAnimation : MonoBehaviour
     [SerializeField]
     private bool ActiveOnStart;
 
+    [SerializeField]
+    private GameObject keyIcon;
+
     private bool triggered;
     private bool swapped;
     private bool finished;
@@ -42,6 +45,8 @@ public class DialogueCharacterAnimation : MonoBehaviour
             Destroy(inWorldCharacter);
             inWorldCharacter = obj;
             triggered = true;
+            if (keyIcon != null)
+                keyIcon.SetActive(false);
         }
     }
 

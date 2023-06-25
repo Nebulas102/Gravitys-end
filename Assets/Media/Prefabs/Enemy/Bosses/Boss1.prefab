@@ -175,7 +175,7 @@ MonoBehaviour:
   - healthStageActivation: 3000
     bossAbilitySequences:
     - bossAbility: {fileID: 6588389978399913415}
-      amountOfTimes: 2
+      amountOfTimes: 3
     - bossAbility: {fileID: 3039630364116265136}
       amountOfTimes: 1
     - bossAbility: {fileID: 1232051141004310871}
@@ -472,10 +472,6 @@ PrefabInstance:
       propertyPath: bulletRotationSpeed
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 3313712564282753253, guid: c8e884ed03e4cff4aa4f90acf0cedbdb, type: 3}
-      propertyPath: isAnimationDepended
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7208658105574866238, guid: c8e884ed03e4cff4aa4f90acf0cedbdb, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -556,10 +552,6 @@ PrefabInstance:
     - target: {fileID: -8878376157486545149, guid: 5c65c3ae5e9fa5c4185a72fca28b7665, type: 3}
       propertyPath: grenadeInterval
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -8878376157486545149, guid: 5c65c3ae5e9fa5c4185a72fca28b7665, type: 3}
-      propertyPath: isAnimationDepended
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4329439358894278220, guid: 5c65c3ae5e9fa5c4185a72fca28b7665, type: 3}
       propertyPath: m_Name
@@ -764,10 +756,6 @@ PrefabInstance:
     - target: {fileID: 6129363915305924683, guid: 41419d07eaf395647a08cb2af1fb4c92, type: 3}
       propertyPath: clockShotInterval
       value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6129363915305924683, guid: 41419d07eaf395647a08cb2af1fb4c92, type: 3}
-      propertyPath: isAnimationDepended
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41419d07eaf395647a08cb2af1fb4c92, type: 3}

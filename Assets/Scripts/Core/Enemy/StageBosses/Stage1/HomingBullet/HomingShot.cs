@@ -34,11 +34,14 @@ namespace Core.Enemy.StageBosses.Stage1
         private float sprayInterval;
 
         private GameObject _boss;
+        private Animator _bossAnimator;
         private GameObject _player;
 
         private void Start()
         {
             _boss = BossManager.Instance.boss;
+            _bossAnimator = GameObject.Find("PirateNew").GetComponent<Animator>();
+
             _player = PlayerManager.Instance.player;
         }
 
@@ -51,11 +54,11 @@ namespace Core.Enemy.StageBosses.Stage1
         {
             for (var i = 0; i < sprayAmountBullets; i++)
             {
-                _boss.GetComponentInChildren<Animator>().SetBool("shoot", true);
+                _bossAnimator.SetBool("shoot", true);
                 Shoot();
                 yield return new WaitForSeconds(bulletInterval);
             }
-            _boss.GetComponentInChildren<Animator>().SetBool("shoot", false);
+            _bossAnimator.SetBool("shoot", false);
             yield return new WaitForSeconds(sprayInterval);
         }
 

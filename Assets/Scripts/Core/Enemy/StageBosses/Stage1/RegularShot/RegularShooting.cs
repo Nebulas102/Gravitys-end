@@ -40,11 +40,14 @@ namespace Core.Enemy.StageBosses.Stage1
         public Color nonEmissive;
 
         private GameObject _boss;
+        private Animator _bossAnimator;
         private GameObject _player;
 
         private void Start()
         {
             _boss = BossManager.Instance.boss;
+            _bossAnimator = GameObject.Find("PirateNew").GetComponent<Animator>();
+            
             _player = PlayerManager.Instance.player;
         }
 
@@ -58,12 +61,12 @@ namespace Core.Enemy.StageBosses.Stage1
             for (var i = 0; i < sprayAmountBullets; i++)
             {
                 //start shooting anim
-                _boss.GetComponentInChildren<Animator>().SetBool("shoot", true);
+                _bossAnimator.SetBool("shoot", true);
                 Shoot();
                 yield return new WaitForSeconds(bulletInterval);
             }
             //after every bullet burst is shot, stop shooting anim
-            _boss.GetComponentInChildren<Animator>().SetBool("shoot", false);
+            _bossAnimator.SetBool("shoot", false);
             yield return new WaitForSeconds(sprayInterval);
 
         }

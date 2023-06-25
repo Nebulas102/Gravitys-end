@@ -34,21 +34,25 @@ namespace Core.Enemy.StageBosses.Stage1
         private ParticleSystem destructionEffect;
 
         private GameObject _boss;
+        private Animator _bossAnimator;
         private GameObject _player;
 
         private void Start()
         {
             _boss = BossManager.Instance.boss;
+            _bossAnimator = GameObject.Find("PirateNew").GetComponent<Animator>();
+
             _player = PlayerManager.Instance.player;
         }
 
         public override IEnumerator UseBossAbility()
         {
             while (!activateAbility)
-            { 
+            {
                 yield return null;
             }
-            
+            _bossAnimator.SetTrigger("grenade");
+
             ThrowGrenade();
 
             yield return new WaitForSeconds(grenadeInterval);

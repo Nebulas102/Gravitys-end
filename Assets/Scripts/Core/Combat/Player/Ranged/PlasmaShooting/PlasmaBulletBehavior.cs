@@ -7,6 +7,11 @@ public class PlasmaBulletBehavior : BulletBehavior
 {
     protected override void OnCollisionEnter(Collision other)
     {
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss"))
+        {
+            StartCoroutine(plasmaExplosion());
+        }
+
         if (other.gameObject.CompareTag("Enemy"))
         {
             if (other.gameObject.GetComponent<EnemyBase>())
@@ -37,6 +42,9 @@ public class PlasmaBulletBehavior : BulletBehavior
 
     private IEnumerator plasmaExplosion()
     {
-        yield return null;
+        yield return new WaitForSeconds(0.5f);
+        allowMovement = false;
+
+        
     }
 }

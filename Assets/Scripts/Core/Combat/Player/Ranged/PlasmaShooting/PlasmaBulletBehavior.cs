@@ -1,50 +1,63 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Core.Enemy;
 using UI.Tokens;
 using UnityEngine;
 
 public class PlasmaBulletBehavior : BulletBehavior
 {
+    [SerializeField]
+    private float sphereSize = 1.5f;
+
+    private List<Collider> hitColliders = new();
+
     protected override void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss"))
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss") || other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door"))
         {
-            StartCoroutine(plasmaExplosion());
-        }
-
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            if (other.gameObject.GetComponent<EnemyBase>())
-            {
-                float damageMod = TokenManager.instance.damageSection.GetModifier();
-                other.gameObject.GetComponent<EnemyBase>().TakeDamage((int)Mathf.Round(_minDamage * damageMod), (int)Mathf.Round(_maxDamage * damageMod), 0);
-            }
-
-            Destroy(transform.root.gameObject);
-        }
-
-        if (other.gameObject.CompareTag("Boss"))
-        {
-            if (other.gameObject.GetComponent<Boss>())
-            {
-                float damageMod = TokenManager.instance.damageSection.GetModifier();
-                other.gameObject.GetComponent<Boss>().TakeDamage((int)Mathf.Round(_minDamage * damageMod), (int)Mathf.Round(_maxDamage * damageMod), 0);
-            }
-
-            Destroy(transform.root.gameObject);
-        }
-
-        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door"))
-        {
-            StartCoroutine(DestroyBullet());
+            StartCoroutine(PlasmaExplosion());
         }
     }
 
-    private IEnumerator plasmaExplosion()
+    private IEnumerator PlasmaExplosion()
     {
-        yield return new WaitForSeconds(0.5f);
         allowMovement = false;
 
-        
+        StartCoroutine(PlasmaSphere());
+
+        yield return new WaitForSeconds(destructionEffect.main.duration);
+
+        Destroy(transform.root.gameObject);
+    }
+
+    private IEnumerator PlasmaSphere()
+    {
+        destructionEffect.Play();
+
+        var colliders = Physics.OverlapSphere(transform.position, sphereSize);
+        colliders.ToList();
+
+        foreach (var collider in colliders)
+        {
+            if (!hitColliders.Contains(collider))
+            {
+                hitColliders.Add(collider);
+
+                if (collider.CompareTag("Enemy"))
+                {
+                    float damageMod = TokenManager.instance.damageSection.GetModifier();
+                    collider.gameObject.GetComponent<EnemyBase>().TakeDamage((int)Mathf.Round(_minDamage * damageMod), (int)Mathf.Round(_maxDamage * damageMod), 0);
+                }
+
+                if (collider.CompareTag("Boss"))
+                {
+                    float damageMod = TokenManager.instance.damageSection.GetModifier();
+                    collider.gameObject.GetComponent<Boss>().TakeDamage((int)Mathf.Round(_minDamage * damageMod), (int)Mathf.Round(_maxDamage * damageMod), 0);
+                }
+            }
+        }
+
+        yield return null;
     }
 }

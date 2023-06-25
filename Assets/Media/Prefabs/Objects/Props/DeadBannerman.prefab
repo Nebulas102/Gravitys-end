@@ -354,7 +354,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2101485286837543131}
-  - component: {fileID: 7056095175316984659}
   m_Layer: 0
   m_Name: Bannerman
   m_TagString: Untagged
@@ -370,9 +369,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1612896797126638177}
   m_LocalRotation: {x: -0, y: -0.9426781, z: -0, w: -0.33370355}
-  m_LocalPosition: {x: 0, y: -1.312, z: 0}
-  m_LocalScale: {x: 0.24, y: 0.24, z: 0.24}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: -1.534, z: 0}
+  m_LocalScale: {x: 0.28, y: 0.28, z: 0.28}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5976070189180526616}
   - {fileID: 6419495971217793704}
@@ -384,20 +383,6 @@ Transform:
   m_Father: {fileID: 7641805324922609498}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -218.987, z: 0}
---- !u!136 &7056095175316984659
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1612896797126638177}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 2.5
-  m_Height: 10.85876
-  m_Direction: 1
-  m_Center: {x: 0, y: 5.581206, z: 0}
 --- !u!1 &1782408117100561782
 GameObject:
   m_ObjectHideFlags: 0
@@ -2178,6 +2163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7641805324922609498}
+  - component: {fileID: 8439367891607323692}
   m_Layer: 3
   m_Name: DeadBannerman
   m_TagString: Enemy
@@ -2201,6 +2187,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8439367891607323692
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7993144003987375071}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0.2, y: 1, z: 0.2}
 --- !u!1 &8012317827460239267
 GameObject:
   m_ObjectHideFlags: 0

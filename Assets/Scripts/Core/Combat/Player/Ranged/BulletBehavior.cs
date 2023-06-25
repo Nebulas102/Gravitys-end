@@ -3,22 +3,22 @@ using Core.Enemy;
 using UI.Tokens;
 using UnityEngine;
 
-public class BulletBehaviour : MonoBehaviour
+public class BulletBehavior : MonoBehaviour
 {
     [SerializeField]
-    private TrailRenderer trail;
+    protected TrailRenderer trail;
     [SerializeField]
-    private ParticleSystem destructionEffect;
+    protected ParticleSystem destructionEffect;
 
-    private int _minDamage;
-    private int _maxDamage;
-    private float _speed;
-    private Vector3 _direction;
+    protected int _minDamage;
+    protected int _maxDamage;
+    protected float _speed;
+    protected Vector3 _direction;
 
-    private float destructiomTime;
-    private bool allowMovement = true;
+    protected float destructiomTime;
+    protected bool allowMovement = true;
 
-    private void Update()
+    protected virtual void Update()
     {
         if (allowMovement)
         {
@@ -27,7 +27,7 @@ public class BulletBehaviour : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
@@ -57,7 +57,7 @@ public class BulletBehaviour : MonoBehaviour
         }
     }
 
-    private IEnumerator DestroyBullet()
+    protected IEnumerator DestroyBullet()
     {
         allowMovement = false;
 

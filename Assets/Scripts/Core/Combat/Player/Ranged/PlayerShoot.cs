@@ -9,7 +9,6 @@ using UnityEngine.InputSystem;
 public class PlayerShoot : MonoBehaviour
 {
     public static Action shootInput;
-    public static Action reloadEvent;
 
     [HideInInspector]
     public RangeWeapon weapon;

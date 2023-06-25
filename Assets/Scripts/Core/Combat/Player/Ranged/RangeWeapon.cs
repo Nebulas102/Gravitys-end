@@ -6,6 +6,8 @@ public class RangeWeapon : MonoBehaviour
 {
     [Header("Shooting")]
     public float fireRate;
+    public int countOfProjectilesShot;
+    public float delayBetweenShots;
 
     [Header("Reloading")]
     public int currentAmmo;
@@ -16,13 +18,13 @@ public class RangeWeapon : MonoBehaviour
     [HideInInspector]
     public bool reloading;
 
-    [Header("Bullet")]
-    public GameObject bullet;
+    [Header("Projectile")]
+    public GameObject projectile;
     public int minDamage;
     public int maxDamage;
     public float bulletSpeed;
 
-    [Header("Bullet styling")]
+    [Header("Projectile styling")]
     [ColorUsageAttribute(true, true)]
     public Color albedo;
     [ColorUsageAttribute(true, true)]
@@ -30,20 +32,23 @@ public class RangeWeapon : MonoBehaviour
     public float glowPower;
     public Gradient trailGradient;
 
-    [Header("Effect styling")]
+    [Header("Destruction effect styling")]
     public Color standardColor;
     [ColorUsageAttribute(true, true)]
     public Color emission;
     public Color nonEmissive;
 
     [SerializeField]
-    private Transform bulletOutput;
+    protected Transform bulletOutput;
 
-    private float timeSinceLastShot;
+    protected Vector3 bulletDirection;
+    protected GameObject newBullet;
+    protected BulletBehavior newBulletBehavior;
 
-    private Character player;
+    protected float timeSinceLastShot;
+    protected Character player;
 
-    private void Start()
+    protected virtual void Start()
     {
         player = PlayerManager.Instance.player.GetComponent<Character>();
     }
@@ -68,46 +73,61 @@ public class RangeWeapon : MonoBehaviour
         reloading = false;
     }
 
-    private bool CanShoot() => !reloading && timeSinceLastShot > 1f / (fireRate / 60f) && currentAmmo > 0;
+    protected bool CanShoot() => !reloading && timeSinceLastShot > fireRate && currentAmmo > 0;
 
-    public void Shoot()
+    public virtual void Shoot()
     {
         if (!CanShoot())
             return;
 
-        currentAmmo--;
+        currentAmmo -= countOfProjectilesShot;
         timeSinceLastShot = 0;
-        OnGunShot();
+
+        StartCoroutine(ExecuteBullet());
 
         if (currentAmmo <= 0 && reserveAmmo > 0)
         {
+            currentAmmo = 0;
             StartReload();
         }
     }
 
-    private void Update()
+    protected IEnumerator ExecuteBullet()
+    {
+        for (int i = 0; i < countOfProjectilesShot; i++)
+        {
+            OnGunShot();
+            yield return new WaitForSeconds(delayBetweenShots);
+        }
+    }
+
+    protected virtual void Update()
     {
         timeSinceLastShot += Time.deltaTime;
     }
 
-    private void OnGunShot()
+    protected virtual void OnGunShot()
+    {
+        newBulletBehavior = newBullet.GetComponentInChildren<BulletBehavior>();
+
+        newBulletBehavior.SetDamage(minDamage, maxDamage);
+        newBulletBehavior.SetSpeed(bulletSpeed);
+        newBulletBehavior.SetDirection(bulletDirection);
+        newBulletBehavior.SetBulletStyle(albedo, glow, glowPower, trailGradient);
+        newBulletBehavior.SetBulletDestructionStyle(standardColor, emission, nonEmissive);
+    }
+
+    // In most cases you want the projectile go straight
+    protected void RegularShotBehavior()
     {
         Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
-        Vector3 bulletDirection = (player.lookAtPosition - bulletOutputWorldPos);
+        bulletDirection = (player.lookAtPosition - bulletOutputWorldPos);
 
         bulletDirection.y = 0f;
 
-        GameObject newBullet = Instantiate(bullet, bulletOutputWorldPos, Quaternion.identity);
+        newBullet = Instantiate(projectile, bulletOutputWorldPos, Quaternion.identity);
 
         newBullet.transform.LookAt(player.lookAtPosition);
         newBullet.transform.rotation = new Quaternion(0, newBullet.transform.rotation.y, 0, newBullet.transform.rotation.w);
-
-        BulletBehaviour newBulletBehaviour = newBullet.GetComponentInChildren<BulletBehaviour>();
-
-        newBulletBehaviour.SetDamage(minDamage, maxDamage);
-        newBulletBehaviour.SetSpeed(bulletSpeed);
-        newBulletBehaviour.SetDirection(bulletDirection);
-        newBulletBehaviour.SetBulletStyle(albedo, glow, glowPower, trailGradient);
-        newBulletBehaviour.SetBulletDestructionStyle(standardColor, emission, nonEmissive);
     }
 }

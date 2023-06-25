@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2337945471920218110}
   - component: {fileID: 8156016004182041479}
-  - component: {fileID: 7402146865991575629}
+  - component: {fileID: -662541822681080431}
   - component: {fileID: 2167131251478977754}
   - component: {fileID: 5094088735860116390}
   - component: {fileID: 4950002286982334965}
@@ -111,7 +111,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7402146865991575629
+--- !u!114 &-662541822681080431
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,22 +120,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5017546938602902393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d027b195eb492db4cbcb394decd81c65, type: 3}
+  m_Script: {fileID: 11500000, guid: 916a439298c82b6478ab705763218685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 600
-  currentAmmo: 10
-  reserveAmmo: 44
-  magSize: 11
+  fireRate: 0.8
+  countOfProjectilesShot: 3
+  delayBetweenShots: 0.15
+  currentAmmo: 15
+  reserveAmmo: 60
+  magSize: 15
   reloadTime: 1.5
   reloading: 0
-  bullet: {fileID: 1563543445386549699, guid: 488672f14df59a841b4721b174f0662e, type: 3}
+  projectile: {fileID: 1563543445386549699, guid: 1c2b5530ae7a2284bae4503431c9884d, type: 3}
   minDamage: 100
   maxDamage: 120
   bulletSpeed: 9
-  albedo: {r: 0, g: 0, b: 0, a: 0}
-  glow: {r: 0, g: 0, b: 0, a: 0}
-  glowPower: 0
+  albedo: {r: 0.012459949, g: 0.48438817, b: 0.5283019, a: 0}
+  glow: {r: 0, g: 41.662746, b: 64, a: 0}
+  glowPower: 10
   trailGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -165,9 +167,9 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  destructionEffect: {fileID: 5896232801978186725, guid: 0b4aa1e054b62924184a5fc3713e41bc, type: 3}
-  emission: {r: 0, g: 0.99086285, b: 1, a: 0}
-  nonEmissive: {r: 0, g: 0.4504162, b: 0.5188679, a: 0}
+  standardColor: {r: 0, g: 0.7079072, b: 1, a: 0}
+  emission: {r: 0, g: 44.42353, b: 64, a: 0}
+  nonEmissive: {r: 0, g: 0.49156097, b: 0.7830189, a: 0}
   bulletOutput: {fileID: 5100371559316657012}
 --- !u!114 &2167131251478977754
 MonoBehaviour:

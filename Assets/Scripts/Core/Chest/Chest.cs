@@ -10,10 +10,6 @@ namespace Core.Chest
         private GameObject openedChestGameObject;
 
         [SerializeField]
-        [Tooltip("The radius to detect chests")]
-        private float detectionRadius = 2f;
-
-        [SerializeField]
         [Tooltip("The distance from the chest to spawn the item")]
         private float itemSpawnDistanceFromChest = 1f;
 

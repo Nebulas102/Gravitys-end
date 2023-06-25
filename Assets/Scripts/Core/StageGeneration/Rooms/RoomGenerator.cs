@@ -21,8 +21,6 @@ namespace Core.StageGeneration.Rooms
         private int startDoorsLeftCount;
         private int startDoorsRightCount;
 
-        private bool keyRoomInMap = false;
-
         private bool initialSpawned = false;
 
         private bool placeRoomsCoroutineActive;
@@ -210,8 +208,6 @@ namespace Core.StageGeneration.Rooms
                 keyRoom.SetDoorCells();
 
                 _previousRoom = keyRoom.SetRoomData((int)roomPosition.x, (int)roomPosition.z, roomRotation, placementSide, spawnDoor.gameObject);
-
-                keyRoomInMap = true;
             }
         }
 

@@ -9,7 +9,6 @@ namespace Controllers.Player
     {
         private float timePassed;
         private bool attackTriggered;
-        private bool moveTriggered;
         private Animator animator;
         private const float ComboDelay = 0.55f;
 
@@ -30,7 +29,6 @@ namespace Controllers.Player
         {
             base.Enter();
             attackTriggered = false;
-            moveTriggered = false;
             timePassed = 0f;
 
             //todo need to check if keyboard or gamepad

@@ -16,8 +16,6 @@ public class MeleeWeapon : MonoBehaviour
     public Color fireColor;
     public Color hitColor;
 
-    private bool isEquipped = false;
-
     public int GetMinDamage()
     {
         return minDamage;

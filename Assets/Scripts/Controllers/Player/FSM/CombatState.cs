@@ -62,10 +62,30 @@ namespace Controllers.Player
 
             if (attack)
             {
-                stateMachine.ChangeState(character.attacking);
-            }
+                if (EquipmentSystem.Instance._equippedWeapon.GetComponent<MeleeWeapon>())
+                {
+                    stateMachine.ChangeState(character.attacking);
+                }
 
+
+                if (EquipmentSystem.Instance._equippedWeapon.CompareTag("Ranged"))
+                {
+                    if (EquipmentSystem.Instance._equippedWeapon.GetComponent<RangeWeapon>().CanShoot())
+                    {
+                        stateMachine.ChangeState(character.attacking);
+                    }
+                    // if (!EquipmentSystem.Instance._equippedWeapon.GetComponent<RangeWeapon>().CanShoot() && PlayerAnimator.Instance._animator.velocity.magnitude < 0.1f)
+                    // {
+                    //     PlayerAnimator.Instance._animator.SetTrigger("run_reload");
+                    //     stateMachine.ChangeState(character.combatting);
+                    // }
+
+                    stateMachine.ChangeState(character.combatting);
+                }
+            }
         }
+
+
 
         public override void PhysicsUpdate()
         {

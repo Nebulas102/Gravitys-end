@@ -11,7 +11,7 @@ namespace Controllers.Player
         private bool attackTriggered;
         private bool moveTriggered;
         private Animator animator;
-        private const float ComboDelay = 0.6f;
+        private const float ComboDelay = 0.55f;
 
         private Character _player = PlayerManager.Instance.player.GetComponent<Character>();
         private Vector2 mousePos;
@@ -61,16 +61,14 @@ namespace Controllers.Player
                 input = Vector2.zero;
                 PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);
 
-                RangeWeapon rangeWeapon =  EquipmentSystem.Instance._equippedWeapon.GetComponent<RangeWeapon>();
-
-                if (rangeWeapon.currentAmmo > 0)
+                if (EquipmentSystem.Instance._equippedWeapon.GetComponent<RangeWeapon>().CanShoot())
                 {
                     animator.SetTrigger("shoot");
+                    velocity = Vector3.zero;
+                    input = Vector2.zero;
+                    PlayerAnimator.Instance._animator.SetFloat("Velocity", 0);
                 }
-                else if (rangeWeapon.reserveAmmo > 0)
-                {
-                    animator.SetTrigger("reload");
-                }
+
             }
         }
 

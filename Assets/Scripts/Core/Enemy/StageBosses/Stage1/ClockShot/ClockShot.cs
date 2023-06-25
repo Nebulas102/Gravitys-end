@@ -41,11 +41,13 @@ namespace Core.Enemy.StageBosses.Stage1
         private GameObject _boss;
         private Quaternion _bulletRot;
         private GameObject _player;
+        private Animator _bossAnimator;
 
         private void Start()
         {
             _boss = BossManager.Instance.boss;
             _player = PlayerManager.Instance.player;
+            _bossAnimator = GameObject.Find("PirateNew").GetComponent<Animator>();
 
             _amountOfBullets = 360 / 30;
         }
@@ -53,9 +55,10 @@ namespace Core.Enemy.StageBosses.Stage1
         public override IEnumerator UseBossAbility()
         {
             while (!activateAbility)
-            { 
+            {
                 yield return null;
             }
+            _bossAnimator.SetTrigger("clockshot");
 
             yield return StartCoroutine(Shoot());
         }

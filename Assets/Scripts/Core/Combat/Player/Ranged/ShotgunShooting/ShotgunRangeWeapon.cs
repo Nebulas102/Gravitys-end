@@ -13,11 +13,11 @@ public class ShotgunRangeWeapon : RangeWeapon
 
         OnGunShot();
 
-        if (currentAmmo <= 0 && reserveAmmo > 0)
-        {
-            currentAmmo = 0;
-            StartReload();
-        }
+        // if (currentAmmo <= 0 && reserveAmmo > 0)
+        // {
+        //     currentAmmo = 0;
+        //     StartReload();
+        // }
     }
 
     protected override void OnGunShot()

@@ -123,18 +123,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 216494d22fa83c64993b3d9c675b984f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireRate: 1
+  fireRate: 0.5
   countOfProjectilesShot: 5
   delayBetweenShots: 0
-  currentAmmo: 5
-  reserveAmmo: 25
-  magSize: 5
-  reloadTime: 2
+  currentAmmo: 100
   reloading: 0
   projectile: {fileID: 1563543445386549699, guid: 743880d137bf30f40868852ad28fa0cd, type: 3}
-  minDamage: 15
-  maxDamage: 30
-  bulletSpeed: 9
+  minDamage: 30
+  maxDamage: 60
+  bulletSpeed: 18
   albedo: {r: 1, g: 0.31764707, b: 0.31764707, a: 0}
   glow: {r: 766.9961, g: 0, b: 72.28236, a: 0}
   glowPower: 10
@@ -171,7 +168,7 @@ MonoBehaviour:
   emission: {r: 0.85882354, g: 0, b: 0.08627451, a: 0}
   nonEmissive: {r: 0.44313726, g: 0, b: 0.101960786, a: 0}
   bulletOutput: {fileID: 2960653143182745868}
-  angleBetweenBullets: 5
+  angleBetweenBullets: 8
 --- !u!114 &-8079711847852174373
 MonoBehaviour:
   m_ObjectHideFlags: 0

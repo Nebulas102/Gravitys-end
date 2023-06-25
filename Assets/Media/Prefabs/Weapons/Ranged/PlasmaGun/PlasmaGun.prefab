@@ -95,14 +95,11 @@ MonoBehaviour:
   fireRate: 0.4
   countOfProjectilesShot: 1
   delayBetweenShots: 0
-  currentAmmo: 3
-  reserveAmmo: 18
-  magSize: 3
-  reloadTime: 0.6
+  currentAmmo: 30
   reloading: 0
   projectile: {fileID: 1563543445386549699, guid: 488672f14df59a841b4721b174f0662e, type: 3}
-  minDamage: 20
-  maxDamage: 60
+  minDamage: 200
+  maxDamage: 300
   bulletSpeed: 8
   albedo: {r: 0.08116765, g: 0.9056604, b: 0.83928275, a: 0}
   glow: {r: 0, g: 58.980392, b: 62.99608, a: 0}
@@ -165,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883823951d110ed49bf01ba3798e08a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: b59ae182d2a3b294aafaa7e5b0184057, type: 3}
+  icon: {fileID: 21300000, guid: a0cf8eb51eb622946b5574d4fc6cee3e, type: 3}
   type: 0
   armorModifier: 0
   prefab: {fileID: 4487968532897041239}

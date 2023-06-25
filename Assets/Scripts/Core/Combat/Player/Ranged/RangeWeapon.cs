@@ -11,9 +11,9 @@ public class RangeWeapon : MonoBehaviour
 
     [Header("Reloading")]
     public int currentAmmo;
-    public int reserveAmmo;
-    public int magSize;
-    public float reloadTime;
+    // public int reserveAmmo;
+    // public int magSize;
+    // public float reloadTime;
 
     [HideInInspector]
     public bool reloading;
@@ -53,27 +53,27 @@ public class RangeWeapon : MonoBehaviour
         player = PlayerManager.Instance.player.GetComponent<Character>();
     }
 
-    private void OnDisable() => reloading = false;
+    // private void OnDisable() => reloading = false;
 
-    public void StartReload()
-    {
-        if (!reloading && this.gameObject.activeSelf)
-            StartCoroutine(Reload());
-    }
+    // public void StartReload()
+    // {
+    //     if (!reloading && this.gameObject.activeSelf)
+    //         StartCoroutine(Reload());
+    // }
 
-    private IEnumerator Reload()
-    {
-        reloading = true;
+    // private IEnumerator Reload()
+    // {
+    //     reloading = true;
 
-        yield return new WaitForSeconds(reloadTime);
+    //     yield return new WaitForSeconds(reloadTime);
 
-        currentAmmo = reserveAmmo - magSize > 0 ? magSize : reserveAmmo;
-        reserveAmmo -= currentAmmo;
+    //     currentAmmo = reserveAmmo - magSize > 0 ? magSize : reserveAmmo;
+    //     reserveAmmo -= currentAmmo;
 
-        reloading = false;
-    }
+    //     reloading = false;
+    // }
 
-    protected bool CanShoot() => !reloading && timeSinceLastShot > fireRate && currentAmmo > 0;
+    public bool CanShoot() => timeSinceLastShot > fireRate && currentAmmo > 0;
 
     public virtual void Shoot()
     {
@@ -85,11 +85,11 @@ public class RangeWeapon : MonoBehaviour
 
         StartCoroutine(ExecuteBullet());
 
-        if (currentAmmo <= 0 && reserveAmmo > 0)
-        {
-            currentAmmo = 0;
-            StartReload();
-        }
+        // if (currentAmmo <= 0 && reserveAmmo > 0)
+        // {
+        //     currentAmmo = 0;
+        //     StartReload();
+        // }
     }
 
     protected IEnumerator ExecuteBullet()

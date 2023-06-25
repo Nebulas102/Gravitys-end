@@ -38,7 +38,8 @@ namespace Core
                     for (int i = 0; i < numEnemiesToSpawn; i++)
                     {
                         float randomOffsetX = Random.Range(-1f, 1f);
-                        Vector3 spawnPosition = spawnpoint.spawnpoint.position + new Vector3(randomOffsetX, 0f, 0f);
+                        float randomOffsetZ = Random.Range(-1f, 1f);
+                        Vector3 spawnPosition = spawnpoint.spawnpoint.position + new Vector3(randomOffsetX, 0f, randomOffsetZ);
                         Instantiate(PickRandomEnemy(enemyType.enemys), spawnPosition, spawnpoint.spawnpoint.rotation);
                         yield return null;
                     }

@@ -12,6 +12,8 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
     {
         [SerializeField]
         private Canvas bossFightCanvas;
+        [SerializeField]
+        private GameObject bossProtection;
 
         private GameObject bossRoom;
         private GameObject boss;
@@ -62,7 +64,10 @@ namespace Core.StageGeneration.Rooms.BossRoomUtil
         private void Update()
         {
             if(!fightStarted && triggered && !DialogueManager.instance.dialogueActive)
+            {
                 bossRoom.GetComponent<BossRoom>().SetPlayerEnterBossFight(true);
+                bossProtection.SetActive(false);
+            }
         }
     }
 }

@@ -51,7 +51,7 @@ public class BulletBehavior : MonoBehaviour
             Destroy(transform.root.gameObject);
         }
 
-        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door"))
+        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door") || other.gameObject.CompareTag("BulletInteract"))
         {
             StartCoroutine(DestroyBullet());
         }

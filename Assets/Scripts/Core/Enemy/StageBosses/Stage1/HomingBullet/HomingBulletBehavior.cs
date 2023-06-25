@@ -70,7 +70,7 @@ namespace Core.Enemy.StageBosses.Stage1
                 Destroy(gameObject);
             }
 
-            if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door"))
+            if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door") || other.gameObject.CompareTag("BulletInteract"))
             {
                 _destructionEffect.Play();
                 Destroy(gameObject);

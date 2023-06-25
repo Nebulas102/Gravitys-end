@@ -53,7 +53,7 @@ namespace Core.Enemy.StageBosses.Stage1
                 Destroy(transform.root.gameObject);
             }
 
-            if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door"))
+            if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door") || other.gameObject.CompareTag("BulletInteract"))
             {
                 StartCoroutine(DestroyBullet());
             }

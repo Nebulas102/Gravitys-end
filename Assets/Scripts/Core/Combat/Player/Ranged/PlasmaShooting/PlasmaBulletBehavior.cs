@@ -14,7 +14,7 @@ public class PlasmaBulletBehavior : BulletBehavior
 
     protected override void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss") || other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door"))
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Boss") || other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Door") || other.gameObject.CompareTag("BulletInteract"))
         {
             StartCoroutine(PlasmaExplosion());
         }

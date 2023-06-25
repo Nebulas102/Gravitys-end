@@ -91,14 +91,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minDamage: 100
-  maxDamage: 120
-  slashColor: {r: 1, g: 0.48472303, b: 0, a: 0}
+  maxDamage: 150
+  slashColor: {r: 0.7075472, g: 0.32494757, b: 0, a: 1}
   slashTexture: {fileID: 2800000, guid: 511e5604ee37a4e46995ab00a56cfc63, type: 3}
-  smokeColor: {r: 0.9716981, g: 0.482146, b: 0.05958529, a: 0}
-  sparkColor: {r: 0.9528302, g: 0.572623, b: 0.22921856, a: 0}
-  sparkCoreColor: {r: 0.9716981, g: 0.4886456, b: 0.041251317, a: 0}
-  fireColor: {r: 1, g: 0.6939962, b: 0.3066038, a: 0}
-  hitColor: {r: 1, g: 0.4933104, b: 0, a: 0}
+  smokeColor: {r: 0.9716981, g: 0.482146, b: 0.05958529, a: 0.21960784}
+  sparkColor: {r: 0.9528302, g: 0.572623, b: 0.22921856, a: 1}
+  sparkCoreColor: {r: 0.9716981, g: 0.4886456, b: 0.041251317, a: 1}
+  fireColor: {r: 1, g: 0.6939962, b: 0.3066038, a: 1}
+  hitColor: {r: 1, g: 0.4933104, b: 0, a: 1}
 --- !u!114 &4184660351150783957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
   armorModifier: 0
   prefab: {fileID: 6284918362569833036}
   meshRenderer: {fileID: 1431022065950288148}
-  price: 3
+  price: 2
   IsInInventory: 0
 --- !u!65 &1849240982032039664
 BoxCollider:

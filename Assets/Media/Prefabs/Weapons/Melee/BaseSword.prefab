@@ -175,6 +175,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDamage: 80
   maxDamage: 100
+  slashColor: {r: 0, g: 0, b: 0, a: 1}
+  slashTexture: {fileID: 0}
+  smokeColor: {r: 0, g: 0, b: 0, a: 0.2}
+  sparkColor: {r: 0, g: 0, b: 0, a: 1}
+  sparkCoreColor: {r: 0, g: 0, b: 0, a: 1}
+  fireColor: {r: 0, g: 0, b: 0, a: 1}
+  hitColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!114 &5885481109482782114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,9 +196,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: f26b0b540edc55d439adf63feb66e042, type: 3}
   type: 0
+  armorModifier: 0
   prefab: {fileID: 8615974926673144041}
   meshRenderer: {fileID: 5692040059086326805}
-  price: 3
+  price: 1
   IsInInventory: 0
 --- !u!65 &8203329707373640362
 BoxCollider:

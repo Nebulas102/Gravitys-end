@@ -125,6 +125,8 @@ namespace UI.Inventory
             // Check if the clicked slot is a equipped slot
             if (slot.isEquippedSlot)
             {
+                if (InventoryManager.instance.IsInventoryFull(slot.item.GetComponent<Item>().type))
+                    return;
                 // Call the Pickup method to put the equipped item in the first empty slot and remove as equipped item
                 Pickup(ref slots, ref equippedSlot, slot.item.GetComponent<Item>());
                 equippedSlot.DropItem();

@@ -1577,7 +1577,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.8
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 1.25, z: 0}
@@ -1621,7 +1621,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1000
   hitMaterial: {fileID: 2100000, guid: 03a535ea21aad5f4d96fe054fad5306a, type: 2}
-  timeOnDead: 60
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}
 --- !u!114 &8919038059770493122
 MonoBehaviour:
@@ -1635,6 +1634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82e80dd5b10f087488992e4c52a68cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
 --- !u!114 &2352057697780690719
 MonoBehaviour:
   m_ObjectHideFlags: 0

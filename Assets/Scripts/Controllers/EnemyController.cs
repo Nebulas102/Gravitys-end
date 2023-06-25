@@ -65,11 +65,15 @@ namespace Controllers
 
             if (distance > lookRadius)
             {
-                behaviorTree.state = true;
+                behaviorTree.state = false;
+                rb.constraints =  RigidbodyConstraints.FreezePosition;
+                rb.freezeRotation = true;
                 return;
             }
 
             behaviorTree.state = true;
+            rb.constraints =  RigidbodyConstraints.None;
+            rb.freezeRotation = false;
             
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,

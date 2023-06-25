@@ -1497,7 +1497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6594353997b71414a98c955fc6809e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
+  health: 800
   hitMaterial: {fileID: 2100000, guid: 03a535ea21aad5f4d96fe054fad5306a, type: 2}
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}
 --- !u!114 &4157109929983363822
@@ -1527,7 +1527,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCooldown: 2
   attackRange: 3
-  _enemyMeleeWeapon: {fileID: 0}
+  _enemyMeleeWeapon: {fileID: 4685673727694897767}
 --- !u!1 &4348042017698251763
 GameObject:
   m_ObjectHideFlags: 0
@@ -3163,3 +3163,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2153588855667216892, guid: 6194d7719d8af5b47aa460013a16a04d, type: 3}
   m_PrefabInstance: {fileID: 2794785339380298661}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4685673727694897767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7480418613310648770, guid: 6194d7719d8af5b47aa460013a16a04d, type: 3}
+  m_PrefabInstance: {fileID: 2794785339380298661}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4263228596311794265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fefe3128ea0bb64f8fffd4adb7727ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

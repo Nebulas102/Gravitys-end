@@ -43,7 +43,7 @@ namespace UI
             EnemyBase.OnEnemyKilled += HandleEnemyKilled;
 
             objectivesHolder = GameObject.Find("ObjectivesHolder");
-            objectives.Add(new Objective(ObjectiveTask.KILL_Enemies, "Kill " + enemyKillObjective + " enemies"));
+            objectives.Add(new Objective(ObjectiveTask.KILL_Enemies, "Kill " + enemyKillObjective + " enemies (" + enemiesKilledCount + ")"));
             objectives.Add(new Objective(ObjectiveTask.COLLECT_KEY, "Find the bossroom key"));
             objectives.Add(new Objective(ObjectiveTask.KILL_BOSS, "Defeat the Boss"));
 
@@ -92,9 +92,16 @@ namespace UI
         public void HandleEnemyKilled()
         {
             enemiesKilledCount++;
-            if (enemiesKilledCount == enemyKillObjective)
+            if (enemiesKilledCount >= enemyKillObjective)
             {
                 CompleteObjective(ObjectiveTask.KILL_Enemies);
+            }
+
+            if (enemiesKilledCount <= enemyKillObjective)
+            {
+                Objective objective = objectives.Find(o => o.task == ObjectiveTask.KILL_Enemies);
+                Transform objectiveUI = objectivesHolder.transform.Find(objective.task.ToString());
+                objectiveUI.GetComponent<TextMeshProUGUI>().text = "Kill " + enemyKillObjective + " enemies (" + enemiesKilledCount + ")";
             }
         }
 

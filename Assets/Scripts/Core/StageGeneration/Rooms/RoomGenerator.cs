@@ -184,9 +184,9 @@ namespace Core.StageGeneration.Rooms
             bool isLeft = (Random.Range(0, 2) == 0);
 
             if (isLeft)
-                hallwayDoorId = Random.Range(startDoorsLeftCount, startDoorsLeftCount + 6);
+                hallwayDoorId = Random.Range(startDoorsLeftCount, startDoorsLeftCount + 3);
             else
-                hallwayDoorId = Random.Range(startDoorsRightCount, startDoorsRightCount + 6);
+                hallwayDoorId = Random.Range(startDoorsRightCount, startDoorsRightCount + 3);
 
             var hallwaysDoors = mapHallways.SelectMany(hallway => hallway.GetComponent<Room>().GetDoors()).ToList();
 

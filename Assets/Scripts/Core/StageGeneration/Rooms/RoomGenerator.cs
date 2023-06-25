@@ -152,7 +152,7 @@ namespace Core.StageGeneration.Rooms
                 _previousRoom = currentRoom.SetRoomData((int)pos.x, (int)pos.z, roomRotation, placementSide, currentSpawnDoor);
 
                 initialSpawned = true;
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.1f);
             }
             placeRoomsCoroutineActive = false;
             yield return null;
@@ -160,13 +160,13 @@ namespace Core.StageGeneration.Rooms
 
         private void CountHallwayDoors(List<GameObject> mapHallways)
         {
-            hallwayDoorCount = (mapHallways.Count - 1) * 6;
+            hallwayDoorCount = (mapHallways.Count) * 6;
             startDoorsLeftCount = hallwayDoorCount / 2 - 6;
             startDoorsRightCount = hallwayDoorCount - 6;
         }
 
         // Spawn key room
-        public IEnumerator SpawnKeyRoom(List<GameObject> mapHallways)
+        public void SpawnKeyRoom(List<GameObject> mapHallways)
         {
             CountHallwayDoors(mapHallways);
 
@@ -184,9 +184,9 @@ namespace Core.StageGeneration.Rooms
             bool isLeft = (Random.Range(0, 2) == 0);
 
             if (isLeft)
-                hallwayDoorId = Random.Range(startDoorsLeftCount, startDoorsLeftCount + 3);
+                hallwayDoorId = Random.Range(startDoorsLeftCount, startDoorsLeftCount + 6);
             else
-                hallwayDoorId = Random.Range(startDoorsRightCount, startDoorsRightCount + 3);
+                hallwayDoorId = Random.Range(startDoorsRightCount, startDoorsRightCount + 6);
 
             var hallwaysDoors = mapHallways.SelectMany(hallway => hallway.GetComponent<Room>().GetDoors()).ToList();
 
@@ -213,8 +213,6 @@ namespace Core.StageGeneration.Rooms
 
                 keyRoomInMap = true;
             }
-
-            yield return null;
         }
 
         // Determine placement side of room

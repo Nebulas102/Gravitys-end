@@ -28,7 +28,7 @@ namespace UI.Runtime
 
                 var rangeWeapon = _equippedSystem._equippedWeapon.GetComponent<RangeWeapon>();
                 currentAmmo.text = rangeWeapon.currentAmmo.ToString();
-                reserveAmmo.text = rangeWeapon.reserveAmmo.ToString();
+                // reserveAmmo.text = rangeWeapon.reserveAmmo.ToString();
             }
             else if (container.activeSelf)
                 container.SetActive(false);

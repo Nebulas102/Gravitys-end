@@ -8,7 +8,7 @@ public class ShotgunRangeWeapon : RangeWeapon
         if (!CanShoot())
             return;
 
-        currentAmmo -= countOfProjectilesShot;
+        currentAmmo -= 1;
         timeSinceLastShot = 0;
 
         OnGunShot();
@@ -27,25 +27,18 @@ public class ShotgunRangeWeapon : RangeWeapon
 
         bulletDirection.y = 0f;
 
-        float totalSpreadAngle = countOfProjectilesShot * angleBetweenBullets;
+        float totalSpreadAngle = (countOfProjectilesShot - 1) * angleBetweenBullets;
         float startOffset = -totalSpreadAngle / 2f;
 
         for (int i = 0; i < countOfProjectilesShot; i++)
         {
-            // Calculate the offset for each bullet
-            float angleOffset = startOffset + ((i + 1) * angleBetweenBullets);
+            float angleOffset = startOffset + (i * angleBetweenBullets);
 
-            // Rotate the bullet direction by the offset and spread angle
-            Quaternion spreadRotation = Quaternion.Euler(0f, angleOffset, 0f);
-            Vector3 spreadDirection = spreadRotation * bulletDirection;
+            newBullet = Instantiate(projectile, bulletOutputWorldPos, player.transform.rotation);
+            
+            newBullet.transform.Rotate(0f, angleOffset, 0f);
 
-            newBullet = Instantiate(projectile, bulletOutputWorldPos, Quaternion.identity);
-
-            // Set the bullet's rotation to face the spread direction
-            bulletDirection = spreadDirection;
-
-            // Set the bullet's rotation to face the spread direction
-            newBullet.transform.rotation = Quaternion.LookRotation(spreadDirection, Vector3.forward);
+            bulletDirection = newBullet.transform.forward;
             base.OnGunShot();
         }
     }

@@ -6,17 +6,17 @@ using UnityEngine;
 public class BulletBehavior : MonoBehaviour
 {
     [SerializeField]
-    private TrailRenderer trail;
+    protected TrailRenderer trail;
     [SerializeField]
-    private ParticleSystem destructionEffect;
+    protected ParticleSystem destructionEffect;
 
-    private int _minDamage;
-    private int _maxDamage;
-    private float _speed;
-    private Vector3 _direction;
+    protected int _minDamage;
+    protected int _maxDamage;
+    protected float _speed;
+    protected Vector3 _direction;
 
-    private float destructiomTime;
-    private bool allowMovement = true;
+    protected float destructiomTime;
+    protected bool allowMovement = true;
 
     protected virtual void Update()
     {
@@ -57,7 +57,7 @@ public class BulletBehavior : MonoBehaviour
         }
     }
 
-    private IEnumerator DestroyBullet()
+    protected IEnumerator DestroyBullet()
     {
         allowMovement = false;
 

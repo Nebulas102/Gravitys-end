@@ -91,6 +91,9 @@ namespace UI
 
         public void HandleEnemyKilled()
         {
+            if (IsObjectiveCompleted(ObjectiveTask.KILL_Enemies))
+                return;
+
             enemiesKilledCount++;
             if (enemiesKilledCount >= enemyKillObjective)
             {

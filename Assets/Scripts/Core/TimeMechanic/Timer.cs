@@ -17,8 +17,7 @@ namespace Core
         public float dangerZone = 600;
 
         [SerializeField]
-        [Range(0, 0.1f)]
-        private float timePercentageOnKill = 0.02f;
+        private float timePerKill = 0.02f;
 
         [SerializeField]
         public TextMeshProUGUI display;
@@ -88,7 +87,7 @@ namespace Core
 
         private void AddEnemyTime()
         {
-            time += (time * timePercentageOnKill) * TokenManager.instance.timeSection.GetModifier();
+            time += timePerKill * TokenManager.instance.timeSection.GetModifier();
         }
 
         private void DisplayTime(float ttd)

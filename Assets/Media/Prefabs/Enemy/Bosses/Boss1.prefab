@@ -196,7 +196,6 @@ MonoBehaviour:
       amountOfTimes: 2
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}
   hitParticle: {fileID: 4578820454602233568}
-  allowNextAbility: 0
 --- !u!114 &8828537752519385422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +332,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: PirateNew
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2129540014475787649, guid: 863eb3cdc557ce94d9de5f5b0d4adee0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 863eb3cdc557ce94d9de5f5b0d4adee0, type: 3}
 --- !u!4 &7221478969219821985 stripped
 Transform:

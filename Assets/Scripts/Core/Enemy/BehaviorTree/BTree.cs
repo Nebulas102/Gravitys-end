@@ -9,10 +9,12 @@ namespace BehaviorTree
         // Previous node state
         protected NodeState previousState;
 
+        public bool state = false;
+
         private void Update()
         {
             // If there is a root, evaluate
-            if (_root != null)
+            if (_root != null && state)
                 _root.Evaluate();
         }
         

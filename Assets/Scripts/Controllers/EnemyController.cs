@@ -65,8 +65,11 @@ namespace Controllers
 
             if (distance > lookRadius)
             {
+                behaviorTree.state = true;
                 return;
             }
+
+            behaviorTree.state = true;
             
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,

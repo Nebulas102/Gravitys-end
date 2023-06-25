@@ -48,6 +48,7 @@ namespace Core.Enemy.StageBosses.Stage1
         public override IEnumerator UseBossAbility()
         {
             _bossAnimator.SetTrigger("grenade");
+            yield return new WaitForSeconds(0.5f);
 
             ThrowGrenade();
 

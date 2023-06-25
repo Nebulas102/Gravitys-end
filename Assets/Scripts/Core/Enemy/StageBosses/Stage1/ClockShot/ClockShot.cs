@@ -55,6 +55,7 @@ namespace Core.Enemy.StageBosses.Stage1
         public override IEnumerator UseBossAbility()
         {
             _bossAnimator.SetTrigger("clockshot");
+            yield return new WaitForSeconds(1f);
 
             yield return StartCoroutine(Shoot());
         }

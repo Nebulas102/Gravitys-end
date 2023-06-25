@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Core.Audio;
 using UI;
@@ -29,6 +30,22 @@ namespace Controllers.Player
 
         [SerializeField]
         private bool isDashing;
+
+        [Header("Trail")]
+        public float activeTime = 1f;
+        private bool isTrailActive;
+
+        [Header("Mesh related")]
+        public float meshRefreshRate = 0.1f;
+        public float meshDestroyDelay = 0.2f;
+        private SkinnedMeshRenderer[] skinnedMeshRenderers;
+        public Transform positionToSpawn;
+
+        [Header("Shader related")]
+        public Material material;
+        public string shaderVarRef;
+        public float shaderVarRate = 0.1f;
+        public float shaderVarResfreshRate = 0.05f;
 
         private CharacterController _controller;
         private bool _dashInput;
@@ -96,6 +113,11 @@ namespace Controllers.Player
                 case true when _dashInput:
                     //when activation input is pressed, start dash cooldown
                     StartCoroutine(DashCoroutine());
+                    if (!isTrailActive)
+                    {
+                        isTrailActive = true;
+                        StartCoroutine(ActivateTrail(activeTime));
+                    }
                     break;
             }
         }
@@ -146,6 +168,55 @@ namespace Controllers.Player
         public void SetDashAvailable(bool available)
         {
             dashAvailable = available;
+        }
+
+
+
+        private IEnumerator ActivateTrail(float timeActive)
+        {
+            while (timeActive > 0)
+            {
+                timeActive -= meshRefreshRate;
+
+                if (skinnedMeshRenderers == null)
+                {
+                    skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+                }
+
+                for (int i = 0; i < skinnedMeshRenderers.Length; i++)
+                {
+                    GameObject gObj = new GameObject();
+                    gObj.transform.position = positionToSpawn.position;
+                    gObj.transform.rotation = positionToSpawn.rotation;
+
+
+                    MeshRenderer mr = gObj.AddComponent<MeshRenderer>();
+                    MeshFilter mf = gObj.AddComponent<MeshFilter>();
+
+                    Mesh mesh = new Mesh();
+                    skinnedMeshRenderers[i].BakeMesh(mesh);
+
+                    mf.mesh = mesh;
+                    mr.material = material;
+
+                    StartCoroutine(AnimateMaterialFloat(mr.material, 0, shaderVarRate, shaderVarResfreshRate));
+                    Destroy(gObj, meshDestroyDelay);
+                }
+
+                yield return new WaitForSeconds(meshRefreshRate);
+            }
+            isTrailActive = false;
+        }
+
+        private IEnumerator AnimateMaterialFloat(Material mat, float goal, float rate, float refreshrate)
+        {
+            float valueToAnimate = mat.GetFloat(shaderVarRef);
+            while (valueToAnimate > goal)
+            {
+                valueToAnimate -= rate;
+                mat.SetFloat(shaderVarRef, valueToAnimate);
+                yield return new WaitForSeconds(refreshrate);
+            }
         }
     }
 }

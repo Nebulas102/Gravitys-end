@@ -579,7 +579,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 750
   hitMaterial: {fileID: 2100000, guid: 03a535ea21aad5f4d96fe054fad5306a, type: 2}
-  timeOnDead: 60
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}
 --- !u!114 &8074097166669857031
 MonoBehaviour:
@@ -593,6 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8cef4830e90054e87f44dde14541d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
 --- !u!114 &8677293137043198816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,8 +605,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0602f9bc8b461144ebc9c1d962a4e5aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healEnemyAmount: 10
-  healPlayerAmount: 50
+  healEnemyAmountMinimum: 65
+  healEnemyAmountMaximum: 85
+  healPlayerAmountMinimum: 40
+  healPlayerAmountMaximum: 60
   healCooldown: 4
   healingAllowed: 0
 --- !u!1 &1919193722229235315
@@ -2739,7 +2741,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8050093825219124741}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2752,7 +2754,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 5ba3cfbbcdc160845ab7efbf956dc453, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

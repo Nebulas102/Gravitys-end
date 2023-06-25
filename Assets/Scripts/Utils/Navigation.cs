@@ -93,6 +93,7 @@ namespace Utils
 
         public void Quit()
         {
+            Time.timeScale = 1f;
             if(!coroutineActive)
                 StartCoroutine(QuitGame());
         }

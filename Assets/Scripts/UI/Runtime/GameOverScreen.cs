@@ -56,7 +56,7 @@ public class GameOverScreen : MonoBehaviour
     {
         GameStats.Instance.objectivesCompleted = 0;
         GameStats.Instance.enemiesKilled = 0;
-        GameStats.Instance.timePlayed = 0;
-        GameStats.Instance.timeLeft = 0;
+        GameStats.Instance.timePlayed = 0f;
+        GameStats.Instance.timeLeft = 0f;
     }
 }

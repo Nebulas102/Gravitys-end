@@ -39,6 +39,7 @@ namespace UI
         private void OnDestroy()
         {
             Item.OnItemPickup -= OnShowPickupPrompt;
+            Chest.OnChestOpen -= OnChestOpen;
         }
 
         private void PauseGame(bool condition)

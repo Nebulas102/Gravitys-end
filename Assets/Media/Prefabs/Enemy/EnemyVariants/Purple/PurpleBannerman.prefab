@@ -261,7 +261,6 @@ GameObject:
   - component: {fileID: 9055804481101468359}
   - component: {fileID: 2130640590504997918}
   - component: {fileID: 7206933126865250104}
-  - component: {fileID: 5398482061053601529}
   m_Layer: 0
   m_Name: Bannerman
   m_TagString: Untagged
@@ -302,7 +301,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: ee8893cef58367741addc32402519616, type: 3}
   m_Controller: {fileID: 9100000, guid: f03fef1d811132142a8b6db32dd5430b, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -419,20 +418,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!136 &5398482061053601529
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1660157081574915247}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 2.5
-  m_Height: 10.85876
-  m_Direction: 1
-  m_Center: {x: 0, y: 5.581206, z: 0}
 --- !u!1 &1730730172468892838
 GameObject:
   m_ObjectHideFlags: 0
@@ -2422,7 +2407,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8064413062590298601}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.1, y: 3.1, z: 1.1}

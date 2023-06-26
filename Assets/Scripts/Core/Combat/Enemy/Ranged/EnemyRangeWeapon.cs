@@ -102,7 +102,10 @@ public class EnemyRangeWeapon : MonoBehaviour
 
     private void Update()
     {
-        timeSinceLastShot += Time.deltaTime;
+        if (allowRaycast)
+        {
+            timeSinceLastShot += Time.deltaTime;
+        }
     }
 
     private void FixedUpdate()

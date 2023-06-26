@@ -58,22 +58,17 @@ namespace Controllers
 
         private void Update()
         {
-            var targetPosition = target.position;
-            var transformPosition = transform.position;
-            var distance = Vector3.Distance(targetPosition, transformPosition);
-            var enemyDirection = targetPosition - transformPosition;
+            var distance = (target.position - transform.position).sqrMagnitude;
 
-            if (distance > lookRadius)
+            if (distance > lookRadius * lookRadius)
             {
                 behaviorTree.state = false;
-                rb.constraints =  RigidbodyConstraints.FreezePosition;
-                rb.freezeRotation = true;
                 return;
             }
 
+            var enemyDirection = target.position - transform.position;
+
             behaviorTree.state = true;
-            rb.constraints =  RigidbodyConstraints.None;
-            rb.freezeRotation = false;
             
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,

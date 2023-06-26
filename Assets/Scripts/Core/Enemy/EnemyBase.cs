@@ -31,16 +31,6 @@ namespace Core.Enemy
             _currentHealth = health;
         }
 
-        private void Update()
-        {
-            if (_currentHealth <= 0)
-            {
-                Destroy(gameObject);
-                GameStats.Instance.enemiesKilled++;
-                OnEnemyKilled?.Invoke();
-            }
-        }
-
         public void TakeDamage(int takeStartDamage, int takeEndDamage, float modifier)
         {
             var damage = Random.Range(takeStartDamage, takeEndDamage);
@@ -55,6 +45,13 @@ namespace Core.Enemy
             if (!_hitParticle.isPlaying)
             {
                 _hitParticle.Play();
+            }
+
+            if (_currentHealth <= 0)
+            {
+                Destroy(gameObject);
+                GameStats.Instance.enemiesKilled++;
+                OnEnemyKilled?.Invoke();
             }
         }
 

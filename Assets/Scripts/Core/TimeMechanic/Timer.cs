@@ -5,6 +5,7 @@ using UI.Runtime;
 using UI.Tokens;
 using Core.Audio;
 using Utils;
+using UI;
 
 namespace Core
 {
@@ -67,6 +68,8 @@ namespace Core
                 {
                     time -= Time.deltaTime;
                     timePlayed += Time.deltaTime;
+                    GameStats.Instance.timePlayed = timePlayed;
+                    GameStats.Instance.timeLeft = time;
                 }
                 else
                 {

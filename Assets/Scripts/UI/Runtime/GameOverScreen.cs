@@ -33,12 +33,15 @@ public class GameOverScreen : MonoBehaviour
     {
         Navigation.instance.FadeIn();
 
-        header.text = GameStats.Instance.gameEnd == GameEnd.TIME ? gameOverOnTime : gameOverOnKIA;
+        if (header != null) 
+            header.text = GameStats.Instance.gameEnd == GameEnd.TIME ? gameOverOnTime : gameOverOnKIA;
 
         objectivesCompleted.text = GameStats.Instance.objectivesCompleted.ToString();
         enemiesKilled.text = GameStats.Instance.enemiesKilled.ToString();
         timePlayed.text = FormatTime(GameStats.Instance.timePlayed);
         timeLeft.text = FormatTime(GameStats.Instance.timeLeft);
+
+        ResetStats();
     }
 
     private String FormatTime(float time)
@@ -47,5 +50,13 @@ public class GameOverScreen : MonoBehaviour
         float seconds = Mathf.FloorToInt(time % 60);
 
         return string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    private void ResetStats()
+    {
+        GameStats.Instance.objectivesCompleted = 0;
+        GameStats.Instance.enemiesKilled = 0;
+        GameStats.Instance.timePlayed = 0;
+        GameStats.Instance.timeLeft = 0;
     }
 }

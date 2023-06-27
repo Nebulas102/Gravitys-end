@@ -23,9 +23,7 @@ public class ShotgunRangeWeapon : RangeWeapon
     protected override void OnGunShot()
     {
         Vector3 bulletOutputWorldPos = bulletOutput.transform.position;
-        bulletDirection = (player.lookAtPosition - bulletOutputWorldPos);
-
-        bulletDirection.y = 0f;
+        player.transform.LookAt(player.lookAtPosition);
 
         float totalSpreadAngle = (countOfProjectilesShot - 1) * angleBetweenBullets;
         float startOffset = -totalSpreadAngle / 2f;

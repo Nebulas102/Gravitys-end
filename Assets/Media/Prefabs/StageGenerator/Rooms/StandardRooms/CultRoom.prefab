@@ -17530,13 +17530,13 @@ MonoBehaviour:
   enemySpawnpoints:
   - spawnpoint: {fileID: 326076983440749213}
     minSpawn: 2
-    maxSpawn: 4
+    maxSpawn: 3
   - spawnpoint: {fileID: 8707863827298658271}
     minSpawn: 1
-    maxSpawn: 3
+    maxSpawn: 2
   - spawnpoint: {fileID: 3769051737782680163}
-    minSpawn: 3
-    maxSpawn: 5
+    minSpawn: 2
+    maxSpawn: 3
   enemyTypes:
     enemyTypes:
     - enemys:
@@ -17549,6 +17549,8 @@ MonoBehaviour:
       typeWeight: 5
     - enemys:
       - enemy: {fileID: 2116661060557773896, guid: a62f9a562b02ec148bbca726939ca325, type: 3}
+        spawnWeight: 4
+      - enemy: {fileID: 4762182825552911128, guid: 27b4478121cc05f46886d54d25bf929d, type: 3}
         spawnWeight: 1
       typeWeight: 1
 --- !u!114 &4012576703115637300

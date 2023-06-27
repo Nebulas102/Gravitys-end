@@ -17310,6 +17310,7 @@ Transform:
   - {fileID: 8250974880636499420}
   - {fileID: 5645782028866195531}
   - {fileID: 4721727246829859690}
+  - {fileID: 3720498237613897376}
   m_Father: {fileID: 2267017980131431850}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18513,7 +18514,6 @@ Transform:
   - {fileID: 3490436960732270121}
   - {fileID: 2267017980131431850}
   - {fileID: 8557792386368949082}
-  - {fileID: 3720498237613897376}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18554,33 +18554,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawnpoints:
   - spawnpoint: {fileID: 1761435399734763577}
-    minSpawn: 2
-    maxSpawn: 4
+    minSpawn: 1
+    maxSpawn: 2
   - spawnpoint: {fileID: 7119310417285273490}
     minSpawn: 2
-    maxSpawn: 4
+    maxSpawn: 3
   - spawnpoint: {fileID: 5127232965654057349}
     minSpawn: 2
-    maxSpawn: 4
+    maxSpawn: 3
   enemyTypes:
     enemyTypes:
     - enemys:
-      - enemy: {fileID: 783898304264283845, guid: 5de2b21c34d10b940a169342e1e2543b, type: 3}
-        spawnWeight: 3
-      - enemy: {fileID: 5734400625356844651, guid: e2eb4c7cdb06872468d7be50d87f18c5, type: 3}
-        spawnWeight: 1
-      - enemy: {fileID: 4817303409735151379, guid: 60c6e5d65fac4b94abd5870d4a452a40, type: 3}
-        spawnWeight: 1
       - enemy: {fileID: 5466090959327304995, guid: 393796a4388a7ed429f7865f26762b5e, type: 3}
         spawnWeight: 3
+      - enemy: {fileID: 783898304264283845, guid: 5de2b21c34d10b940a169342e1e2543b, type: 3}
+        spawnWeight: 2
+      - enemy: {fileID: 5734400625356844651, guid: e2eb4c7cdb06872468d7be50d87f18c5, type: 3}
+        spawnWeight: 1
       typeWeight: 5
     - enemys:
-      - enemy: {fileID: 2634792126719282848, guid: bf56adf125b9d4b4b8461bd10cd359f1, type: 3}
-        spawnWeight: 3
-      - enemy: {fileID: 4762182825552911128, guid: 27b4478121cc05f46886d54d25bf929d, type: 3}
-        spawnWeight: 1
       - enemy: {fileID: 2116661060557773896, guid: a62f9a562b02ec148bbca726939ca325, type: 3}
         spawnWeight: 3
+      - enemy: {fileID: 2634792126719282848, guid: bf56adf125b9d4b4b8461bd10cd359f1, type: 3}
+        spawnWeight: 2
+      - enemy: {fileID: 4762182825552911128, guid: 27b4478121cc05f46886d54d25bf929d, type: 3}
+        spawnWeight: 1
       typeWeight: 3
     - enemys:
       - enemy: {fileID: 3996576251175853972, guid: 30c75349ed08cbb488be7ec502546b88, type: 3}
@@ -20756,11 +20754,11 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 8848010660274292443}
+    m_TransformParent: {fileID: 6299519392856492051}
     m_Modifications:
     - target: {fileID: 3316585515916162445, guid: aea2f63865097f147a01378c2cadfbb8, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3316585515916162445, guid: aea2f63865097f147a01378c2cadfbb8, type: 3}
       propertyPath: m_LocalPosition.x

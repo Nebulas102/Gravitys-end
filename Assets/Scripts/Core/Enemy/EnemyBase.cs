@@ -38,7 +38,7 @@ namespace Core.Enemy
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
             if (damageDisplay != null)
-                damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
+                damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas, new Color(1f, 0.2f, 0.2f, 1));
 
             _currentHealth -= damage;
 
@@ -53,6 +53,17 @@ namespace Core.Enemy
                 GameStats.Instance.enemiesKilled++;
                 OnEnemyKilled?.Invoke();
             }
+        }
+
+        public void EnemyHeal(float healthIncrease)
+        {
+            int roundedHealthIncrease = Mathf.RoundToInt(healthIncrease);
+            if (_currentHealth < health)
+            {
+                _currentHealth += roundedHealthIncrease;
+                if (damageDisplay != null)
+                    damageDisplay.GetComponent<DamageDisplay>().Show(roundedHealthIncrease.ToString(), damageDisplay, _canvas, Color.green);
+            }   
         }
 
         private IEnumerator HitFeedback()

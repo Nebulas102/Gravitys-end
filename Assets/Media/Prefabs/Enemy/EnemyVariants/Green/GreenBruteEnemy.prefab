@@ -1593,8 +1593,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d48551806ff6d740b63e19f2e14659b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRadius: 10
-  retreatDistance: 2
+  lookRadius: 15
+  retreatDistance: 1
   rotationSpeed: 5
   knockbackForce: 8
   knockbackDuration: 0.5
@@ -1607,6 +1607,7 @@ MonoBehaviour:
   target: {fileID: 0}
   isKnockbackInProgress: 0
   knockbackDirection: {x: 0, y: 0, z: 0}
+  playerNearby: 0
 --- !u!114 &6269652843007844676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1622,6 +1623,8 @@ MonoBehaviour:
   health: 800
   hitMaterial: {fileID: 2100000, guid: 03a535ea21aad5f4d96fe054fad5306a, type: 2}
   damageDisplay: {fileID: 7474804463308281864, guid: b3fd26dd25103a348b23785120289f1d, type: 3}
+  damageColor: {r: 1, g: 0.2, b: 0.2, a: 0}
+  healColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &8919038059770493122
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -46,7 +46,9 @@ public class EnemyAntiPushing : MonoBehaviour
             var direction = transform.position - other.transform.position;
             direction.y = 0f; // don't move up/down
                               // Move enemies away from eachother so they don't collide
-            navMeshAgent.Move(direction.normalized * Time.deltaTime);
+
+            if(navMeshAgent.isOnNavMesh)
+                navMeshAgent.Move(direction.normalized * Time.deltaTime);
         }
     }
 }

@@ -127,7 +127,7 @@ namespace Core.Enemy
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
             if (damageDisplay != null)
-                damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas);
+                damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas, Color.red);
 
             _currentHealth -= damage;
             SoundEffectsManager.instance.PlaySoundEffect(SoundEffect.BOSS_YELLS);

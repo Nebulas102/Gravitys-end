@@ -82,7 +82,7 @@ public class BannermanController : MonoBehaviour
         while (true)
         {
             float healEnemyAmount = Random.Range(healEnemyAmountMinimum, healEnemyAmountMaximum);
-            enemyBase.health += healEnemyAmount;
+            enemyBase.EnemyHeal(healEnemyAmount);
             yield return new WaitForSeconds(healCooldown);
         }
     }

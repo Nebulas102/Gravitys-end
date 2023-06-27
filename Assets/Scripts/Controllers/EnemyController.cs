@@ -36,6 +36,7 @@ namespace Controllers
 
         private Rigidbody rb;
 
+        [HideInInspector]
         public bool playerNearby;
 
         private void Start()

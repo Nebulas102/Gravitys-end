@@ -1597,8 +1597,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d48551806ff6d740b63e19f2e14659b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRadius: 10
-  retreatDistance: 2
+  lookRadius: 15
+  retreatDistance: 1
   rotationSpeed: 5
   knockbackForce: 8
   knockbackDuration: 0.5
@@ -1611,6 +1611,7 @@ MonoBehaviour:
   target: {fileID: 0}
   isKnockbackInProgress: 0
   knockbackDirection: {x: 0, y: 0, z: 0}
+  playerNearby: 0
 --- !u!114 &1431038608027374789
 MonoBehaviour:
   m_ObjectHideFlags: 0

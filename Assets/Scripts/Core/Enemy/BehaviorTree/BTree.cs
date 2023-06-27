@@ -9,6 +9,7 @@ namespace BehaviorTree
         // Previous node state
         protected NodeState previousState;
 
+        [HideInInspector]
         public bool state = false;
 
         private void Update()

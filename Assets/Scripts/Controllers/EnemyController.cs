@@ -32,10 +32,11 @@ namespace Controllers
         [HideInInspector]
         public Vector3 knockbackDirection;
 
-        private GameObject[] enemies;
         private BTree behaviorTree;
 
         private Rigidbody rb;
+
+        public bool playerNearby;
 
         private void Start()
         {
@@ -48,7 +49,6 @@ namespace Controllers
             // See PlayerManager.cs for explanation
             target = PlayerManager.Instance.player.transform;
             agent = GetComponent<NavMeshAgent>();
-            enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
             var o = gameObject;
             Physics.IgnoreLayerCollision(o.layer, o.layer);
@@ -63,12 +63,14 @@ namespace Controllers
             if (distance > lookRadius * lookRadius)
             {
                 behaviorTree.state = false;
+                playerNearby = false;
                 return;
             }
 
             var enemyDirection = target.position - transform.position;
 
             behaviorTree.state = true;
+            playerNearby = true;
             
             // Check if there is no wall in between the player and the enemy, if there is then return
             if (Physics.Raycast(transform.position, enemyDirection.normalized, out var hit, distance,
@@ -80,20 +82,6 @@ namespace Controllers
 
             // Face the player
             FaceTarget();
-
-            foreach (var enemy in enemies)
-                if (enemy != gameObject && enemy != null) // don't compare to itself
-                {
-                    // Checks distance between enemies
-                    var enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);
-
-                    if (!(enemyDistance < retreatDistance)) continue;
-
-                    var direction = transform.position - enemy.transform.position;
-                    direction.y = 0f; // don't move up/down
-                    // Move enemies away from eachother so they don't collide
-                    GetComponent<NavMeshAgent>().Move(direction.normalized * Time.deltaTime);
-                }
         }
 
         // When the player is too close to the enemy, it wont rotate anymore

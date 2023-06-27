@@ -12,6 +12,7 @@ namespace Core.Chest
         [SerializeField]
         [Tooltip("The distance from the chest to spawn the item")]
         private float itemSpawnDistanceFromChest = 1f;
+        private float itemSpawnheightOffset = 1f;
 
         private List<LootItem> _lootObjects;
         private InputManager _inputManager;
@@ -99,7 +100,7 @@ namespace Core.Chest
             int randomInt = Random.Range(0, randomizer.Count);
             int randomizerResult = randomizer[randomInt];
 
-            Vector3 spawnPosition = transform.position + transform.forward * itemSpawnDistanceFromChest;
+            Vector3 spawnPosition = transform.position + (transform.forward * itemSpawnDistanceFromChest) + transform.up * itemSpawnheightOffset;
 
             Instantiate(_lootObjects[randomizerResult].item, spawnPosition, Quaternion.identity);
         }

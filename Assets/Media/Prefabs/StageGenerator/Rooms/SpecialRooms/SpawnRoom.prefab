@@ -6223,7 +6223,7 @@ GameObject:
   - component: {fileID: 1433426605612591084}
   m_Layer: 0
   m_Name: ControlDialogue
-  m_TagString: Untagged
+  m_TagString: DialogueTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6323,7 +6323,9 @@ MonoBehaviour:
   dialogue:
     name: Mysterious Voice
     sentences:
-    - Remember, you can pick up items with F. Look at the controls in the pause menu
+    - Keep in mind that you can assign tokens to your stats in your inventory.
+    - You can redistribute them whenever you want.
+    - Also, you can pick up items with F. Look at the controls in the pause menu
       if you ever need a refresher.
   hasTriggered: 0
 --- !u!1 &2829558449871829901
@@ -10494,7 +10496,7 @@ GameObject:
   - component: {fileID: 8039280196194902318}
   m_Layer: 0
   m_Name: ShopDialogue
-  m_TagString: Untagged
+  m_TagString: DialogueTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

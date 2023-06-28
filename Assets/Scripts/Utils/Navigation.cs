@@ -94,6 +94,17 @@ namespace Utils
             StartCoroutine(FadeOutCoroutine(5));
         }
 
+        public void SkipIntro()
+        {
+            foreach (GameObject trigger in GameObject.FindGameObjectsWithTag("DialogueTrigger"))
+                trigger.GetComponent<DialogueTrigger>().hasTriggered = true;
+
+            if (gameObject.GetComponent<DialogueTrigger>() != null)
+                gameObject.GetComponent<DialogueTrigger>().hasTriggered = true;
+
+            FadeIn();
+        }
+
         public void Quit()
         {
             Time.timeScale = 1f;
@@ -134,8 +145,9 @@ namespace Utils
 
                 loadingScreen.SetActive(false);
 
-                if (gameObject.GetComponent<DialogueTrigger>() != null)
-                    gameObject.GetComponent<DialogueTrigger>().TriggerDialogue();
+                DialogueTrigger trigger = gameObject.GetComponent<DialogueTrigger>();
+                if (trigger != null && trigger.hasTriggered == false)
+                    trigger.TriggerDialogue();
             }
             coroutineActive = false;
         }

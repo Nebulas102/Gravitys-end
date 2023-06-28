@@ -17,6 +17,9 @@ namespace Utils
         private Animator animator;
 
         [SerializeField]
+        private Animator flashAnimator;
+
+        [SerializeField]
         private DialogueManager dialogue;
 
         [SerializeField]
@@ -144,6 +147,10 @@ namespace Utils
             {
                 loadingScreen.SetActive(true);
                 animator.SetTrigger("FadeOut");
+
+                if (flashAnimator != null)
+                    flashAnimator.SetTrigger("Flash");
+
                 yield return new WaitForSeconds(0.99f);
                 SceneManager.LoadScene(scene);
             }

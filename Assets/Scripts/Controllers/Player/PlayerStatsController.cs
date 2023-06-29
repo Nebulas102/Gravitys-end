@@ -56,10 +56,11 @@ namespace Controllers.Player
 
         public void HealPlayer(float healPlayerAmount)
         {
+            if (health - _currentHealth < healPlayerAmount)
+                healPlayerAmount = health - _currentHealth;
+
             if (_currentHealth < health)
-            {
                 _currentHealth += healPlayerAmount;
-            }
         }
 
         private void Die()

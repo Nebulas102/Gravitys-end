@@ -23,29 +23,44 @@ public class BannermanController : MonoBehaviour
     private float healCooldown = 4f;
     [HideInInspector]
     public bool healingAllowed;
-    private List<(Coroutine coroutine, EnemyBase enemy)> healingEnemies = new List<(Coroutine, EnemyBase)>();
-    private Coroutine healingPlayer;
+
+    private float coolDownTimer = 0f;
+
+    private List<EnemyBase> enemies = new();
+    PlayerStatsController playerStats;
+
+    private void Update()
+    {
+        if (healingAllowed)
+        {
+            if (coolDownTimer < healCooldown)
+                coolDownTimer += Time.deltaTime;
+            else
+            {
+                coolDownTimer = 0f;
+                if (playerStats != null)
+                    HealPlayer();
+                foreach (EnemyBase enemyBase in enemies)
+                    if(enemyBase != null)
+                        HealEnemy(enemyBase);
+            }
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy") && healingAllowed)
         {
-            EnemyBase enemyBase = other.GetComponent<EnemyBase>();
-
-            if (enemyBase != null)
-            {
-                Coroutine healingEnemy = StartCoroutine(HealEnemy(enemyBase));
-                healingEnemies.Add((healingEnemy, enemyBase));
-            }
+            EnemyBase _enemyBase = other.GetComponent<EnemyBase>();
+            if (_enemyBase != null && !enemies.Contains(_enemyBase))
+                enemies.Add(_enemyBase);
         }
         else if (other.gameObject.CompareTag("Player") && healingAllowed)
         {
-            PlayerStatsController playerStats = other.GetComponent<PlayerStatsController>();
+            PlayerStatsController _playerStats = other.GetComponent<PlayerStatsController>();
 
-            if (playerStats != null)
-            {
-                healingPlayer = StartCoroutine(HealPlayer(playerStats));
-            }
+            if (_playerStats != null && playerStats == null)
+                playerStats = _playerStats;
         }
     }
 
@@ -55,45 +70,28 @@ public class BannermanController : MonoBehaviour
         {
             EnemyBase enemyBase = other.GetComponent<EnemyBase>();
 
-            if (enemyBase != null)
-            {
-                var enemyEntry = healingEnemies.Find(entry => entry.enemy == enemyBase);
-                if (enemyEntry.coroutine != null)
-                {
-                    StopCoroutine(enemyEntry.coroutine);
-                    healingEnemies.Remove(enemyEntry);
-                }
-            }
+            if (enemyBase != null && enemies.Contains(enemyBase))
+                    enemies.Remove(enemyBase);
         }
 
         else if (other.gameObject.CompareTag("Player") && healingAllowed)
         {
-            PlayerStatsController playerStats = other.GetComponent<PlayerStatsController>();
+            PlayerStatsController _playerStats = other.GetComponent<PlayerStatsController>();
 
-            if (playerStats != null)
-            {
-                StopCoroutine(healingPlayer);
-            }
+            if (_playerStats != null && playerStats != null)
+                playerStats = null;
         }
     }
 
-    private IEnumerator HealEnemy(EnemyBase enemyBase)
+    private void HealEnemy(EnemyBase enemyBase)
     {
-        while (true)
-        {
-            float healEnemyAmount = Random.Range(healEnemyAmountMinimum, healEnemyAmountMaximum);
-            enemyBase.EnemyHeal(healEnemyAmount);
-            yield return new WaitForSeconds(healCooldown);
-        }
+        float healEnemyAmount = Random.Range(healEnemyAmountMinimum, healEnemyAmountMaximum);
+        enemyBase.EnemyHeal(healEnemyAmount);
     }
 
-    private IEnumerator HealPlayer(PlayerStatsController playerStats)
+    private void HealPlayer()
     {
-        while (true)
-        {
-            float healPlayerAmount = Random.Range(healPlayerAmountMinimum, healPlayerAmountMaximum);
-            playerStats.HealPlayer(healPlayerAmount);
-            yield return new WaitForSeconds(healCooldown);
-        }
+        float healPlayerAmount = Random.Range(healPlayerAmountMinimum, healPlayerAmountMaximum);
+        playerStats.HealPlayer(healPlayerAmount);
     }
 }

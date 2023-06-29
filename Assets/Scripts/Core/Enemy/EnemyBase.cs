@@ -55,15 +55,23 @@ namespace Core.Enemy
             }
         }
 
-        public void EnemyHeal(float healthIncrease)
+        public bool EnemyHeal(float healthIncrease)
         {
-            int roundedHealthIncrease = Mathf.RoundToInt(healthIncrease);
+            if (_currentHealth <= 0)
+                return false;
+            
+            float roundedHealthIncrease = Mathf.RoundToInt(healthIncrease);
             if (_currentHealth < health)
             {
+                if (health - _currentHealth < roundedHealthIncrease)
+                    roundedHealthIncrease = health - _currentHealth;
+
                 _currentHealth += roundedHealthIncrease;
+
                 if (damageDisplay != null)
                     damageDisplay.GetComponent<DamageDisplay>().Show(roundedHealthIncrease.ToString(), damageDisplay, _canvas, Color.green);
-            }   
+            }
+            return true;
         }
 
         private IEnumerator HitFeedback()

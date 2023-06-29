@@ -24,6 +24,9 @@ namespace UI.Runtime
         [SerializeField]
         private GameObject settingsEntryButton;
 
+        [SerializeField]
+        private GameObject dialogue;
+
         private InputManager _inputManager;
         private bool _isPaused;
 
@@ -73,6 +76,22 @@ namespace UI.Runtime
 
         public void TogglePause(bool force = false)
         {
+            if (settingsMenu.activeSelf)
+            {
+                ToggleSettings();
+                return;
+            }
+
+            if(dialogue != null)
+            {
+                DialogueManager dialogueManager = dialogue.GetComponent<DialogueManager>();
+                if (dialogueManager.dialogueActive)
+                {
+                    dialogue.SetActive(!force);
+                    dialogue.GetComponent<DialogueManager>().ToggleDialoguePaused();
+                }
+            }
+            
             isPaused = force;
             Time.timeScale = force ? 0f : 1f;
         }

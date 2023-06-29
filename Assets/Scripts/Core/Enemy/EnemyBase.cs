@@ -39,14 +39,13 @@ namespace Core.Enemy
             damage -= Mathf.RoundToInt(modifier) * damage;
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
+            _currentHealth -= damage;
+
             if (damageDisplay != null)
             {
                 gameObject.GetComponent<HeathDisplay>().UpdateHealthBar(health, _currentHealth);
                 damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas, new Color(1f, 0.2f, 0.2f, 1));
             }
-
-
-            _currentHealth -= damage;
 
             if (!_hitParticle.isPlaying)
             {

@@ -7,7 +7,7 @@ namespace UI.Enemy
     {
         public void Show(string damage, GameObject display, Canvas canvas, Color color)
         {
-            var damageDisplay = Instantiate(display, canvas.transform.TransformPoint(0, 0, 0), Quaternion.identity,
+            var damageDisplay = Instantiate(display, canvas.transform.TransformPoint(0, 1, 0), Quaternion.identity,
                 canvas.transform);
 
             TextMeshProUGUI textUI = damageDisplay.GetComponentInChildren<TextMeshProUGUI>();

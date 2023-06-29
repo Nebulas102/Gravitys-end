@@ -29,6 +29,8 @@ namespace Core.Enemy
             _canvas = GetComponentInChildren<Canvas>();
             _hitParticle = GetComponent<EnemyController>().hitParticle;
             _currentHealth = health;
+
+            gameObject.GetComponent<HeathDisplay>().UpdateHealthBar(health, _currentHealth);
         }
 
         public void TakeDamage(int takeStartDamage, int takeEndDamage, float modifier)
@@ -38,7 +40,11 @@ namespace Core.Enemy
             damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
             if (damageDisplay != null)
+            {
+                gameObject.GetComponent<HeathDisplay>().UpdateHealthBar(health, _currentHealth);
                 damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas, new Color(1f, 0.2f, 0.2f, 1));
+            }
+
 
             _currentHealth -= damage;
 
@@ -59,7 +65,7 @@ namespace Core.Enemy
         {
             if (_currentHealth <= 0)
                 return false;
-            
+
             float roundedHealthIncrease = Mathf.RoundToInt(healthIncrease);
             if (_currentHealth < health)
             {
@@ -69,7 +75,9 @@ namespace Core.Enemy
                 _currentHealth += roundedHealthIncrease;
 
                 if (damageDisplay != null)
+                {
                     damageDisplay.GetComponent<DamageDisplay>().Show(roundedHealthIncrease.ToString(), damageDisplay, _canvas, Color.green);
+                }
             }
             return true;
         }

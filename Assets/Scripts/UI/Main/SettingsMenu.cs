@@ -13,6 +13,9 @@ namespace Main.UI
         [SerializeField]
         private TMP_Dropdown resolutionDropdown;
 
+        [SerializeField]
+        private GameObject FPSCounter;
+
         private Resolution[] resolutions;
         private List<Resolution> filteredResolutions;
         private float currentRefreshRate;
@@ -76,6 +79,11 @@ namespace Main.UI
         public void SetFullscreen(bool isFullScreen)
         {
             Screen.fullScreen = isFullScreen;
+        }
+
+        public void ToggleFPSCounter(bool setFPS)
+        {
+            FPSCounter.SetActive(setFPS);
         }
     }
 }

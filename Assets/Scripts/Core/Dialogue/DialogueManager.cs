@@ -39,6 +39,7 @@ public class DialogueManager : MonoBehaviour
     public static event DialogueActive OnDialgueActive;
 
     private bool textIsTyping;
+    private bool paused;
     private string currentSentence;
     private InputManager _inputManager;
 
@@ -139,5 +140,16 @@ public class DialogueManager : MonoBehaviour
         sentences.Clear();
         dialogueText.text = "";
         EndDialogue();
+    }
+
+    public void ToggleDialoguePaused()
+    {
+        paused = !paused;
+        if (!paused)
+        {
+            animator.SetBool("IsOpen", true);
+            if (textIsTyping)
+                OnDisplayNextSentence();
+        }  
     }
 }

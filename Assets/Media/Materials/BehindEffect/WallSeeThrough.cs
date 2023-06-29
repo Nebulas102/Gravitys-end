@@ -8,11 +8,11 @@ public class WallSeeThrough : MonoBehaviour
 
     public void EnableTiles()
     {
-        tiles.ForEach(t => t.SetActive(true));
+        tiles.ForEach(t => t.GetComponent<MeshRenderer>().material.renderQueue = 3000);
     }
 
     public void DisableTiles()
     {
-        tiles.ForEach(t => t.SetActive(false));
+        tiles.ForEach(t => t.GetComponent<MeshRenderer>().material.renderQueue = 3002);
     }
 }

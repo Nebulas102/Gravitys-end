@@ -39,7 +39,7 @@ public class MeleeWeaponHitbox : MonoBehaviour
 
             other.GetComponent<EnemyBase>().TakeDamage(baseDamage, maxBaseDamage, 0);
 
-            if (player.attackCount >= 4 && !other.GetComponent<EnemyController>().isKnockbackInProgress)
+            if (player.attackCount >= 2 && !other.GetComponent<EnemyController>().isKnockbackInProgress)
             {
                 enemyController.StartCoroutine(enemyController.PerformKnockback());
             }

@@ -4,6 +4,7 @@ using System.Linq;
 using Controllers.Player;
 using TMPro;
 using UI.Shop;
+using UI.Tokens;
 using UnityEngine;
 
 namespace UI.Inventory
@@ -178,5 +179,22 @@ namespace UI.Inventory
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        public void SalvageArmor()
+        {
+            if (!equippedArmorSlot.IsEmpty())
+            {
+                equippedArmorSlot.DropItem();
+            } 
+        }
+
+        public void SalvageWeapon()
+        {
+            if (!equippedWeaponSlot.IsEmpty())
+            {
+                equippedWeaponSlot.DropItem();
+                TokenManager.instance.AddToken();
+            }
+        } 
     }
 }

@@ -8,10 +8,10 @@ namespace UI.Tokens
     {
         [Header("Core Settings")]
         [SerializeField]
-        private int tokens = 5;
+        private int tokens = 2;
 
         [SerializeField]
-        public int maxTokens = 5;
+        public int maxTokens = 100;
 
         [SerializeField]
         private TextMeshProUGUI spendableText;
@@ -60,6 +60,11 @@ namespace UI.Tokens
                 spendableTokens++;
 
             return canRefund;
+        }
+
+        public void AddToken()
+        {
+            spendableTokens++;
         }
     }
 }

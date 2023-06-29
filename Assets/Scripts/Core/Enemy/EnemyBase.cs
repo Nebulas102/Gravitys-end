@@ -14,6 +14,7 @@ namespace Core.Enemy
         public GameObject damageDisplay;
 
         private Canvas _canvas;
+        private HeathDisplay _healthDisplay;
 
         private float _currentHealth;
         private ParticleSystem _hitParticle;
@@ -27,10 +28,13 @@ namespace Core.Enemy
         private void Start()
         {
             _canvas = GetComponentInChildren<Canvas>();
+
             _hitParticle = GetComponent<EnemyController>().hitParticle;
             _currentHealth = health;
+            _healthDisplay = gameObject.GetComponent<HeathDisplay>();
 
-            gameObject.GetComponent<HeathDisplay>().UpdateHealthBar(health, _currentHealth);
+            _healthDisplay.UpdateHealthBar(health, _currentHealth);
+            _canvas.gameObject.SetActive(false);
         }
 
         public void TakeDamage(int takeStartDamage, int takeEndDamage, float modifier)
@@ -43,6 +47,9 @@ namespace Core.Enemy
 
             if (damageDisplay != null)
             {
+                if(!_canvas.gameObject.activeSelf)
+                    _canvas.gameObject.SetActive(true);
+
                 gameObject.GetComponent<HeathDisplay>().UpdateHealthBar(health, _currentHealth);
                 damageDisplay.GetComponent<DamageDisplay>().Show(damage.ToString(), damageDisplay, _canvas, new Color(1f, 0.2f, 0.2f, 1));
             }
@@ -75,7 +82,10 @@ namespace Core.Enemy
 
                 if (damageDisplay != null)
                 {
+                    gameObject.GetComponent<HeathDisplay>().UpdateHealthBar(health, _currentHealth);
                     damageDisplay.GetComponent<DamageDisplay>().Show(roundedHealthIncrease.ToString(), damageDisplay, _canvas, Color.green);
+                    if (_currentHealth == health)
+                        _canvas.gameObject.SetActive(false);
                 }
             }
             return true;

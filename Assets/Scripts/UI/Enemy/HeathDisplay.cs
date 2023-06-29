@@ -10,7 +10,6 @@ public class HeathDisplay : MonoBehaviour
 
     public void UpdateHealthBar(float maxHealth, float currentHealth)
     {
-        Debug.Log(maxHealth / currentHealth);
         healthBarSprite.fillAmount = currentHealth / maxHealth; 
     }
 }

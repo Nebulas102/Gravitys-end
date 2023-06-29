@@ -6,7 +6,7 @@ using UnityEngine;
 public class Keycard : MonoBehaviour
 {
     [SerializeField]
-    private GameObject mapIcon;
+    private List<GameObject> mapIcons;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,8 +15,8 @@ public class Keycard : MonoBehaviour
             ObjectiveSystem.instance.HandleKeycardCollected();
             Destroy(gameObject);
 
-            if(mapIcon != null)
-                mapIcon.SetActive(false);
+            foreach(GameObject keyIcon in mapIcons)
+                keyIcon.SetActive(false);
         }
     }
 }

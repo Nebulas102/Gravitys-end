@@ -49,15 +49,10 @@ namespace Utils
                 loadingScreenActive = false;
 
             if (loadingScreenActive && loader != null && loader.activeSelf && StageGenComplete)
-            {
                 loader.SetActive(false);
-                skipDialogueButton.SetActive(true);
-            }
 
             if (loadingScreenActive && loader != null && !loader.activeSelf && !dialogue.dialogueActive)
-            {
                 FadeIn();
-            }
         }
 
         public void MainMenu()
@@ -102,7 +97,9 @@ namespace Utils
             if (gameObject.GetComponent<DialogueTrigger>() != null)
                 gameObject.GetComponent<DialogueTrigger>().hasTriggered = true;
 
-            FadeIn();
+            DialogueManager.instance.SkipDialogue();
+
+            skipDialogueButton.SetActive(false);
         }
 
         public void Quit()

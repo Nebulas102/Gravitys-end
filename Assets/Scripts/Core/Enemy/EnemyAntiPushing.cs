@@ -1,4 +1,5 @@
 using Controllers;
+using Controllers.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class EnemyAntiPushing : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !controller.isKnockbackInProgress)
         {
             rb.isKinematic = true;
         }
@@ -28,7 +29,7 @@ public class EnemyAntiPushing : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && !controller.isKnockbackInProgress)
         {
             rb.isKinematic = false;
         }
@@ -45,9 +46,9 @@ public class EnemyAntiPushing : MonoBehaviour
 
             var direction = transform.position - other.transform.position;
             direction.y = 0f; // don't move up/down
-                              
+
             // Move enemies away from eachother so they don't collide
-            if(navMeshAgent.isOnNavMesh)
+            if (navMeshAgent.isOnNavMesh)
                 navMeshAgent.Move(direction.normalized * Time.deltaTime);
         }
     }

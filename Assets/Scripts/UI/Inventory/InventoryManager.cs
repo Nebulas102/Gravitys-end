@@ -185,6 +185,7 @@ namespace UI.Inventory
             if (!equippedArmorSlot.IsEmpty())
             {
                 equippedArmorSlot.DropItem();
+                TokenManager.instance.AddToken();
             } 
         }
 

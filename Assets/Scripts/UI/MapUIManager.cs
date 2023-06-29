@@ -53,7 +53,7 @@ public class MapUIManager : MonoBehaviour
         if(mapCamera == null) GetMapCamera();
     }
 
-    private void ToggleMap()
+    public void ToggleMap()
     {
         mapIsActive = !mapIsActive;
 

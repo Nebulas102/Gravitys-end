@@ -82,6 +82,15 @@ namespace UI.Runtime
                 return;
             }
 
+            if (InventoryOverlayBehaviour.instance.inventoryOpened)
+            {
+                InventoryOverlayBehaviour.instance.inventoryOpened = false;
+                return;
+            }
+
+            if(MapUIManager.instance.mapIsActive)
+                MapUIManager.instance.ToggleMap();
+
             if(dialogue != null)
             {
                 DialogueManager dialogueManager = dialogue.GetComponent<DialogueManager>();

@@ -85,6 +85,7 @@ namespace UI.Runtime
             if (InventoryOverlayBehaviour.instance.inventoryOpened)
             {
                 InventoryOverlayBehaviour.instance.inventoryOpened = false;
+                Time.timeScale = 1f;
                 return;
             }
 

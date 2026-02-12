@@ -110,7 +110,7 @@ namespace Controllers
             rb.isKinematic = false;
 
             // Apply the knockback force to the enemy's Rigidbody
-            rb.velocity = target.forward * knockbackForce;
+            rb.linearVelocity = target.forward * knockbackForce;
 
             yield return new WaitForSeconds(knockbackDuration);
 
